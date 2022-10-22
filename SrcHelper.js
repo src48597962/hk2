@@ -1,5 +1,5 @@
 function homepage(helper) {
-    var cloudVersion = 7.08;//插件版本号，判断是否需要更新
+    var cloudVersion = 7.09;//插件版本号，判断是否需要更新
     if(config.SrcSet=='hiker://files/cache/SrcSet.js'){
         confirm({
             title:'更新提示', 
