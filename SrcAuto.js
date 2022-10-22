@@ -1,7 +1,7 @@
 //============自动挡处理逻辑、仅用于个人学习使用============
 //========感谢@断念大佬========
 
-var SrcVersion = 7.08;
+var SrcVersion = 7.09;
 
 //载入断插主控js
 eval(fetch('hiker://files/cache/Parse_Dn.js'));
