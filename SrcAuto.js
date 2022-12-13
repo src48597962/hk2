@@ -866,18 +866,16 @@ var SrcParseS = {
                         return 0;
                     }else{
                         var urlts = urltss[0];
-                        if(!/^http/.test(urlts)){
-                            let http = urlcode.url.match(/http.*\//)[0];
-                            urlts = http + urlts;
-                        }    
-                        var tscode = JSON.parse(fetch(urlts,{headers:{'Referer':url},onlyHeaders:true,timeout:1500}));
-                        //log(name+'ts访问状态码：'+tscode.statusCode)
-                        if(tscode.statusCode==-1){
-                            log(name+'>√ts段探测超时未拦载，结果未知')
-                            return 1;
-                        }else if(tscode.statusCode!=200){
-                            log(name+'>√ts段地址疑似失效或网络无法访问，不信去验证一下>'+url);
-                            return 0;
+                        if(/^http/.test(urlts)){
+                            var tscode = JSON.parse(fetch(urlts,{headers:{'Referer':url},onlyHeaders:true,timeout:1500}));
+                            //log(name+'ts访问状态码：'+tscode.statusCode)
+                            if(tscode.statusCode==-1){
+                                log(name+'>√ts段探测超时未拦载，结果未知')
+                                return 1;
+                            }else if(tscode.statusCode!=200){
+                                log(name+'>√ts段地址疑似失效或网络无法访问，不信去验证一下>'+url);
+                                return 0;
+                            }
                         }
                     }
                 }
