@@ -67,8 +67,8 @@ function yiji() {
         }
         if(bookshelf.length==0){
             d.push({
-                title: '↻书架是空的',
-                col_type: "rich_text"
+                title: '⚠书架是空的',
+                col_type: "text_center_1"
             });
         }
     }
