@@ -4,7 +4,7 @@ function yiji() {
         {
             title: "管理",
             url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJySet.js');
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcRdSet.js');
                     SRCSet();
                 }),
             pic_url: 'https://lanmeiguojiang.com/tubiao/more/129.png',
