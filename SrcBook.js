@@ -68,6 +68,7 @@ function yiji() {
         if(bookshelf.length==0){
             d.push({
                 title: '⚠书架是空的',
+                url: "hiker://empty",
                 col_type: "text_center_1"
             });
         }
