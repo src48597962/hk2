@@ -11,7 +11,7 @@ function yiji() {
             col_type: 'icon_5'
         },
         {
-            title: "书架",
+            title: "布局",
             url: "hiker://collection",
             pic_url: 'https://lanmeiguojiang.com/tubiao/more/109.png',
             col_type: 'icon_5'
@@ -35,7 +35,7 @@ function yiji() {
             col_type: 'icon_5'
         },
         {
-            title: "直播",
+            title: "编辑",
             url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcLive.js');
                     Live();
@@ -57,6 +57,19 @@ function yiji() {
             d.push({
                 col_type: "blank_block"
             })
+        }
+        var shelffile = "hiker://files/rules/Src/Read/bookshelf.js";
+        var shelf=fetch(cfgfile);
+        if(shelf != ""){
+            eval("var bookshelf=" + shelf+ ";");
+        }else{
+            var bookshelf= [];
+        }
+        if(bookshelf.length==0){
+            d.push({
+                title: '↻书架是空的',
+                col_type: "rich_text"
+            });
         }
     }
     setResult(d);
