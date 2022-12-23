@@ -59,7 +59,7 @@ function yiji() {
             })
         }
         var shelffile = "hiker://files/rules/Src/Read/bookshelf.js";
-        var shelf=fetch(cfgfile);
+        var shelf=fetch(shelffile);
         if(shelf != ""){
             eval("var bookshelf=" + shelf+ ";");
         }else{
