@@ -866,7 +866,7 @@ var SrcParseS = {
                         return 0;
                     }else{
                         var urlts = urltss[0];
-                        if(/^http/.test(urlts)){
+                        if(/^http/.test(urlts)&&!urlts.match(/youku|iqiyi|ixigua|migu|sohu|pptv|le|cctv|1905|mgtv|qq.com/)){
                             var tscode = JSON.parse(fetch(urlts,{headers:{'Referer':url},onlyHeaders:true,timeout:1500}));
                             //log(name+'ts访问状态码：'+tscode.statusCode)
                             if(tscode.statusCode==-1){
