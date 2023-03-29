@@ -1,39 +1,66 @@
 //巨漫，接口型空壳小程序，接口分为主页源和搜索源
+let cfgfile = "hiker://files/rules/Src/JuMan/config.json";
+let JuMancfg=fetch(cfgfile);
+if(JuMancfg != ""){
+    eval("var JMconfig=" + JuMancfg+ ";");
+}else{
+    var JMconfig= {};
+}
+
+let sourcefile = "hiker://files/rules/Src/JuMan/jiekou.json";
+let sourcedata = fetch(sourcefile);
+if(sourcedata != ""){
+    eval("var datalist=" + sourcedata+ ";");
+}else{
+    var datalist = [];
+}
+
 //一级
 function yiji() {
     Version();
-
+    let sourcename = JMconfig['source'];
+    let sourcedata = datalist.length>0?datalist.filter(it=>{
+        return it.name==sourcename&&it.type=="source";
+    }):[];
     let d = [];
-    d.push({
-        title: "源",
-        url: "",
-        pic_url: "",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: "更新",
-        url: "",
-        pic_url: "",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: "分类",
-        url: "",
-        pic_url: "",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: "排行",
-        url: "",
-        pic_url: "",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: "书架",
-        url: "",
-        pic_url: "",
-        col_type: 'icon_5'
-    })
+    if(sourcedata.length==0){
+        d.push({
+            title: "请先配置一个主页源",
+            url: "hiker://empty",
+            col_type: "text_center_1",
+        })
+    }else{
+        d.push({
+            title: "管理",
+            url: "",
+            pic_url: "",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: "更新",
+            url: "",
+            pic_url: "",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: "分类",
+            url: "",
+            pic_url: "",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: "排行",
+            url: "",
+            pic_url: "",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: "书架",
+            url: "",
+            pic_url: "",
+            col_type: 'icon_5'
+        })
+    }
 
     setResult(d);
     /*
