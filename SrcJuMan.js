@@ -2,7 +2,39 @@
 //一级
 function yiji() {
     Version();
-    
+
+    let d = [];
+    d.push({
+        title: "测试",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "测试",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "测试",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "测试",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "测试",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    setResult(d);
     /*
     if(getMyVar('jydingyue','0')=="0"&&JYconfig['codedyid']&&JYconfig['codeid']!=JYconfig['codedyid']){
         putMyVar('jydingyue','1');
@@ -41,4 +73,34 @@ function yiji() {
         }
     }
     */
+}
+
+//版本检测
+function Version() {
+    var nowVersion = "0.1";//现在版本 
+    var nowtime = Date.now();
+    var oldtime = parseInt(getItem('VersionChecktime','0').replace('time',''));
+    if (getMyVar('SrcJuying-VersionCheck', '0') == '0' && nowtime > (oldtime+12*60*60*1000)) {
+        try {
+            eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Comics','master') + 'SrcTmplVersion.js'))
+            if (parseFloat(newVersion.SrcJuMan) > parseFloat(nowVersion)) {
+                confirm({
+                    title:'发现新版本，是否更新？', 
+                    content:nowVersion+'=>'+newVersion.SrcJuMan+'\n'+newVersion.SrcJuMandesc[newVersion.SrcJuMan], 
+                    confirm: $.toString((nowtime) => {
+                        setItem('VersionChecktime', nowtime+'time');
+                        deleteCache();
+                        delete config.依赖;
+                        refreshPage();
+                    },nowtime),
+                    cancel:''
+                })
+                log('检测到新版本！\nV'+newVersion.SrcJuMan+'版本》'+newVersion.SrcJuMandesc[newVersion.SrcJuMan]);
+            }
+            putMyVar('SrcJuying-Version', '-V'+newVersion.SrcJuying);
+        } catch (e) { }
+        putMyVar('SrcJuying-VersionCheck', '1');
+    }else{
+        putMyVar('SrcJuying-Version', '-V'+nowVersion);
+    }
 }
