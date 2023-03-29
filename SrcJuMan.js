@@ -5,35 +5,36 @@ function yiji() {
 
     let d = [];
     d.push({
-        title: "测试",
+        title: "源",
         url: "",
         pic_url: "",
         col_type: 'icon_5'
     })
     d.push({
-        title: "测试",
+        title: "更新",
         url: "",
         pic_url: "",
         col_type: 'icon_5'
     })
     d.push({
-        title: "测试",
+        title: "分类",
         url: "",
         pic_url: "",
         col_type: 'icon_5'
     })
     d.push({
-        title: "测试",
+        title: "排行",
         url: "",
         pic_url: "",
         col_type: 'icon_5'
     })
     d.push({
-        title: "测试",
+        title: "书架",
         url: "",
         pic_url: "",
         col_type: 'icon_5'
     })
+
     setResult(d);
     /*
     if(getMyVar('jydingyue','0')=="0"&&JYconfig['codedyid']&&JYconfig['codeid']!=JYconfig['codedyid']){
