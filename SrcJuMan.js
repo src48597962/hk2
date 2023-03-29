@@ -23,6 +23,36 @@ function yiji() {
         return it.name==sourcename&&it.type=="source";
     }):[];
     let d = [];
+    d.push({
+        title: "管理",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "更新",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "分类",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "排行",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
+    d.push({
+        title: "书架",
+        url: "",
+        pic_url: "",
+        col_type: 'icon_5'
+    })
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
@@ -30,36 +60,7 @@ function yiji() {
             col_type: "text_center_1",
         })
     }else{
-        d.push({
-            title: "管理",
-            url: "",
-            pic_url: "",
-            col_type: 'icon_5'
-        })
-        d.push({
-            title: "更新",
-            url: "",
-            pic_url: "",
-            col_type: 'icon_5'
-        })
-        d.push({
-            title: "分类",
-            url: "",
-            pic_url: "",
-            col_type: 'icon_5'
-        })
-        d.push({
-            title: "排行",
-            url: "",
-            pic_url: "",
-            col_type: 'icon_5'
-        })
-        d.push({
-            title: "书架",
-            url: "",
-            pic_url: "",
-            col_type: 'icon_5'
-        })
+        
     }
 
     setResult(d);
