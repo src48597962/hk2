@@ -68,7 +68,7 @@ function yiji() {
             requireCache(source, 48);
             log(parse['链接']);
             let html = request(parse['链接']);
-            log(html);
+            log(parse['推荐']);
             //eval("let tuijian = " + parse['推荐'])
             //d = d.concat(tuijian);
         }
