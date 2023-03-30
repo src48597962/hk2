@@ -32,7 +32,7 @@ let parse = {
                 });
             });
         });
-        var Label_set = JSON.parse(request(this.链接+'api/getBookByType?product_id=3&productname=smh&platformname=wap&pagesize=5&page=2&pytype=tuijian&booktype=132')).data.book
+        var Label_set = JSON.parse(request(MY_URL+'api/getBookByType?product_id=3&productname=smh&platformname=wap&pagesize=5&page=2&pytype=tuijian&booktype=132')).data.book
         Label_set.forEach((data, id) => {
             d.push({
                 title: '““””<br><font color="' + colorsz[ci] + '">' + data.title + '</font>',
