@@ -69,8 +69,8 @@ function yiji() {
             requireCache(source, 48);
             MY_URL = parse['链接'];
             let html = request(MY_URL);
-            eval("let 推荐 = " + parse['推荐'])
-            d = d.concat(推荐());
+            eval("let 主页 = " + parse['主页'])
+            d = d.concat(主页());
         }
 
     }
