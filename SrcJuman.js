@@ -14,6 +14,7 @@ if(sourcedata != ""){
 }else{
     var datalist = [];
 }
+log(datalist)
 
 //一级
 function yiji() {
