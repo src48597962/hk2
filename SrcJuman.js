@@ -63,9 +63,14 @@ function yiji() {
             col_type: "text_center_1",
         })
     }else{
-        log($.type(sourcedata[0].parse));
-        requireCache(sourcedata[0].parse, 48);
-        log(parse['链接']);
+        let source = sourcedata[0].parse;
+        if($.type(source)=="string" && /^http/.test(source)){
+            requireCache(source.parse, 48);
+            let html = request(parse['链接']);
+            eval("let tuijian = " + parse['推荐'])
+            d = d.concat(tuijian);
+        }
+
     }
 
     setResult(d);
