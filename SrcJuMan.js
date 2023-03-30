@@ -25,7 +25,10 @@ function yiji() {
     let d = [];
     d.push({
         title: "管理",
-        url: "",
+        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmSet.js');
+            SRCSet();
+        }),
         pic_url: "",
         col_type: 'icon_5'
     })
