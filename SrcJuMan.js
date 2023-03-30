@@ -20,7 +20,7 @@ function yiji() {
     Version();
     let sourcename = JMconfig['source'];
     let sourcedata = datalist.length>0?datalist.filter(it=>{
-        return it.name==sourcename&&it.type=="source";
+        return it.name==sourcename&&it.parse;
     }):[];
     let d = [];
     d.push({
@@ -60,7 +60,7 @@ function yiji() {
             col_type: "text_center_1",
         })
     }else{
-        
+        log(sourcedata[0]);
     }
 
     setResult(d);
@@ -109,7 +109,7 @@ function Version() {
     var nowVersion = "0.1";//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime','0').replace('time',''));
-    if (getMyVar('SrcJuying-VersionCheck', '0') == '0' && nowtime > (oldtime+12*60*60*1000)) {
+    if (getMyVar('SrcJuMan-VersionCheck', '0') == '0' && nowtime > (oldtime+12*60*60*1000)) {
         try {
             eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Comics','master') + 'SrcTmplVersion.js'))
             if (parseFloat(newVersion.SrcJuMan) > parseFloat(nowVersion)) {
@@ -126,10 +126,10 @@ function Version() {
                 })
                 log('检测到新版本！\nV'+newVersion.SrcJuMan+'版本》'+newVersion.SrcJuMandesc[newVersion.SrcJuMan]);
             }
-            putMyVar('SrcJuying-Version', '-V'+newVersion.SrcJuying);
+            putMyVar('SrcJuMan-Version', '-V'+newVersion.SrcJuying);
         } catch (e) { }
-        putMyVar('SrcJuying-VersionCheck', '1');
+        putMyVar('SrcJuMan-VersionCheck', '1');
     }else{
-        putMyVar('SrcJuying-Version', '-V'+nowVersion);
+        putMyVar('SrcJuMan-Version', '-V'+nowVersion);
     }
 }
