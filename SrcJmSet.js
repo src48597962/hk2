@@ -18,7 +18,6 @@ function SRCSet() {
         if(data){
             putMyVar('manhuaedit','1');
             putMyVar('manhuaname',data.name);
-            putMyVar('manhuaurl',data.url);
             putMyVar('manhuaparse',data.parse);
             putMyVar('manhuaerparse',data.erparse?data.erparse:"");
         }
@@ -32,18 +31,6 @@ function SRCSet() {
                 titleVisible: false,
                 onChange: $.toString(() => {
                     putMyVar('manhuaname',input);
-                })
-            }
-        });
-        d.push({
-            title:'网址',
-            col_type: 'input',
-            desc: "网页地址",
-            extra: {
-                defaultValue: getMyVar('manhuaurl')?getMyVar('manhuaurl'):"",
-                titleVisible: false,
-                onChange: $.toString(() => {
-                    putMyVar('manhuaurl',input);
                 })
             }
         });
@@ -108,7 +95,7 @@ function SRCSet() {
                     }else{
                         var datalist = [];
                     }
-                    let index = datalist.indexOf(datalist.filter(d=> d.name==name && d.url==url)[0]);
+                    let index = datalist.indexOf(datalist.filter(d=> d.name==name)[0]);
                     if(index>-1 && getMyVar('manhuaedit')!="1"){
                         return "toast://已存在-"+name;
                     }else{
@@ -158,7 +145,7 @@ function SRCSet() {
                     }
                     let num = 0;
                     for (let i = 0; i < datalist2.length; i++) {
-                        if (!datalist.some(item => item.name==datalist2[i].name && item.url==datalist2[i].url)) {
+                        if (!datalist.some(item => item.name==datalist2[i].name)) {
                             datalist.push(datalist2[i]);
                             num = num + 1;
                         }
@@ -221,7 +208,7 @@ function SRCSet() {
                 } else if (input == "删除") {
                     let datafile = fetch(filepath);
                     eval("var datalist=" + datafile+ ";");
-                    let index = datalist.indexOf(datalist.filter(d => d.name==data.name&&d.url==data.url)[0]);
+                    let index = datalist.indexOf(datalist.filter(d => d.name==data.name)[0]);
                     datalist.splice(index, 1);
                     writeFile(filepath, JSON.stringify(datalist));
                     refreshPage(false);
