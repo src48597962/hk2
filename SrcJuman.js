@@ -1,13 +1,13 @@
 //巨漫，接口型空壳小程序，接口分为主页源和搜索源
-let cfgfile = "hiker://files/rules/Src/JuMan/config.json";
-let JuMancfg=fetch(cfgfile);
-if(JuMancfg != ""){
-    eval("var JMconfig=" + JuMancfg+ ";");
+let cfgfile = "hiker://files/rules/Src/Juman/config.json";
+let Jumancfg=fetch(cfgfile);
+if(Jumancfg != ""){
+    eval("var JMconfig=" + Jumancfg+ ";");
 }else{
     var JMconfig= {};
 }
 
-let sourcefile = "hiker://files/rules/Src/JuMan/jiekou.json";
+let sourcefile = "hiker://files/rules/Src/Juman/jiekou.json";
 let sourcedata = fetch(sourcefile);
 if(sourcedata != ""){
     eval("var datalist=" + sourcedata+ ";");
@@ -112,13 +112,13 @@ function Version() {
     var nowVersion = "0.1";//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime','0').replace('time',''));
-    if (getMyVar('SrcJuMan-VersionCheck', '0') == '0' && nowtime > (oldtime+12*60*60*1000)) {
+    if (getMyVar('SrcJuman-VersionCheck', '0') == '0' && nowtime > (oldtime+12*60*60*1000)) {
         try {
             eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Comics','master') + 'SrcTmplVersion.js'))
-            if (parseFloat(newVersion.SrcJuMan) > parseFloat(nowVersion)) {
+            if (parseFloat(newVersion.SrcJuman) > parseFloat(nowVersion)) {
                 confirm({
                     title:'发现新版本，是否更新？', 
-                    content:nowVersion+'=>'+newVersion.SrcJuMan+'\n'+newVersion.SrcJuMandesc[newVersion.SrcJuMan], 
+                    content:nowVersion+'=>'+newVersion.SrcJuman+'\n'+newVersion.SrcJumandesc[newVersion.SrcJuman], 
                     confirm: $.toString((nowtime) => {
                         setItem('VersionChecktime', nowtime+'time');
                         deleteCache();
@@ -127,12 +127,12 @@ function Version() {
                     },nowtime),
                     cancel:''
                 })
-                log('检测到新版本！\nV'+newVersion.SrcJuMan+'版本》'+newVersion.SrcJuMandesc[newVersion.SrcJuMan]);
+                log('检测到新版本！\nV'+newVersion.SrcJuman+'版本》'+newVersion.SrcJumandesc[newVersion.SrcJuman]);
             }
-            putMyVar('SrcJuMan-Version', '-V'+newVersion.SrcJuying);
+            putMyVar('SrcJuman-Version', '-V'+newVersion.SrcJuying);
         } catch (e) { }
-        putMyVar('SrcJuMan-VersionCheck', '1');
+        putMyVar('SrcJuman-VersionCheck', '1');
     }else{
-        putMyVar('SrcJuMan-Version', '-V'+nowVersion);
+        putMyVar('SrcJuman-Version', '-V'+nowVersion);
     }
 }
