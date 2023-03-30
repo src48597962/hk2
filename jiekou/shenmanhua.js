@@ -1,6 +1,6 @@
 let parse = {
     "链接": "https://m.taomanhua.com/",
-    "推荐": function () {
+    "主页": function () {
         let d = [];
         var Label_set = pdfa(html, '#js_content&&.mult.sow')
         var ci = 0;
@@ -27,6 +27,34 @@ let parse = {
                     extra: {
                         name: pdfh(datas, '.card-title&&Text'),
                         url: pd(datas, 'a&&href'),
+                        qz: MY_HOME
+                    }
+                });
+            });
+        });
+        var Label_set = JSON.parse(request(链接+'api/getBookByType?product_id=3&productname=smh&platformname=wap&pagesize=5&page=2&pytype=tuijian&booktype=132')).data.book
+        Label_set.forEach((data, id) => {
+            d.push({
+                title: '““””<br><font color="' + colorsz[ci] + '">' + data.title + '</font>',
+                url: '',
+                col_type: "text_1",
+                extra: {
+                    lineVisible: false
+                }
+            });
+            ci = ci >= 2 ? 0 : ci + 1
+            var item = data.comic_info
+            var item_sl = item.length;
+            item.forEach((datas) => {
+                d.push({
+                    title: datas.comic_name,
+                    desc: id % 2 ? datas.last_comic_chapter_name : datas.content,
+                    url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + MY_HOME + '/' + datas.comic_newid + '/@rule=js:$.require("hiker://page/details")',
+                    pic_url: id % 2 ? 'https://image.yqmh.com/mh/' + datas.comic_id + '.jpg-300x400.webp' : 'https://cms.samanlehua.com' + '/' + datas.img_url + '-noresize.webp',
+                    col_type: !(id % 2) ? "movie_2" : "movie_3_marquee",
+                    extra: {
+                        name: datas.comic_name,
+                        url: MY_HOME + '/' + datas.comic_newid + '/',
                         qz: MY_HOME
                     }
                 });
