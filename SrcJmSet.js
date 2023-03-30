@@ -71,7 +71,7 @@ function SRCSet() {
                 if(!getMyVar('manhuaname')){
                     return "toast://名称不能为空";
                 }
-                if(!getMyVar('manhuaparse') || !getMyVar('manhuaerparse')){
+                if(!getMyVar('manhuaparse') && !getMyVar('manhuaerparse')){
                     return "toast://主页源数据和搜索源数据不能同时为空";
                 }
                 try{
