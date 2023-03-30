@@ -66,9 +66,11 @@ function yiji() {
         let source = sourcedata[0].parse;
         if($.type(source)=="string" && /^http/.test(source)){
             requireCache(source, 48);
+            log(parse['链接']);
             let html = request(parse['链接']);
-            eval("let tuijian = " + parse['推荐'])
-            d = d.concat(tuijian);
+            log(html);
+            //eval("let tuijian = " + parse['推荐'])
+            //d = d.concat(tuijian);
         }
 
     }
