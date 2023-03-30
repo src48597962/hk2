@@ -1,7 +1,7 @@
 ////本代码仅用于个人学习，请勿用于其他作用，下载后请24小时内删除，代码虽然是公开学习的，但请尊重作者，应留下说明
 function SRCSet() {
-    setPageTitle('巨漫接口 | ♥管理');
-    let filepath = "hiker://files/rules/Src/JuMan/manhua.json";
+    setPageTitle('聚漫接口 | ♥管理');
+    let filepath = "hiker://files/rules/Src/Juman/manhua.json";
     let datafile = fetch(filepath);
     if(datafile != ""){
         eval("var datalist=" + datafile+ ";");
@@ -141,11 +141,11 @@ function SRCSet() {
         url: $("", "云盘分享口令的云剪贴板").input((filepath) => {
             try {
                 let inputname = input.split('￥')[0];
-                if (inputname == "巨漫接口") {
+                if (inputname == "聚漫接口") {
                     showLoading("正在导入，请稍后...");
-                    let parseurl = aesDecode('JuMan', input.split('￥')[1]);
+                    let parseurl = aesDecode('Juman', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
-                    let datalist2 = JSON.parse(aesDecode('JuMan', content));
+                    let datalist2 = JSON.parse(aesDecode('Juman', content));
                     let datafile = fetch(filepath);
                     if(datafile != ""){
                         try{
@@ -180,10 +180,10 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: datalist.length == 0 ? "toast://巨漫接口为0，无法分享" : $().lazyRule((datalist) => {
-            let pasteurl = sharePaste(aesEncode('JuMan', JSON.stringify(datalist)));
+        url: datalist.length == 0 ? "toast://聚漫接口为0，无法分享" : $().lazyRule((datalist) => {
+            let pasteurl = sharePaste(aesEncode('Juman', JSON.stringify(datalist)));
             if (pasteurl) {
-                let code = '巨漫接口￥' + aesEncode('JuMan', pasteurl) + '￥共' + datalist.length + '条';
+                let code = '聚漫接口￥' + aesEncode('Juman', pasteurl) + '￥共' + datalist.length + '条';
                 copy(code);
                 return "toast://(全部)云盘分享口令已生成";
             } else {
@@ -205,10 +205,10 @@ function SRCSet() {
                     showLoading('分享上传中，请稍后...');
                     let oneshare = []
                     oneshare.push(data);
-                    let pasteurl = sharePaste(aesEncode('JuMan', JSON.stringify(oneshare)));
+                    let pasteurl = sharePaste(aesEncode('Juman', JSON.stringify(oneshare)));
                     hideLoading();
                     if(pasteurl){
-                        let code = '巨漫接口￥'+aesEncode('JuMan', pasteurl)+'￥'+data.name;
+                        let code = '聚漫接口￥'+aesEncode('Juman', pasteurl)+'￥'+data.name;
                         copy(code);
                         return "toast://(单个)云盘分享口令已生成";
                     }else{
