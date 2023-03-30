@@ -68,8 +68,8 @@ function SRCSet() {
             title: '保存',
             col_type: 'text_center_1',
             url: $().lazyRule((filepath)=>{
-                if(!getMyVar('manhuaname') || !getMyVar('manhuaurl')){
-                    return "toast://名称或网址标识不能为空";
+                if(!getMyVar('manhuaname')){
+                    return "toast://名称不能为空";
                 }
                 if(!getMyVar('manhuaparse') || !getMyVar('manhuaerparse')){
                     return "toast://主页源数据和搜索源数据不能同时为空";
