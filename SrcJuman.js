@@ -65,7 +65,7 @@ function yiji() {
     }else{
         log($.type(sourcedata[0].parse));
         requireCache(sourcedata[0].parse, 48);
-        log(parse);
+        log(parse['链接']);
     }
 
     setResult(d);
