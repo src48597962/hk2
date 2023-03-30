@@ -65,7 +65,7 @@ function yiji() {
     }else{
         let source = sourcedata[0].parse;
         if($.type(source)=="string" && /^http/.test(source)){
-            requireCache(source.parse, 48);
+            requireCache(source, 48);
             let html = request(parse['链接']);
             eval("let tuijian = " + parse['推荐'])
             d = d.concat(tuijian);
