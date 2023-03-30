@@ -14,7 +14,6 @@ if(sourcedata != ""){
 }else{
     var datalist = [];
 }
-log(datalist)
 
 //一级
 function yiji() {
@@ -64,7 +63,9 @@ function yiji() {
             col_type: "text_center_1",
         })
     }else{
-        log(sourcedata[0]);
+        log($.type(sourcedata[0].parse));
+        requireCache(sourcedata[0].parse, 48);
+        log(parse);
     }
 
     setResult(d);
