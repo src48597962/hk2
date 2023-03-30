@@ -67,7 +67,8 @@ function yiji() {
         if($.type(source)=="string" && /^http/.test(source)){
             var colorsz = ['#519D9E', '#285943', '#098AC1'];
             requireCache(source, 48);
-            let html = request(parse['链接']);
+            MY_URL = parse['链接'];
+            let html = request(MY_URL);
             eval("let 推荐 = " + parse['推荐'])
             d = d.concat(推荐());
         }
