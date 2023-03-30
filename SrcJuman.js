@@ -1,4 +1,4 @@
-//巨漫，接口型空壳小程序，接口分为主页源和搜索源
+//聚漫，接口型空壳小程序，接口分为主页源和搜索源
 let cfgfile = "hiker://files/rules/Src/Juman/config.json";
 let Jumancfg=fetch(cfgfile);
 if(Jumancfg != ""){
