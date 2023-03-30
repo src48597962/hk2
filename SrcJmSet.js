@@ -76,12 +76,10 @@ function SRCSet() {
                 }
                 try{
                     let name = getMyVar('manhuaname');
-                    let url = getMyVar('manhuaurl');
                     let parse = getMyVar('manhuaparse');
                     let erparse = getMyVar('manhuaerparse');
                     let newapi = {
                         name: name,
-                        url: url,
                         parse: parse
                     }
                     if(erparse){newapi['erparse'] = erparse;}
