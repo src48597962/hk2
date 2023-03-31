@@ -18,6 +18,7 @@ if(sourcedata != ""){
 //一级
 function yiji() {
     Version();
+    downloadicon();
     let sourcename = JMconfig['source'] || "神漫画";
     let sourcedata = datalist.length>0?datalist.filter(it=>{
         return it.name==sourcename&&it.parse;
@@ -29,31 +30,31 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmSet.js');
             SRCSet();
         }),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
+        pic_url: "hiker://files/cache/src/管理.png",
         col_type: 'icon_5'
     })
     d.push({
         title: "更新",
         url: "",
-        pic_url: "https://cms.samanlehua.com/cms/chendan/8ba45ec1-76a5-11ed-b83d-5b399cfce11d.png-noresize.webp",
+        pic_url: "hiker://files/cache/src/更新.webp",
         col_type: 'icon_5'
     })
     d.push({
         title: "分类",
         url: "",
-        pic_url: "https://cms.samanlehua.com/cms/chendan/92a7df31-76a5-11ed-ba0c-4dc033de340d.png-noresize.webp",
+        pic_url: "hiker://files/cache/src/分类.webp",
         col_type: 'icon_5'
     })
     d.push({
         title: "排行",
         url: "",
-        pic_url: "//cms.samanlehua.com/cms/chendan/8ba45ec1-76a5-11ed-b83d-5b399cfce11d.png-noresize.webp",
+        pic_url: "hiker://files/cache/src/排行.webp",
         col_type: 'icon_5'
     })
     d.push({
         title: "书架",
         url: "",
-        pic_url: "https://icweiliimg1.pstatp.com/weili/bl/480448004049600550.jpg",
+        pic_url: "hiker://files/cache/src/书架.jpg",
         col_type: 'icon_5'
     })
     d.push({
@@ -129,7 +130,26 @@ function yiji() {
     }
     */
 }
-
+//图标下载
+function downloadicon() {
+    try{
+        if(!fileExist('hiker://files/cache/src/管理.png')){
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/管理.png", 'hiker://files/cache/src/管理.png');
+        }
+        if(!fileExist('hiker://files/cache/src/更新.webp')){
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/更新.webp", 'hiker://files/cache/src/更新.webp');
+        }
+        if(!fileExist('hiker://files/cache/src/分类.webp')){
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/分类.webp", 'hiker://files/cache/src/分类.webp');
+        }
+        if(!fileExist('hiker://files/cache/src/排行.webp')){
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/管理.png", 'hiker://files/cache/src/排行.webp');
+        }
+        if(!fileExist('hiker://files/cache/src/书架.jpg')){
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/书架.jpg", 'hiker://files/cache/src/书架.jpg');
+        }
+    }catch(e){}
+}
 //版本检测
 function Version() {
     var nowVersion = "0.1";//现在版本 
