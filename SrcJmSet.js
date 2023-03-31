@@ -83,10 +83,10 @@ function SRCSet() {
                     let parse = getMyVar('manhuaparse');
                     let erparse = getMyVar('manhuaerparse');
                     let newapi = {
-                        name: name,
-                        parse: parse
+                        name: name
                     }
-                    if(erparse){newapi['erparse'] = erparse;}
+                    if(parse){newapi['parse'] = JSON.parse(parse);}
+                    if(erparse){newapi['erparse'] = JSON.parse(erparse);}
                     let datafile = fetch(filepath);
                     if(datafile != ""){
                         try{
