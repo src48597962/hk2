@@ -97,13 +97,20 @@ function sousuo() {
     let d = [];
     let wd = MY_URL.split('##')[1];
     let page = MY_URL.split('##')[2];
-    let source = sourcedata[0].erparse;
+    if(sourcedata.length==0){
+        d.push({
+            title: "请先配置一个主页源",
+            url: "hiker://empty",
+            col_type: "text_center_1",
+        })
+    }else{
+        let source = sourcedata[0].erparse;
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
             MY_HOME = erparse['链接'];
             let data = [];
             try{
-                eval("let 搜索 = " + parse['搜索'])
+                eval("let 搜索 = " + erparse['搜索'])
                 data = 搜索();
             }catch(e){
                 log(e.message);
@@ -117,6 +124,7 @@ function sousuo() {
             }
             d = d.concat(data);
         }
+    }
     setResult(d);
 }
 //二级+源搜索
