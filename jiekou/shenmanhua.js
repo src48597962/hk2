@@ -26,28 +26,6 @@ let parse = {
                 });
             });
         });
-        var Label_set = JSON.parse(request(MY_URL+'api/getBookByType?product_id=3&productname=smh&platformname=wap&pagesize=5&page=2&pytype=tuijian&booktype=132')).data.book
-        Label_set.forEach((data, id) => {
-            d.push({
-                title: data.title,
-                col_type: "rich_text"
-            });
-            var item = data.comic_info
-            item.forEach((datas,id) => {
-                d.push({
-                    title: datas.comic_name,
-                    desc: id % 2 ? datas.last_comic_chapter_name : datas.content,
-                    url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + MY_HOME + '/' + datas.comic_newid + '/@rule=js:$.require("hiker://page/details")',
-                    pic_url: id % 2 ? 'https://image.yqmh.com/mh/' + datas.comic_id + '.jpg-300x400.webp' : 'https://cms.samanlehua.com' + '/' + datas.img_url + '-noresize.webp',
-                    col_type: (item.length/3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
-                    extra: {
-                        name: datas.comic_name,
-                        url: MY_HOME + '/' + datas.comic_newid + '/',
-                        qz: MY_HOME
-                    }
-                });
-            });
-        });
         return d;
     }
 }
