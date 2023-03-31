@@ -2,6 +2,8 @@ let parse = {
     "链接": "https://m.taomanhua.com/",
     "主页": function () {
         let d = [];
+        var colorsz = ['#519D9E', '#285943', '#098AC1'];
+        let html = request(MY_URL);
         var Label_set = pdfa(html, '#js_content&&.mult.sow')
         var ci = 0;
         Label_set.forEach((data, id) => {
