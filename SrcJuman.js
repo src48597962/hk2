@@ -15,7 +15,7 @@ if(sourcedata != ""){
     var datalist = [];
 }
 let sourcename = JMconfig['source'] || "神漫画";
-let sourcedata = datalist.length>0?datalist.filter(it=>{
+var sourcedata = datalist.length>0?datalist.filter(it=>{
     return it.name==sourcename&&it.parse;
 }):[];
 
