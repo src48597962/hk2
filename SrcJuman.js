@@ -71,28 +71,55 @@ function yiji() {
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
             MY_URL = parse['链接'];
-            let 主页数据 = [];
+            let data = [];
             try{
                 eval("let 主页 = " + parse['主页'])
-                主页数据 = 主页();
+                data = 主页();
             }catch(e){
                 log(e.message);
             }
-            if(主页数据.length==0){
-                主页数据.push({
-                    title: "主页源的主页数据获取失败",
+            if(data.length==0){
+                data.push({
+                    title: "主页接口的主页数据获取失败",
                     url: "hiker://empty",
                     col_type: "text_center_1",
                 })
             }
-            d = d.concat(主页数据);
+            d = d.concat(data);
         }
 
     }
 
     setResult(d);
 }
-//二级+搜索源
+//搜索
+function sousuo() {
+    let d = [];
+    let wd = MY_URL.split('##')[1];
+    let page = MY_URL.split('##')[2];
+    let source = sourcedata[0].erparse;
+        if(source.ext && /^http/.test(source.ext)){
+            requireCache(source.ext, 48);
+            MY_HOME = erparse['链接'];
+            let data = [];
+            try{
+                eval("let 搜索 = " + parse['搜索'])
+                data = 搜索();
+            }catch(e){
+                log(e.message);
+            }
+            if(data.length==0){
+                data.push({
+                    title: "搜索接口的搜索数据获取失败",
+                    url: "hiker://empty",
+                    col_type: "text_center_1",
+                })
+            }
+            d = d.concat(data);
+        }
+    setResult(d);
+}
+//二级+源搜索
 function erji(name,data) {
     name = name || MY_PARAMS.name;
     let d = [];
