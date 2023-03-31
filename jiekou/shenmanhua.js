@@ -17,7 +17,7 @@ let parse = {
                     desc: pdfh(datas, '.card-text&&Text'),
                     url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + pd(datas, 'a&&href') + '@rule=js:$.require("hiker://page/details")',
                     pic_url: pd(datas, 'img&&data-src').replace('-300x400.jpg', ''),
-                    col_type: item.length%2===0 ? "movie_2" : "movie_3_marquee",
+                    col_type: (item.length/3) % 1 === 0 ? "movie_2" : "movie_3_marquee",
                     extra: {
                         name: pdfh(datas, '.card-title&&Text'),
                         url: pd(datas, 'a&&href'),
@@ -39,7 +39,7 @@ let parse = {
                     desc: id % 2 ? datas.last_comic_chapter_name : datas.content,
                     url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + MY_HOME + '/' + datas.comic_newid + '/@rule=js:$.require("hiker://page/details")',
                     pic_url: id % 2 ? 'https://image.yqmh.com/mh/' + datas.comic_id + '.jpg-300x400.webp' : 'https://cms.samanlehua.com' + '/' + datas.img_url + '-noresize.webp',
-                    col_type: item.length%2===0 ? "movie_2" : "movie_3_marquee",
+                    col_type: (item.length/3) % 1 === 0 ? "movie_2" : "movie_3_marquee",
                     extra: {
                         name: datas.comic_name,
                         url: MY_HOME + '/' + datas.comic_newid + '/',
