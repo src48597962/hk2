@@ -32,7 +32,7 @@ let erparse = {
     "链接": "https://m.taomanhua.com/",
     "搜索": function () {
         let d = [];
-        var code = JSON.parse(request("https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+input+"&page="+fypage+"&size=30")).data.data
+        var code = JSON.parse(request("https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+wd+"&page="+page+"&size=30")).data.data
         code.forEach(function(data) {
             d.push({
                 title: data.comic_name,
