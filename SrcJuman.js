@@ -54,7 +54,7 @@ function yiji() {
     d.push({
         title: "书架",
         url: "",
-        pic_url: "hiker://files/cache/src/书架.jpg",
+        pic_url: "hiker://files/cache/src/书架.png",
         col_type: 'icon_5'
     })
     d.push({
@@ -143,10 +143,10 @@ function downloadicon() {
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/分类.webp", 'hiker://files/cache/src/分类.webp');
         }
         if(!fileExist('hiker://files/cache/src/排行.webp')){
-            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/管理.png", 'hiker://files/cache/src/排行.webp');
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/排行.webp", 'hiker://files/cache/src/排行.webp');
         }
         if(!fileExist('hiker://files/cache/src/书架.jpg')){
-            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/书架.jpg", 'hiker://files/cache/src/书架.jpg');
+            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/书架.png", 'hiker://files/cache/src/书架.png');
         }
     }catch(e){}
 }
