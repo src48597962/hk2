@@ -27,3 +27,26 @@ let parse = {
         return d;
     }
 }
+
+let erparse = {
+    "链接": "https://m.taomanhua.com/",
+    "搜索": function () {
+        let d = [];
+        var code = JSON.parse(request("https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+input+"&page="+fypage+"&size=30")).data.data
+        code.forEach(function(data) {
+            d.push({
+                title: data.comic_name,
+                desc: '最新：' + data.last_chapter_name,
+                pic_url: data.cover_img + "@Referer=https://m.taomanhua.com/" + MY_HOME,
+                url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + MY_HOME + '/' + data.comic_newid  + '/@rule=js:$.require("hiker://page/details")',
+                content: data.cartoon_desc,
+                extra: {
+                    name: data.comic_name,
+                    url: MY_HOME + '/' + data.comic_newid +'/',
+                    qz: MY_HOME
+                }
+            });
+        });
+        return d;
+    }
+}
