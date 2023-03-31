@@ -2,6 +2,7 @@ let parse = {
     "链接": "https://m.taomanhua.com/",
     "主页": function () {
         let d = [];
+        MY_URL = MY_HOME;
         let html = request(MY_URL);
         var Label_set = pdfa(html, '#js_content&&.mult.sow')
         Label_set.forEach((data) => {
@@ -32,18 +33,17 @@ let erparse = {
     "链接": "https://m.taomanhua.com/",
     "搜索": function () {
         let d = [];
-        var code = JSON.parse(request("https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+wd+"&page="+page+"&size=30")).data.data
-        code.forEach(function(data) {
+        MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+wd+"&page="+page+"&size=30";
+        var code = JSON.parse(request(MY_URL)).data.data
+        code.forEach(item => {
             d.push({
-                title: data.comic_name,
-                desc: '最新：' + data.last_chapter_name,
-                pic_url: data.cover_img + "@Referer=https://m.taomanhua.com/" + MY_HOME,
-                url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + MY_HOME + '/' + data.comic_newid  + '/@rule=js:$.require("hiker://page/details")',
-                content: data.cartoon_desc,
+                title: item.comic_name,
+                desc: '最新：' + item.last_chapter_name,
+                pic_url: item.cover_img + "@Referer=",
+                url: 'hiker://empty###immersiveTheme##autoCache#',
+                content: item.cartoon_desc,
                 extra: {
-                    name: data.comic_name,
-                    url: MY_HOME + '/' + data.comic_newid +'/',
-                    qz: MY_HOME
+                    name: item.comic_name
                 }
             });
         });
