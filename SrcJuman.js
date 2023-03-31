@@ -14,15 +14,15 @@ if(sourcedata != ""){
 }else{
     var datalist = [];
 }
+let sourcename = JMconfig['source'] || "神漫画";
+let sourcedata = datalist.length>0?datalist.filter(it=>{
+    return it.name==sourcename&&it.parse;
+}):[];
 
 //一级
 function yiji() {
     Version();
     downloadicon();
-    let sourcename = JMconfig['source'] || "神漫画";
-    let sourcedata = datalist.length>0?datalist.filter(it=>{
-        return it.name==sourcename&&it.parse;
-    }):[];
     let d = [];
     d.push({
         title: "管理",
