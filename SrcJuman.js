@@ -65,12 +65,23 @@ function yiji() {
     }else{
         let source = sourcedata[0].parse;
         if($.type(source)=="string" && /^http/.test(source)){
-            var colorsz = ['#519D9E', '#285943', '#098AC1'];
             requireCache(source, 48);
             MY_URL = parse['链接'];
-            let html = request(MY_URL);
-            eval("let 主页 = " + parse['主页'])
-            d = d.concat(主页());
+            let 主页数据 = [];
+            try{
+                eval("let 主页 = " + parse['主页'])
+                主页数据 = 主页();
+            }catch(e){
+                log(e.message);
+            }
+            if(主页数据.length==0){
+                主页数据.push({
+                    title: "主页源的主页数据获取失败",
+                    url: "hiker://empty",
+                    col_type: "text_center_1",
+                })
+            }
+            d = d.concat(主页数据);
         }
 
     }
