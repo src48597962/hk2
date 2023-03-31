@@ -47,7 +47,7 @@ function yiji() {
     d.push({
         title: "排行",
         url: "",
-        pic_url: "https://cms.samanlehua.com/cms/chendan/92a7df31-76a5-11ed-ba0c-4dc033de340d.png-noresize.webp",
+        pic_url: "//cms.samanlehua.com/cms/chendan/8ba45ec1-76a5-11ed-b83d-5b399cfce11d.png-noresize.webp",
         col_type: 'icon_5'
     })
     d.push({
