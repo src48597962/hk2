@@ -16,7 +16,7 @@ let parse = {
                 d.push({
                     title: pdfh(datas, '.card-title&&Text'),
                     desc: pdfh(datas, '.card-text&&Text'),
-                    url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + pd(datas, 'a&&href') + '@rule=js:$.require("hiker://page/details")',
+                    url: `hiker://empty#immersiveTheme##autoCache#@rule=js:require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');SRCSet();`,
                     pic_url: (item.length/3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
                     col_type: (item.length/3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
                     extra: {
@@ -40,7 +40,7 @@ let erparse = {
                 title: item.comic_name,
                 desc: '最新：' + item.last_chapter_name,
                 pic_url: item.cover_img + "@Referer=",
-                url: 'hiker://empty###immersiveTheme##autoCache#',
+                url: `hiker://empty#immersiveTheme##autoCache#@rule=js:require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');SRCSet();`,
                 content: item.cartoon_desc,
                 extra: {
                     name: item.comic_name
