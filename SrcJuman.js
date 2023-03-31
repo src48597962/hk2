@@ -68,8 +68,8 @@ function yiji() {
         })
     }else{
         let source = sourcedata[0].parse;
-        if($.type(source)=="string" && /^http/.test(source)){
-            requireCache(source, 48);
+        if(source.ext && /^http/.test(source.ext)){
+            requireCache(source.ext, 48);
             MY_URL = parse['链接'];
             let 主页数据 = [];
             try{
