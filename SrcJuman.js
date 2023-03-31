@@ -71,7 +71,7 @@ function yiji() {
         let source = sourcedata[0].parse;
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
-            MY_URL = parse['链接'];
+            MY_HOME = parse['链接'];
             let data = [];
             try{
                 eval("let 主页 = " + parse['主页'])
