@@ -189,7 +189,7 @@ function SRCSet() {
 
     datalist.forEach(item => {
         d.push({
-            title: "🎃 " + item.name + (item.parse?"（主页源）":"") +  + (item.erparse?"（搜索源）":""),
+            title: "🎃 " + item.name + (item.parse?"（主页源）":"") + (item.erparse?"（搜索源）":""),
             url: $(["分享", "编辑", "删除"], 1).select((filepath,manhuaapi,data) => {
                 if(input == "分享"){
                     showLoading('分享上传中，请稍后...');
