@@ -8,12 +8,8 @@ let parse = {
         var ci = 0;
         Label_set.forEach((data, id) => {
             d.push({
-                title: '““””<br><font color="' + colorsz[ci] + '">' + pdfh(data, 'h2&&Text') + '</font>',
-                url: '',
-                col_type: "text_1",
-                extra: {
-                    lineVisible: false
-                }
+                title: pdfh(data, 'h2&&Text'),
+                col_type: "rich_text"
             });
             ci = ci == 2 ? 0 : ci + 1
             var item = pdfa(data, '.mult-warp.siw&&li.r1c3');
