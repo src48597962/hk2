@@ -15,9 +15,7 @@ if(sourcedata != ""){
     var datalist = [];
 }
 let sourcename = JMconfig['source'] || "神漫画";
-var sourcedata = datalist.length>0?datalist.filter(it=>{
-    return it.name==sourcename&&it.parse;
-}):[];
+
 
 //一级
 function yiji() {
@@ -60,6 +58,9 @@ function yiji() {
     d.push({
         col_type: 'line'
     })
+    let sourcedata = datalist.length>0?datalist.filter(it=>{
+        return it.name==sourcename&&it.parse;
+    }):[];
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
@@ -97,6 +98,9 @@ function sousuo() {
     let d = [];
     let wd = MY_URL.split('##')[1];
     let page = MY_URL.split('##')[2];
+    let sourcedata = datalist.length>0?datalist.filter(it=>{
+        return it.name==sourcename&&it.parse;
+    }):[];
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
