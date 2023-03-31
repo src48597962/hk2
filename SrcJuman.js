@@ -56,6 +56,9 @@ function yiji() {
         pic_url: "",
         col_type: 'icon_5'
     })
+    d.push({
+        col_type: 'line'
+    })
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
