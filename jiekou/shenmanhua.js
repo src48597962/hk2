@@ -1,5 +1,5 @@
 let parse = {
-    "链接": "https://m.kanman.com/",//"https://m.taomanhua.com/",
+    "链接": "https://m.taomanhua.com/",
     "主页": function () {
         let d = [];
         var colorsz = ['#519D9E', '#285943', '#098AC1'];
