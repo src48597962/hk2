@@ -132,10 +132,60 @@ function sousuo() {
     setResult(d);
 }
 //二级+源搜索
-function erji(name,data) {
+function erji(name) {
     name = name || MY_PARAMS.name;
     let d = [];
-    
+    let task = function(obj) {
+        try{
+            let source = sourcedata[0].erparse;
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                MY_HOME = erparse['链接'];
+                let data = [];
+                try{
+                    eval("let 搜索 = " + erparse['搜索'])
+                    data = 搜索();
+                }catch(e){
+                    log(e.message);
+                }
+                if(data.length==0){
+                    data.push({
+                        title: "搜索接口的搜索数据获取失败",
+                        url: "hiker://empty",
+                        col_type: "text_center_1",
+                    })
+                }
+                d = d.concat(data);
+            }
+        }catch(e){
+          log(obj.name+'>搜索失败>'+e.message);
+        }
+        return 1;
+    }
+    let list = datalist.map((item)=>{
+        return {
+          func: task,
+          param: item,
+          id: item.name
+        }
+    });
+    if(list.length>0){
+        //deleteItemByCls('loadlist');
+        //putMyVar('diskSearch', '1');
+        be(list, {
+            func: function(obj, id, error, taskResult) {
+            },
+            param: {
+            }
+        });
+        //storage0.putMyVar('alistMark',alistMark);
+        //clearMyVar('diskSearch');
+        toast('搜索完成');
+    }else{
+      toast('无接口，无法搜索');
+    }
+    hideLoading();
+
     setResult(d);
 }
 //图标下载
