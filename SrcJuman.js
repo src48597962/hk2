@@ -111,7 +111,7 @@ function sousuo() {
         })
     }else{
         let parse;
-        eval("let source = " + sourcedata[0].erparse);
+        eval("let source = " + sourcedata[0].parse);
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
             parse = erdata;
@@ -146,8 +146,8 @@ function erji(name) {
             }
             MY_HOME = parse['链接'];
             let data = [];
-            eval("let 聚搜 = " + parse['换源'])
-            data = 聚搜();
+            eval("let 搜索 = " + parse['搜索'])
+            data = 搜索();
             d = d.concat(data);
         }catch(e){
           log(obj.name+'>搜源失败>'+e.message);
