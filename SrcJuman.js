@@ -91,6 +91,12 @@ function yiji() {
                 col_type: "text_center_1",
             })
         }
+        data.forEach(item => {
+            item.url = $('hiker://empty#immersiveTheme##autoCache##noRecordHistory##noHistory#').rule(() => {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                erji();
+            })
+        })
         d = d.concat(data);
     }
     setResult(d);
@@ -123,10 +129,16 @@ function sousuo() {
         try{
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索();
-            d = d.concat(data);
         }catch(e){
             log(e.message);
         }
+        data.forEach(item => {
+            item.url = $('hiker://empty#immersiveTheme##autoCache##noRecordHistory##noHistory#').rule(() => {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                erji();
+            })
+        })
+        d = d.concat(data);
     }
     setResult(d);
 }
@@ -150,7 +162,7 @@ function erji(name) {
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索();
             data.forEach(item => {
-                item.title = '源：'+obj.name+' '+(item.title==name?"":item.title);
+                item.desc = '源：'+obj.name;
                 item.url = $("#noLoading#").lazyRule((url) => {
                     return "toast://"+url
                 },item.url)
