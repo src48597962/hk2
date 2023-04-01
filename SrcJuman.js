@@ -162,7 +162,14 @@ function erji(name) {
     if(erjisource){
         try{
             let parse;
-            eval("let source = " + obj.erparse);
+            let sourcedata = datalist.length>0?datalist.filter(it=>{
+                return it.name==erjisource.sname&&it.erparse;
+            }):[];
+            if(sourcedata.length==0){
+                clearMyVar('erjisource'+name);
+                refreshPage(true);
+            }
+            eval("let source = " + sourcedata[0].erparse);
             if(source.ext && /^http/.test(source.ext)){
                 requireCache(source.ext, 48);
                 parse = erdata;
