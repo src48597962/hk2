@@ -144,14 +144,19 @@ function erji(name) {
     let d = [];
     let task = function(obj) {
         try{
-            let source = obj.erparse;
+            let parse;
+            eval("let source = " + obj.erparse);
             if(source.ext && /^http/.test(source.ext)){
                 requireCache(source.ext, 48);
-                MY_HOME = erparse['链接'];
-                let data = [];
-                eval("let 搜索 = " + erparse['搜索'])
-                data = 搜索();
+                parse = erdata;
+            }else{
+                parse = source;
             }
+            MY_HOME = erparse['链接'];
+            let data = [];
+            eval("let 搜索 = " + parse['搜索'])
+            data = 搜索();
+            
         }catch(e){
           log(obj.name+'>搜源失败>'+e.message);
         }
