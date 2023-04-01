@@ -134,17 +134,7 @@ function sousuo() {
 function erji(name) {
     name = name || MY_PARAMS.name;
     let d = [];
-    d.push({
-        title: name,
-        desc: "",
-        pic_url: MY_PARAMS.img + '@Referer=',
-        url: MY_PARAMS.img + '#noHistory#',
-        col_type: 'movie_1_vertical_pic_blur',
-        extra: {
-            gradient: true
-        }
-
-    });
+    datalist = datalist.filter(it => {return it.erparse})
     let task = function(obj) {
         try{
             let parse;
@@ -171,6 +161,17 @@ function erji(name) {
           param: item,
           id: item.name
         }
+    });
+    d.push({
+        title: "合计搜索源：" + list.length,
+        desc: "点击下方一个漫源",
+        pic_url: MY_PARAMS.img + '@Referer=',
+        url: MY_PARAMS.img + '#noHistory#',
+        col_type: 'movie_1_vertical_pic_blur',
+        extra: {
+            gradient: true
+        }
+
     });
     if(list.length>0){
         //deleteItemByCls('loadlist');
