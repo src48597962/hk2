@@ -57,14 +57,14 @@ let yidata = {
 
 let erdata = {
     "链接": "https://m.taomanhua.com/",//会写入MY_HOME
-    "搜索": function () {//做为搜索源时，聚合搜索换源列表数据
+    "搜索": function (sourcename) {//做为搜索源时，聚合搜索换源列表数据,变量传入接口名称
         let d = [];
         MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page=1&size=30";
         let code = JSON.parse(request(MY_URL)).data.data
         code.forEach(item => {
             if(item.comic_name.includes(name)){
                 d.push({
-                    title: item.comic_name,
+                    title: '源：'+sourcename+' '+(item.comic_name==name?"":item.comic_name),
                     desc: item.last_chapter_name,//建议取最新
                     pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",//网站图标
                     url: '',//MY_HOME + '/' + data.comic_newid
