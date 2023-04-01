@@ -72,7 +72,7 @@ function yiji() {
         if(source.ext && /^http/.test(source.ext)){
             log(source.ext);
             requireCache(source.ext, 48);
-            log(parse['链接']);
+            log(parse);
         }else{
             var parse = source;
         }
