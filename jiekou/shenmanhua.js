@@ -56,8 +56,7 @@ let erdata = {
         code.forEach(item => {
             if(item.comic_name.includes(name)){
                 d.push({
-                    title: item.comic_name,
-                    desc: item.last_chapter_name,//建议取最新
+                    title: item.comic_name+'-'+item.last_chapter_name,
                     pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",//网站图标
                     url: MY_HOME + item.comic_newid,//原站二级链接
                     col_type: 'avatar'
