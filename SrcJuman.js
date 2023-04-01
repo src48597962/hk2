@@ -68,11 +68,11 @@ function yiji() {
             col_type: "text_center_1",
         })
     }else{
-        let source = sourcedata[0].parse;
+        eval("let source = " + sourcedata[0].parse);
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
         }else{
-            eval("var parse = " + source);
+            var parse = source;
         }
         MY_HOME = parse['链接'];
         let data = [];
