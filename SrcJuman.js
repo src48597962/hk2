@@ -74,7 +74,7 @@ function yiji() {
             requireCache(source.ext, 48);
             Parses = parse;
         }else{
-            Parses = source;
+            Parses = JSON.parse(source);
         }
         MY_HOME = Parses['链接'];
         let data = [];
