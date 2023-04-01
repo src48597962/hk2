@@ -148,7 +148,13 @@ function erji(name) {
             MY_HOME = parse['链接'];
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
-            data = 搜索(obj.name);
+            data = 搜索();
+            data.forEach(item => {
+                item.title = '源：'+obj.name+' '+(item.title==name?"":item.title);
+                item.url = $("#noLoading#").lazyRule((url) => {
+                    return "toast://"+url
+                },item.url)
+            })
             d = d.concat(data);
         }catch(e){
           log(obj.name+'>搜源失败>'+e.message);
@@ -164,12 +170,13 @@ function erji(name) {
     });
     d.push({
         title: "合计搜索源：" + list.length,
-        desc: "点击下方一个漫源",
+        desc: "\n\n选择一个源观看吧👇",
         pic_url: MY_PARAMS.img + '@Referer=',
         url: MY_PARAMS.img + '#noHistory#',
         col_type: 'movie_1_vertical_pic_blur',
         extra: {
-            gradient: true
+            gradient: true,
+            id: erjidetails
         }
 
     });
