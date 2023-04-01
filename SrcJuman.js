@@ -148,14 +148,7 @@ function erji(name) {
             MY_HOME = parse['链接'];
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
-            data = 搜索();
-            if(data.length>0){
-                data.push({
-                    title: `‘‘’’<small><font color='#aaaaaa'>`+obj.name+`</font></small>`,
-                    url: '#noHistory#hiker://empty',
-                    col_type: 'text_center_1'
-                })
-            }
+            data = 搜索(obj.name);
             d = d.concat(data);
         }catch(e){
           log(obj.name+'>搜源失败>'+e.message);
