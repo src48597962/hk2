@@ -70,7 +70,9 @@ function yiji() {
     }else{
         eval("let source = " + sourcedata[0].parse);
         if(source.ext && /^http/.test(source.ext)){
+            log(source.ext);
             requireCache(source.ext, 48);
+            log(parse['链接']);
         }else{
             var parse = source;
         }
