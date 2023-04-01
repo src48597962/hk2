@@ -99,7 +99,7 @@ function yiji() {
 //搜索
 function sousuo() {
     let d = [];
-    let wd = MY_URL.split('##')[1];
+    let name = MY_URL.split('##')[1];
     let page = MY_URL.split('##')[2];
     let sourcedata = datalist.length>0?datalist.filter(it=>{
         return it.name==sourcename&&it.parse;
@@ -154,9 +154,9 @@ function erji(name) {
             }
             MY_HOME = erparse['链接'];
             let data = [];
-            eval("let 搜索 = " + parse['搜索'])
-            data = 搜索();
-            
+            eval("let 聚搜 = " + parse['换源'])
+            data = 聚搜();
+            d = d.concat(data);
         }catch(e){
           log(obj.name+'>搜源失败>'+e.message);
         }
