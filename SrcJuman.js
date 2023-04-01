@@ -71,8 +71,8 @@ function yiji() {
         let parse;
         eval("let source = " + sourcedata[0].parse);
         if(source.ext && /^http/.test(source.ext)){
-            require(source.ext, 48);
-            parse = yi;
+            requireCache(source.ext, 48);
+            parse = yidata;
         }else{
             parse = source;
         }
