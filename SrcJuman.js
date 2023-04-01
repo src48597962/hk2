@@ -159,7 +159,24 @@ function erji(name) {
 
     });
     let erjisource = storage0.getMyVar('erjisource'+name);
-    log(erjisource);
+    if(erjisource){
+        try{
+            let parse;
+            eval("let source = " + obj.erparse);
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                parse = erdata;
+            }else{
+                parse = source;
+            }
+            let html = request(erjisource.url);
+            MY_HOME = parse['链接'];
+            let 详情 = parse['详情'];
+            log(eval(详情['作者']));
+        }catch(e){
+            log(erjisource.sname+'>加载详情失败>'+e.message);
+        }
+    }
     setResult(d);
     if(!erjisource){
         showLoading('搜源中,请稍后.');
