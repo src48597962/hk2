@@ -1,4 +1,4 @@
-let yi = {
+let yidata = {
     "链接": "https://m.taomanhua.com/",
     "主页": function () {
         let d = [];
@@ -32,7 +32,7 @@ let yi = {
     }
 }
 
-let er = {
+let erdata = {
     "链接": "https://m.taomanhua.com/",
     "搜索": function () {
         let d = [];
