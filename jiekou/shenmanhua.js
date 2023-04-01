@@ -60,12 +60,15 @@ let erdata = {
         MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page=1&size=30";
         let code = JSON.parse(request(MY_URL)).data.data
         code.forEach(item => {
-            d.push({
-                title: item.comic_name+'\n'+item.last_chapter_name,
-                pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",
-                url: '',
-                col_type: 'avatar'
-            });
+            if(item.comic_name.includes(name)){
+                d.push({
+                    title: item.comic_name,
+                    desc: item.last_chapter_name,
+                    pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",
+                    url: '',
+                    col_type: 'avatar'
+                });
+            }
         });
         return d;
     }
