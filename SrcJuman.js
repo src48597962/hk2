@@ -152,7 +152,7 @@ function erji(name) {
             }else{
                 parse = source;
             }
-            MY_HOME = erparse['链接'];
+            MY_HOME = parse['链接'];
             let data = [];
             eval("let 聚搜 = " + parse['换源'])
             data = 聚搜();
