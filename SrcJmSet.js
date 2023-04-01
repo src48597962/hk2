@@ -18,8 +18,8 @@ function SRCSet() {
         if(data){
             putMyVar('manhuaedit','1');
             putMyVar('manhuaname',data.name);
-            putMyVar('manhuaparse',data.parse);
-            putMyVar('manhuaerparse',data.erparse?data.erparse:"");
+            storage0.putMyVar('manhuaparse',data.parse);
+            storage0.putMyVar('manhuaerparse',data.erparse?data.erparse:"");
         }
         let d = [];
         d.push({
@@ -39,7 +39,7 @@ function SRCSet() {
             col_type: 'input',
             desc: "主页数据源, 可以留空",
             extra: {
-                defaultValue: getMyVar('manhuaparse')?JSON.stringify(JSON.parse(getMyVar('manhuaparse')), null, "\t"):"",
+                defaultValue: storage0.getMyVar('manhuaparse')?JSON.stringify(storage0.getMyVar('manhuaparse'), null, "\t"):"",
                 titleVisible: false,
                 type: "textarea",
                 highlight: true,
@@ -56,7 +56,7 @@ function SRCSet() {
             col_type: 'input',
             desc: "搜索数据源, 可以留空",
             extra: {
-                defaultValue: getMyVar('manhuaerparse')?JSON.stringify(JSON.parse(getMyVar('manhuaerparse')), null, "\t"):"",
+                defaultValue: storage0.getMyVar('manhuaerparse')?JSON.stringify(storage0.getMyVar('manhuaerparse'), null, "\t"):"",
                 titleVisible: false,
                 type: "textarea",
                 highlight: true,
