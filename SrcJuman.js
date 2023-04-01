@@ -111,26 +111,30 @@ function sousuo() {
             col_type: "text_center_1",
         })
     }else{
-        let source = sourcedata[0].erparse;
+        let parse;
+        eval("let source = " + sourcedata[0].erparse);
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
-            MY_HOME = erparse['链接'];
-            let data = [];
-            try{
-                eval("let 搜索 = " + erparse['搜索'])
-                data = 搜索();
-            }catch(e){
-                log(e.message);
-            }
-            if(data.length==0){
-                data.push({
-                    title: "搜索接口的搜索数据获取失败",
-                    url: "hiker://empty",
-                    col_type: "text_center_1",
-                })
-            }
-            d = d.concat(data);
+            parse = erdata;
+        }else{
+            parse = source;
         }
+        MY_HOME = erparse['链接'];
+        let data = [];
+        try{
+            eval("let 搜索 = " + erparse['搜索'])
+            data = 搜索();
+        }catch(e){
+            log(e.message);
+        }
+        if(data.length==0){
+            data.push({
+                title: "搜索接口的搜索数据获取失败",
+                url: "hiker://empty",
+                col_type: "text_center_1",
+            })
+        }
+        d = d.concat(data);
     }
     setResult(d);
 }
