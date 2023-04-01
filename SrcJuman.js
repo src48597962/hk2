@@ -119,10 +119,10 @@ function sousuo() {
         }else{
             parse = source;
         }
-        MY_HOME = erparse['链接'];
+        MY_HOME = parse['链接'];
         let data = [];
         try{
-            eval("let 搜索 = " + erparse['搜索'])
+            eval("let 搜索 = " + parse['搜索'])
             data = 搜索();
         }catch(e){
             log(e.message);
