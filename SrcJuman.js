@@ -134,6 +134,17 @@ function sousuo() {
 function erji(name) {
     name = name || MY_PARAMS.name;
     let d = [];
+    d.push({
+        title: name,
+        desc: "",
+        pic_url: MY_PARAMS.img + '@Referer=',
+        url: MY_PARAMS.img + '#noHistory#',
+        col_type: 'movie_1_vertical_pic_blur',
+        extra: {
+            gradient: true
+        }
+
+    });
     let task = function(obj) {
         try{
             let parse;
