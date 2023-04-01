@@ -46,7 +46,7 @@ function SRCSet() {
                 height: 5,
                 onChange: $.toString(() => {
                     if(/{|}/.test(input)){
-                        putMyVar("manhuaparse",JSON.stringify(JSON.parse(input)))
+                        putMyVar("manhuaparse",input)
                     }
                 })
             }
@@ -63,7 +63,7 @@ function SRCSet() {
                 height: 5,
                 onChange: $.toString(() => {
                     if(/{|}/.test(input)){
-                        putMyVar("manhuaerparse",JSON.stringify(JSON.parse(input)))
+                        putMyVar("manhuaerparse",input)
                     }
                 })
             }
