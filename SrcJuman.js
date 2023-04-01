@@ -176,7 +176,7 @@ function erji(name) {
         col_type: 'movie_1_vertical_pic_blur',
         extra: {
             gradient: true,
-            id: erjidetails
+            id: "erjidetails"
         }
 
     });
