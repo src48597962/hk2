@@ -1,4 +1,4 @@
-let parse = {
+var parse = {
     "链接": "https://m.taomanhua.com/",
     "主页": function () {
         let d = [];
@@ -32,7 +32,7 @@ let parse = {
     }
 }
 
-let erparse = {
+var erparse = {
     "链接": "https://m.taomanhua.com/",
     "搜索": function () {
         let d = [];
