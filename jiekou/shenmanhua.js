@@ -1,5 +1,5 @@
 let yidata = {
-    "链接": "https://m.taomanhua.com/",
+    "链接": "https://m.taomanhua.com/",//会写入MY_HOME
     "主页": function () {
         let d = [];
         MY_URL = MY_HOME;
@@ -33,11 +33,11 @@ let yidata = {
 }
 
 let erdata = {
-    "链接": "https://m.taomanhua.com/",
-    "搜索": function () {
+    "链接": "https://m.taomanhua.com/",//会写入MY_HOME
+    "搜索": function () {//做为主页源时，视界自带搜索
         let d = [];
-        MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+wd+"&page="+page+"&size=30";
-        var code = JSON.parse(request(MY_URL)).data.data
+        MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page="+page+"&size=30";
+        let code = JSON.parse(request(MY_URL)).data.data
         code.forEach(item => {
             d.push({
                 title: item.comic_name,
@@ -51,6 +51,20 @@ let erdata = {
                 extra: {
                     name: item.comic_name
                 }
+            });
+        });
+        return d;
+    },
+    "换源": function () {//做为搜索源时，聚合搜索换源列表数据
+        let d = [];
+        MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page="+page+"&size=30";
+        let code = JSON.parse(request(MY_URL)).data.data
+        code.forEach(item => {
+            d.push({
+                title: item.comic_name+'\n'+item.last_chapter_name,
+                pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",
+                url: '',
+                col_type: 'avatar'
             });
         });
         return d;
