@@ -46,7 +46,7 @@ function SRCSet() {
                 height: 5,
                 onChange: $.toString(() => {
                     if(/{|}/.test(input)){
-                        putMyVar("manhuaparse",input)
+                        storage0.putMyVar("manhuaparse",input)
                     }
                 })
             }
@@ -63,7 +63,7 @@ function SRCSet() {
                 height: 5,
                 onChange: $.toString(() => {
                     if(/{|}/.test(input)){
-                        putMyVar("manhuaerparse",input)
+                        storage0.putMyVar("manhuaerparse",input)
                     }
                 })
             }
@@ -80,13 +80,13 @@ function SRCSet() {
                 }
                 try{
                     let name = getMyVar('manhuaname');
-                    let parse = getMyVar('manhuaparse');
-                    let erparse = getMyVar('manhuaerparse');
+                    let parse = storage0.getMyVar('manhuaparse');
+                    let erparse = storage0.getMyVar('manhuaerparse');
                     let newapi = {
                         name: name
                     }
-                    if(parse){newapi['parse'] = JSON.parse(parse);}
-                    if(erparse){newapi['erparse'] = JSON.parse(erparse);}
+                    if(parse){newapi['parse'] = parse;}
+                    if(erparse){newapi['erparse'] = erparse;}
                     let datafile = fetch(filepath);
                     if(datafile != ""){
                         try{
