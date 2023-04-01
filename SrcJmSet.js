@@ -80,8 +80,8 @@ function SRCSet() {
                 }
                 try{
                     let name = getMyVar('manhuaname');
-                    let parse = storage0.getMyVar('manhuaparse');
-                    let erparse = storage0.getMyVar('manhuaerparse');
+                    let parse = getMyVar('manhuaparse');
+                    let erparse = getMyVar('manhuaerparse');
                     let newapi = {
                         name: name
                     }
