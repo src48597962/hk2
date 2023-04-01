@@ -114,7 +114,7 @@ function sousuo() {
         eval("let source = " + sourcedata[0].parse);
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
-            parse = erdata;
+            parse = yidata;
         }else{
             parse = source;
         }
