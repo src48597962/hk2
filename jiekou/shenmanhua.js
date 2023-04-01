@@ -13,7 +13,7 @@ let yidata = {
             var item = pdfa(data, '.mult-warp.siw&&li.r1c3');
             item = item.length ? item : pdfa(data, '.mult-warp.siw&&li.r1c2');
             item.forEach((datas) => {
-                d.push({
+                d.push({//主页源不需要url
                     title: pdfh(datas, '.card-title&&Text'),
                     desc: pdfh(datas, '.card-text&&Text'),
                     pic_url: (item.length/3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
