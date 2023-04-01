@@ -163,9 +163,11 @@ function erji(name) {
             data = 搜索();
             data.forEach(item => {
                 item.desc = '源：'+obj.name;
-                item.url = $("#noLoading#").lazyRule((url) => {
-                    return "toast://"+url
-                },item.url)
+                item.url = $("#noLoading#").lazyRule((sname,name,url) => {
+                    storage0.putMyVar('erjisource', {sname:sname,name:name,url:url});
+                    refreshPage();
+                    return "toast://"+sname
+                },obj.name,name,item.url)
             })
             d = d.concat(data);
         }catch(e){
@@ -192,6 +194,8 @@ function erji(name) {
         }
 
     });
+    let erjisource = storage0.getMyVar('erjisource');
+    log(erjisource);
     if(list.length>0){
         //deleteItemByCls('loadlist');
         //putMyVar('diskSearch', '1');
