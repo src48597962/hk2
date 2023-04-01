@@ -63,8 +63,8 @@ let erdata = {
             if(item.comic_name.includes(name)){
                 d.push({
                     title: item.comic_name,
-                    desc: item.last_chapter_name,
-                    pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",
+                    desc: item.last_chapter_name,//建议取最新
+                    pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",//网站图标
                     url: '',
                     col_type: 'avatar'
                 });
