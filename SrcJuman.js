@@ -68,18 +68,16 @@ function yiji() {
             col_type: "text_center_1",
         })
     }else{
-        let Parses;
         let source = sourcedata[0].parse;
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
-            Parses = parse;
         }else{
-            Parses = JSON.parse(source);
+            eval("var parse = " + source);
         }
-        MY_HOME = Parses['链接'];
+        MY_HOME = parse['链接'];
         let data = [];
         try{
-            eval("let 主页 = " + Parses['主页'])
+            eval("let 主页 = " + parse['主页'])
             data = 主页();
         }catch(e){
             log(e.message);
