@@ -71,24 +71,25 @@ function yiji() {
         let source = sourcedata[0].parse;
         if(source.ext && /^http/.test(source.ext)){
             requireCache(source.ext, 48);
-            MY_HOME = parse['链接'];
-            let data = [];
-            try{
-                eval("let 主页 = " + parse['主页'])
-                data = 主页();
-            }catch(e){
-                log(e.message);
-            }
-            if(data.length==0){
-                data.push({
-                    title: "主页接口的主页数据获取失败",
-                    url: "hiker://empty",
-                    col_type: "text_center_1",
-                })
-            }
-            d = d.concat(data);
+        }else{
+            var parse = source;
         }
-
+        MY_HOME = parse['链接'];
+        let data = [];
+        try{
+            eval("let 主页 = " + parse['主页'])
+            data = 主页();
+        }catch(e){
+            log(e.message);
+        }
+        if(data.length==0){
+            data.push({
+                title: "主页接口的主页数据获取失败",
+                url: "hiker://empty",
+                col_type: "text_center_1",
+            })
+        }
+        d = d.concat(data);
     }
 
     setResult(d);
@@ -137,28 +138,16 @@ function erji(name) {
     let d = [];
     let task = function(obj) {
         try{
-            let source = sourcedata[0].erparse;
+            let source = obj.erparse;
             if(source.ext && /^http/.test(source.ext)){
                 requireCache(source.ext, 48);
                 MY_HOME = erparse['链接'];
                 let data = [];
-                try{
-                    eval("let 搜索 = " + erparse['搜索'])
-                    data = 搜索();
-                }catch(e){
-                    log(e.message);
-                }
-                if(data.length==0){
-                    data.push({
-                        title: "搜索接口的搜索数据获取失败",
-                        url: "hiker://empty",
-                        col_type: "text_center_1",
-                    })
-                }
-                d = d.concat(data);
+                eval("let 搜索 = " + erparse['搜索'])
+                data = 搜索();
             }
         }catch(e){
-          log(obj.name+'>搜索失败>'+e.message);
+          log(obj.name+'>搜源失败>'+e.message);
         }
         return 1;
     }
@@ -180,9 +169,9 @@ function erji(name) {
         });
         //storage0.putMyVar('alistMark',alistMark);
         //clearMyVar('diskSearch');
-        toast('搜索完成');
+        toast('搜源完成');
     }else{
-      toast('无接口，无法搜索');
+      toast('无接口，未找到源');
     }
     hideLoading();
 
