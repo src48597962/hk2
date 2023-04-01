@@ -39,7 +39,7 @@ function SRCSet() {
             col_type: 'input',
             desc: "主页数据源, 可以留空",
             extra: {
-                defaultValue: storage0.getMyVar('manhuaparse')?JSON.stringify(storage0.getMyVar('manhuaparse'), null, "\t"):"",
+                defaultValue: storage0.getMyVar('manhuaparse')||"",
                 titleVisible: false,
                 type: "textarea",
                 highlight: true,
@@ -56,7 +56,7 @@ function SRCSet() {
             col_type: 'input',
             desc: "搜索数据源, 可以留空",
             extra: {
-                defaultValue: storage0.getMyVar('manhuaerparse')?JSON.stringify(storage0.getMyVar('manhuaerparse'), null, "\t"):"",
+                defaultValue: storage0.getMyVar('manhuaerparse')||"",
                 titleVisible: false,
                 type: "textarea",
                 highlight: true,
