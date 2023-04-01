@@ -66,16 +66,16 @@ let erdata = {
         return d;
     },
     "详情": {
-        "作者": pdfh(html, '#detail&&.author&&Text'),
-        "分类": pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  "),
-        "简介": pdfh(html, '#js_desc_content&&Text'),
-        "选集": pdfa(html, '#js_chapters&&li').map((data) => {
+        "作者": `pdfh(html, '#detail&&.author&&Text')`,
+        "分类": `pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ")`,
+        "简介": `pdfh(html, '#js_desc_content&&Text')`,
+        "选集": `pdfa(html, '#js_chapters&&li').map((data) => {
             let id = pdfh(html, "#COMMENT&&data-ssid");
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
             选集列表.url = MY_HOME + "getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+id+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
             return 选集列表;
-        })
+        })`
     },
     "解析": ""
 }
