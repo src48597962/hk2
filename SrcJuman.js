@@ -86,14 +86,13 @@ function yiji() {
         }
         if(data.length==0){
             data.push({
-                title: "主页接口的主页数据获取失败",
+                title: "未获取到数据",
                 url: "hiker://empty",
                 col_type: "text_center_1",
             })
         }
         d = d.concat(data);
     }
-
     setResult(d);
 }
 //搜索
@@ -124,17 +123,10 @@ function sousuo() {
         try{
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索();
+            d = d.concat(data);
         }catch(e){
             log(e.message);
         }
-        if(data.length==0){
-            data.push({
-                title: "搜索接口的搜索数据获取失败",
-                url: "hiker://empty",
-                col_type: "text_center_1",
-            })
-        }
-        d = d.concat(data);
     }
     setResult(d);
 }
