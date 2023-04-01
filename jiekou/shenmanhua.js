@@ -57,7 +57,7 @@ let erdata = {
     },
     "换源": function () {//做为搜索源时，聚合搜索换源列表数据
         let d = [];
-        MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page="+page+"&size=30";
+        MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page=1&size=30";
         let code = JSON.parse(request(MY_URL)).data.data
         code.forEach(item => {
             d.push({
