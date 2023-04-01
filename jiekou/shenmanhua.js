@@ -23,17 +23,14 @@ let yidata = {
                     pic_url: (item.length/3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
                     col_type: (item.length/3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
                     extra: {
-                        name: pdfh(datas, '.card-title&&Text')
+                        name: pdfh(datas, '.card-title&&Text'),
+                        img: pd(datas, 'img&&data-src').replace('-300x400.jpg', '')
                     }
                 });
             });
         });
         return d;
-    }
-}
-
-let erdata = {
-    "链接": "https://m.taomanhua.com/",//会写入MY_HOME
+    },
     "搜索": function () {//做为主页源时，视界自带搜索
         let d = [];
         MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page="+page+"&size=30";
@@ -49,13 +46,18 @@ let erdata = {
                 }),
                 content: item.cartoon_desc,
                 extra: {
-                    name: item.comic_name
+                    name: item.comic_name,
+                    img: item.cover_img
                 }
             });
         });
         return d;
-    },
-    "换源": function () {//做为搜索源时，聚合搜索换源列表数据
+    }
+}
+
+let erdata = {
+    "链接": "https://m.taomanhua.com/",//会写入MY_HOME
+    "搜索": function () {//做为搜索源时，聚合搜索换源列表数据
         let d = [];
         MY_URL = MY_HOME + "api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key="+name+"&page=1&size=30";
         let code = JSON.parse(request(MY_URL)).data.data
@@ -65,7 +67,7 @@ let erdata = {
                     title: item.comic_name,
                     desc: item.last_chapter_name,//建议取最新
                     pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",//网站图标
-                    url: '',
+                    url: '',//MY_HOME + '/' + data.comic_newid
                     col_type: 'avatar'
                 });
             }
