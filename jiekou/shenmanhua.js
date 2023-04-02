@@ -65,7 +65,7 @@ let erdata = {
         });
         return d;
     },
-    "前提": `let id = pdfh(html, "#COMMENT&&data-ssid");`,//这里写后面加载需要的前提需要的数据，也可以留空
+    "前提": `var dataid = pdfh(html, "#COMMENT&&data-ssid");`,//这里写后面加载需要的前提需要的数据，变量定义需要用var，也可以留空
     "详情": {
         "标题1": `作者$$$pdfh(html, '#detail&&.author&&Text')`,//用$$$间隔需要取值的标题和内容
         "标题2": `分类$$$pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ")`,
@@ -74,7 +74,7 @@ let erdata = {
     "选集": `pdfa(html, '#js_chapters&&li').map((data) => {
         let 选集列表 = {};
         选集列表.title = pdfh(data, 'Text')
-        选集列表.url = MY_HOME + "getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+id+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
+        选集列表.url = MY_HOME + "getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
         return 选集列表;
     })`,
     "解析": ""
