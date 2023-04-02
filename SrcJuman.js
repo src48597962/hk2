@@ -187,7 +187,7 @@ function erji(name) {
             lists.forEach((item,id) =>{
                 d.push({
                     title: item.title,
-                    url: item.url + 解析,
+                    url: item.url + '@lazyRule=.js:' + 解析,
                     col_type: "text_2",
                     extra: {
                         id: name + "_选集_" + id
