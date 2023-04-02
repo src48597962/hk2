@@ -161,21 +161,26 @@ function erji(name) {
     let erjisource = storage0.getMyVar('erjisource'+name);
     if(erjisource){
         try{
-            let parse;
-            let sourcedata = datalist.length>0?datalist.filter(it=>{
-                return it.name==erjisource.sname&&it.erparse;
-            }):[];
-            if(sourcedata.length==0){
-                clearMyVar('erjisource'+name);
-                refreshPage(true);
+            let parse = MY_PARAMS['parse'] || "";
+            if(!parse){
+                let sourcedata = datalist.length>0?datalist.filter(it=>{
+                    return it.name==erjisource.sname&&it.erparse;
+                }):[];
+                if(sourcedata.length==0){
+                    clearMyVar('erjisource'+name);
+                    refreshPage(true);
+                }
+                eval("let source = " + sourcedata[0].erparse);
+                if(source.ext && /^http/.test(source.ext)){
+                    requireCache(source.ext, 48);
+                    parse = erdata;
+                }else{
+                    parse = source;
+                }
+                MY_PARAMS['parse'] = parse;
+                log('111')
             }
-            eval("let source = " + sourcedata[0].erparse);
-            if(source.ext && /^http/.test(source.ext)){
-                requireCache(source.ext, 48);
-                parse = erdata;
-            }else{
-                parse = source;
-            }
+
             let html = request(erjisource.url);
             MY_HOME = parse['链接'];
             let 详情 = parse['详情'];
