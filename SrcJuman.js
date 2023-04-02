@@ -92,7 +92,7 @@ function yiji() {
             })
         }
         data.forEach(item => {
-            item.url = $('hiker://empty#immersiveTheme##autoCache##noRecordHistory##noHistory#').rule(() => {
+            item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
             })
@@ -133,7 +133,7 @@ function sousuo() {
             log(e.message);
         }
         data.forEach(item => {
-            item.url = $('hiker://empty#immersiveTheme##autoCache##noRecordHistory##noHistory#').rule(() => {
+            item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
             })
