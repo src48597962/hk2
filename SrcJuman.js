@@ -312,7 +312,6 @@ function search(name) {
                 data.forEach(item => {
                     item.extra = {name: item.desc,img: item.pic_url,sname:obj.name,url:item.url,parse: JSON.stringify(parse)};
                     item.url = item.url + $("#noLoading#").lazyRule(() => {
-                        log(MY_PARAMS);
                         return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                             erji();
