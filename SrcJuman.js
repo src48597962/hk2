@@ -146,7 +146,19 @@ function sousuo() {
 function erji() {
     let name = MY_PARAMS.name;
     let d = [];
+    //取之前源选择记录，用于自动定位之前的漫源
     let erjisource = storage0.getMyVar('erjisource'+name);
+    if(!erjisource){
+        try {
+            eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
+            if (SrcMark != "") {
+                if (SrcMark.route[name] != undefined) {
+                    var SrcMarksource = SrcMark.route[name];
+                }
+            }
+        } catch (e) { }
+        erjisource = SrcMarksource;
+    }
     if(erjisource){
         try{
             let parse;
@@ -187,7 +199,7 @@ function erji() {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                     deleteItemByCls('loadlist');
                     searchList(name);
-                    return '#noHistory#hiker://empty'
+                    return 'hiker://empty'
                 }, name),
                 col_type: 'scroll_button',
                 extra: {
@@ -236,9 +248,6 @@ function searchList(name) {
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
-        if(searchMark.length>30){
-            searchMark.splice(0,1);
-        }
         datalist = datalist.filter(it => {return it.erparse})
         let task = function(obj) {
             try{
@@ -258,8 +267,28 @@ function searchList(name) {
                     item.desc = '源：'+obj.name;
                     item.url = $("#noLoading#").lazyRule((sname,name,url) => {
                         storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
+                        let Marksum = 50;
+                        try {
+                            eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
+                        } catch (e) {
+                            var SrcMark = "";
+                        }
+                        if (SrcMark == "") {
+                            SrcMark = { route: {} };
+                        } else if (SrcMark.route == undefined) {
+                            SrcMark.route = {};
+                        }
+                        SrcMark.route[name] = {sname:sname,url:url};
+                        let key = 0;
+                        let one = "";
+                        for (var k in SrcMark.route) {
+                            key++;
+                            if (key == 1) { one = k }
+                        }
+                        if (key > Marksum) { delete SrcMark.route[one]; }
+                        writeFile("hiker://files/cache/src/JmMark.json", JSON.stringify(SrcMark));
                         refreshPage();
-                        return "toast://"+sname
+                        return "toast://选择源："+sname
                     },obj.name,name,item.url);
                 })
                 searchMark[name] = searchMark[name] || [];
