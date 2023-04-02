@@ -169,7 +169,7 @@ function erji() {
     }
     try{
         if(parse){
-            let html = request(erjisource.url);
+            let html = request(MY_PARAMS.url);
             MY_HOME = parse['链接'];
             if(parse['前提']){eval(parse['前提']);}
             let 详情 = parse['详情'];
@@ -241,7 +241,7 @@ function erji() {
         }
     }catch(e){
         toast('有异常，看日志');
-        log(erjisource.sname+'>加载详情失败>'+e.message);
+        log(MY_PARAMS.sname+'>加载详情失败>'+e.message);
     }
     
     if(isload){
