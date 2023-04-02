@@ -318,8 +318,8 @@ function search(name) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索();
                 data.forEach(item => {
-                    item.title = item.title==name?item.desc:item.title;
-                    item.desc = '源：'+obj.name;
+                    item.extra = {name: item.desc,img: item.pic_url,parse: JSON.stringify(parse)};
+                    item.desc = item.desc + ' 源:'+obj.name;
                     item.url = $("#noLoading#").lazyRule((sname,name,url) => {
                         storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
                         try {
@@ -345,7 +345,6 @@ function search(name) {
                         return "toast://选择源："+sname
                     },obj.name,name,item.url);
                     item.col_type = "avatar";
-                    item.extra = {name: item.title,img: item.pic_url,parse: JSON.stringify(parse)};
                 })
                 searchMark[name] = searchMark[name] || [];
                 searchMark[name] = searchMark[name].concat(data);
