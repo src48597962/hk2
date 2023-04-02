@@ -145,84 +145,125 @@ function sousuo() {
 //二级+源搜索
 function erji() {
     let name = MY_PARAMS.name;
-    let d = [];
-    //取之前源选择记录，用于自动定位之前的漫源
-    let erjisource = storage0.getMyVar('erjisource'+name);
-    if(!erjisource){
+    //获取之前历史记录
+    function getMask(input){
         try {
             eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
             if (SrcMark != "") {
-                if (SrcMark.route[name] != undefined) {
-                    var SrcMarksource = SrcMark.route[name];
+                if (SrcMark.route[input] != undefined) {
+                    return SrcMark.route[input];
                 }
             }
         } catch (e) { }
-        erjisource = SrcMarksource;
+        return "";
     }
+    let isload;//是否正确加载
+    let d = [];
+    //取之前源选择记录，用于自动定位之前的漫源
+    let erjisource = storage0.getMyVar('erjisource'+name) || getMask(name);
     if(erjisource){
+        let parse;
         try{
-            let parse;
             let sourcedata = datalist.length>0?datalist.filter(it=>{
                 return it.name==erjisource.sname&&it.erparse;
-            }):[];
-            if(sourcedata.length==0){
-                clearMyVar('erjisource'+name);
-                refreshPage(true);
-            }
-            eval("let source = " + sourcedata[0].erparse);
-            if(source.ext && /^http/.test(source.ext)){
-                requireCache(source.ext, 48);
-                parse = erdata;
+            })[0]:{};
+            if(sourcedata.erparse){
+                eval("let source = " + sourcedata.erparse);
+                if(source.ext && /^http/.test(source.ext)){
+                    requireCache(source.ext, 48);
+                    parse = erdata;
+                }else{
+                    parse = source;
+                }
             }else{
-                parse = source;
+                toast("源接口已不存在，需要重新选源");
             }
-            let html = request(erjisource.url);
-            MY_HOME = parse['链接'];
-            if(parse['前提']){eval(parse['前提']);}
-            let 详情 = parse['详情'];
-            let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
-            let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
-            d.push({
-                title: detail1,
-                desc: detail2,
-                pic_url: MY_PARAMS.img + '@Referer=',
-                url: MY_PARAMS.img + '@Referer=',
-                col_type: 'movie_1_vertical_pic_blur',
-                extra: {
-                    gradient: true,
-                    id: "listloading"
-                }
-            });
-            d.push({
-                title: "换源",
-                url: $("#noLoading#").lazyRule((name) => {
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                    deleteItemByCls('loadlist');
-                    searchList(name);
-                    return 'hiker://empty'
-                }, name),
-                col_type: 'scroll_button',
-                extra: {
-                    cls: "loadlist"
-                }
-            })
-            let 解析 = eval(parse['解析']) || "";
-            let lists = eval(parse['选集']) || [];
-            lists.forEach((item,id) =>{
+        }catch(e){
+
+        }
+        try{
+            if(parse){
+                let html = request(erjisource.url);
+                MY_HOME = parse['链接'];
+                if(parse['前提']){eval(parse['前提']);}
+                let 详情 = parse['详情'];
+                let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
+                let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
                 d.push({
-                    title: item.title,
-                    url: item.url + 解析,
-                    col_type: "text_2",
+                    title: detail1,
+                    desc: detail2,
+                    pic_url: MY_PARAMS.img + '@Referer=',
+                    url: MY_PARAMS.img + '@Referer=',
+                    col_type: 'movie_1_vertical_pic_blur',
                     extra: {
-                        id: name + "_选集_" + id,
-                        cls: "loadlist"
+                        gradient: true,
+                        id: "listloading"
                     }
                 });
-            })
+                d.push({
+                    title: "下载阅读",
+                    url: $("#noLoading#").lazyRule((name) => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                        deleteItemByCls('loadlist');
+                        searchList(name);
+                        return 'hiker://empty'
+                    }, name),
+                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/32.svg',
+                    col_type: 'icon_small_3',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                d.push({
+                    title: "加入书架",
+                    url: $("#noLoading#").lazyRule((name) => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                        deleteItemByCls('loadlist');
+                        searchList(name);
+                        return 'hiker://empty'
+                    }, name),
+                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/37.svg',
+                    col_type: 'icon_small_3',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                d.push({
+                    title: "切换书源",
+                    url: $("#noLoading#").lazyRule((name) => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                        deleteItemByCls('loadlist');
+                        searchList(name);
+                        return 'hiker://empty'
+                    }, name),
+                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/25.svg',
+                    col_type: 'icon_small_3',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                let 解析 = eval(parse['解析']) || "";
+                let lists = eval(parse['选集']) || [];
+                lists.forEach((item,id) =>{
+                    d.push({
+                        title: item.title,
+                        url: item.url + 解析,
+                        col_type: "text_2",
+                        extra: {
+                            id: name + "_选集_" + id,
+                            cls: "loadlist"
+                        }
+                    });
+                })
+                isload = 1;
+            }
         }catch(e){
             toast('有异常，看日志');
             log(erjisource.sname+'>加载详情失败>'+e.message);
         }
+    }
+    if(isload){
+        setResult(d);
     }else{
         d.push({
             title: "",
@@ -238,7 +279,6 @@ function erji() {
         setResult(d);
         searchList(name);
     }
-    setResult(d);
 }
 //搜索图源
 function searchList(name) {
@@ -267,7 +307,6 @@ function searchList(name) {
                     item.desc = '源：'+obj.name;
                     item.url = $("#noLoading#").lazyRule((sname,name,url) => {
                         storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
-                        let Marksum = 50;
                         try {
                             eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
                         } catch (e) {
@@ -285,7 +324,7 @@ function searchList(name) {
                             key++;
                             if (key == 1) { one = k }
                         }
-                        if (key > Marksum) { delete SrcMark.route[one]; }
+                        if (key > 50) { delete SrcMark.route[one]; }
                         writeFile("hiker://files/cache/src/JmMark.json", JSON.stringify(SrcMark));
                         refreshPage();
                         return "toast://选择源："+sname
