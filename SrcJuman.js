@@ -212,7 +212,7 @@ function erji() {
             })
             d.push({
                 title: "切换书源",
-                url: getMyVar('backsousuo')=="1"?"back(false);":$("#noLoading#").lazyRule((name) => {
+                url: getMyVar('backsousuo')=="1"?`#noLoading#@lazyRule=.js:back(false);'hiker://empty'`:$("#noLoading#").lazyRule((name) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                     deleteItemByCls('loadlist');
                     search(name);
