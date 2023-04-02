@@ -146,119 +146,104 @@ function sousuo() {
 //二级+源搜索
 function erji() {
     let name = MY_PARAMS.name;
-    //获取之前历史记录
-    function getMask(input){
-        try {
-            eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
-            if (SrcMark != "") {
-                if (SrcMark.route[input] != undefined) {
-                    return SrcMark.route[input];
-                }
-            }
-        } catch (e) { }
-        return "";
-    }
     let isload;//是否正确加载
     let d = [];
-    //取之前源选择记录，用于自动定位之前的漫源
-    let erjisource = storage0.getMyVar('erjisource'+name) || getMask(name);
-    if(erjisource){
-        let parse;
-        try{
-            let sourcedata = datalist.length>0?datalist.filter(it=>{
-                return it.name==erjisource.sname&&it.erparse;
-            })[0]:{};
-            if(sourcedata.erparse){
-                eval("let source = " + sourcedata.erparse);
-                if(source.ext && /^http/.test(source.ext)){
-                    requireCache(source.ext, 48);
-                    parse = erdata;
-                }else{
-                    parse = source;
-                }
+    let parse;
+    try{
+        let sourcedata = datalist.length>0?datalist.filter(it=>{
+            return it.name==MY_PARAMS.sname&&it.erparse;
+        })[0]:{erparse: JSON.parse(MY_PARAMS.parse)};
+        if(sourcedata.erparse){
+            eval("let source = " + sourcedata.erparse);
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                parse = erdata;
             }else{
-                toast("源接口已不存在，需要重新选源");
+                parse = source;
             }
-        }catch(e){
-
+        }else{
+            toast("源接口已不存在，需要重新选源");
         }
-        try{
-            if(parse){
-                let html = request(erjisource.url);
-                MY_HOME = parse['链接'];
-                if(parse['前提']){eval(parse['前提']);}
-                let 详情 = parse['详情'];
-                let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
-                let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
+    }catch(e){
+        log(e.message);
+    }
+    try{
+        if(parse){
+            let html = request(erjisource.url);
+            MY_HOME = parse['链接'];
+            if(parse['前提']){eval(parse['前提']);}
+            let 详情 = parse['详情'];
+            let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
+            let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
+            d.push({
+                title: detail1,
+                desc: detail2,
+                pic_url: MY_PARAMS.img + '@Referer=',
+                url: MY_PARAMS.img + '@Referer=',
+                col_type: 'movie_1_vertical_pic_blur',
+                extra: {
+                    gradient: true,
+                    id: "listloading"
+                }
+            });
+            d.push({
+                title: "下载阅读",
+                url: $("#noLoading#").lazyRule((name) => {
+                    
+                    return 'hiker://empty'
+                }, name),
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/116.svg',
+                col_type: 'icon_small_3',
+                extra: {
+                    cls: "loadlist"
+                }
+            })
+            d.push({
+                title: "加入书架",
+                url: $("#noLoading#").lazyRule((name) => {
+                    
+                    return 'hiker://empty'
+                }, name),
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/70.svg',
+                col_type: 'icon_small_3',
+                extra: {
+                    cls: "loadlist"
+                }
+            })
+            d.push({
+                title: "切换书源",
+                url: $("#noLoading#").lazyRule((name) => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                    deleteItemByCls('loadlist');
+                    search(name);
+                    return 'hiker://empty'
+                }, name),
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/23.svg',
+                col_type: 'icon_small_3',
+                extra: {
+                    cls: "loadlist"
+                }
+            })
+            let 解析 = eval(parse['解析']) || "";
+            let lists = eval(parse['选集']) || [];
+            lists.forEach((item,id) =>{
                 d.push({
-                    title: detail1,
-                    desc: detail2,
-                    pic_url: MY_PARAMS.img + '@Referer=',
-                    url: MY_PARAMS.img + '@Referer=',
-                    col_type: 'movie_1_vertical_pic_blur',
+                    title: item.title,
+                    url: item.url + 解析,
+                    col_type: "text_2",
                     extra: {
-                        gradient: true,
-                        id: "listloading"
+                        id: name + "_选集_" + id,
+                        cls: "loadlist"
                     }
                 });
-                d.push({
-                    title: "下载阅读",
-                    url: $("#noLoading#").lazyRule((name) => {
-                        
-                        return 'hiker://empty'
-                    }, name),
-                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/116.svg',
-                    col_type: 'icon_small_3',
-                    extra: {
-                        cls: "loadlist"
-                    }
-                })
-                d.push({
-                    title: "加入书架",
-                    url: $("#noLoading#").lazyRule((name) => {
-                        
-                        return 'hiker://empty'
-                    }, name),
-                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/70.svg',
-                    col_type: 'icon_small_3',
-                    extra: {
-                        cls: "loadlist"
-                    }
-                })
-                d.push({
-                    title: "切换书源",
-                    url: $("#noLoading#").lazyRule((name) => {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                        deleteItemByCls('loadlist');
-                        search(name);
-                        return 'hiker://empty'
-                    }, name),
-                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/23.svg',
-                    col_type: 'icon_small_3',
-                    extra: {
-                        cls: "loadlist"
-                    }
-                })
-                let 解析 = eval(parse['解析']) || "";
-                let lists = eval(parse['选集']) || [];
-                lists.forEach((item,id) =>{
-                    d.push({
-                        title: item.title,
-                        url: item.url + 解析,
-                        col_type: "text_2",
-                        extra: {
-                            id: name + "_选集_" + id,
-                            cls: "loadlist"
-                        }
-                    });
-                })
-                isload = 1;
-            }
-        }catch(e){
-            toast('有异常，看日志');
-            log(erjisource.sname+'>加载详情失败>'+e.message);
+            })
+            isload = 1;
         }
+    }catch(e){
+        toast('有异常，看日志');
+        log(erjisource.sname+'>加载详情失败>'+e.message);
     }
+    
     if(isload){
         setResult(d);
     }else{
