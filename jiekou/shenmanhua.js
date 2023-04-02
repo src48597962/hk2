@@ -17,11 +17,7 @@ let yidata = {
                     title: pdfh(datas, '.card-title&&Text'),
                     desc: pdfh(datas, '.card-text&&Text'),
                     pic_url: (item.length / 3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
-                    col_type: (item.length / 3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
-                    extra: {
-                        name: pdfh(datas, '.card-title&&Text'),
-                        img: pd(datas, 'img&&data-src').replace('-300x400.jpg', '')
-                    }
+                    col_type: (item.length / 3) % 1 === 0 ? "movie_3_marquee" : "movie_2"
                 });
             });
         });
