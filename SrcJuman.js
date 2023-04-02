@@ -93,7 +93,7 @@ function yiji() {
         }
         data.forEach(item => {
             item.extra = {name: item.title, img: item.pic_url}
-            item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            item.url = $('hiker://empty#immersiveTheme##noRecordHistory##noHistory#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 sousuo2();
             })
@@ -318,32 +318,14 @@ function search(name) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索();
                 data.forEach(item => {
-                    item.extra = {name: item.desc,img: item.pic_url,parse: JSON.stringify(parse)};
-                    item.desc = item.desc + ' 源:'+obj.name;
-                    item.url = $("#noLoading#").lazyRule((sname,name,url) => {
-                        storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
-                        try {
-                            eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
-                        } catch (e) {
-                            var SrcMark = "";
-                        }
-                        if (SrcMark == "") {
-                            SrcMark = { route: {} };
-                        } else if (SrcMark.route == undefined) {
-                            SrcMark.route = {};
-                        }
-                        SrcMark.route[name] = {sname:sname,url:url};
-                        let key = 0;
-                        let one = "";
-                        for (var k in SrcMark.route) {
-                            key++;
-                            if (key == 1) { one = k }
-                        }
-                        if (key > 50) { delete SrcMark.route[one]; }
-                        writeFile("hiker://files/cache/src/JmMark.json", JSON.stringify(SrcMark));
-                        refreshPage();
-                        return "toast://选择源："+sname
-                    },obj.name,name,item.url);
+                    item.extra = {name: item.desc,img: item.pic_url,sname:sname,url:url,parse: JSON.stringify(parse)};
+                    item.url = $("#noLoading#").lazyRule(() => {
+                        return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                            erji();
+                        })
+                    });
+                    item.desc = item.desc + '-源:'+obj.name;
                     item.col_type = "avatar";
                 })
                 searchMark[name] = searchMark[name] || [];
@@ -429,3 +411,26 @@ function Version() {
         putMyVar('SrcJuman-Version', '-V'+nowVersion);
     }
 }
+
+
+/*
+                        try {
+                            eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
+                        } catch (e) {
+                            var SrcMark = "";
+                        }
+                        if (SrcMark == "") {
+                            SrcMark = { route: {} };
+                        } else if (SrcMark.route == undefined) {
+                            SrcMark.route = {};
+                        }
+                        SrcMark.route[name] = {sname:sname,url:url};
+                        let key = 0;
+                        let one = "";
+                        for (var k in SrcMark.route) {
+                            key++;
+                            if (key == 1) { one = k }
+                        }
+                        if (key > 50) { delete SrcMark.route[one]; }
+                        writeFile("hiker://files/cache/src/JmMark.json", JSON.stringify(SrcMark));
+*/
