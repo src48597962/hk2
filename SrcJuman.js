@@ -32,9 +32,9 @@ function yiji() {
         col_type: 'icon_5'
     })
     d.push({
-        title: "更新",
+        title: "排行",
         url: "",
-        pic_url: "hiker://files/cache/src/更新.webp",
+        pic_url: "hiker://files/cache/src/排行.webp",
         col_type: 'icon_5'
     })
     d.push({
@@ -44,9 +44,9 @@ function yiji() {
         col_type: 'icon_5'
     })
     d.push({
-        title: "排行",
+        title: "更新",
         url: "",
-        pic_url: "hiker://files/cache/src/排行.webp",
+        pic_url: "hiker://files/cache/src/更新.webp",
         col_type: 'icon_5'
     })
     d.push({
@@ -92,9 +92,10 @@ function yiji() {
             })
         }
         data.forEach(item => {
+            item.extra = {name: item.title, img: item.pic_url}
             item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                erji();
+                sousuo2();
             })
         })
         d = d.concat(data);
@@ -229,7 +230,7 @@ function erji() {
                     url: $("#noLoading#").lazyRule((name) => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                         deleteItemByCls('loadlist');
-                        searchList(name);
+                        search(name);
                         return 'hiker://empty'
                     }, name),
                     pic_url: 'https://lanmeiguojiang.com/tubiao/messy/23.svg',
@@ -273,11 +274,28 @@ function erji() {
             }
         });
         setResult(d);
-        searchList(name);
+        search(name);
     }
 }
+//搜索页面
+function sousuo2() {
+    let d = [];
+    d.push({
+        title: "",
+        desc: "\n\n选择一个源观看吧👇",
+        pic_url: MY_PARAMS.img + '@Referer=',
+        url: MY_PARAMS.img + '@Referer=',
+        col_type: 'movie_1_vertical_pic_blur',
+        extra: {
+            gradient: true,
+            id: "listloading"
+        }
+    });
+    setResult(d);
+    search(MY_PARAMS.name);
+}
 //搜索图源
-function searchList(name) {
+function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(searchMark[name]){
         addItemAfter('listloading', searchMark[name]);
