@@ -182,8 +182,19 @@ function erji(name) {
                 }
 
             });
-            log(eval(parse['选集']))
+            let lists = eval(parse['选集']) || [];
+            lists.forEach((item,id) =>{
+                d.push({
+                    title: item.title,
+                    url: item.url,
+                    col_type: "text_2",
+                    extra: {
+                        id: name + "_选集_" + id
+                    }
+                });
+            })
         }catch(e){
+            toast('有异常，看日志');
             log(erjisource.sname+'>加载详情失败>'+e.message);
         }
     }else{
