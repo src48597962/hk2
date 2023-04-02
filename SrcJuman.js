@@ -212,7 +212,7 @@ function erji() {
             })
             d.push({
                 title: "切换书源",
-                url: $("#noLoading#").lazyRule((name) => {
+                url: getMyVar('backsousuo')=="1"?"back(false);":$("#noLoading#").lazyRule((name) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                     deleteItemByCls('loadlist');
                     search(name);
@@ -264,6 +264,10 @@ function erji() {
 }
 //搜索页面
 function sousuo2() {
+    addListener("onClose", $.toString(() => {
+        clearMyVar('backsousuo');
+    }));
+    putMyVar('backsousuo','1');
     let d = [];
     d.push({
         title: "\n接口搜索结果",
