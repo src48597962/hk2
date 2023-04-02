@@ -281,7 +281,7 @@ function erji() {
 function sousuo2() {
     let d = [];
     d.push({
-        title: "接口搜索结果",
+        title: "\n接口搜索结果",
         desc: "\n\n选择一个源观看吧👇",
         pic_url: MY_PARAMS.img + '@Referer=',
         url: 'toast://点我干啥，点下面源',
@@ -304,7 +304,6 @@ function search(name) {
         let searchMark = storage0.getMyVar('searchMark') || {};
         datalist = datalist.filter(it => {return it.erparse})
         let task = function(obj) {
-            log(MY_PARAMS);
             try{
                 let parse;
                 eval("let source = " + obj.erparse);
@@ -319,6 +318,7 @@ function search(name) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索();
                 data.forEach(item => {
+                    item.title = item.title==name?item.desc:item.title;
                     item.desc = '源：'+obj.name;
                     item.url = $("#noLoading#").lazyRule((sname,name,url) => {
                         storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
@@ -344,6 +344,8 @@ function search(name) {
                         refreshPage();
                         return "toast://选择源："+sname
                     },obj.name,name,item.url);
+                    item.col_type = "avatar";
+                    item.extra = {name: item.title,img: item.pic_url,parse: parse};
                 })
                 searchMark[name] = searchMark[name] || [];
                 searchMark[name] = searchMark[name].concat(data);
