@@ -281,10 +281,10 @@ function erji() {
 function sousuo2() {
     let d = [];
     d.push({
-        title: "",
+        title: "接口搜索结果",
         desc: "\n\n选择一个源观看吧👇",
         pic_url: MY_PARAMS.img + '@Referer=',
-        url: MY_PARAMS.img + '@Referer=',
+        url: 'toast://点我干啥，点下面源',
         col_type: 'movie_1_vertical_pic_blur',
         extra: {
             gradient: true,
@@ -304,6 +304,7 @@ function search(name) {
         let searchMark = storage0.getMyVar('searchMark') || {};
         datalist = datalist.filter(it => {return it.erparse})
         let task = function(obj) {
+            log(MY_PARAMS);
             try{
                 let parse;
                 eval("let source = " + obj.erparse);
