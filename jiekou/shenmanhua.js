@@ -52,10 +52,10 @@ let erdata = {
         code.forEach(item => {
             if (item.comic_name.includes(name)) {
                 d.push({
-                    title: item.comic_name == name ? item.last_chapter_name : item.comic_name,//名称等于当前显示为更新状态
-                    pic_url: "https://m.taomanhua.com/static/images/favicon.ico@Referer=",//网站图标
+                    title: item.comic_name == name,//名称
+                    desc: item.last_chapter_name,//可以为最新章节或更新状态
+                    pic_url: item.cover_img + "@Referer=",//网站图标
                     url: MY_HOME + item.comic_newid,//原站二级链接
-                    col_type: 'avatar'
                 });
             }
         });
