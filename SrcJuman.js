@@ -182,6 +182,7 @@ function erji(name) {
                 }
 
             });
+            log(eval(parse['选集']))
         }catch(e){
             log(erjisource.sname+'>加载详情失败>'+e.message);
         }
