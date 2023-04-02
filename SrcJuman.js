@@ -150,7 +150,7 @@ function erji(name) {
         title: "",
         desc: "\n\n选择一个源观看吧👇",
         pic_url: MY_PARAMS.img + '@Referer=',
-        url: MY_PARAMS.img + '#noHistory#',
+        url: MY_PARAMS.img + '@Referer=',
         col_type: 'movie_1_vertical_pic_blur',
         extra: {
             gradient: true,
@@ -158,34 +158,31 @@ function erji(name) {
         }
 
     });
-    let erjisource = config.erjisource || storage0.getMyVar('erjisource'+name);
+    let erjisource = storage0.getMyVar('erjisource'+name);
     if(erjisource){
-        initConfig({erjisource:erjisource});
         try{
-            let parse = config.parse;
-            if(!config.parse){
-                let sourcedata = datalist.length>0?datalist.filter(it=>{
-                    return it.name==erjisource.sname&&it.erparse;
-                }):[];
-                if(sourcedata.length==0){
-                    clearMyVar('erjisource'+name);
-                    refreshPage(true);
-                }
-                eval("let source = " + sourcedata[0].erparse);
-                if(source.ext && /^http/.test(source.ext)){
-                    requireCache(source.ext, 48);
-                    parse = erdata;
-                }else{
-                    parse = source;
-                }
-                initConfig({parse:parse});
-                log('111')
+            let parse;
+            let sourcedata = datalist.length>0?datalist.filter(it=>{
+                return it.name==erjisource.sname&&it.erparse;
+            }):[];
+            if(sourcedata.length==0){
+                clearMyVar('erjisource'+name);
+                refreshPage(true);
             }
-            log(config)
+            eval("let source = " + sourcedata[0].erparse);
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                parse = erdata;
+            }else{
+                parse = source;
+            }
             let html = request(erjisource.url);
             MY_HOME = parse['链接'];
+            if(parse['前提']){eval(parse['前提']);}
             let 详情 = parse['详情'];
-            log(eval(详情['作者']));
+            let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
+            let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
+            updateItem("erjidetails",{title: detail1, desc: detail2})
         }catch(e){
             log(erjisource.sname+'>加载详情失败>'+e.message);
         }
