@@ -182,11 +182,12 @@ function erji(name) {
                 }
 
             });
+            let 解析 = eval(parse['解析']) || "";
             let lists = eval(parse['选集']) || [];
             lists.forEach((item,id) =>{
                 d.push({
                     title: item.title,
-                    url: item.url,
+                    url: item.url + 解析,
                     col_type: "text_2",
                     extra: {
                         id: name + "_选集_" + id
