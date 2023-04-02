@@ -146,18 +146,6 @@ function sousuo() {
 function erji(name) {
     name = name || MY_PARAMS.name;
     let d = [];
-    d.push({
-        title: "",
-        desc: "\n\n选择一个源观看吧👇",
-        pic_url: MY_PARAMS.img + '@Referer=',
-        url: MY_PARAMS.img + '@Referer=',
-        col_type: 'movie_1_vertical_pic_blur',
-        extra: {
-            gradient: true,
-            id: "erjidetails"
-        }
-
-    });
     let erjisource = storage0.getMyVar('erjisource'+name);
     if(erjisource){
         try{
@@ -182,10 +170,34 @@ function erji(name) {
             let 详情 = parse['详情'];
             let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
             let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
-            updateItem("erjidetails",{title: detail1, desc: detail2})
+            d.push({
+                title: detail1,
+                desc: detail2,
+                pic_url: MY_PARAMS.img + '@Referer=',
+                url: MY_PARAMS.img + '@Referer=',
+                col_type: 'movie_1_vertical_pic_blur',
+                extra: {
+                    gradient: true,
+                    id: "erjidetails"
+                }
+
+            });
         }catch(e){
             log(erjisource.sname+'>加载详情失败>'+e.message);
         }
+    }else{
+        d.push({
+            title: "",
+            desc: "\n\n选择一个源观看吧👇",
+            pic_url: MY_PARAMS.img + '@Referer=',
+            url: MY_PARAMS.img + '@Referer=',
+            col_type: 'movie_1_vertical_pic_blur',
+            extra: {
+                gradient: true,
+                id: "erjidetails"
+            }
+
+        });
     }
     setResult(d);
     if(!erjisource){
