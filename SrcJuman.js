@@ -183,12 +183,12 @@ function erji() {
             });
             d.push({
                 title: "换源",
-                url: $("#noLoading#").lazyRule(() => {
+                url: $("#noLoading#").lazyRule((name) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                     deleteItemByCls('loadlist');
                     searchList(name);
                     return '#noHistory#hiker://empty'
-                }),
+                }, name),
                 col_type: 'scroll_button'
             })
             let 解析 = eval(parse['解析']) || "";
