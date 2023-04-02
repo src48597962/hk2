@@ -158,8 +158,9 @@ function erji(name) {
         }
 
     });
-    let erjisource = storage0.getMyVar('erjisource'+name);
+    let erjisource = config.erjisource || storage0.getMyVar('erjisource'+name);
     if(erjisource){
+        initConfig({erjisource:erjisource});
         try{
             let parse = config.parse;
             if(!config.parse){
@@ -180,7 +181,7 @@ function erji(name) {
                 initConfig({parse:parse});
                 log('111')
             }
-
+            log(config)
             let html = request(erjisource.url);
             MY_HOME = parse['链接'];
             let 详情 = parse['详情'];
