@@ -303,7 +303,7 @@ function search(name) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索();
                 data.forEach(item => {
-                    item.extra = {name: item.desc,img: item.pic_url,sname:sname,url:url,parse: JSON.stringify(parse)};
+                    item.extra = {name: item.desc,img: item.pic_url,sname:obj.name,url:url,parse: JSON.stringify(parse)};
                     item.url = $("#noLoading#").lazyRule(() => {
                         return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
