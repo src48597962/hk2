@@ -287,6 +287,13 @@ function search(name) {
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
+        let i = 0;
+        let one = "";
+        for (var k in searchMark) {
+            i++;
+            if (i == 1) { one = k }
+        }
+        if (i > 30) { delete searchMark[one]; }
         datalist = datalist.filter(it => {return it.erparse})
         let task = function(obj) {
             try{
@@ -305,6 +312,7 @@ function search(name) {
                 data.forEach(item => {
                     item.extra = {name: item.desc,img: item.pic_url,sname:obj.name,url:item.url,parse: JSON.stringify(parse)};
                     item.url = item.url + $("#noLoading#").lazyRule(() => {
+                        log(MY_PARAMS);
                         return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                             erji();
