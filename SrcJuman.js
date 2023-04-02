@@ -189,7 +189,10 @@ function erji() {
                     searchList(name);
                     return '#noHistory#hiker://empty'
                 }, name),
-                col_type: 'scroll_button'
+                col_type: 'scroll_button',
+                extra: {
+                    cls: "loadlist"
+                }
             })
             let 解析 = eval(parse['解析']) || "";
             let lists = eval(parse['选集']) || [];
