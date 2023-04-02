@@ -203,12 +203,10 @@ function erji() {
                 d.push({
                     title: "下载阅读",
                     url: $("#noLoading#").lazyRule((name) => {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                        deleteItemByCls('loadlist');
-                        searchList(name);
+                        
                         return 'hiker://empty'
                     }, name),
-                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/32.svg',
+                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/116.svg',
                     col_type: 'icon_small_3',
                     extra: {
                         cls: "loadlist"
@@ -217,12 +215,10 @@ function erji() {
                 d.push({
                     title: "加入书架",
                     url: $("#noLoading#").lazyRule((name) => {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                        deleteItemByCls('loadlist');
-                        searchList(name);
+                        
                         return 'hiker://empty'
                     }, name),
-                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/37.svg',
+                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/70.svg',
                     col_type: 'icon_small_3',
                     extra: {
                         cls: "loadlist"
@@ -236,7 +232,7 @@ function erji() {
                         searchList(name);
                         return 'hiker://empty'
                     }, name),
-                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/25.svg',
+                    pic_url: 'https://lanmeiguojiang.com/tubiao/messy/23.svg',
                     col_type: 'icon_small_3',
                     extra: {
                         cls: "loadlist"
