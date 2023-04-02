@@ -74,7 +74,7 @@ let erdata = {
     "选集": `pdfa(html, '#js_chapters&&li').map((data) => {
         let 选集列表 = {};
         选集列表.title = pdfh(data, 'Text')
-        选集列表.url = MY_HOME + "getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
+        选集列表.url = MY_HOME + "api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
         return 选集列表;
     })`,
     "解析": `$('').lazyRule(() => {let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
