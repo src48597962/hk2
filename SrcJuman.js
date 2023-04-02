@@ -178,10 +178,19 @@ function erji() {
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
                     gradient: true,
-                    id: "erjidetails"
+                    id: "listloading"
                 }
-
             });
+            d.push({
+                title: "换源",
+                url: $("#noLoading#").lazyRule(() => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                    deleteItemByCls('loadlist');
+                    searchList(name);
+                    return '#noHistory#hiker://empty'
+                }),
+                col_type: 'scroll_button'
+            })
             let 解析 = eval(parse['解析']) || "";
             let lists = eval(parse['选集']) || [];
             lists.forEach((item,id) =>{
@@ -190,7 +199,8 @@ function erji() {
                     url: item.url + 解析,
                     col_type: "text_2",
                     extra: {
-                        id: name + "_选集_" + id
+                        id: name + "_选集_" + id,
+                        cls: "loadlist"
                     }
                 });
             })
@@ -207,77 +217,81 @@ function erji() {
             col_type: 'movie_1_vertical_pic_blur',
             extra: {
                 gradient: true,
-                id: "erjidetails"
+                id: "listloading"
             }
         });
         setResult(d);
-        let soulistMark = storage0.getMyVar('soulistMark') || {};
-        if(soulistMark[name]){
-            addItemAfter('erjidetails', soulistMark[name]);
-        }else{
-            showLoading('搜源中,请稍后.');
-            let soulistMark = storage0.getMyVar('soulistMark') || {};
-            if(soulistMark.length>30){
-                soulistMark.splice(0,1);
-            }
-            datalist = datalist.filter(it => {return it.erparse})
-            let task = function(obj) {
-                try{
-                    let parse;
-                    eval("let source = " + obj.erparse);
-                    if(source.ext && /^http/.test(source.ext)){
-                        requireCache(source.ext, 48);
-                        parse = erdata;
-                    }else{
-                        parse = source;
-                    }
-                    MY_HOME = parse['链接'];
-                    let data = [];
-                    eval("let 搜索 = " + parse['搜索'])
-                    data = 搜索();
-                    data.forEach(item => {
-                        item.desc = '源：'+obj.name;
-                        item.url = $("#noLoading#").lazyRule((sname,name,url) => {
-                            storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
-                            refreshPage();
-                            return "toast://"+sname
-                        },obj.name,name,item.url)
-                    })
-                    soulistMark[name] = soulistMark[name] || [];
-                    soulistMark[name] = soulistMark[name].concat(data);
-                    addItemAfter('erjidetails', data);
-                }catch(e){
-                    log(obj.name+'>搜源失败>'+e.message);
-                }
-                return 1;
-            }
-            let list = datalist.map((item)=>{
-                return {
-                func: task,
-                param: item,
-                id: item.name
-                }
-            });
-            
-            if(list.length>0){
-                //deleteItemByCls('loadlist');
-                //putMyVar('diskSearch', '1');
-                be(list, {
-                    func: function(obj, id, error, taskResult) {
-                    },
-                    param: {
-                    }
-                });
-                storage0.putMyVar('soulistMark',soulistMark);
-                //clearMyVar('diskSearch');
-                toast('搜源完成');
-            }else{
-            toast('无接口，未找到源');
-            }
-            hideLoading();
-        }
+        searchList(name);
     }
     setResult(d);
+}
+//搜索图源
+function searchList(name) {
+    let searchMark = storage0.getMyVar('searchMark') || {};
+    if(searchMark[name]){
+        addItemAfter('listloading', searchMark[name]);
+    }else{
+        showLoading('搜源中,请稍后.');
+        let searchMark = storage0.getMyVar('searchMark') || {};
+        if(searchMark.length>30){
+            searchMark.splice(0,1);
+        }
+        datalist = datalist.filter(it => {return it.erparse})
+        let task = function(obj) {
+            try{
+                let parse;
+                eval("let source = " + obj.erparse);
+                if(source.ext && /^http/.test(source.ext)){
+                    requireCache(source.ext, 48);
+                    parse = erdata;
+                }else{
+                    parse = source;
+                }
+                MY_HOME = parse['链接'];
+                let data = [];
+                eval("let 搜索 = " + parse['搜索'])
+                data = 搜索();
+                data.forEach(item => {
+                    item.desc = '源：'+obj.name;
+                    item.url = $("#noLoading#").lazyRule((sname,name,url) => {
+                        storage0.putMyVar('erjisource'+name, {sname:sname,url:url});
+                        refreshPage();
+                        return "toast://"+sname
+                    },obj.name,name,item.url);
+                })
+                searchMark[name] = searchMark[name] || [];
+                searchMark[name] = searchMark[name].concat(data);
+                addItemAfter('listloading', data);
+            }catch(e){
+                log(obj.name+'>搜源失败>'+e.message);
+            }
+            return 1;
+        }
+        let list = datalist.map((item)=>{
+            return {
+            func: task,
+            param: item,
+            id: item.name
+            }
+        });
+        
+        if(list.length>0){
+            //deleteItemByCls('loadlist');
+            //putMyVar('diskSearch', '1');
+            be(list, {
+                func: function(obj, id, error, taskResult) {
+                },
+                param: {
+                }
+            });
+            storage0.putMyVar('searchMark',searchMark);
+            //clearMyVar('diskSearch');
+            toast('搜源完成');
+        }else{
+        toast('无接口，未找到源');
+        }
+        hideLoading();
+    }
 }
 //图标下载
 function downloadicon() {
