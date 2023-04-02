@@ -77,8 +77,6 @@ let erdata = {
         选集列表.url = MY_HOME + "getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
         return 选集列表;
     })`,
-    "解析": `$.toString(() => {
-        let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
-        return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
-    })`
+    "解析": `let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
+        return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';`
 }
