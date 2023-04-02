@@ -161,8 +161,8 @@ function erji(name) {
     let erjisource = storage0.getMyVar('erjisource'+name);
     if(erjisource){
         try{
-            let parse = MY_PARAMS['parse'] || "";
-            if(!parse){
+            let parse = config.parse;
+            if(!config.parse){
                 let sourcedata = datalist.length>0?datalist.filter(it=>{
                     return it.name==erjisource.sname&&it.erparse;
                 }):[];
@@ -177,7 +177,7 @@ function erji(name) {
                 }else{
                     parse = source;
                 }
-                MY_PARAMS['parse'] = parse;
+                initConfig({parse:parse});
                 log('111')
             }
 
