@@ -58,15 +58,9 @@ function yiji() {
     d.push({
         col_type: 'line'
     })
-    /*
-    let sourcedata = datalist.length>0?datalist.filter(it=>{
-        return it.name==sourcename&&it.parse;
-    }):[];
-    */
     let sourcedata = datalist.filter(it=>{
         return it.name==sourcename&&it.parse;
     });
-    log(sourcedata);
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
@@ -113,9 +107,9 @@ function sousuo() {
     let d = [];
     let name = MY_URL.split('##')[1];
     let page = MY_URL.split('##')[2];
-    let sourcedata = datalist.length>0?datalist.filter(it=>{
+    let sourcedata = datalist.filter(it=>{
         return it.name==sourcename&&it.parse;
-    }):[];
+    });
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
@@ -152,15 +146,23 @@ function sousuo() {
 //二级+源搜索
 function erji() {
     let name = MY_PARAMS.name;
+    addListener("onClose", $.toString(() => {
+        clearMyVar(name+'erji');
+    }));
     let isload;//是否正确加载
     let d = [];
     let parse;
     try{
-        let sourcedata = datalist.length>0?datalist.filter(it=>{
-            return it.name==MY_PARAMS.sname&&it.erparse;
-        })[0]:{erparse: JSON.parse(MY_PARAMS.parse)};
+        let sourcedata = [];
+        sourcedata = datalist.filter(it=>{
+            return it.name==getMyVar(name+'erji',MY_PARAMS.sname)&&it.erparse;
+        });
+        if(sourcedata.length==0){
+            sourcedata = [{erparse: JSON.parse(MY_PARAMS.parse)}];
+        }
+        
         if(sourcedata.erparse){
-            eval("let source = " + sourcedata.erparse);
+            eval("let source = " + sourcedata[0].erparse);
             if(source.ext && /^http/.test(source.ext)){
                 requireCache(source.ext, 48);
                 parse = erdata;
@@ -321,12 +323,18 @@ function search(name) {
                 data = 搜索();
                 data.forEach(item => {
                     item.extra = {name: item.desc,img: item.pic_url,sname:obj.name,url:item.url,parse: JSON.stringify(parse)};
-                    item.url = item.url + $("#noLoading#").lazyRule(() => {
-                        return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                            erji();
-                        })
-                    });
+                    item.url = item.url + $("#noLoading#").lazyRule((name,sname) => {
+                        if(getMyVar('backsousuo')=="1"){
+                            return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                                erji();
+                            })
+                        }else{
+                            putMyVar(name+'erji', sname);
+                            refreshPage(false);
+                            return "toast://已切换源："+sname;
+                        }
+                    },item.desc,obj.name);
                     item.desc = item.desc + '-源:'+obj.name;
                     item.col_type = "avatar";
                 })
