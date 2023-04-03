@@ -160,8 +160,7 @@ function erji() {
         if(sourcedata.length==0){
             sourcedata = [{erparse: JSON.parse(MY_PARAMS.parse)}];
         }
-        log(sourcedata);
-        if(sourcedata.erparse){
+        if(sourcedata[0].erparse){
             eval("let source = " + sourcedata[0].erparse);
             if(source.ext && /^http/.test(source.ext)){
                 requireCache(source.ext, 48);
