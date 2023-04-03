@@ -95,7 +95,7 @@ function yiji() {
             item.extra = {name: item.title, img: item.pic_url}
             item.url = $('hiker://empty#immersiveTheme##noRecordHistory##noHistory#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                sousuo2();
+                erji();
             })
         })
         d = d.concat(data);
