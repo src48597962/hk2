@@ -160,7 +160,7 @@ function erji() {
         if(sourcedata.length==0){
             sourcedata = [{erparse: JSON.parse(MY_PARAMS.parse)}];
         }
-        
+        log(sourcedata);
         if(sourcedata.erparse){
             eval("let source = " + sourcedata[0].erparse);
             if(source.ext && /^http/.test(source.ext)){
@@ -355,7 +355,7 @@ function search(name) {
         });
         
         if(list.length>0){
-            //deleteItemByCls('loadlist');
+            deleteItemByCls('loadlist');
             //putMyVar('diskSearch', '1');
             be(list, {
                 func: function(obj, id, error, taskResult) {
