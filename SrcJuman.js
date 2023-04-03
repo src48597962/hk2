@@ -145,17 +145,17 @@ function sousuo() {
 }
 //二级+源搜索
 function erji() {
-    let name = MY_PARAMS.name;
     addListener("onClose", $.toString(() => {
-        clearMyVar(name+'erji');
+        clearMyVar('erjisourcename');
     }));
+    let name = MY_PARAMS.name;
     let isload;//是否正确加载
     let d = [];
     let parse;
     try{
         let sourcedata = [];
         sourcedata = datalist.filter(it=>{
-            return it.name==getMyVar(name+'erji',MY_PARAMS.sname)&&it.erparse;
+            return it.name==getMyVar('erjisourcename',MY_PARAMS.sname)&&it.erparse;
         });
         if(sourcedata.length==0){
             sourcedata = [{erparse: JSON.parse(MY_PARAMS.parse)}];
@@ -323,18 +323,18 @@ function search(name) {
                 data = 搜索();
                 data.forEach(item => {
                     item.extra = {name: item.desc,img: item.pic_url,sname:obj.name,url:item.url,parse: JSON.stringify(parse)};
-                    item.url = item.url + $("#noLoading#").lazyRule((name,sname) => {
+                    item.url = item.url + $("#noLoading#").lazyRule((sname) => {
                         if(getMyVar('backsousuo')=="1"){
                             return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                                 erji();
                             })
                         }else{
-                            putMyVar(name+'erji', sname);
+                            putMyVar('erjisourcename', sname);
                             refreshPage(false);
                             return "toast://已切换源："+sname;
                         }
-                    },item.desc,obj.name);
+                    },obj.name);
                     item.desc = item.desc + '-源:'+obj.name;
                     item.col_type = "avatar";
                 })
