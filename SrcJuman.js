@@ -155,7 +155,7 @@ function erji() {
     try{
         let sourcedata = [];
         sourcedata = datalist.filter(it=>{
-            return it.name==getMyVar('erjisourcename',MY_PARAMS.sname)&&it.erparse;
+            return it.name==getMyVar('erjisourcename',MY_PARAMS.sname||"")&&it.erparse;
         });
         if(sourcedata.length==0){
             sourcedata = [{erparse: MY_PARAMS.parse}];
@@ -168,8 +168,6 @@ function erji() {
             }else{
                 parse = source;
             }
-        }else{
-            toast("源接口已不存在，需要重新选源");
         }
     }catch(e){
         log(e.message);
