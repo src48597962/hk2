@@ -58,9 +58,15 @@ function yiji() {
     d.push({
         col_type: 'line'
     })
+    /*
     let sourcedata = datalist.length>0?datalist.filter(it=>{
         return it.name==sourcename&&it.parse;
     }):[];
+    */
+    let sourcedata = datalist.filter(it=>{
+        return it.name==sourcename&&it.parse;
+    });
+    log(sourcedata);
     if(sourcedata.length==0){
         d.push({
             title: "请先配置一个主页源",
