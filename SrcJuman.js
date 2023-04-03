@@ -158,7 +158,7 @@ function erji() {
             return it.name==getMyVar('erjisourcename',MY_PARAMS.sname)&&it.erparse;
         });
         if(sourcedata.length==0){
-            sourcedata = [{erparse: JSON.parse(MY_PARAMS.parse)}];
+            sourcedata = [{erparse: MY_PARAMS.parse}];
         }
         if(sourcedata[0].erparse){
             eval("let source = " + sourcedata[0].erparse);
