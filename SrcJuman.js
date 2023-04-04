@@ -115,8 +115,23 @@ function yiji() {
     }
     setResult(d);
 }
-//搜索
+//搜索页面
 function sousuo() {
+    putMyVar('SrcJmSousuo','1');
+    let name = MY_URL.split('##')[1];
+    let d = [];
+    d.push({
+        col_type: 'blank_block',
+        extra: {
+            id: "listloading"
+        }
+    });
+    setResult(d);
+    search(name);
+    clearMyVar('SrcJmSousuo');
+}
+//搜索
+function sousuo3() {
     let d = [];
     let name = MY_URL.split('##')[1];
     let page = MY_URL.split('##')[2];
@@ -209,13 +224,12 @@ function erji() {
     let erjidata = storage0.getMyVar('erjidata') || getMark(name);
     let sname = erjidata.sname || MY_PARAMS.sname || "";
     let surl = erjidata.surl || MY_PARAMS.surl || "";
+    let sourcedata = datalist.filter(it=>{
+        return it.name==sname&&it.erparse;
+    });
     try{
-        let sourcedata = [];
-        sourcedata = datalist.filter(it=>{
-            return it.name==sname&&it.erparse;
-        });
         if(sourcedata.length==0){
-            sourcedata = [{erparse: MY_PARAMS.parse}];
+            sourcedata.push({erparse: MY_PARAMS.parse});
         }
         if(sourcedata[0].erparse){
             eval("let source = " + sourcedata[0].erparse);
@@ -317,7 +331,7 @@ function erji() {
         setMark(erjidata);
     }else{
         d.push({
-            title: "",
+            title: "\n搜索接口源结果如下",
             desc: "\n\n选择一个源观看吧👇",
             pic_url: MY_PARAMS.img + '@Referer=',
             url: MY_PARAMS.img + '@Referer=',
@@ -391,7 +405,7 @@ function search(name) {
                         return "toast://已切换源："+erjidata.sname;
                     },erjidata);
                     item.desc = item.desc + '-源:'+obj.name;
-                    item.col_type = "avatar";
+                    item.col_type = getMyVar('SrcJmSousuo')=="1"?"video":"avatar";
                 })
                 searchMark[name] = searchMark[name] || [];
                 searchMark[name] = searchMark[name].concat(data);
