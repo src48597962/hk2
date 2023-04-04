@@ -106,6 +106,7 @@ function SRCSet() {
                         }
                         datalist.push(newapi);
                         writeFile(filepath, JSON.stringify(datalist));
+                        clearMyVar('searchMark');
                         back(true);
                         return "toast://已保存";
                     }
@@ -154,6 +155,7 @@ function SRCSet() {
                         }
                     }
                     writeFile(filepath, JSON.stringify(datalist));
+                    clearMyVar('searchMark');
                     hideLoading();
                     refreshPage(false);
                     return "toast://合计" + datalist2.length + "个，导入" + num + "个";
@@ -215,6 +217,7 @@ function SRCSet() {
                     let index = datalist.indexOf(datalist.filter(d => d.name==data.name)[0]);
                     datalist.splice(index, 1);
                     writeFile(filepath, JSON.stringify(datalist));
+                    clearMyVar('searchMark');
                     refreshPage(false);
                     return 'toast://已删除';
                 } 
