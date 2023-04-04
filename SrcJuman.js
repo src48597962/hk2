@@ -28,7 +28,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmSet.js');
             SRCSet();
         }),
-        pic_url: "hiker://files/cache/src/管理.png",
+        pic_url: "https://lanmeiguojiang.com/tubiao/messy/13.svg",
         col_type: 'icon_5'
     })
     d.push({
@@ -50,10 +50,22 @@ function yiji() {
         col_type: 'icon_5'
     })
     d.push({
-        title: "收藏",
-        url: "",
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/109.png",
-        col_type: 'icon_5'
+        title: getItem('collectionorhistory')=="history"?"历史":"收藏",
+        url: getItem('collectionorhistory')=="history"?"hiker://history":"hiker://collection",
+        pic_url: "https://lanmeiguojiang.com/tubiao/messy/165.svg",
+        col_type: 'icon_5',
+        extra: {
+            longClick: [{
+                title: "切换按钮",
+                js: $.toString(() => {
+                    if(getItem('collectionorhistory')=="history"){
+                        setItem('collectionorhistory','collection');
+                    }else{
+                        setItem('collectionorhistory','history');
+                    }
+                })
+            }]
+        }
     })
     d.push({
         col_type: 'line'
@@ -237,11 +249,12 @@ function erji() {
             })
             d.push({
                 title: "倒转排序",
-                url: $("#noLoading#").lazyRule((name) => {
-                    
-                    return 'hiker://empty'
-                }, name),
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/126.svg',//https://lanmeiguojiang.com/tubiao/messy/127.svg
+                url: $("#noLoading#").lazyRule(() => {
+                    if (getMyVar('shsort') == '1') { putMyVar('shsort', '0'); } else { putMyVar('shsort', '1') };
+                    refreshPage(false);
+                    return 'toast://切换排序成功'
+                }),
+                pic_url: getMyVar('shsort') == '1'?'https://lanmeiguojiang.com/tubiao/messy/127.svg':'https://lanmeiguojiang.com/tubiao/messy/126.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
