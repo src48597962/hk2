@@ -143,19 +143,63 @@ function sousuo() {
     }
     setResult(d);
 }
+//取本地足迹记录
+function getMark(name){
+    let markfile = "hiker://files/rules/Src/Juman/mark.json";
+    let markdata = fetch(markfile);
+    if(markdata != ""){
+        eval("var marklist=" + markdata+ ";");
+    }else{
+        var marklist = [];
+    }
+    let mark = marklist.filter(item => {
+        return item.name==name;
+    })
+    if(mark.length==1){
+        return mark[0];
+    }else{
+        return {};
+    }
+}
+//保存本地足迹记录
+function setMark(data){
+    let markfile = "hiker://files/rules/Src/Juman/mark.json";
+    let markdata = fetch(markfile);
+    if(markdata != ""){
+        eval("var marklist=" + markdata+ ";");
+    }else{
+        var marklist = [];
+    }
+    let mark = marklist.filter(item => {
+        return item.name==data.name;
+    })
+    if(mark.length==1){
+        let index = marklist.indexOf(mark[0]);
+        marklist.splice(index,1)
+    }
+    marklist.push(data);
+    if(marklist.length>100){
+        marklist.splice(0,1);
+    }
+    writeFile(markfile, JSON.stringify(marklist));
+    return 1;
+}
 //二级+源搜索
 function erji() {
     addListener("onClose", $.toString(() => {
-        clearMyVar('erjisourcename');
+        clearMyVar('erjidata');
     }));
     let name = MY_PARAMS.name;
     let isload;//是否正确加载
     let d = [];
     let parse;
+    let erjidata = storage0.getMyVar('erjidata') || getMark(name);
+    let sname = erjidata.name || MY_PARAMS.sname || "";
+    let surl = erjidata.surl || MY_PARAMS.surl || "";
     try{
         let sourcedata = [];
         sourcedata = datalist.filter(it=>{
-            return it.name==getMyVar('erjisourcename',MY_PARAMS.sname||"")&&it.erparse;
+            return it.name==sname&&it.erparse;
         });
         if(sourcedata.length==0){
             sourcedata = [{erparse: MY_PARAMS.parse}];
@@ -174,7 +218,7 @@ function erji() {
     }
     try{
         if(parse){
-            let html = request(MY_PARAMS.url);
+            let html = request(surl);
             MY_HOME = parse['链接'];
             if(parse['前提']){eval(parse['前提']);}
             let 详情 = parse['详情'];
@@ -251,6 +295,9 @@ function erji() {
     
     if(isload){
         setResult(d);
+        //二级源保存到记录
+        let erjidata = {name:name,sname:sname,surl:surl};
+        setMark(erjidata);
     }else{
         d.push({
             title: "",
@@ -319,19 +366,13 @@ function search(name) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索();
                 data.forEach(item => {
-                    item.extra = {name: item.desc,img: item.pic_url,sname:obj.name,url:item.url,parse: JSON.stringify(parse)};
-                    item.url = item.url + $("#noLoading#").lazyRule((sname) => {
-                        if(getMyVar('backsousuo')=="1"){
-                            return $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-                                erji();
-                            })
-                        }else{
-                            putMyVar('erjisourcename', sname);
-                            refreshPage(false);
-                            return "toast://已切换源："+sname;
-                        }
-                    },obj.name);
+                    let erjidata = {name:item.desc,sname:obj.name,surl:item.url};
+                    item.extra = {name:item.desc,img:item.pic_url};
+                    item.url = item.url + $("#noLoading#").lazyRule((erjidata) => {
+                        storage0.putMyVar('erjidata', erjidata);
+                        refreshPage(false);
+                        return "toast://已切换源："+erjidata.sname;
+                    },erjidata);
                     item.desc = item.desc + '-源:'+obj.name;
                     item.col_type = "avatar";
                 })
