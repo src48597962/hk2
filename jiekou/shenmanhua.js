@@ -52,8 +52,8 @@ let erdata = {
         code.forEach(item => {
             if (item.comic_name.includes(name)) {
                 d.push({
-                    title: item.last_chapter_name,//更新状态/最新章节
-                    desc: item.comic_name,//名称
+                    title: item.comic_name,//名称
+                    desc: item.last_chapter_name,//更新状态或最新章节
                     pic_url: item.cover_img + "@Referer=",//网站图标
                     url: MY_HOME + item.comic_newid,//原站二级链接
                 });
