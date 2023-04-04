@@ -123,7 +123,6 @@ function sousuo() {
     d.push({
         title: "加载中...",
         url: "hiker://empty",
-        col_type: 'text_center_1',
         extra: {
             id: "listloading"
         }
