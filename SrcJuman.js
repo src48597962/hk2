@@ -241,7 +241,7 @@ function erji() {
                     
                     return 'hiker://empty'
                 }, name),
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/137.svg',//https://lanmeiguojiang.com/tubiao/messy/133.svg
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/126.svg',//https://lanmeiguojiang.com/tubiao/messy/127.svg
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
@@ -267,7 +267,7 @@ function erji() {
                     search(name);
                     return 'hiker://empty'
                 }, name),
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/23.svg',
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/25.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
