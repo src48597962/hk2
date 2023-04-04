@@ -289,6 +289,9 @@ function erji() {
             })
             let 解析 = eval(parse['解析']) || "";
             let lists = eval(parse['选集']) || [];
+            if(getMyVar('shsort') == '1'){
+                lists.reverse();
+            }
             lists.forEach((item,id) =>{
                 d.push({
                     title: item.title,
