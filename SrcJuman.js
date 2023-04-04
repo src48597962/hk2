@@ -50,9 +50,9 @@ function yiji() {
         col_type: 'icon_5'
     })
     d.push({
-        title: "书架",
+        title: "收藏",
         url: "",
-        pic_url: "hiker://files/cache/src/书架.png",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/109.png",
         col_type: 'icon_5'
     })
     d.push({
@@ -93,7 +93,7 @@ function yiji() {
         }
         data.forEach(item => {
             item.extra = {name: item.title, img: item.pic_url}
-            item.url = $('hiker://empty#immersiveTheme##noRecordHistory##noHistory#').rule(() => {
+            item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
             })
@@ -234,26 +234,26 @@ function erji() {
                     gradient: true,
                     id: "listloading"
                 }
-            });
+            })
             d.push({
-                title: "下载阅读",
+                title: "倒转排序",
                 url: $("#noLoading#").lazyRule((name) => {
                     
                     return 'hiker://empty'
                 }, name),
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/119.svg',
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/137.svg',//https://lanmeiguojiang.com/tubiao/messy/133.svg
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
                 }
             })
             d.push({
-                title: "加入书架",
+                title: "下载阅读",
                 url: $("#noLoading#").lazyRule((name) => {
                     
                     return 'hiker://empty'
                 }, name),
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/70.svg',
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/116.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
@@ -267,7 +267,7 @@ function erji() {
                     search(name);
                     return 'hiker://empty'
                 }, name),
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/147.svg',
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/23.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
