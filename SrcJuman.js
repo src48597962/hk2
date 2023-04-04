@@ -121,7 +121,9 @@ function sousuo() {
     let name = MY_URL.split('##')[1];
     let d = [];
     d.push({
-        col_type: 'blank_block',
+        title: "加载中...",
+        url: "hiker://empty",
+        col_type: 'text_center_1',
         extra: {
             id: "listloading"
         }
@@ -129,6 +131,7 @@ function sousuo() {
     setResult(d);
     search(name);
     clearMyVar('SrcJmSousuo');
+    updateItem("listloading",{title:"搜索完成"})
 }
 //搜索
 function sousuo3() {
@@ -370,7 +373,11 @@ function sousuo2() {
 function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(searchMark[name]){
-        addItemAfter('listloading', searchMark[name]);
+        if(getMyVar('SrcJmSousuo')=="1"){
+            addItemBefore('listloading', searchMark[name]);
+        }else{
+            addItemAfter('listloading', searchMark[name]);
+        }
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
@@ -410,7 +417,11 @@ function search(name) {
                 })
                 searchMark[name] = searchMark[name] || [];
                 searchMark[name] = searchMark[name].concat(data);
-                addItemAfter('listloading', data);
+                if(getMyVar('SrcJmSousuo')=="1"){
+                    addItemBefore('listloading', data);
+                }else{
+                    addItemAfter('listloading', data);
+                }
             }catch(e){
                 log(obj.name+'>搜源失败>'+e.message);
             }
