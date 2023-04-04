@@ -63,6 +63,7 @@ function yiji() {
                     }else{
                         setItem('collectionorhistory','history');
                     }
+                    refreshPage(false);
                 })
             }]
         }
