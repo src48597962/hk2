@@ -404,7 +404,8 @@ function search(name) {
                         refreshPage(false);
                         return "toast://已切换源："+erjidata.sname;
                     },erjidata);
-                    item.desc = item.desc + '-源:'+obj.name;
+                    item.content = item.desc;
+                    item.desc = getMyVar('SrcJmSousuo')=="1"? '聚漫√ · ' + obj.name : obj.name + ' · ' + item.desc;
                     item.col_type = getMyVar('SrcJmSousuo')=="1"?"video":"avatar";
                 })
                 searchMark[name] = searchMark[name] || [];
