@@ -27,12 +27,9 @@ let yidata = {
         var 当前页 = getParam('page');
         var 类别 = MY_RULE.title + "类别"
         var 类别名 = getVar(类别, "");
-
         var 排序 = MY_RULE.title + "排序"
         var 排序名 = getVar(排序, "click");
-
         var class_Name = MY_RULE.title + "分类"
-
         if (当前页 == 1) {
             if (!getVar(class_Name)) {
                 var codes = request('https://m.taomanhua.com/sort/');
@@ -40,7 +37,6 @@ let yidata = {
             }else{
                 var codes = getVar(class_Name)
             }
-
             var 分类项 = pdfa(codes, '.dl-sort-list&&a').map((data) => {
                 var 项数据 = {};
                 项数据.title = pdfh(data, 'Text')
@@ -48,7 +44,6 @@ let yidata = {
                 项数据.sz = 项数据.bs == 类别名 ? true : false;
                 return 项数据;
             })
-
             var 排序项 = pdfa(codes, '#js_orderList&&li').map((data) => {
                 var 项数据 = {};
                 项数据.title = pdfh(data, 'Text')
@@ -56,7 +51,6 @@ let yidata = {
                 项数据.sz = 项数据.bs == 排序名 ? true : false;
                 return 项数据;
             })
-
             function List_of_options(数据源, 赋值名) {
                 d.push({
                     col_type: 'blank_block'
@@ -66,7 +60,6 @@ let yidata = {
                     if (data.sz) {
                         title = '““””<b><font color=#FA7298>' + title + '</font></b>';
                     }
-
                     var url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
                         putVar(list_name, Url)
                         refreshPage(false);
@@ -79,15 +72,11 @@ let yidata = {
                     });
                 })
             }
-
             List_of_options(分类项, 类别)
             List_of_options(排序项, 排序)
-
         }
-
         var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
         var code = JSON.parse(request(分类post.replace('**', 类别名).replace('@@', 排序名).replace('~~', 当前页))).data.data;
-
         code.forEach((data) => {
             d.push({
                 title: data.comic_name,
@@ -130,7 +119,6 @@ let yidata = {
                 col_type: "scroll_button"
             });
         });
-
         lisr_s.forEach((data) => {
             d.push({
                 title: '‘‘’’<b>'+data.comic_name+'</b> <small>\n最新：<font color="#FA7298">'+data.comic_chapter_name+'</font>\n作者：'+data.author_name+'</small>',
@@ -143,6 +131,51 @@ let yidata = {
             });
 
         })
+        return d;
+    },
+    "排行": function() {
+        let d = [];
+        let list_name = MY_RULE.title + "排行榜"
+        let list_url = getVar(list_name, 'https://m.taomanhua.com/top/dianji.html');
+        let code = request(list_url);
+        let url_wzqz = 'https://m.taomanhua.com';
+        MY_URL=url_wzqz;
+        let list_class = pdfa(code, '#J_rankOptionMenu&&li')
+        list_class.forEach((data) => {
+            let title = pdfh(data, 'a&&Text')
+            let url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
+                putVar(list_name, Url)
+                refreshPage(false);
+                return "hiker://empty"
+            }, list_name, url_wzqz + pdfh(data, 'a&&href'))
+            if (data.includes('active')) {
+                setPageTitle(title);
+                title = '““””<b><font color=#FA7298>' + title + '</font></b>';
+            }
+            d.push({
+                title: title,
+                url: url_qz,
+                col_type: "scroll_button"
+            });
+        });
+        pdfa(code, 'li.comic-rank-top&&.comic-item').forEach((data, id) => {
+            d.push({
+                title: pdfh(data, 'a&&title').split(',')[0],
+                desc: '：第' + (id + 1) + '名',
+                pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.taomanhua.com/",
+                col_type: "movie_3_marquee"
+            });
+        })
+        pdfa(code, '.rank-comic-list&&.list').forEach(function(data) {
+            d.push({
+                title: '‘‘’’<b>' + pdfh(data, 'h3&&Text') + '</b> <small>&nbsp;&nbsp;&nbsp;&nbsp;排名：<font color="#FA7298"><b> ' + pdfh(data, '.order&&Text') + '  名</b></font>&nbsp;&nbsp;&nbsp;&nbsp;作者：' + pdfh(data, '.comic-author&&Text') + '</small>',
+                desc: '‘‘’’<font color="#004e66">动态：' + pdfh(data, '.clearfix&&.statistics&&Text') + '&nbsp;&nbsp;&nbsp;&nbsp;分类：' + pdfa(data, '.sort-list&&a').map(datas => pdfh(datas, 'Text')).join(" | ") + '</font>',
+                col_type: 'text_1',
+                extra: {
+                    name: pdfh(data, 'h3&&Text')
+                }
+            });
+        });
         return d;
     }
 }
