@@ -98,7 +98,6 @@ function SRCSet() {
                         name: name,
                         erparse: JSON.parse(erparse)
                     }
-                    //eval("var source = " + newapi);
                 }catch(e){
                     log(e.message);
                     return "toast://搜索源接口有异常，看日志"
@@ -118,7 +117,7 @@ function SRCSet() {
                         setResult(d);
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                         search(name,sdata);
-                    },input,source)
+                    },input,JSON.stringify(source))
                 }else{
                     return "toast://确认搜索源接口数据？"
                 }
