@@ -218,16 +218,8 @@ let erdata = {
     },
     "解析": function() {
         return "@lazyRule=.js:"+$.toString(() => {//解析放在下面
-                var list = parseDomForArray(request(input), '.view-imgBox&&img');
-                var pics = [];
-                for (var i in list) {
-                    pics.push(parseDom(list[i],'img&&data-original'))
-                }
-                return "pics://" + pics.join("&&");
+            let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
+            return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
         })
     }
-    /*`$('').lazyRule(() => {//解析放在lazyRule里面
-        let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
-        return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
-    })`*/
 }
