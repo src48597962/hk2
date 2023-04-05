@@ -1,21 +1,5 @@
 //聚漫，接口型空壳小程序，接口分为主页源和搜索源
-let cfgfile = "hiker://files/rules/Src/Juman/config.json";
-let Jumancfg=fetch(cfgfile);
-if(Jumancfg != ""){
-    eval("var JMconfig=" + Jumancfg+ ";");
-}else{
-    var JMconfig= {};
-}
-
-let sourcefile = "hiker://files/rules/Src/Juman/jiekou.json";
-let sourcedata = fetch(sourcefile);
-if(sourcedata != ""){
-    eval("var datalist=" + sourcedata+ ";");
-}else{
-    var datalist = [];
-}
-let sourcename = JMconfig['source'] || "神漫画";
-
+require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
 
 //一级
 function yiji() {
@@ -71,8 +55,8 @@ function yiji() {
     d.push({
         col_type: 'line'
     })
-    let sourcedata = datalist.filter(it=>{
-        return it.name==sourcename&&it.parse;
+    let sourcedata = yidatalist.filter(it=>{
+        return it.name==yijisource;
     });
     if(sourcedata.length==0){
         d.push({
@@ -146,8 +130,8 @@ function erji() {
     let sname = erjidata.sname || MY_PARAMS.sname || "";
     let surl = erjidata.surl || MY_PARAMS.surl || "";
     let sauthor = "未知";
-    let sourcedata = datalist.filter(it=>{
-        return it.name==sname&&it.erparse;
+    let sourcedata = erdatalist.filter(it=>{
+        return it.name==sname;
     });
     try{
         if(sourcedata.length==0){
@@ -308,7 +292,6 @@ function search(name) {
             if (i == 1) { one = k }
         }
         if (i > 20) { delete searchMark[one]; }
-        datalist = datalist.filter(it => {return it.erparse})
         let success = 0;
         let task = function(obj) {
             try{
@@ -355,7 +338,7 @@ function search(name) {
             }
             return 1;
         }
-        let list = datalist.map((item)=>{
+        let list = erdatalist.map((item)=>{
             return {
             func: task,
             param: item,
