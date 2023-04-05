@@ -283,10 +283,10 @@ function erji() {
 }
 
 //搜索接口
-function search(name,sname) {
+function search(name,sdata) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     let loadid = getMyVar('SrcJmSousuo')=="1"?'sousuoloading':'listloading';
-    if(searchMark[name] && !sname){
+    if(searchMark[name] && !sdata){
         //log("重复搜索>"+name+"，调用搜索缓存");
         addItemBefore(loadid, searchMark[name]);
         updateItem(loadid,{title: getMyVar('SrcJmSousuo')=="1"?"当前搜索为缓存":"‘‘’’<small>当前搜索为缓存</small>"})
@@ -345,10 +345,9 @@ function search(name,sname) {
             }
             return 1;
         }
-        if(sname){
-            erdatalist = erdatalist.filter(it=>{
-                return it.name==sname;
-            })
+        if(sdata){
+            erdatalist = [];
+            erdatalist.push(sdata);
         }
         let list = erdatalist.map((item)=>{
             return {
@@ -366,7 +365,7 @@ function search(name,sname) {
                 param: {
                 }
             });
-            if(!sname){
+            if(!sdata){
                 storage0.putMyVar('searchMark',searchMark);
             }
             let sousuosm = getMyVar('SrcJmSousuo')=="1"?success+"/"+list.length+"，搜索完成":"‘‘’’<small><font color=#f13b66a>"+success+"</font>/"+list.length+"，搜索完成</small>";
