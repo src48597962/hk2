@@ -210,9 +210,9 @@ function erji() {
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
-                }//item.url + 解析
+                }
             })
-            let 解析 = parse['解析'];//eval(parse['解析']) || "";
+            let 解析 = parse['解析'];
             let lists = details.list;
             if(getMyVar('shsort') == '1'){
                 lists.reverse();
