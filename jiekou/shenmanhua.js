@@ -101,6 +101,49 @@ let yidata = {
             });
         })
         return d;
+    },
+    "更新": function() {
+        var d = [];
+        var 前缀 = "https://m.taomanhua.com";
+        var update_url = MY_RULE.title + "更新"
+        if (!getVar(update_url)) {
+            putVar(update_url, request("https://m.taomanhua.com/api/updatelist/?product_id=3&productname=smh&platformname=wap"))
+
+        }
+        var code = JSON.parse(getVar(update_url)).data.update
+        var lisr_s = [];
+
+        var update_date = MY_RULE.title + "更新日期"
+        var date = getVar(update_date, '今天')
+        code.forEach((data) => {
+            var title = data.comicUpdateDate_new
+            var url_qz = $("#noLoading#").lazyRule((update_date, title) => {
+                putVar(update_date, title)
+                refreshPage(false);
+                return "hiker://empty"
+            }, update_date, title)
+            if (date == title) {
+                setPageTitle(title);
+                title = '““””<b><font color=#FA7298>' + title + '</font></b>';
+                lisr_s = data.info;
+            }
+            d.push({
+                title: title,
+                url: url_qz,
+                col_type: "scroll_button"
+            });
+        });
+
+        lisr_s.forEach((data) => {
+            d.push({
+                title: '‘‘’’<b>'+data.comic_name+'</b> <small>\n最新：<font color="#FA7298">'+data.comic_chapter_name+'</font>\n作者：'+data.author_name+'</small>',
+                desc:'‘‘’’<font color="#274c5e">分类：'+data.comic_type.join(" | ")+'\n简介：'+data.comic_feature+'</font>' ,
+                pic_url: data.feature_img + "@Referer=https://m.taomanhua.com/" + 前缀,
+                col_type: "movie_1_vertical_pic"
+            });
+
+        })
+        return d;
     }
 }
 
