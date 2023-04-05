@@ -128,6 +128,7 @@ function sousuo() {
         }
     });
     setResult(d);
+    java.lang.Thread.sleep(1000);
     search(name);
     clearMyVar('SrcJmSousuo');
 }
