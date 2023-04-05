@@ -24,7 +24,7 @@ let yidata = {
     },
     "分类": function () {
         let d = [];
-        var 当前页 = 1;//getParam('page');
+        var 当前页 = getParam('page');
         var 类别 = MY_RULE.title + "类别"
         var 类别名 = getVar(类别, "");
 
