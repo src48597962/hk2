@@ -108,7 +108,7 @@ function SRCSet() {
                 } catch (e) {
                     return "toast://接口数据异常，请确认对象格式";
                 }
-            }, filepath)
+            }, sourcefile)
         });
         setResult(d);
     }
@@ -132,7 +132,7 @@ function SRCSet() {
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((filepath, manhuaapi) => {
             setPageTitle('增加 | 聚漫接口');
             manhuaapi(filepath);
-        }, filepath, manhuaapi),
+        }, sourcefile, manhuaapi),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
         col_type: "icon_small_3"
     });
@@ -175,7 +175,7 @@ function SRCSet() {
                 log(e.message);
                 return "toast://聚漫√：口令有误";
             }
-        }, filepath),
+        }, sourcefile),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
         col_type: "icon_small_3"
     });
@@ -230,7 +230,7 @@ function SRCSet() {
                     refreshPage(false);
                     return 'toast://已删除';
                 }
-            }, filepath, manhuaapi, item),
+            }, sourcefile, manhuaapi, item),
             desc: '',
             col_type: "text_1"
         });
