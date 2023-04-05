@@ -76,7 +76,6 @@ function yiji() {
         }else{
             parse = source;
         }
-        MY_HOME = parse['链接'];
         let data = [];
         try{
             eval("let 主页 = " + parse['主页'])
@@ -156,7 +155,6 @@ function erji() {
         if(parse){
             sauthor = parse["作者"] || sauthor;
             let html = request(surl);
-            MY_HOME = parse['链接'];
             if(parse['前提']){eval(parse['前提']);}
             let 详情 = parse['详情'];
             let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
@@ -306,7 +304,6 @@ function search(name) {
                 }else{
                     parse = source;
                 }
-                MY_HOME = parse['链接'];
                 let data = [];
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索() || [];
