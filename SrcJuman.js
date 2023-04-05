@@ -19,7 +19,7 @@ function yiji() {
         title: "排行",
         url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
-            getData('排行');
+            getYiData('排行');
         }),
         pic_url: "hiker://files/cache/src/排行.webp",
         col_type: 'icon_5'
@@ -28,7 +28,7 @@ function yiji() {
         title: "分类",
         url: $("hiker://empty#noRecordHistory##noHistory#?page=fypage").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
-            getData('分类');
+            getYiData('分类');
         }),
         pic_url: "hiker://files/cache/src/分类.webp",
         col_type: 'icon_5'
@@ -37,7 +37,7 @@ function yiji() {
         title: "更新",
         url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
-            getData('更新');
+            getYiData('更新');
         }),
         pic_url: "hiker://files/cache/src/更新.webp",
         col_type: 'icon_5'
