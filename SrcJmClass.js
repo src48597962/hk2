@@ -38,7 +38,7 @@ function Category() {
         }
         data.forEach(item => {
             item.extra = {name: item.title, img: item.pic_url}
-            item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
             })
