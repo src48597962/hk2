@@ -1,8 +1,7 @@
 let yidata = {
-    "链接": "https://m.taomanhua.com",//会写入MY_HOME
     "主页": function () {
         let d = [];
-        MY_URL = MY_HOME;
+        MY_URL = "https://m.taomanhua.com";
         let html = request(MY_URL);
         var Label_set = pdfa(html, '#js_content&&.mult.sow')
         Label_set.forEach((data) => {
@@ -36,7 +35,7 @@ let yidata = {
 
         if (当前页 == 1) {
             if (!getVar(class_Name)) {
-                var codes = request(MY_HOME + '/sort/');
+                var codes = request('https://m.taomanhua.com/sort/');
                 putVar(class_Name, codes)
             }else{
                 var codes = getVar(class_Name)
@@ -86,7 +85,7 @@ let yidata = {
 
         }
 
-        var 分类post = MY_HOME + '/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
+        var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
         var code = JSON.parse(request(分类post.replace('**', 类别名).replace('@@', 排序名).replace('~~', 当前页))).data.data;
 
         code.forEach((data) => {
@@ -109,10 +108,9 @@ let yidata = {
 
 let erdata = {
     "作者": "嗨又是我",//接口作者
-    "链接": "https://m.taomanhua.com",//会写入MY_HOME
     "搜索": function () {//做为搜索源时，聚合搜索换源列表数据
         let d = [];
-        MY_URL = MY_HOME + "/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page=1&size=30";
+        MY_URL = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page=1&size=30";
         let code = JSON.parse(request(MY_URL)).data.data
         code.forEach(item => {
             if (item.comic_name.includes(name)) {
@@ -120,7 +118,7 @@ let erdata = {
                     title: item.comic_name,//名称
                     desc: item.last_chapter_name,//更新状态或最新章节
                     pic_url: item.cover_img + "@Referer=",//网站图标
-                    url: MY_HOME + item.comic_newid,//原站二级链接
+                    url: "https://m.taomanhua.com/" + item.comic_newid,//原站二级链接
                 });
             }
         });
@@ -135,7 +133,7 @@ let erdata = {
     "选集": `pdfa(html, '#js_chapters&&li').map((data) => {
         let 选集列表 = {};
         选集列表.title = pdfh(data, 'Text')
-        选集列表.url = MY_HOME + "api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
+        选集列表.url = "https://m.taomanhua.comapi/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
         return 选集列表;
     })`,
     "解析": `$('').lazyRule(() => {let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
