@@ -161,15 +161,18 @@ function erji() {
     try{
         if(parse){
             sauthor = parse["作者"] || sauthor;
+            /*
             let html = request(surl);
             if(parse['前提']){eval(parse['前提']);}
             let 详情 = parse['详情'];
             let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
             let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
+            */
+            let details = parse['二级'](surl);
             d.push({
-                title: detail1,
-                desc: detail2,
-                pic_url: MY_PARAMS.img + '@Referer=',
+                title: details.detail1,
+                desc: details.detail2,
+                pic_url: (details.img||MY_PARAMS.img||"https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=',
                 url: MY_PARAMS.img + '@Referer=',
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
@@ -216,7 +219,7 @@ function erji() {
                 }
             })
             let 解析 = eval(parse['解析']) || "";
-            let lists = eval(parse['选集']) || [];
+            let lists = details.list;//eval(parse['选集']) || [];
             if(getMyVar('shsort') == '1'){
                 lists.reverse();
             }
@@ -287,7 +290,7 @@ function erji() {
 function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(searchMark[name]){
-        log("重复搜索>"+name+"，调用搜索缓存");
+        //log("重复搜索>"+name+"，调用搜索缓存");
         addItemBefore('listloading', searchMark[name]);
         updateItem("listloading",{title: getMyVar('SrcJmSousuo')=="1"?"当前搜索为缓存":"‘‘’’<small>当前搜索为缓存</small>"})
     }else{
