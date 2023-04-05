@@ -32,7 +32,10 @@ function yiji() {
     })
     d.push({
         title: "更新",
-        url: "",
+        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmClass.js');
+            Update();
+        }),
         pic_url: "hiker://files/cache/src/更新.webp",
         col_type: 'icon_5'
     })
