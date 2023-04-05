@@ -88,10 +88,17 @@ function SRCSet() {
             col_type: 'text_2',
             url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
                 setItem("searchtestkey",input);
+                let name = getMyVar('manhuaname');
+                let erparse = getMyVar('manhuaerparse');
+                if(!name || !erparse){
+                    return "toast://名称或搜索源接口不能为空";
+                }
                 try{
-                    let erparse = getMyVar('manhuaerparse');
-                    eval("var source = " + erparse);
-                    let sousuo = erparse['搜索'];
+                    let newapi = {
+                        name: name,
+                        erparse: erparse
+                    }
+                    eval("var source = " + newapi);
                 }catch(e){
                     log(e.message);
                     return "toast://搜索源接口有异常，看日志"
