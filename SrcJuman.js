@@ -287,6 +287,7 @@ function erji() {
 //搜索接口
 function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
+    log(searchMark[name]);
     if(searchMark[name]){
         addItemBefore('listloading', searchMark[name]);
         updateItem("listloading",{title: "‘‘’’<small>当前为搜索缓存</small>"})
