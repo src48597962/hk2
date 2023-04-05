@@ -219,5 +219,8 @@ let erdata = {
     "解析": function(url) {//url为播放链接
         let code = JSON.parse(request(url)).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
+    },
+    "最新": function(surl) {//收藏获取最新章节，surl为详情页链接
+        setResult(pdfh(request(surl), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
