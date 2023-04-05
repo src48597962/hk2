@@ -96,7 +96,7 @@ function SRCSet() {
                 try{
                     var source = {
                         name: name,
-                        erparse: JSON.parse(erparse)
+                        erparse: erparse
                     }
                 }catch(e){
                     log(e.message);
@@ -117,7 +117,7 @@ function SRCSet() {
                         setResult(d);
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                         search(name,sdata);
-                    },input,JSON.stringify(source))
+                    },input,source)
                 }else{
                     return "toast://确认搜索源接口数据？"
                 }
