@@ -23,7 +23,7 @@ function yiji() {
     })
     d.push({
         title: "分类",
-        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#?page="+fypage).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmClass.js');
             Category();
         }),
