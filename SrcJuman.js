@@ -131,6 +131,7 @@ function erji() {
         clearMyVar('erjidata');
     }));
     let name = MY_PARAMS.name;
+    setPageTitle(name);
     let isload;//是否正确加载
     let d = [];
     let parse;
