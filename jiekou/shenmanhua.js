@@ -183,17 +183,17 @@ let yidata = {
 
 let erdata = {
     "作者": "嗨又是我",//接口作者
-    "搜索": function () {//做为搜索源时，聚合搜索换源列表数据
+    "搜索": function () {//聚合搜索换源列表数据，搜索关键字为name
         let d = [];
-        MY_URL = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page=1&size=30";
-        let code = JSON.parse(request(MY_URL)).data.data
+        let ssurl = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page=1&size=30";
+        let code = JSON.parse(request(ssurl)).data.data
         code.forEach(item => {
             if (item.comic_name.includes(name)) {
                 d.push({
                     title: item.comic_name,//名称
                     desc: item.last_chapter_name,//更新状态或最新章节
                     pic_url: item.cover_img + "@Referer=",//网站图标
-                    url: "https://m.taomanhua.com/" + item.comic_newid,//原站二级链接
+                    url: "https://m.taomanhua.com/" + item.comic_newid,//原站二级链接,因为在多线程中MY_URL会变，所以不要用pd取
                 });
             }
         });
