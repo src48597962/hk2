@@ -251,12 +251,12 @@ function erji() {
         //二级源浏览记录保存
         let erjidata = {name:name,sname:sname,surl:surl};
         setMark(erjidata);
-        /*收藏更新最新章节，等后面再写
-        setLastChapterRule('js:' + $.toString((type,ua,data)=>{
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
-            xunmi(type,ua,data);
-        }, type, ua, MY_PARAMS.data))
-        */
+        //收藏更新最新章节
+        if(parse['最新']){
+            setLastChapterRule('js:' + $.toString((surl,最新)=>{
+                最新(surl);
+            }, surl, parse['最新']))
+        }
     }else{
         d.push({
             title: "\n搜索接口源结果如下",
