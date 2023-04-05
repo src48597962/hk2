@@ -5,7 +5,7 @@ if(Jumancfg != ""){
 }else{
     var JMconfig= {};
 }
-let yijisource = JMconfig['yijisource'] || "神漫画";
+let yijisource = JMconfig['yijisource'] || "";
 
 let sourcefile = "hiker://files/rules/Src/Juman/jiekou.json";
 let sourcedata = fetch(sourcefile);
