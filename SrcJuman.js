@@ -169,6 +169,7 @@ function erji() {
             let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
             */
             let details = parse['二级'](surl);
+            log(details);
             d.push({
                 title: details.detail1,
                 desc: details.detail2,
