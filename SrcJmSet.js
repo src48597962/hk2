@@ -111,7 +111,7 @@ function SRCSet() {
                         setResult(d);
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                         search(name,sdata);
-                    },input,JSON.parse(erparse))
+                    },input,source)
                 }else{
                     return "toast://确认搜索源接口数据？"
                 }
