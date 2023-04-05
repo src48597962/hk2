@@ -208,6 +208,7 @@ let erdata = {
         let detail1 = "作者："+作者+"\n"+"分类："+分类;
         let detail2 = "简介："+简介;
         let 图片 = pd(html, '#detail&&.thumbnail&&img&&data-src');
+        log(图片);
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
