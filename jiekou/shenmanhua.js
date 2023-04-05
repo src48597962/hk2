@@ -216,8 +216,8 @@ let erdata = {
         })
         return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
     },
-    "解析": function() {
-        return "@lazyRule=.js:"+$.toString(() => {//解析放在下面
+    "解析": function(url) {
+        return url+ $("").lazyRule(() => {//解析放在下面
             let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
             return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
         })
