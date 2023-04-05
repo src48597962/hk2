@@ -287,10 +287,10 @@ function erji() {
 //搜索接口
 function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
-    log(searchMark[name]);
     if(searchMark[name]){
+        log("重复搜索>"+name+"，调用搜索缓存");
         addItemBefore('listloading', searchMark[name]);
-        updateItem("listloading",{title: "‘‘’’<small>当前为搜索缓存</small>"})
+        updateItem("listloading",{title: getMyVar('SrcJmSousuo')=="1"?"当前搜索为缓存":"‘‘’’<small>当前搜索为缓存</small>"})
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
