@@ -161,15 +161,7 @@ function erji() {
     try{
         if(parse){
             sauthor = parse["作者"] || sauthor;
-            /*
-            let html = request(surl);
-            if(parse['前提']){eval(parse['前提']);}
-            let 详情 = parse['详情'];
-            let detail1 = 详情['标题1'].split('$$$')[0]+"："+eval(详情['标题1'].split('$$$')[1])+"\n"+详情['标题2'].split('$$$')[0]+"："+eval(详情['标题2'].split('$$$')[1]);
-            let detail2 = 详情['描述'].split('$$$')[0]+"："+eval(详情['描述'].split('$$$')[1]);
-            */
             let details = parse['二级'](surl);
-            log(details);
             d.push({
                 title: details.detail1,
                 desc: details.detail2,
@@ -220,7 +212,7 @@ function erji() {
                 }
             })
             let 解析 = eval(parse['解析']) || "";
-            let lists = details.list;//eval(parse['选集']) || [];
+            let lists = details.list;
             if(getMyVar('shsort') == '1'){
                 lists.reverse();
             }
