@@ -211,7 +211,7 @@ let erdata = {
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
-            选集列表.url = "https://m.taomanhua.comapi/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
+            选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
             return 选集列表;
         })
         return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
