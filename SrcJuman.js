@@ -284,6 +284,8 @@ function erji() {
 
 //搜索接口
 function search(name,sdata) {
+    log(name);
+    log(sdata);
     let searchMark = storage0.getMyVar('searchMark') || {};
     let loadid = getMyVar('SrcJmSousuo')=="1"?'sousuoloading':'listloading';
     if(searchMark[name] && !sdata){
