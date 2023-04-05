@@ -212,7 +212,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            let 解析 = parse['解析'] || "";//eval(parse['解析']) || "";
+            let 解析 = eval(parse['解析']) || "";
             let lists = details.list;
             if(getMyVar('shsort') == '1'){
                 lists.reverse();
