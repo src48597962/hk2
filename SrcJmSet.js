@@ -1,69 +1,64 @@
 ////本代码仅用于个人学习，请勿用于其他作用，下载后请24小时内删除，代码虽然是公开学习的，但请尊重作者，应留下说明
 function SRCSet() {
     setPageTitle('聚漫接口 | ♥管理');
-    let filepath = "hiker://files/rules/Src/Juman/jiekou.json";
-    let datafile = fetch(filepath);
-    if(datafile != ""){
-        eval("var datalist=" + datafile+ ";");
-    }else{
-        var datalist = [];
-    }
-    function manhuaapi(filepath,data){
+    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+    
+    function manhuaapi(filepath, data) {
         addListener("onClose", $.toString(() => {
             clearMyVar('manhuaname');
             clearMyVar('manhuaparse');
             clearMyVar('manhuaerparse');
             clearMyVar('manhuaedit');
         }));
-        if(data){
-            putMyVar('manhuaedit','1');
-            putMyVar('manhuaname',data.name);
-            storage0.putMyVar('manhuaparse',data.parse);
-            storage0.putMyVar('manhuaerparse',data.erparse?data.erparse:"");
+        if (data) {
+            putMyVar('manhuaedit', '1');
+            putMyVar('manhuaname', data.name);
+            storage0.putMyVar('manhuaparse', data.parse);
+            storage0.putMyVar('manhuaerparse', data.erparse ? data.erparse : "");
         }
         let d = [];
         d.push({
-            title:'名称',
+            title: '名称',
             col_type: 'input',
             desc: "接口名称",
             extra: {
-                defaultValue: getMyVar('manhuaname')?getMyVar('manhuaname'):"",
+                defaultValue: getMyVar('manhuaname') ? getMyVar('manhuaname') : "",
                 titleVisible: false,
                 onChange: $.toString(() => {
-                    putMyVar('manhuaname',input);
+                    putMyVar('manhuaname', input);
                 })
             }
         });
         d.push({
-            title:'主页数据源',
+            title: '主页数据源',
             col_type: 'input',
             desc: "主页数据源, 可以留空",
             extra: {
-                defaultValue: storage0.getMyVar('manhuaparse')||"",
+                defaultValue: storage0.getMyVar('manhuaparse') || "",
                 titleVisible: false,
                 type: "textarea",
                 highlight: true,
                 height: 5,
                 onChange: $.toString(() => {
-                    if(/{|}/.test(input)){
-                        storage0.putMyVar("manhuaparse",input)
+                    if (/{|}/.test(input)) {
+                        storage0.putMyVar("manhuaparse", input)
                     }
                 })
             }
         });
         d.push({
-            title:'搜索数据源',
+            title: '搜索数据源',
             col_type: 'input',
             desc: "搜索数据源, 可以留空",
             extra: {
-                defaultValue: storage0.getMyVar('manhuaerparse')||"",
+                defaultValue: storage0.getMyVar('manhuaerparse') || "",
                 titleVisible: false,
                 type: "textarea",
                 highlight: true,
                 height: 5,
                 onChange: $.toString(() => {
-                    if(/{|}/.test(input)){
-                        storage0.putMyVar("manhuaerparse",input)
+                    if (/{|}/.test(input)) {
+                        storage0.putMyVar("manhuaerparse", input)
                     }
                 })
             }
@@ -71,38 +66,38 @@ function SRCSet() {
         d.push({
             title: '保存',
             col_type: 'text_center_1',
-            url: $().lazyRule((filepath)=>{
-                if(!getMyVar('manhuaname')){
+            url: $().lazyRule((filepath) => {
+                if (!getMyVar('manhuaname')) {
                     return "toast://名称不能为空";
                 }
-                if(!getMyVar('manhuaparse') && !getMyVar('manhuaerparse')){
+                if (!getMyVar('manhuaparse') && !getMyVar('manhuaerparse')) {
                     return "toast://主页源数据和搜索源数据不能同时为空";
                 }
-                try{
+                try {
                     let name = getMyVar('manhuaname');
                     let parse = getMyVar('manhuaparse');
                     let erparse = getMyVar('manhuaerparse');
                     let newapi = {
                         name: name
                     }
-                    if(parse){newapi['parse'] = parse;}
-                    if(erparse){newapi['erparse'] = erparse;}
+                    if (parse) { newapi['parse'] = parse; }
+                    if (erparse) { newapi['erparse'] = erparse; }
                     let datafile = fetch(filepath);
-                    if(datafile != ""){
-                        try{
-                            eval("var datalist=" + datafile+ ";");
-                        }catch(e){
+                    if (datafile != "") {
+                        try {
+                            eval("var datalist=" + datafile + ";");
+                        } catch (e) {
                             var datalist = [];
                         }
-                    }else{
+                    } else {
                         var datalist = [];
                     }
-                    let index = datalist.indexOf(datalist.filter(d=> d.name==name)[0]);
-                    if(index>-1 && getMyVar('manhuaedit')!="1"){
-                        return "toast://已存在-"+name;
-                    }else{
-                        if(getMyVar('manhuaedit')=="1" && index>-1){
-                            datalist.splice(index,1);
+                    let index = datalist.indexOf(datalist.filter(d => d.name == name)[0]);
+                    if (index > -1 && getMyVar('manhuaedit') != "1") {
+                        return "toast://已存在-" + name;
+                    } else {
+                        if (getMyVar('manhuaedit') == "1" && index > -1) {
+                            datalist.splice(index, 1);
                         }
                         datalist.push(newapi);
                         writeFile(filepath, JSON.stringify(datalist));
@@ -110,20 +105,34 @@ function SRCSet() {
                         back(true);
                         return "toast://已保存";
                     }
-                }catch(e){
+                } catch (e) {
                     return "toast://接口数据异常，请确认对象格式";
                 }
-            },filepath)
+            }, filepath)
         });
         setResult(d);
     }
     var d = [];
+    let sourcenames = yidatalist.map(it=>{
+        return it.name;
+    })
+    d.push({
+        title: yijisource?"主页源："+yijisource:'设置主页源',
+        url: $(sourcenames,2).select((cfgfile,JMconfig) => {
+            JMconfig["yijisource"] = input;
+            writeFile(cfgfile, JSON.stringify(JMconfig));
+            refreshPage(false);
+            return 'toast://主页源已设置为：' + input;
+        }, cfgfile, JMconfig),
+        img: "https://lanmeiguojiang.com/tubiao/messy/145.svg",
+        col_type: "icon_2"
+    });
     d.push({
         title: '增加',
-        url: $('hiker://empty#noRecordHistory##noHistory#').rule((filepath,manhuaapi) => {
+        url: $('hiker://empty#noRecordHistory##noHistory#').rule((filepath, manhuaapi) => {
             setPageTitle('增加 | 聚漫接口');
             manhuaapi(filepath);
-        },filepath,manhuaapi),
+        }, filepath, manhuaapi),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
         col_type: "icon_small_3"
     });
@@ -138,18 +147,18 @@ function SRCSet() {
                     let content = parsePaste(parseurl);
                     let datalist2 = JSON.parse(aesDecode('Juman', content));
                     let datafile = fetch(filepath);
-                    if(datafile != ""){
-                        try{
-                            eval("var datalist=" + datafile+ ";");
-                        }catch(e){
+                    if (datafile != "") {
+                        try {
+                            eval("var datalist=" + datafile + ";");
+                        } catch (e) {
                             var datalist = [];
                         }
-                    }else{
+                    } else {
                         var datalist = [];
                     }
                     let num = 0;
                     for (let i = 0; i < datalist2.length; i++) {
-                        if (!datalist.some(item => item.name==datalist2[i].name)) {
+                        if (!datalist.some(item => item.name == datalist2[i].name)) {
                             datalist.push(datalist2[i]);
                             num = num + 1;
                         }
@@ -191,37 +200,37 @@ function SRCSet() {
 
     datalist.forEach(item => {
         d.push({
-            title: "🎃 " + item.name + (item.parse?"（主页源）":"") + (item.erparse?"（搜索源）":""),
-            url: $(["分享", "编辑", "删除"], 1).select((filepath,manhuaapi,data) => {
-                if(input == "分享"){
+            title: "🎃 " + item.name + (item.parse ? "（主页源）" : "") + (item.erparse ? "（搜索源）" : ""),
+            url: $(["分享", "编辑", "删除"], 1).select((filepath, manhuaapi, data) => {
+                if (input == "分享") {
                     showLoading('分享上传中，请稍后...');
                     let oneshare = []
                     oneshare.push(data);
                     let pasteurl = sharePaste(aesEncode('Juman', JSON.stringify(oneshare)));
                     hideLoading();
-                    if(pasteurl){
-                        let code = '聚漫接口￥'+aesEncode('Juman', pasteurl)+'￥'+data.name;
+                    if (pasteurl) {
+                        let code = '聚漫接口￥' + aesEncode('Juman', pasteurl) + '￥' + data.name;
                         copy(code);
                         return "toast://(单个)聚漫分享口令已生成";
-                    }else{
+                    } else {
                         return "toast://分享失败，剪粘板或网络异常";
                     }
-                }else if(input == "编辑"){
-                    return $('hiker://empty#noRecordHistory##noHistory#').rule((filepath,manhuaapi,data) => {
+                } else if (input == "编辑") {
+                    return $('hiker://empty#noRecordHistory##noHistory#').rule((filepath, manhuaapi, data) => {
                         setPageTitle('编辑 | 聚漫接口');
-                        manhuaapi(filepath,data);
-                    },filepath,manhuaapi,data)
+                        manhuaapi(filepath, data);
+                    }, filepath, manhuaapi, data)
                 } else if (input == "删除") {
                     let datafile = fetch(filepath);
-                    eval("var datalist=" + datafile+ ";");
-                    let index = datalist.indexOf(datalist.filter(d => d.name==data.name)[0]);
+                    eval("var datalist=" + datafile + ";");
+                    let index = datalist.indexOf(datalist.filter(d => d.name == data.name)[0]);
                     datalist.splice(index, 1);
                     writeFile(filepath, JSON.stringify(datalist));
                     clearMyVar('searchMark');
                     refreshPage(false);
                     return 'toast://已删除';
-                } 
-            },filepath,manhuaapi,item),
+                }
+            }, filepath, manhuaapi, item),
             desc: '',
             col_type: "text_1"
         });
