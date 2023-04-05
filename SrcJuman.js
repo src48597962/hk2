@@ -318,7 +318,7 @@ function search(name) {
                     data.forEach(item => {
                         if(getMyVar('SrcJmSousuo')=="1"){
                             item.extra = {name:item.title,img:item.pic_url,sname:obj.name,surl:item.url};
-                            item.url = item.url + $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                            item.url = item.url + $("").rule(() => {
                                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                                 erji();
                             })
