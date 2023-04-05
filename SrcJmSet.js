@@ -1,7 +1,27 @@
 ////本代码仅用于个人学习，请勿用于其他作用，下载后请24小时内删除，代码虽然是公开学习的，但请尊重作者，应留下说明
 function SRCSet() {
     setPageTitle('聚漫接口 | ♥管理');
-    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+    
+    let cfgfile = "hiker://files/rules/Src/Juman/config.json";
+    let Jumancfg=fetch(cfgfile);
+    if(Jumancfg != ""){
+        eval("var JMconfig=" + Jumancfg+ ";");
+    }else{
+        var JMconfig= {};
+    }
+    let yijisource = JMconfig['yijisource'] || "";
+
+    let filepath = "hiker://files/rules/Src/Juman/jiekou.json";
+    let sourcedata = fetch(filepath);
+    if(sourcedata != ""){
+        eval("var datalist=" + sourcedata+ ";");
+    }else{
+        var datalist = [];
+    }
+
+    let yidatalist = datalist.filter(it=>{
+        return it.parse;
+    });
     
     function manhuaapi(filepath, data) {
         addListener("onClose", $.toString(() => {
@@ -108,7 +128,7 @@ function SRCSet() {
                 } catch (e) {
                     return "toast://接口数据异常，请确认对象格式";
                 }
-            }, sourcefile)
+            }, filepath)
         });
         setResult(d);
     }
@@ -135,7 +155,7 @@ function SRCSet() {
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((filepath, manhuaapi) => {
             setPageTitle('增加 | 聚漫接口');
             manhuaapi(filepath);
-        }, sourcefile, manhuaapi),
+        }, filepath, manhuaapi),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
         col_type: "icon_small_3"
     });
@@ -178,7 +198,7 @@ function SRCSet() {
                 log(e.message);
                 return "toast://聚漫√：口令有误";
             }
-        }, sourcefile),
+        }, filepath),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
         col_type: "icon_small_3"
     });
@@ -233,7 +253,7 @@ function SRCSet() {
                     refreshPage(false);
                     return 'toast://已删除';
                 }
-            }, sourcefile, manhuaapi, item),
+            }, filepath, manhuaapi, item),
             desc: '',
             col_type: "text_1"
         });
