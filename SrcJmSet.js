@@ -88,8 +88,15 @@ function SRCSet() {
             col_type: 'text_2',
             url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
                 setItem("searchtestkey",input);
-                let erparse = getMyVar('manhuaerparse');
-                if(erparse){
+                try{
+                    let erparse = getMyVar('manhuaerparse');
+                    eval("var source = " + erparse);
+                    let sousuo = erparse['搜索'];
+                }catch(e){
+                    log(e.message);
+                    return "toast://搜索源接口有异常，看日志"
+                }
+                if(source){
                     return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
                         let d = [];
                         d.push({
@@ -105,6 +112,8 @@ function SRCSet() {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                         search(name,sdata);
                     },input,JSON.parse(erparse))
+                }else{
+                    return "toast://确认搜索源接口数据？"
                 }
             })
         })
