@@ -200,7 +200,8 @@ let erdata = {
         return d;
     },
     "二级": function(surl) {//surl为详情页链接
-        let html = request(surl);
+        let MY_URL = surl;
+        let html = request(MY_URL);
         let dataid = pdfh(html, "#COMMENT&&data-ssid");
         let 作者 = pdfh(html, '#detail&&.author&&Text');
         let 分类 = pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ");
@@ -208,7 +209,6 @@ let erdata = {
         let detail1 = "作者："+作者+"\n"+"分类："+分类;
         let detail2 = "简介："+简介;
         let 图片 = pd(html, '#detail&&.thumbnail&&img&&data-src');
-        log(图片);
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
