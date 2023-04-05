@@ -93,12 +93,10 @@ let yidata = {
                 title: data.comic_name,
                 desc: data.last_chapter_name,
                 pic_url: data.cover_img + "@Referer=",
-                url: 'hiker://empty#immersiveTheme##autoCache##noHistory#?url=' + 前缀 +'/'+ data.comic_newid + '/@rule=js:$.require("hiker://page/details")',
                 col_type: "movie_3_marquee",
                 extra: {
                     name: data.comic_name,
-                    url: 前缀 +'/'+ data.comic_newid +'/',
-                    qz: 前缀
+                    url: 'https://m.taomanhua.com/'+ data.comic_newid +'/'
                 }
             });
         })
