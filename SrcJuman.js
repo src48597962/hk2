@@ -185,6 +185,7 @@ function erji() {
     let erjidata = storage0.getMyVar('erjidata') || getMark(name);
     let sname = erjidata.sname || MY_PARAMS.sname || "";
     let surl = erjidata.surl || MY_PARAMS.surl || "";
+    let sauthor = "未知";
     let sourcedata = datalist.filter(it=>{
         return it.name==sname&&it.erparse;
     });
@@ -206,6 +207,7 @@ function erji() {
     }
     try{
         if(parse){
+            sauthor = parse["作者"] || sauthor;
             let html = request(surl);
             MY_HOME = parse['链接'];
             if(parse['前提']){eval(parse['前提']);}
@@ -286,11 +288,12 @@ function erji() {
     
     if(isload){
         d.push({
-            title: "‘‘’’<small><font color=#f20c00>此规则仅限学习交流使用，请于导入后24小时内删除，任何团体或个人不得以任何方式方法传播此规则的整体或部分！</font></small>",
+            title: "‘‘’’<small><font color=#f20c00>当前数据来自接口源："+sname+"，作者："+sauthor+"</font></small>",
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
-                id: "listloading"
+                id: "listloading",
+                lineVisible: false
             }
         });
         setResult(d);
@@ -313,7 +316,8 @@ function erji() {
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
-                id: "listloading"
+                id: "listloading",
+                lineVisible: false
             }
         });
         setResult(d);
@@ -326,6 +330,7 @@ function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(searchMark[name]){
         addItemBefore('listloading', searchMark[name]);
+        updateItem("listloading",{title: "<small>当前为搜索缓存</small>"})
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
@@ -392,7 +397,7 @@ function search(name) {
                 }
             });
             storage0.putMyVar('searchMark',searchMark);
-            let sousuosm = getMyVar('SrcJmSousuo')=="1"?success+"/"+list.length+"，搜索完成":"‘‘’’<font color=#f13b66a>"+success+"</font>/"+list.length+"，搜索完成";
+            let sousuosm = getMyVar('SrcJmSousuo')=="1"?success+"/"+list.length+"，搜索完成":"‘‘’’<small><font color=#f13b66a>"+success+"</font>/"+list.length+"，搜索完成</small>";
             updateItem("listloading",{title: sousuosm})
             toast('搜源完成');
         }else{
