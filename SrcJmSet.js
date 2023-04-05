@@ -128,6 +128,9 @@ function SRCSet() {
         col_type: "icon_2"
     });
     d.push({
+        col_type: "blank_block"
+    })
+    d.push({
         title: '增加',
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((filepath, manhuaapi) => {
             setPageTitle('增加 | 聚漫接口');
