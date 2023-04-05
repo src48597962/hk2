@@ -1,5 +1,6 @@
 //分类、更新、排行
 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+
 //分类
 function Update() {
     let d = [];
@@ -37,7 +38,7 @@ function Update() {
         }
         data.forEach(item => {
             if(item.pic_url){
-                item.extra = {name: item.title, img: item.pic_url}
+                item.extra = {name: item.extra&&item.extra.name?item.extra.name:item.title, img: item.pic_url}
             }
             item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
@@ -85,7 +86,7 @@ function Category() {
         }
         data.forEach(item => {
             if(item.pic_url){
-                item.extra = {name: item.title, img: item.pic_url}
+                item.extra = {name: item.extra&&item.extra.name?item.extra.name:item.title, img: item.pic_url}
             }
             item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
