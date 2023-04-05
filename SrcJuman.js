@@ -283,10 +283,10 @@ function erji() {
 }
 
 //搜索接口
-function search(name) {
+function search(name,sname) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     let loadid = getMyVar('SrcJmSousuo')=="1"?'sousuoloading':'listloading';
-    if(searchMark[name]){
+    if(searchMark[name] && !sname){
         //log("重复搜索>"+name+"，调用搜索缓存");
         addItemBefore(loadid, searchMark[name]);
         updateItem(loadid,{title: getMyVar('SrcJmSousuo')=="1"?"当前搜索为缓存":"‘‘’’<small>当前搜索为缓存</small>"})
@@ -345,6 +345,11 @@ function search(name) {
             }
             return 1;
         }
+        if(sname){
+            erdatalist = erdatalist.filter(it=>{
+                return it.name==sname;
+            })
+        }
         let list = erdatalist.map((item)=>{
             return {
             func: task,
@@ -361,7 +366,9 @@ function search(name) {
                 param: {
                 }
             });
-            storage0.putMyVar('searchMark',searchMark);
+            if(!sname){
+                storage0.putMyVar('searchMark',searchMark);
+            }
             let sousuosm = getMyVar('SrcJmSousuo')=="1"?success+"/"+list.length+"，搜索完成":"‘‘’’<small><font color=#f13b66a>"+success+"</font>/"+list.length+"，搜索完成</small>";
             updateItem(loadid,{title: sousuosm})
             toast('搜源完成');
