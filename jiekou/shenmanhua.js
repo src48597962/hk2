@@ -120,7 +120,7 @@ let yidata = {
             });
         });
         lisr_s.forEach((data) => {
-            d.push({
+            d.push({//主页源不需要url
                 title: '‘‘’’<b>'+data.comic_name+'</b> <small>\n最新：<font color="#FA7298">'+data.comic_chapter_name+'</font>\n作者：'+data.author_name+'</small>',
                 desc:'‘‘’’<font color="#274c5e">分类：'+data.comic_type.join(" | ")+'\n简介：'+data.comic_feature+'</font>' ,
                 pic_url: data.feature_img + "@Referer=https://m.taomanhua.com/",
@@ -159,7 +159,7 @@ let yidata = {
             });
         });
         pdfa(code, 'li.comic-rank-top&&.comic-item').forEach((data, id) => {
-            d.push({
+            d.push({//主页源不需要url
                 title: pdfh(data, 'a&&title').split(',')[0],
                 desc: '：第' + (id + 1) + '名',
                 pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.taomanhua.com/",
@@ -167,12 +167,12 @@ let yidata = {
             });
         })
         pdfa(code, '.rank-comic-list&&.list').forEach(function(data) {
-            d.push({
+            d.push({//主页源不需要url
                 title: '‘‘’’<b>' + pdfh(data, 'h3&&Text') + '</b> <small>&nbsp;&nbsp;&nbsp;&nbsp;排名：<font color="#FA7298"><b> ' + pdfh(data, '.order&&Text') + '  名</b></font>&nbsp;&nbsp;&nbsp;&nbsp;作者：' + pdfh(data, '.comic-author&&Text') + '</small>',
                 desc: '‘‘’’<font color="#004e66">动态：' + pdfh(data, '.clearfix&&.statistics&&Text') + '&nbsp;&nbsp;&nbsp;&nbsp;分类：' + pdfa(data, '.sort-list&&a').map(datas => pdfh(datas, 'Text')).join(" | ") + '</font>',
                 col_type: 'text_1',
                 extra: {
-                    name: pdfh(data, 'h3&&Text')
+                    name: pdfh(data, 'h3&&Text')//如果上面的title不是单纯的名称可以单独写在附加中
                 }
             });
         });
