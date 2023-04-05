@@ -285,11 +285,11 @@ function erji() {
 //搜索接口
 function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
-    let addid = getMyVar('SrcJmSousuo')=="1"?'sousuoloading':'listloading';
+    let loadid = getMyVar('SrcJmSousuo')=="1"?'sousuoloading':'listloading';
     if(searchMark[name]){
         //log("重复搜索>"+name+"，调用搜索缓存");
-        addItemBefore(addid, searchMark[name]);
-        updateItem(addid,{title: getMyVar('SrcJmSousuo')=="1"?"当前搜索为缓存":"‘‘’’<small>当前搜索为缓存</small>"})
+        addItemBefore(loadid, searchMark[name]);
+        updateItem(loadid,{title: getMyVar('SrcJmSousuo')=="1"?"当前搜索为缓存":"‘‘’’<small>当前搜索为缓存</small>"})
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
@@ -337,7 +337,7 @@ function search(name) {
                     })
                     searchMark[name] = searchMark[name] || [];
                     searchMark[name] = searchMark[name].concat(data);
-                    addItemBefore(addid, data);
+                    addItemBefore(loadid, data);
                     success++;
                 }
             }catch(e){
@@ -363,7 +363,7 @@ function search(name) {
             });
             storage0.putMyVar('searchMark',searchMark);
             let sousuosm = getMyVar('SrcJmSousuo')=="1"?success+"/"+list.length+"，搜索完成":"‘‘’’<small><font color=#f13b66a>"+success+"</font>/"+list.length+"，搜索完成</small>";
-            updateItem(addid,{title: sousuosm})
+            updateItem(loadid,{title: sousuosm})
             toast('搜源完成');
         }else{
             toast('无接口，未找到源');
