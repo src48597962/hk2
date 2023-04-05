@@ -330,7 +330,7 @@ function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(searchMark[name]){
         addItemBefore('listloading', searchMark[name]);
-        updateItem("listloading",{title: "<small>当前为搜索缓存</small>"})
+        updateItem("listloading",{title: "‘‘’’<small>当前为搜索缓存</small>"})
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
