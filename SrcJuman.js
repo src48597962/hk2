@@ -28,7 +28,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmSet.js');
             SRCSet();
         }),
-        pic_url: "https://lanmeiguojiang.com/tubiao/messy/13.svg",
+        pic_url: "hiker://files/cache/src/管理.svg",
         col_type: 'icon_5'
     })
     d.push({
@@ -52,7 +52,7 @@ function yiji() {
     d.push({
         title: getItem('collectionorhistory')=="history"?"历史":"收藏",
         url: getItem('collectionorhistory')=="history"?"hiker://history":"hiker://collection",
-        pic_url: "https://lanmeiguojiang.com/tubiao/messy/165.svg",
+        pic_url: "hiker://files/cache/src/收藏.svg",
         col_type: 'icon_5',
         extra: {
             longClick: [{
@@ -121,7 +121,7 @@ function sousuo() {
     let name = MY_URL.split('##')[1];
     let d = [];
     d.push({
-        title: "加载中...",
+        title: "搜索中...",
         url: "hiker://empty",
         extra: {
             id: "listloading"
@@ -130,7 +130,6 @@ function sousuo() {
     setResult(d);
     search(name);
     clearMyVar('SrcJmSousuo');
-    updateItem("listloading",{title:"搜索完成"})
 }
 //搜索
 function sousuo3() {
@@ -173,47 +172,7 @@ function sousuo3() {
     }
     setResult(d);
 }
-//取本地足迹记录
-function getMark(name){
-    let markfile = "hiker://files/rules/Src/Juman/mark.json";
-    let markdata = fetch(markfile);
-    if(markdata != ""){
-        eval("var marklist=" + markdata+ ";");
-    }else{
-        var marklist = [];
-    }
-    let mark = marklist.filter(item => {
-        return item.name==name;
-    })
-    if(mark.length==1){
-        return mark[0];
-    }else{
-        return {};
-    }
-}
-//保存本地足迹记录
-function setMark(data){
-    let markfile = "hiker://files/rules/Src/Juman/mark.json";
-    let markdata = fetch(markfile);
-    if(markdata != ""){
-        eval("var marklist=" + markdata+ ";");
-    }else{
-        var marklist = [];
-    }
-    let mark = marklist.filter(item => {
-        return item.name==data.name;
-    })
-    if(mark.length==1){
-        let index = marklist.indexOf(mark[0]);
-        marklist.splice(index,1)
-    }
-    marklist.push(data);
-    if(marklist.length>100){
-        marklist.splice(0,1);
-    }
-    writeFile(markfile, JSON.stringify(marklist));
-    return 1;
-}
+
 //二级+源搜索
 function erji() {
     addListener("onClose", $.toString(() => {
@@ -339,7 +298,14 @@ function erji() {
             url: MY_PARAMS.img + '@Referer=',
             col_type: 'movie_1_vertical_pic_blur',
             extra: {
-                gradient: true,
+                gradient: true
+            }
+        });
+        d.push({
+            title: "",
+            url: 'hiker://empty',
+            col_type: 'text_center_1',
+            extra: {
                 id: "listloading"
             }
         });
@@ -347,36 +313,12 @@ function erji() {
         search(name);
     }
 }
-//搜索页面
-function sousuo2() {
-    addListener("onClose", $.toString(() => {
-        clearMyVar('backsousuo');
-    }));
-    putMyVar('backsousuo','1');
-    let d = [];
-    d.push({
-        title: "\n接口搜索结果",
-        desc: "\n\n选择一个源观看吧👇",
-        pic_url: MY_PARAMS.img + '@Referer=',
-        url: 'toast://点我干啥，点下面源',
-        col_type: 'movie_1_vertical_pic_blur',
-        extra: {
-            gradient: true,
-            id: "listloading"
-        }
-    });
-    setResult(d);
-    search(MY_PARAMS.name);
-}
-//搜索图源
+
+//搜索接口
 function search(name) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(searchMark[name]){
-        if(getMyVar('SrcJmSousuo')=="1"){
-            addItemBefore('listloading', searchMark[name]);
-        }else{
-            addItemAfter('listloading', searchMark[name]);
-        }
+        addItemBefore('listloading', searchMark[name]);
     }else{
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
@@ -386,8 +328,9 @@ function search(name) {
             i++;
             if (i == 1) { one = k }
         }
-        if (i > 30) { delete searchMark[one]; }
+        if (i > 20) { delete searchMark[one]; }
         datalist = datalist.filter(it => {return it.erparse})
+        let success = 0;
         let task = function(obj) {
             try{
                 let parse;
@@ -401,25 +344,24 @@ function search(name) {
                 MY_HOME = parse['链接'];
                 let data = [];
                 eval("let 搜索 = " + parse['搜索'])
-                data = 搜索();
-                data.forEach(item => {
-                    let erjidata = {name:item.desc,sname:obj.name,surl:item.url};
-                    item.extra = {name:item.desc,img:item.pic_url};
-                    item.url = item.url + $("#noLoading#").lazyRule((erjidata) => {
-                        storage0.putMyVar('erjidata', erjidata);
-                        refreshPage(false);
-                        return "toast://已切换源："+erjidata.sname;
-                    },erjidata);
-                    item.content = item.desc;
-                    item.desc = getMyVar('SrcJmSousuo')=="1"? '聚漫√ · ' + obj.name : obj.name + ' · ' + item.desc;
-                    item.col_type = getMyVar('SrcJmSousuo')=="1"?"video":"avatar";
-                })
-                searchMark[name] = searchMark[name] || [];
-                searchMark[name] = searchMark[name].concat(data);
-                if(getMyVar('SrcJmSousuo')=="1"){
+                data = 搜索() || [];
+                if(data.length>0){
+                    data.forEach(item => {
+                        let erjidata = {name:item.desc,sname:obj.name,surl:item.url};
+                        item.extra = {name:item.desc,img:item.pic_url};
+                        item.url = item.url + $("#noLoading#").lazyRule((erjidata) => {
+                            storage0.putMyVar('erjidata', erjidata);
+                            refreshPage(false);
+                            return "toast://已切换源："+erjidata.sname;
+                        },erjidata);
+                        item.content = item.desc;
+                        item.desc = getMyVar('SrcJmSousuo')=="1"? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
+                        item.col_type = getMyVar('SrcJmSousuo')=="1"?"video":"avatar";
+                    })
+                    searchMark[name] = searchMark[name] || [];
+                    searchMark[name] = searchMark[name].concat(data);
                     addItemBefore('listloading', data);
-                }else{
-                    addItemAfter('listloading', data);
+                    success++;
                 }
             }catch(e){
                 log(obj.name+'>搜源失败>'+e.message);
@@ -436,7 +378,6 @@ function search(name) {
         
         if(list.length>0){
             deleteItemByCls('loadlist');
-            //putMyVar('diskSearch', '1');
             be(list, {
                 func: function(obj, id, error, taskResult) {
                 },
@@ -444,19 +385,61 @@ function search(name) {
                 }
             });
             storage0.putMyVar('searchMark',searchMark);
-            //clearMyVar('diskSearch');
+            updateItem("listloading",{title: success+"/"+(list.length-success)+"/"+list.length+"搜索完成"})
             toast('搜源完成');
         }else{
-        toast('无接口，未找到源');
+            toast('无接口，未找到源');
         }
         hideLoading();
     }
 }
+
+//取本地足迹记录
+function getMark(name){
+    let markfile = "hiker://files/rules/Src/Juman/mark.json";
+    let markdata = fetch(markfile);
+    if(markdata != ""){
+        eval("var marklist=" + markdata+ ";");
+    }else{
+        var marklist = [];
+    }
+    let mark = marklist.filter(item => {
+        return item.name==name;
+    })
+    if(mark.length==1){
+        return mark[0];
+    }else{
+        return {};
+    }
+}
+//保存本地足迹记录
+function setMark(data){
+    let markfile = "hiker://files/rules/Src/Juman/mark.json";
+    let markdata = fetch(markfile);
+    if(markdata != ""){
+        eval("var marklist=" + markdata+ ";");
+    }else{
+        var marklist = [];
+    }
+    let mark = marklist.filter(item => {
+        return item.name==data.name;
+    })
+    if(mark.length==1){
+        let index = marklist.indexOf(mark[0]);
+        marklist.splice(index,1)
+    }
+    marklist.push(data);
+    if(marklist.length>100){
+        marklist.splice(0,1);
+    }
+    writeFile(markfile, JSON.stringify(marklist));
+    return 1;
+}
 //图标下载
 function downloadicon() {
     try{
-        if(!fileExist('hiker://files/cache/src/管理.png')){
-            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/管理.png", 'hiker://files/cache/src/管理.png');
+        if(!fileExist('hiker://files/cache/src/管理.svg')){
+            downloadFile('https://lanmeiguojiang.com/tubiao/messy/13.svg', 'hiker://files/cache/src/管理.svg');
         }
         if(!fileExist('hiker://files/cache/src/更新.webp')){
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/更新.webp", 'hiker://files/cache/src/更新.webp');
@@ -467,8 +450,8 @@ function downloadicon() {
         if(!fileExist('hiker://files/cache/src/排行.webp')){
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/排行.webp", 'hiker://files/cache/src/排行.webp');
         }
-        if(!fileExist('hiker://files/cache/src/书架.jpg')){
-            downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/书架.png", 'hiker://files/cache/src/书架.png');
+        if(!fileExist('hiker://files/cache/src/收藏.svg')){
+            downloadFile('https://lanmeiguojiang.com/tubiao/messy/165.svg', 'hiker://files/cache/src/收藏.svg');
         }
     }catch(e){}
 }
@@ -501,26 +484,3 @@ function Version() {
         putMyVar('SrcJuman-Version', '-V'+nowVersion);
     }
 }
-
-
-/*
-                        try {
-                            eval('var SrcMark = ' + fetch("hiker://files/cache/src/JmMark.json"));
-                        } catch (e) {
-                            var SrcMark = "";
-                        }
-                        if (SrcMark == "") {
-                            SrcMark = { route: {} };
-                        } else if (SrcMark.route == undefined) {
-                            SrcMark.route = {};
-                        }
-                        SrcMark.route[name] = {sname:sname,url:url};
-                        let key = 0;
-                        let one = "";
-                        for (var k in SrcMark.route) {
-                            key++;
-                            if (key == 1) { one = k }
-                        }
-                        if (key > 50) { delete SrcMark.route[one]; }
-                        writeFile("hiker://files/cache/src/JmMark.json", JSON.stringify(SrcMark));
-*/
