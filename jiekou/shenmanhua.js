@@ -217,15 +217,13 @@ let erdata = {
         return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
     },
     "解析": function() {
-        return $.toString(() => {
-            $('').lazyRule(() => {//解析放在lazyRule里面
+        return $('').lazyRule(() => {//解析放在lazyRule里面
                 var list = parseDomForArray(request(input), '.view-imgBox&&img');
                 var pics = [];
                 for (var i in list) {
                     pics.push(parseDom(list[i],'img&&data-original'))
                 }
                 return "pics://" + pics.join("&&");
-            })
         })
     }
     /*`$('').lazyRule(() => {//解析放在lazyRule里面
