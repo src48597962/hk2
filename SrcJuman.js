@@ -138,6 +138,7 @@ function erji() {
     let erjidata = storage0.getMyVar('erjidata') || getMark(name);
     let sname = erjidata.sname || MY_PARAMS.sname || "";
     let surl = erjidata.surl || MY_PARAMS.surl || "";
+    MY_URL = surl;
     let sauthor = "未知";
     let sourcedata = erdatalist.filter(it=>{
         return it.name==sname;
@@ -211,7 +212,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            let 解析 = eval(parse['解析']) || "";
+            let 解析 = parse['解析'] || "";//eval(parse['解析']) || "";
             let lists = details.list;
             if(getMyVar('shsort') == '1'){
                 lists.reverse();
