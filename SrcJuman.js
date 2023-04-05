@@ -219,8 +219,7 @@ function erji() {
                 url: MY_PARAMS.img + '@Referer=',
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
-                    gradient: true,
-                    id: "listloading"
+                    gradient: true
                 }
             })
             d.push({
@@ -286,6 +285,14 @@ function erji() {
     }
     
     if(isload){
+        d.push({
+            title: "‘‘’’<small><font color=#f20c00>此规则仅限学习交流使用，请于导入后24小时内删除，任何团体或个人不得以任何方式方法传播此规则的整体或部分！</font></small>",
+            url: 'hiker://empty',
+            col_type: 'text_center_1',
+            extra: {
+                id: "listloading"
+            }
+        });
         setResult(d);
         //二级源保存到记录
         let erjidata = {name:name,sname:sname,surl:surl};
@@ -385,7 +392,8 @@ function search(name) {
                 }
             });
             storage0.putMyVar('searchMark',searchMark);
-            updateItem("listloading",{title: "‘‘’’<font color=#f13b66a>"+success+"</font>/‘‘’’<font color=#F54343>"+(list.length-success)+"</font>/"+list.length+"搜索完成"})
+            let sousuosm = getMyVar('SrcJmSousuo')=="1"?success+"/"+list.length+"，搜索完成":"‘‘’’<font color=#f13b66a>"+success+"</font>/"+list.length+"，搜索完成";
+            updateItem("listloading",{title: sousuosm})
             toast('搜源完成');
         }else{
             toast('无接口，未找到源');
