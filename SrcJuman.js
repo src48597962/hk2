@@ -23,7 +23,10 @@ function yiji() {
     })
     d.push({
         title: "分类",
-        url: "",
+        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmClass.js');
+            Category();
+        }),
         pic_url: "hiker://files/cache/src/分类.webp",
         col_type: 'icon_5'
     })
