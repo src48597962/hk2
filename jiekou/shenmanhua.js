@@ -217,7 +217,7 @@ let erdata = {
         return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
     },
     "解析": function() {
-        return $('').lazyRule(() => {//解析放在lazyRule里面
+        return "@lazyRule=.js:"+$.toString(() => {//解析放在下面
                 var list = parseDomForArray(request(input), '.view-imgBox&&img');
                 var pics = [];
                 for (var i in list) {
