@@ -218,7 +218,10 @@ let erdata = {
         })
         return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
     },
-    "解析": `$('').lazyRule(() => {let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
-        return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
-    });`
+    "解析": $.toString(() => {
+        return $('').lazyRule(() => {//解析放在lazyRule里面
+            let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
+            return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
+        });
+    })
 }
