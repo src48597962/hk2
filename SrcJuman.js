@@ -210,9 +210,9 @@ function erji() {
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
-                }
+                }//item.url + 解析
             })
-            let 解析 = parse['解析']();//eval(parse['解析']) || "";
+            let 解析 = parse['解析'];//eval(parse['解析']) || "";
             let lists = details.list;
             if(getMyVar('shsort') == '1'){
                 lists.reverse();
@@ -220,7 +220,9 @@ function erji() {
             lists.forEach((item,id) =>{
                 d.push({
                     title: item.title,
-                    url: item.url + 解析,
+                    url: item.url + $("").lazyRule((解析) => {
+                        return 解析(input);
+                    },解析),
                     col_type: "text_2",
                     extra: {
                         id: name + "_选集_" + id,
