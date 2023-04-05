@@ -385,7 +385,7 @@ function search(name) {
                 }
             });
             storage0.putMyVar('searchMark',searchMark);
-            updateItem("listloading",{title: success+"/"+(list.length-success)+"/"+list.length+"搜索完成"})
+            updateItem("listloading",{title: "‘‘’’<font color=#f13b66a>"+success+"</font>/‘‘’’<font color=#F54343>"+(list.length-success)+"</font>/"+list.length+"搜索完成"})
             toast('搜源完成');
         }else{
             toast('无接口，未找到源');
