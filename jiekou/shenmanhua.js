@@ -200,7 +200,7 @@ let erdata = {
         return d;
     },
     "二级": function(surl) {//surl为详情页链接
-        let MY_URL = surl;
+        MY_URL = surl;
         let html = request(MY_URL);
         let dataid = pdfh(html, "#COMMENT&&data-ssid");
         let 作者 = pdfh(html, '#detail&&.author&&Text');
@@ -209,6 +209,7 @@ let erdata = {
         let detail1 = "作者："+作者+"\n"+"分类："+分类;
         let detail2 = "简介："+简介;
         let 图片 = pd(html, '#detail&&.thumbnail&&img&&data-src');
+        log(pdfh(html, '#detail&&.thumbnail&&img&&data-src'))
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
@@ -217,19 +218,6 @@ let erdata = {
         })
         return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
     },
-    /*
-    "前提": `var dataid = pdfh(html, "#COMMENT&&data-ssid");`,//这里写后面加载需要的前提需要的数据，变量定义需要用var，也可以留空
-    "详情": {
-        "标题1": `作者$$$pdfh(html, '#detail&&.author&&Text')`,//用$$$间隔需要取值的标题和内容
-        "标题2": `分类$$$pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ")`,
-        "描述": `简介$$$pdfh(html, '#js_desc_content&&Text')`,
-    },
-    "选集": `pdfa(html, '#js_chapters&&li').map((data) => {
-        let 选集列表 = {};
-        选集列表.title = pdfh(data, 'Text')
-        选集列表.url = "https://m.taomanhua.comapi/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
-        return 选集列表;
-    })`,*/
     "解析": `$('').lazyRule(() => {let code = JSON.parse(request(input)).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     });`
