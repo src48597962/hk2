@@ -44,6 +44,7 @@ let yidata = {
 }
 
 let erdata = {
+    "作者": "嗨又是我",//接口作者
     "链接": "https://m.taomanhua.com/",//会写入MY_HOME
     "搜索": function () {//做为搜索源时，聚合搜索换源列表数据
         let d = [];
