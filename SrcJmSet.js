@@ -94,11 +94,11 @@ function SRCSet() {
                     return "toast://名称或搜索源接口不能为空";
                 }
                 try{
-                    let newapi = {
+                    var source = {
                         name: name,
-                        erparse: erparse
+                        erparse: JSON.parse(erparse)
                     }
-                    eval("var source = " + newapi);
+                    //eval("var source = " + newapi);
                 }catch(e){
                     log(e.message);
                     return "toast://搜索源接口有异常，看日志"
