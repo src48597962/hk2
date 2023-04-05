@@ -22,7 +22,7 @@ let erdatalist = datalist.filter(it=>{
     return it.erparse;
 });
 
-function getData(type) {
+function getYiData(type) {
     let d = [];
     let sourcedata = yidatalist.filter(it=>{
         return it.name==yijisource;
@@ -57,9 +57,7 @@ function getData(type) {
             })
         }
         data.forEach(item => {
-            if(item.pic_url){
-                item.extra = {name: item.extra&&item.extra.name?item.extra.name:item.title, img: item.pic_url}
-            }
+            item.extra = {name: item.extra&&item.extra.name?item.extra.name:item.title, img: item.pic_url}
             item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
