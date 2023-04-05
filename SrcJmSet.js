@@ -95,8 +95,10 @@ function SRCSet() {
                         d.push({
                             title: "搜索中...",
                             url: "hiker://empty",
+                            col_type: 'text_center_1',
                             extra: {
-                                id: "listloading"
+                                id: "listloading",
+                                lineVisible: false
                             }
                         });
                         setResult(d);
