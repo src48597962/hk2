@@ -84,8 +84,31 @@ function SRCSet() {
             }
         });
         d.push({
+            title: '测试',
+            col_type: 'text_2',
+            url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
+                setItem("searchtestkey",input);
+                let erparse = getMyVar('manhuaerparse');
+                if(erparse){
+                    return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
+                        let d = [];
+                        d.push({
+                            title: "搜索中...",
+                            url: "hiker://empty",
+                            extra: {
+                                id: "listloading"
+                            }
+                        });
+                        setResult(d);
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                        search(name,sdata);
+                    },input,JSON.parse(erparse))
+                }
+            })
+        })
+        d.push({
             title: '保存',
-            col_type: 'text_center_1',
+            col_type: 'text_2',
             url: $().lazyRule((filepath) => {
                 if (!getMyVar('manhuaname')) {
                     return "toast://名称不能为空";
