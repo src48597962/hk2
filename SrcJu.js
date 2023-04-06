@@ -415,7 +415,7 @@ function getMark(name,stype) {
     let mark = marklist.filter(it => {
         return it.name==name && it.type==stype;
     })
-    if (mark.length == 1) {
+    if (mark.length > 0) {
         return mark[0];
     } else {
         return "";
