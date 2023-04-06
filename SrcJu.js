@@ -433,7 +433,7 @@ function setMark(data) {
     let mark = marklist.filter(it => {
         return it.name==data.name && it.type==data.stype;
     })
-    if (mark.length == 1) {
+    if (mark.length > 0) {
         let index = marklist.indexOf(mark[0]);
         marklist.splice(index, 1)
     }
