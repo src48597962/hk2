@@ -66,9 +66,9 @@ function getYiData(type,od) {
             extra.name = extra.name || item.title;
             extra.img = extra.img || item.pic_url || item.img;
             extra.stype = sourcedata[0].type;
-            extra.sname = yijisource;
             if(item.url && /^http/.test(item.url)){
                 extra.surl = item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,"");
+                extra.sname = yijisource;
             }
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
