@@ -97,7 +97,7 @@ function yiji() {
             })
         }
         data.forEach(item => {
-            item.extra = {name: item.title, img: item.pic_url}
+            item.extra = {name: item.title, img: item.pic_url||item.img}
             item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
@@ -316,15 +316,20 @@ function search(name,sdata) {
                 data = 搜索() || [];
                 if(data.length>0){
                     data.forEach(item => {
+                        let extra = item.extra || {};
+                        extra.img = extra.img || item.img || item.pic_url;
+                        extra.name = extra.name || item.title;
                         if(getMyVar('SrcJmSousuo')=="1"){
-                            item.extra = {name:item.title,img:item.pic_url,sname:obj.name,surl:item.url};
+                            extra.sname = obj.name;
+                            extra.surl = item.url;
+                            item.extra = extra;
                             item.url = item.url + $("").rule(() => {
                                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                                 erji();
                             })
                         }else{
                             let erjidata = {name:item.title,sname:obj.name,surl:item.url};
-                            item.extra = {name:item.title,img:item.pic_url};
+                            item.extra = extra;
                             item.url = item.url + $("#noLoading#").lazyRule((erjidata) => {
                                 storage0.putMyVar('erjidata', erjidata);
                                 refreshPage(false);
