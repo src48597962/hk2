@@ -101,7 +101,6 @@ function erji() {
     let erjiextra = storage0.getMyVar('erjiextra') || getMark(name,stype) || MY_PARAMS;
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
-    MY_URL = surl;
     let sauthor = "未知";
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type==stype;
@@ -123,7 +122,8 @@ function erji() {
         log(e.message);
     }
     try {
-        if (parse) {
+        if (parse && surl) {
+            MY_URL = surl;
             setPageTitle(name+'-'+sname);
             sauthor = parse["作者"] || sauthor;
             let details = parse['二级'](surl);
@@ -223,7 +223,7 @@ function erji() {
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         if(typeof(setPageParams)!="undefined"){
-            erjiextra.parse = JSON.stringify(parse);
+            erjiextra.parse = $.toString((parse) => {parse},parse);
             setPageParams(erjiextra);
         }
 
