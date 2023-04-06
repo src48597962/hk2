@@ -149,9 +149,7 @@ function erji() {
     let erjidata = storage0.getMyVar('erjidata') || getMark(name,stype) || MY_PARAMS;
     let sname = erjidata.sname || "";
     let surl = erjidata.surl || "";
-    log(erjidata);
-    log(sname);
-    log(surl);
+    
     MY_URL = surl;
     let sauthor = "未知";
     let sourcedata = datalist.filter(it => {
@@ -420,7 +418,7 @@ function getMark(name,stype) {
     if (mark.length == 1) {
         return mark[0];
     } else {
-        return {};
+        return "";
     }
 }
 //保存本地足迹记录
