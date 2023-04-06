@@ -214,7 +214,7 @@ function erji() {
             d.push({
                 title: "切换书源",
                 url: getMyVar('backsousuo') == "1" ? `#noLoading#@lazyRule=.js:back(false);'hiker://empty'` : $("#noLoading#").lazyRule((name) => {
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                    require(config.依赖);
                     deleteItemByCls('loadlist');
                     search(name);
                     return 'hiker://empty'
