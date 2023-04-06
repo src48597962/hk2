@@ -103,6 +103,7 @@ function yiji() {
             let extra = item.extra || {};
             extra.name = extra.name || item.title;
             extra.img = extra.img || item.pic_url || item.img;
+            extra.stype = sourcedata[0].type;
             if(!item.col_type=="scroll_button" || item.extra){
                 item.extra = extra;
             }
@@ -335,23 +336,22 @@ function search(name, sdata) {
                         let extra = item.extra || {};
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.name = extra.name || item.title;
+                        extra.stype = obj.type;
+                        extra.sname = obj.name;
+                        extra.surl = item.url;
+                        item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
-                            extra.sname = obj.name;
-                            extra.surl = item.url;
-                            item.extra = extra;
                             item.url = item.url + $("").rule(() => {
                                 require(config.依赖);
                                 erji();
                             })
                         } else {
-                            let erjidata = { name: item.title, sname: obj.name, surl: item.url };
-                            item.extra = extra;
-                            item.url = item.url + $("#noLoading#").lazyRule((erjidata,extra) => {
-                                storage0.putMyVar('erjidata', erjidata);
+                            item.url = item.url + $("#noLoading#").lazyRule((extra) => {
+                                storage0.putMyVar('erjidata', extra);
                                 storage0.putMyVar('erjiextra', extra);
                                 refreshPage(false);
                                 return "toast://已切换源：" + erjidata.sname;
-                            }, erjidata, extra);
+                            }, extra);
                         }
                         item.content = item.desc;
                         item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
