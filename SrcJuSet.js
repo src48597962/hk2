@@ -10,23 +10,25 @@ function SRCSet() {
         var Juconfig= {};
     }
     let yijisource = Juconfig['yijisource'] || "";
-
     let filepath = "hiker://files/rules/Src/Ju/jiekou.json";
     let sourcedata = fetch(filepath);
     if(sourcedata != ""){
-        eval("var datalist=" + sourcedata+ ";");
+        try{
+            eval("var datalist=" + sourcedata+ ";");
+        }catch(e){
+            var datalist = [];
+        }
     }else{
         var datalist = [];
     }
-
     let yidatalist = datalist.filter(it=>{
         return it.parse;
     });
-    
-    let d = [];
     let sourcenames = yidatalist.map(it=>{
         return it.name;
     })
+
+    let d = [];
     d.push({
         title: yijisource?yijisource:'设置主页源',
         url: $(sourcenames,2).select((cfgfile,Juconfig) => {
@@ -40,13 +42,15 @@ function SRCSet() {
         img: "https://lanmeiguojiang.com/tubiao/messy/13.svg",
         col_type: "icon_2"
     });
+
+    let runType = ["漫画", "阅读"];
     d.push({
-        title: Juconfig['ImportType']=="Coverage"?'导入：覆盖':'导入：跳过',
-        url: $(["覆盖", "跳过"],2).select((cfgfile,Juconfig) => {
-            Juconfig["ImportType"] = input=="覆盖"?"Coverage":"Skip";
+        title: (Juconfig["runType"]||runType[0]) + "模式",
+        url: $(runType,2,"切换运行模式").select((cfgfile,Juconfig) => {
+            Juconfig["runType"] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
             refreshPage(false);
-            return 'toast://导入模式已设置为：' + input;
+            return 'toast://运行模式已设置为：' + input;
         }, cfgfile, Juconfig),
         img: "https://lanmeiguojiang.com/tubiao/messy/84.svg",
         col_type: "icon_2"
@@ -110,7 +114,20 @@ function SRCSet() {
             }
         }, filepath, Juconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
-        col_type: "icon_small_3"
+        col_type: "icon_small_3",
+        extra: {
+            longClick: [{
+                title: Juconfig['ImportType']=="Coverage"?'导入模式：覆盖':'导入模式：跳过',
+                js: $.toString((cfgfile, Juconfig) => {
+                    return $(["覆盖", "跳过"],2).select((cfgfile,Juconfig) => {
+                        Juconfig["ImportType"] = input=="覆盖"?"Coverage":"Skip";
+                        writeFile(cfgfile, JSON.stringify(Juconfig));
+                        refreshPage(false);
+                        return 'toast://导入模式已设置为：' + input;
+                    }, cfgfile, Juconfig)
+                },cfgfile, Juconfig)
+            }]
+        }
     });
     d.push({
         title: '分享',
