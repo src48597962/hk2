@@ -184,7 +184,7 @@ function jiekouapi(sourcefile, data) {
         storage0.putMyVar('jiekoudata', data);
         putMyVar('jiekouedit', '1');
         putMyVar('jiekouname', data.name);
-        putMyVar('jiekoutype', data.type||"");
+        putMyVar('jiekoutype', data.type||"漫画");
         storage0.putMyVar('jiekouparse', data.parse);
         storage0.putMyVar('jiekouerparse', data.erparse ? data.erparse : "");
     }
