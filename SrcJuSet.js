@@ -22,11 +22,11 @@ function SRCSet() {
         col_type: "icon_2"
     });
 
-    let runTypes = ["漫画", "阅读"];
+    let runModes = ["漫画", "阅读"];
     d.push({
-        title: (Juconfig["runType"]||runTypes[0]) + "模式",
-        url: $(runTypes,2,"切换运行模式").select((cfgfile,Juconfig) => {
-            Juconfig["runType"] = input;
+        title: (Juconfig["runMode"]||runModes[0]) + "模式",
+        url: $(runModes,2,"切换运行模式").select((cfgfile,Juconfig) => {
+            Juconfig["runMode"] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
             refreshPage(false);
             return 'toast://运行模式已设置为：' + input;
@@ -203,8 +203,8 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '接口类型：'+ getMyVar('jiekoutype','漫画'),
         col_type: 'text_1',
-        url: $(runTypes,2,"接口类型").select((cfgfile,Juconfig) => {
-            Juconfig["runType"] = input;
+        url: $(runModes,2,"接口类型").select((cfgfile,Juconfig) => {
+            Juconfig["runMode"] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
