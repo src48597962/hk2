@@ -340,10 +340,10 @@ function search(name, sdata) {
                         extra.name = extra.name || item.title;
                         extra.stype = obj.type;
                         extra.sname = obj.name;
-                        extra.surl = item.url;
+                        extra.surl = item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,"");
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
-                            item.url = item.url + $("").rule(() => {
+                            item.url = item.url + $("#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
                                 erji();
                             })
