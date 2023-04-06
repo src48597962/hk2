@@ -41,7 +41,7 @@ function SRCSet() {
     d.push({
         title: '增加',
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile) => {
-            setPageTitle('增加 | 聚宝阁接口');
+            setPageTitle('增加 | 聚接口');
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             jiekouapi(sourcefile);
         }, sourcefile),
@@ -50,10 +50,10 @@ function SRCSet() {
     });
     d.push({
         title: '导入',
-        url: $("", "聚宝阁分享口令的云剪贴板").input((sourcefile,ImportType) => {
+        url: $("", "聚分享口令的云剪贴板").input((sourcefile,ImportType) => {
             try {
                 let inputname = input.split('￥')[0];
-                if (inputname == "聚宝阁接口") {
+                if (inputname == "聚接口") {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
@@ -86,11 +86,11 @@ function SRCSet() {
                     refreshPage(false);
                     return "toast://合计" + datalist2.length + "个，导入" + num + "个";
                 } else {
-                    return "toast://聚宝阁√：非法口令";
+                    return "toast://非法口令";
                 }
             } catch (e) {
                 log(e.message);
-                return "toast://聚宝阁√：口令有误";
+                return "toast://口令有误";
             }
         }, sourcefile, Juconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
@@ -139,20 +139,20 @@ function SRCSet() {
                     let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)));
                     hideLoading();
                     if (pasteurl) {
-                        let code = '聚宝阁接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
+                        let code = '聚接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
                         copy(code);
-                        return "toast://(单个)聚宝阁分享口令已生成";
+                        return "toast://(单个)分享口令已生成";
                     } else {
                         return "toast://分享失败，剪粘板或网络异常";
                     }
                 } else if (input == "编辑") {
                     return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
-                        setPageTitle('编辑 | 聚宝阁接口');
+                        setPageTitle('编辑 | 聚接口');
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         jiekouapi(sourcefile, data);
                     }, sourcefile, data)
                 } else if (input == "删除") {
-                    return $("确定删除："+dataname).confirm((sourcefile,data)=>{
+                    return $("确定删除："+data.name).confirm((sourcefile,data)=>{
                         let sourcedata = fetch(sourcefile);
                         eval("var datalist=" + sourcedata + ";");
                         let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
@@ -317,7 +317,7 @@ function jiekouapi(sourcefile, data) {
                 } else {
                     var datalist = [];
                 }
-                let index = datalist.indexOf(datalist.filter(d => d.name==name && d.type==type)[0]);
+                let index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==type||!d.type))[0]);
                 if (index > -1 && getMyVar('jiekouedit') != "1") {
                     return "toast://已存在-" + name;
                 } else {
