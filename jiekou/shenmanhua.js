@@ -27,16 +27,16 @@ let yidata = {
         let d = [];
         var 当前页 = getParam('page');
         var 类别 = MY_RULE.title + "类别"
-        var 类别名 = getVar(类别, "");
+        var 类别名 = getMyVar(类别, "");
         var 排序 = MY_RULE.title + "排序"
-        var 排序名 = getVar(排序, "click");
+        var 排序名 = getMyVar(排序, "click");
         var class_Name = MY_RULE.title + "分类"
         if (当前页 == 1) {
-            if (!getVar(class_Name)) {
+            if (!getMyVar(class_Name)) {
                 var codes = request('https://m.taomanhua.com/sort/');
-                putVar(class_Name, codes)
+                putMyVar(class_Name, codes)
             }else{
-                var codes = getVar(class_Name)
+                var codes = getMyVar(class_Name)
             }
             var 分类项 = pdfa(codes, '.dl-sort-list&&a').map((data) => {
                 var 项数据 = {};
@@ -62,7 +62,7 @@ let yidata = {
                         title = '““””<b><font color=#FA7298>' + title + '</font></b>';
                     }
                     var url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
-                        putVar(list_name, Url)
+                        putMyVar(list_name, Url)
                         refreshPage(false);
                         return "hiker://empty"
                     }, 赋值名, data.bs)
@@ -95,17 +95,17 @@ let yidata = {
     "更新": function() {
         let d = [];
         let update_url = MY_RULE.title + "更新"
-        if (!getVar(update_url)) {
-            putVar(update_url, request("https://m.taomanhua.com/api/updatelist/?product_id=3&productname=smh&platformname=wap"))
+        if (!getMyVar(update_url)) {
+            putMyVar(update_url, request("https://m.taomanhua.com/api/updatelist/?product_id=3&productname=smh&platformname=wap"))
         }
-        let code = JSON.parse(getVar(update_url)).data.update
+        let code = JSON.parse(getMyVar(update_url)).data.update
         let lisr_s = [];
         let update_date = MY_RULE.title + "更新日期"
-        let date = getVar(update_date, '今天')
+        let date = getMyVar(update_date, '今天')
         code.forEach((data) => {
             var title = data.comicUpdateDate_new
             var url_qz = $("#noLoading#").lazyRule((update_date, title) => {
-                putVar(update_date, title)
+                putMyVar(update_date, title)
                 refreshPage(false);
                 return "hiker://empty"
             }, update_date, title)
@@ -137,7 +137,7 @@ let yidata = {
     "排行": function() {
         let d = [];
         let list_name = MY_RULE.title + "排行榜"
-        let list_url = getVar(list_name, 'https://m.taomanhua.com/top/dianji.html');
+        let list_url = getMyVar(list_name, 'https://m.taomanhua.com/top/dianji.html');
         let code = request(list_url);
         let url_wzqz = 'https://m.taomanhua.com';
         MY_URL=url_wzqz;
@@ -145,7 +145,7 @@ let yidata = {
         list_class.forEach((data) => {
             let title = pdfh(data, 'a&&Text')
             let url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
-                putVar(list_name, Url)
+                putMyVar(list_name, Url)
                 refreshPage(false);
                 return "hiker://empty"
             }, list_name, url_wzqz + pdfh(data, 'a&&href'))
