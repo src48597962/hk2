@@ -363,6 +363,7 @@ function search(name, sdata) {
                     searchMark[name] = searchMark[name].concat(data);
                     addItemBefore(loadid, data);
                     success++;
+                    hideLoading();
                 }
             } catch (e) {
                 log(obj.name + '>搜源失败>' + e.message);
