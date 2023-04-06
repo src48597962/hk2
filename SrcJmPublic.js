@@ -57,7 +57,12 @@ function getYiData(type) {
             })
         }
         data.forEach(item => {
-            item.extra = {name: item.extra&&item.extra.name?item.extra.name:item.title, img: item.pic_url}
+            let extra = item.extra || {};
+            extra.name = extra.name || item.title;
+            extra.img = extra.img || item.pic_url || item.img;
+            if(!item.col_type=="scroll_button" || item.extra){
+                item.extra = extra;
+            }
             item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
