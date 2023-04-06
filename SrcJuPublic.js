@@ -73,10 +73,10 @@ function getYiData(type,od) {
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
             }
-            item.url = !extra.surl?item.url:$('#immersiveTheme##autoCache#').rule(() => {
+            item.url = extra.surl||!item.url?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖);
                 erji();
-            })
+            }):item.url
         })
         d = d.concat(data);
     }
