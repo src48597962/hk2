@@ -352,7 +352,7 @@ function search(name, sdata) {
                                 storage0.putMyVar('erjidata', extra);
                                 storage0.putMyVar('erjiextra', extra);
                                 refreshPage(false);
-                                return "toast://已切换源：" + erjidata.sname;
+                                return "toast://已切换源：" + extra.sname;
                             }, extra);
                         }
                         item.content = item.desc;
