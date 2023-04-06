@@ -135,6 +135,7 @@ function sousuo() {
 function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjidata');
+        clearMyVar('erjiextra');
     }));
     let name = MY_PARAMS.name;
     setPageTitle(name);
@@ -343,11 +344,12 @@ function search(name, sdata) {
                         } else {
                             let erjidata = { name: item.title, sname: obj.name, surl: item.url };
                             item.extra = extra;
-                            item.url = item.url + $("#noLoading#").lazyRule((erjidata) => {
+                            item.url = item.url + $("#noLoading#").lazyRule((erjidata,extra) => {
                                 storage0.putMyVar('erjidata', erjidata);
+                                storage0.putMyVar('erjiextra', extra);
                                 refreshPage(false);
                                 return "toast://已切换源：" + erjidata.sname;
-                            }, erjidata);
+                            }, erjidata, extra);
                         }
                         item.content = item.desc;
                         item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
