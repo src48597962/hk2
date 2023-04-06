@@ -453,7 +453,7 @@ function downloadicon() {
 }
 //版本检测
 function Version() {
-    var nowVersion = "0.1";//现在版本 
+    var nowVersion = "0.2";//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime', '0').replace('time', ''));
     if (getMyVar('SrcJuman-VersionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
