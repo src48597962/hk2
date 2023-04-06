@@ -84,7 +84,7 @@ function SRCSet() {
             }
         });
         d.push({
-            title: '测试',
+            title: '测试搜索',
             col_type: 'text_2',
             url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
                 setItem("searchtestkey",input);
@@ -126,7 +126,7 @@ function SRCSet() {
             })
         })
         d.push({
-            title: '保存',
+            title: '保存接口',
             col_type: 'text_2',
             url: $().lazyRule((filepath) => {
                 if (!getMyVar('manhuaname')) {
@@ -179,7 +179,7 @@ function SRCSet() {
         return it.name;
     })
     d.push({
-        title: yijisource?"主页源："+yijisource:'设置主页源',
+        title: yijisource?yijisource:'设置主页源',
         url: $(sourcenames,2).select((cfgfile,JMconfig) => {
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
@@ -187,6 +187,17 @@ function SRCSet() {
             writeFile(cfgfile, JSON.stringify(JMconfig));
             refreshPage(false);
             return 'toast://主页源已设置为：' + input;
+        }, cfgfile, JMconfig),
+        img: "https://lanmeiguojiang.com/tubiao/messy/145.svg",
+        col_type: "icon_2"
+    });
+    d.push({
+        title: JMconfig['ImportType']=="Coverage"?'导入：覆盖':'导入：跳过',
+        url: $(["覆盖", "跳过"],2).select((cfgfile,JMconfig) => {
+            JMconfig["ImportType"] = input=="覆盖"?"Coverage":"Skip";
+            writeFile(cfgfile, JSON.stringify(JMconfig));
+            refreshPage(false);
+            return 'toast://导入模式已设置为：' + input;
         }, cfgfile, JMconfig),
         img: "https://lanmeiguojiang.com/tubiao/messy/145.svg",
         col_type: "icon_2"
@@ -205,7 +216,7 @@ function SRCSet() {
     });
     d.push({
         title: '导入',
-        url: $("", "聚漫分享口令的云剪贴板").input((filepath) => {
+        url: $("", "聚漫分享口令的云剪贴板").input((filepath,ImportType) => {
             try {
                 let inputname = input.split('￥')[0];
                 if (inputname == "聚漫接口") {
@@ -225,19 +236,15 @@ function SRCSet() {
                     }
                     let num = 0;
                     for (let i = 0; i < datalist2.length; i++) {
-                        if (datalist.some(item => item.name == datalist2[i].name)) {
-                            confirm({
-                                title: '是否覆盖？', 
-                                content: datalist2[i].name + '已存在', 
-                                confirm: $.toString((datalist,name) => {
-                                    let index = datalist.indexOf(datalist.filter(d => d.name == name)[0]);
-                                    datalist.splice(index, 1);
-                                },datalist,datalist2[i].name),
-                                cancel:''
-                            })
+                        if (ImportType=="Coverage" && datalist.some(item => item.name == datalist2[i].name)) {
+                            let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name)[0]);
+                            datalist.splice(index, 1);
+                            datalist.push(datalist2[i]);
+                            num = num + 1;
+                        }else if (!datalist.some(item => item.name == datalist2[i].name)) {
+                            datalist.push(datalist2[i]);
+                            num = num + 1;
                         }
-                        datalist.push(datalist2[i]);
-                        num = num + 1;
                     }
                     writeFile(filepath, JSON.stringify(datalist));
                     clearMyVar('searchMark');
@@ -251,7 +258,7 @@ function SRCSet() {
                 log(e.message);
                 return "toast://聚漫√：口令有误";
             }
-        }, filepath),
+        }, filepath, JMconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
         col_type: "icon_small_3"
     });
