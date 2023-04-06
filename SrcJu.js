@@ -152,8 +152,8 @@ function erji() {
     
     MY_URL = surl;
     let sauthor = "未知";
-    let sourcedata = erdatalist.filter(it => {
-        return it.name == sname;
+    let sourcedata = datalist.filter(it => {
+        return it.name == sname && it.erparse && it.type==stype;
     });
     try {
         if (sourcedata.length == 0) {
