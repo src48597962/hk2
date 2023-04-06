@@ -201,7 +201,7 @@ function erji() {
                     "info": { 
                         "bookName": name, 
                         "bookTopPic": pic, 
-                        "parseCode": "(\n(解析) => {\n return 解析(input);\n})("+JSON.stringify(解析)+")", 
+                        "parseCode": "(\n(解析) => {\n return 解析(input);\n})("+解析+")", 
                         "ruleName": MY_RULE.title 
                     }
                 }
