@@ -181,6 +181,8 @@ function SRCSet() {
     d.push({
         title: yijisource?"主页源："+yijisource:'设置主页源',
         url: $(sourcenames,2).select((cfgfile,JMconfig) => {
+            clearMyVar(MY_RULE.title + "分类");
+            clearMyVar(MY_RULE.title + "更新");
             JMconfig["yijisource"] = input;
             writeFile(cfgfile, JSON.stringify(JMconfig));
             refreshPage(false);
