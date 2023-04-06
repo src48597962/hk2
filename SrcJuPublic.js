@@ -27,8 +27,8 @@ let erdatalist = datalist.filter(it=>{
     return it.erparse && it.type==runMode;
 });
 
-function getYiData(type) {
-    let d = [];
+function getYiData(type,od) {
+    let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
         return it.name==yijisource;
     });
@@ -66,10 +66,14 @@ function getYiData(type) {
             extra.name = extra.name || item.title;
             extra.img = extra.img || item.pic_url || item.img;
             extra.stype = sourcedata[0].type;
+            extra.sname = yijisource;
+            if(item.url && /^http/.test(item.url)){
+                extra.surl = item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,"");
+            }
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
             }
-            item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            item.url = !extra.surl?item.url:$('#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖);
                 erji();
             })
