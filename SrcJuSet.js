@@ -22,10 +22,10 @@ function SRCSet() {
         col_type: "icon_2"
     });
 
-    let runType = ["漫画", "阅读"];
+    let runTypes = ["漫画", "阅读"];
     d.push({
-        title: (Juconfig["runType"]||runType[0]) + "模式",
-        url: $(runType,2,"切换运行模式").select((cfgfile,Juconfig) => {
+        title: (Juconfig["runType"]||runTypes[0]) + "模式",
+        url: $(runTypes,2,"切换运行模式").select((cfgfile,Juconfig) => {
             Juconfig["runType"] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
             refreshPage(false);
@@ -57,10 +57,10 @@ function SRCSet() {
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
-                    let datafile = fetch(sourcefile);
-                    if (datafile != "") {
+                    let sourcedata = fetch(sourcefile);
+                    if (sourcedata != "") {
                         try {
-                            eval("var datalist=" + datafile + ";");
+                            eval("var datalist=" + sourcedata + ";");
                         } catch (e) {
                             var datalist = [];
                         }
@@ -69,12 +69,12 @@ function SRCSet() {
                     }
                     let num = 0;
                     for (let i = 0; i < datalist2.length; i++) {
-                        if (ImportType=="Coverage" && datalist.some(item => item.name == datalist2[i].name)) {
-                            let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name)[0]);
+                        if (ImportType=="Coverage" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
+                            let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
                             datalist.splice(index, 1);
                             datalist.push(datalist2[i]);
                             num = num + 1;
-                        }else if (!datalist.some(item => item.name == datalist2[i].name)) {
+                        }else if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                             datalist.push(datalist2[i]);
                             num = num + 1;
                         }
@@ -151,34 +151,39 @@ function SRCSet() {
                         jiekouapi(sourcefile, data);
                     }, sourcefile, data)
                 } else if (input == "删除") {
-                    let datafile = fetch(sourcefile);
-                    eval("var datalist=" + datafile + ";");
-                    let index = datalist.indexOf(datalist.filter(d => d.name == data.name)[0]);
-                    datalist.splice(index, 1);
-                    writeFile(sourcefile, JSON.stringify(datalist));
-                    clearMyVar('searchMark');
-                    refreshPage(false);
-                    return 'toast://已删除';
+                    return $("确定删除："+dataname).confirm((sourcefile,data)=>{
+                        let sourcedata = fetch(sourcefile);
+                        eval("var datalist=" + sourcedata + ";");
+                        let index = datalist.indexOf(datalist.filter(d => d.name == data.name && d.type==data.type)[0]);
+                        datalist.splice(index, 1);
+                        writeFile(sourcefile, JSON.stringify(datalist));
+                        clearMyVar('searchMark');
+                        refreshPage(false);
+                        return 'toast://已删除';
+                    },sourcefile,data)
                 }
             }, sourcefile, item),
             desc: '',
             col_type: "text_1"
         });
     })
-
     setResult(d);
 }
 
 function jiekouapi(sourcefile, data) {
     addListener("onClose", $.toString(() => {
+        clearMyVar('jiekoudata');
         clearMyVar('jiekouname');
+        clearMyVar('jiekoutype');
         clearMyVar('jiekouparse');
         clearMyVar('jiekouerparse');
         clearMyVar('jiekouedit');
     }));
     if (data) {
+        storage0.putMyVar('jiekoudata', data);
         putMyVar('jiekouedit', '1');
         putMyVar('jiekouname', data.name);
+        putMyVar('jiekoutype', data.type);
         storage0.putMyVar('jiekouparse', data.parse);
         storage0.putMyVar('jiekouerparse', data.erparse ? data.erparse : "");
     }
@@ -196,6 +201,16 @@ function jiekouapi(sourcefile, data) {
         }
     });
     d.push({
+        title: '接口类型：'+ getMyVar('jiekoutype','漫画'),
+        col_type: 'text_1',
+        url: $(runTypes,2,"接口类型").select((cfgfile,Juconfig) => {
+            Juconfig["runType"] = input;
+            writeFile(cfgfile, JSON.stringify(Juconfig));
+            refreshPage(false);
+            return 'toast://接口类型已设置为：' + input;
+        }, cfgfile, Juconfig),
+    });
+    d.push({
         title: '主页数据源',
         col_type: 'input',
         desc: "主页数据源, 可以留空",
@@ -204,7 +219,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 5,
+            height: 4,
             onChange: $.toString(() => {
                 if (/{|}/.test(input)) {
                     storage0.putMyVar("jiekouparse", input)
@@ -221,7 +236,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 5,
+            height: 4,
             onChange: $.toString(() => {
                 if (/{|}/.test(input)) {
                     storage0.putMyVar("jiekouerparse", input)
@@ -290,10 +305,10 @@ function jiekouapi(sourcefile, data) {
                 }
                 if (parse) { newapi['parse'] = parse; }
                 if (erparse) { newapi['erparse'] = erparse; }
-                let datafile = fetch(sourcefile);
-                if (datafile != "") {
+                let sourcedata = fetch(sourcefile);
+                if (sourcedata != "") {
                     try {
-                        eval("var datalist=" + datafile + ";");
+                        eval("var datalist=" + sourcedata + ";");
                     } catch (e) {
                         var datalist = [];
                     }
