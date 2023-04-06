@@ -53,9 +53,9 @@ function yiji() {
                 title: "切换按钮",
                 js: $.toString((cfgfile,Juconfig) => {
                     if(Juconfig["btnmenu5"]=="history"){
-                        Juconfig["btnmenu5"]=="collection";
+                        Juconfig["btnmenu5"]="collection";
                     }else{
-                        Juconfig["btnmenu5"]=="collection";
+                        Juconfig["btnmenu5"]="history";
                     }
                     writeFile(cfgfile, JSON.stringify(Juconfig));
                     refreshPage(false);
