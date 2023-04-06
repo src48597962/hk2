@@ -1,29 +1,8 @@
 ////本代码仅用于个人学习，请勿用于其他作用，下载后请24小时内删除，代码虽然是公开学习的，但请尊重作者，应留下说明
 function SRCSet() {
     setPageTitle('♥管理');
+    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
     
-    let cfgfile = "hiker://files/rules/Src/Ju/config.json";
-    let Jucfg=fetch(cfgfile);
-    if(Jucfg != ""){
-        eval("var Juconfig=" + Jucfg+ ";");
-    }else{
-        var Juconfig= {};
-    }
-    let yijisource = Juconfig['yijisource'] || "";
-    let filepath = "hiker://files/rules/Src/Ju/jiekou.json";
-    let sourcedata = fetch(filepath);
-    if(sourcedata != ""){
-        try{
-            eval("var datalist=" + sourcedata+ ";");
-        }catch(e){
-            var datalist = [];
-        }
-    }else{
-        var datalist = [];
-    }
-    let yidatalist = datalist.filter(it=>{
-        return it.parse;
-    });
     let sourcenames = yidatalist.map(it=>{
         return it.name;
     })
@@ -60,17 +39,17 @@ function SRCSet() {
     })
     d.push({
         title: '增加',
-        url: $('hiker://empty#noRecordHistory##noHistory#').rule((filepath) => {
+        url: $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile) => {
             setPageTitle('增加 | 聚漫接口');
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-            jiekouapi(filepath);
-        }, filepath),
+            jiekouapi(sourcefile);
+        }, sourcefile),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
         col_type: "icon_small_3"
     });
     d.push({
         title: '导入',
-        url: $("", "聚漫分享口令的云剪贴板").input((filepath,ImportType) => {
+        url: $("", "聚漫分享口令的云剪贴板").input((sourcefile,ImportType) => {
             try {
                 let inputname = input.split('￥')[0];
                 if (inputname == "聚漫接口") {
@@ -78,7 +57,7 @@ function SRCSet() {
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
-                    let datafile = fetch(filepath);
+                    let datafile = fetch(sourcefile);
                     if (datafile != "") {
                         try {
                             eval("var datalist=" + datafile + ";");
@@ -100,7 +79,7 @@ function SRCSet() {
                             num = num + 1;
                         }
                     }
-                    writeFile(filepath, JSON.stringify(datalist));
+                    writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('searchMark');
                     hideLoading();
                     refreshPage(false);
@@ -112,7 +91,7 @@ function SRCSet() {
                 log(e.message);
                 return "toast://聚漫√：口令有误";
             }
-        }, filepath, Juconfig['ImportType']),
+        }, sourcefile, Juconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
         col_type: "icon_small_3",
         extra: {
@@ -151,7 +130,7 @@ function SRCSet() {
     datalist.forEach(item => {
         d.push({
             title: "🎃 " + item.name + (item.parse ? "（主页源）" : "") + (item.erparse ? "（搜索源）" : ""),
-            url: $(["分享", "编辑", "删除"], 1).select((filepath, data) => {
+            url: $(["分享", "编辑", "删除"], 1).select((sourcefile, data) => {
                 if (input == "分享") {
                     showLoading('分享上传中，请稍后...');
                     let oneshare = []
@@ -166,22 +145,22 @@ function SRCSet() {
                         return "toast://分享失败，剪粘板或网络异常";
                     }
                 } else if (input == "编辑") {
-                    return $('hiker://empty#noRecordHistory##noHistory#').rule((filepath, data) => {
+                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
                         setPageTitle('编辑 | 聚漫接口');
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                        jiekouapi(filepath, data);
-                    }, filepath, data)
+                        jiekouapi(sourcefile, data);
+                    }, sourcefile, data)
                 } else if (input == "删除") {
-                    let datafile = fetch(filepath);
+                    let datafile = fetch(sourcefile);
                     eval("var datalist=" + datafile + ";");
                     let index = datalist.indexOf(datalist.filter(d => d.name == data.name)[0]);
                     datalist.splice(index, 1);
-                    writeFile(filepath, JSON.stringify(datalist));
+                    writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('searchMark');
                     refreshPage(false);
                     return 'toast://已删除';
                 }
-            }, filepath, item),
+            }, sourcefile, item),
             desc: '',
             col_type: "text_1"
         });
@@ -190,7 +169,7 @@ function SRCSet() {
     setResult(d);
 }
 
-function jiekouapi(filepath, data) {
+function jiekouapi(sourcefile, data) {
     addListener("onClose", $.toString(() => {
         clearMyVar('jiekouname');
         clearMyVar('jiekouparse');
@@ -295,7 +274,7 @@ function jiekouapi(filepath, data) {
     d.push({
         title: '保存接口',
         col_type: 'text_2',
-        url: $().lazyRule((filepath) => {
+        url: $().lazyRule((sourcefile) => {
             if (!getMyVar('jiekouname')) {
                 return "toast://名称不能为空";
             }
@@ -311,7 +290,7 @@ function jiekouapi(filepath, data) {
                 }
                 if (parse) { newapi['parse'] = parse; }
                 if (erparse) { newapi['erparse'] = erparse; }
-                let datafile = fetch(filepath);
+                let datafile = fetch(sourcefile);
                 if (datafile != "") {
                     try {
                         eval("var datalist=" + datafile + ";");
@@ -329,7 +308,7 @@ function jiekouapi(filepath, data) {
                         datalist.splice(index, 1);
                     }
                     datalist.push(newapi);
-                    writeFile(filepath, JSON.stringify(datalist));
+                    writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('searchMark');
                     back(true);
                     return "toast://已保存";
@@ -337,7 +316,7 @@ function jiekouapi(filepath, data) {
             } catch (e) {
                 return "toast://接口数据异常，请确认对象格式";
             }
-        }, filepath)
+        }, sourcefile)
     });
     setResult(d);
 }
