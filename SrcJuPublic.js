@@ -65,6 +65,7 @@ function getYiData(type) {
             let extra = item.extra || {};
             extra.name = extra.name || item.title;
             extra.img = extra.img || item.pic_url || item.img;
+            extra.stype = sourcedata[0].type;
             if(!item.col_type=="scroll_button" || item.extra){
                 item.extra = extra;
             }
