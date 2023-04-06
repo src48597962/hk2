@@ -180,11 +180,11 @@ function jiekouapi(sourcefile, data) {
         clearMyVar('jiekouerparse');
         clearMyVar('jiekouedit');
     }));
-    if (data) {
+    if (data&&getMyVar('jiekouedit')=="1") {
         storage0.putMyVar('jiekoudata', data);
         putMyVar('jiekouedit', '1');
         putMyVar('jiekouname', data.name);
-        putMyVar('jiekoutype', data.type);
+        putMyVar('jiekoutype', data.type||"");
         storage0.putMyVar('jiekouparse', data.parse);
         storage0.putMyVar('jiekouerparse', data.erparse ? data.erparse : "");
     }
