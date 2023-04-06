@@ -44,21 +44,23 @@ function yiji() {
         col_type: 'icon_5'
     })
     d.push({
-        title: getItem('collectionorhistory') == "history" ? "历史" : "收藏",
-        url: getItem('collectionorhistory') == "history" ? "hiker://history" : "hiker://collection",
+        title: Juconfig["btnmenu5"]=="history" ? "历史" : "收藏",
+        url: Juconfig["btnmenu5"]=="history" ? "hiker://history" : "hiker://collection",
         pic_url: "hiker://files/cache/src/收藏.svg",
         col_type: 'icon_5',
         extra: {
             longClick: [{
                 title: "切换按钮",
-                js: $.toString(() => {
-                    if (getItem('collectionorhistory') == "history") {
-                        setItem('collectionorhistory', 'collection');
-                    } else {
-                        setItem('collectionorhistory', 'history');
+                js: $.toString((cfgfile,Juconfig) => {
+                    if(Juconfig["btnmenu5"]=="history"){
+                        Juconfig["btnmenu5"]=="collection";
+                    }else{
+                        Juconfig["btnmenu5"]=="collection";
                     }
+                    writeFile(cfgfile, JSON.stringify(Juconfig));
                     refreshPage(false);
-                })
+                    return 'toast://已切换';
+                }, cfgfile, Juconfig)
             }]
         }
     })
