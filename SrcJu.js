@@ -67,54 +67,7 @@ function yiji() {
     d.push({
         col_type: 'line'
     })
-    let sourcedata = yidatalist.filter(it => {
-        return it.name == yijisource;
-    });
-    if (sourcedata.length == 0) {
-        d.push({
-            title: "请先配置一个主页源",
-            url: "hiker://empty",
-            col_type: "text_center_1",
-        })
-    } else {
-        let parse;
-        eval("let source = " + sourcedata[0].parse);
-        if (source.ext && /^http/.test(source.ext)) {
-            requireCache(source.ext, 48);
-            parse = yidata;
-        } else {
-            parse = source;
-        }
-        let data = [];
-        try {
-            eval("let 主页 = " + parse['主页'])
-            data = 主页();
-        } catch (e) {
-            log(e.message);
-        }
-        if (data.length == 0) {
-            data.push({
-                title: "未获取到数据",
-                url: "hiker://empty",
-                col_type: "text_center_1",
-            })
-        }
-        data.forEach(item => {
-            let extra = item.extra || {};
-            extra.name = extra.name || item.title;
-            extra.img = extra.img || item.pic_url || item.img;
-            extra.stype = sourcedata[0].type;
-            if((item.col_type!="scroll_button") || item.extra){
-                item.extra = extra;
-            }
-            item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                require(config.依赖);
-                erji();
-            })
-        })
-        d = d.concat(data);
-    }
-    setResult(d);
+    getYiData('主页',d);
 }
 //搜索页面
 function sousuo() {
