@@ -1,5 +1,5 @@
-//聚漫，接口型空壳小程序，接口分为主页源和搜索源
-require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+//聚集型、接口型空壳小程序，接口分为主页源和搜索源
+require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 //一级
 function yiji() {
@@ -9,7 +9,7 @@ function yiji() {
     d.push({
         title: "管理",
         url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmSet.js');
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             SRCSet();
         }),
         pic_url: "hiker://files/cache/src/管理.svg",
@@ -18,7 +18,7 @@ function yiji() {
     d.push({
         title: "排行",
         url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
         }),
         pic_url: "hiker://files/cache/src/排行.webp",
@@ -27,7 +27,7 @@ function yiji() {
     d.push({
         title: "分类",
         url: $("hiker://empty#noRecordHistory##noHistory#?page=fypage").rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
         }),
         pic_url: "hiker://files/cache/src/分类.webp",
@@ -36,7 +36,7 @@ function yiji() {
     d.push({
         title: "更新",
         url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJmPublic.js');
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('更新');
         }),
         pic_url: "hiker://files/cache/src/更新.webp",
@@ -104,7 +104,7 @@ function yiji() {
                 item.extra = extra;
             }
             item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                require(config.依赖);
                 erji();
             })
         })
@@ -114,7 +114,7 @@ function yiji() {
 }
 //搜索页面
 function sousuo() {
-    putMyVar('SrcJmSousuo', '1');
+    putMyVar('SrcJuSousuo', '1');
     let name = MY_URL.split('##')[1];
     let d = [];
     d.push({
@@ -127,7 +127,7 @@ function sousuo() {
     setResult(d);
     java.lang.Thread.sleep(1000);
     search(name);
-    clearMyVar('SrcJmSousuo');
+    clearMyVar('SrcJuSousuo');
 }
 
 //二级+源搜索
@@ -297,11 +297,11 @@ function erji() {
 //搜索接口
 function search(name, sdata) {
     let searchMark = storage0.getMyVar('searchMark') || {};
-    let loadid = getMyVar('SrcJmSousuo') == "1" ? 'sousuoloading' : 'listloading';
+    let loadid = getMyVar('SrcJuSousuo') == "1" ? 'sousuoloading' : 'listloading';
     if (searchMark[name] && !sdata) {
         //log("重复搜索>"+name+"，调用搜索缓存");
         addItemBefore(loadid, searchMark[name]);
-        updateItem(loadid, { title: getMyVar('SrcJmSousuo') == "1" ? "当前搜索为缓存" : "‘‘’’<small>当前搜索为缓存</small>" })
+        updateItem(loadid, { title: getMyVar('SrcJuSousuo') == "1" ? "当前搜索为缓存" : "‘‘’’<small>当前搜索为缓存</small>" })
     } else {
         showLoading('搜源中,请稍后.');
         let searchMark = storage0.getMyVar('searchMark') || {};
@@ -331,12 +331,12 @@ function search(name, sdata) {
                         let extra = item.extra || {};
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.name = extra.name || item.title;
-                        if (getMyVar('SrcJmSousuo') == "1") {
+                        if (getMyVar('SrcJuSousuo') == "1") {
                             extra.sname = obj.name;
                             extra.surl = item.url;
                             item.extra = extra;
                             item.url = item.url + $("").rule(() => {
-                                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                                require(config.依赖);
                                 erji();
                             })
                         } else {
@@ -349,8 +349,8 @@ function search(name, sdata) {
                             }, erjidata);
                         }
                         item.content = item.desc;
-                        item.desc = getMyVar('SrcJmSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
-                        item.col_type = getMyVar('SrcJmSousuo') == "1" ? "video" : "avatar";
+                        item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
+                        item.col_type = getMyVar('SrcJuSousuo') == "1" ? "video" : "avatar";
                     })
                     searchMark[name] = searchMark[name] || [];
                     searchMark[name] = searchMark[name].concat(data);
@@ -385,7 +385,7 @@ function search(name, sdata) {
             if (!sdata) {
                 storage0.putMyVar('searchMark', searchMark);
             }
-            let sousuosm = getMyVar('SrcJmSousuo') == "1" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
+            let sousuosm = getMyVar('SrcJuSousuo') == "1" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
             updateItem(loadid, { title: sousuosm })
             toast('搜源完成');
         } else {
@@ -397,7 +397,7 @@ function search(name, sdata) {
 
 //取本地足迹记录
 function getMark(name) {
-    let markfile = "hiker://files/rules/Src/Juman/mark.json";
+    let markfile = "hiker://files/rules/Src/Ju/mark.json";
     let markdata = fetch(markfile);
     if (markdata != "") {
         eval("var marklist=" + markdata + ";");
@@ -415,7 +415,7 @@ function getMark(name) {
 }
 //保存本地足迹记录
 function setMark(data) {
-    let markfile = "hiker://files/rules/Src/Juman/mark.json";
+    let markfile = "hiker://files/rules/Src/Ju/mark.json";
     let markdata = fetch(markfile);
     if (markdata != "") {
         eval("var marklist=" + markdata + ";");
@@ -461,13 +461,13 @@ function Version() {
     var nowVersion = "0.2";//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime', '0').replace('time', ''));
-    if (getMyVar('SrcJuman-VersionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
+    if (getMyVar('SrcJu-VersionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
         try {
             eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Comics', 'master') + 'SrcTmplVersion.js'))
-            if (parseFloat(newVersion.SrcJuman) > parseFloat(nowVersion)) {
+            if (parseFloat(newVersion.SrcJu) > parseFloat(nowVersion)) {
                 confirm({
                     title: '发现新版本，是否更新？',
-                    content: nowVersion + '=>' + newVersion.SrcJuman + '\n' + newVersion.SrcJumandesc[newVersion.SrcJuman],
+                    content: nowVersion + '=>' + newVersion.SrcJu + '\n' + newVersion.SrcJudesc[newVersion.SrcJu],
                     confirm: $.toString((nowtime) => {
                         setItem('VersionChecktime', nowtime + 'time');
                         deleteCache();
@@ -476,12 +476,12 @@ function Version() {
                     }, nowtime),
                     cancel: ''
                 })
-                log('检测到新版本！\nV' + newVersion.SrcJuman + '版本》' + newVersion.SrcJumandesc[newVersion.SrcJuman]);
+                log('检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
             }
-            putMyVar('SrcJuman-Version', '-V' + newVersion.SrcJuying);
+            putMyVar('SrcJu-Version', '-V' + newVersion.SrcJu);
         } catch (e) { }
-        putMyVar('SrcJuman-VersionCheck', '1');
+        putMyVar('SrcJu-VersionCheck', '1');
     } else {
-        putMyVar('SrcJuman-Version', '-V' + nowVersion);
+        putMyVar('SrcJu-Version', '-V' + nowVersion);
     }
 }
