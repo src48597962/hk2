@@ -1,4 +1,6 @@
 ////本代码仅用于个人学习，请勿用于其他作用，下载后请24小时内删除，代码虽然是公开学习的，但请尊重作者，应留下说明
+let runModes = ["漫画", "阅读"];
+
 function SRCSet() {
     setPageTitle('♥管理');
     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
@@ -22,7 +24,6 @@ function SRCSet() {
         col_type: "icon_2"
     });
 
-    let runModes = ["漫画", "阅读"];
     d.push({
         title: (Juconfig["runMode"]||runModes[0]) + "模式",
         url: $(runModes,2,"切换运行模式").select((cfgfile,Juconfig) => {
