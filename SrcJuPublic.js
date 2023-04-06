@@ -1,16 +1,20 @@
-let cfgfile = "hiker://files/rules/Src/Juman/config.json";
-let Jumancfg=fetch(cfgfile);
-if(Jumancfg != ""){
-    eval("var JMconfig=" + Jumancfg+ ";");
+let cfgfile = "hiker://files/rules/Src/Ju/config.json";
+let Jucfg=fetch(cfgfile);
+if(Jucfg != ""){
+    eval("var Juconfig=" + Jucfg+ ";");
 }else{
-    var JMconfig= {};
+    var Juconfig= {};
 }
-let yijisource = JMconfig['yijisource'] || "";
+let yijisource = Juconfig['yijisource'] || "";
 
-let sourcefile = "hiker://files/rules/Src/Juman/jiekou.json";
+let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
 if(sourcedata != ""){
-    eval("var datalist=" + sourcedata+ ";");
+    try{
+        eval("var datalist=" + sourcedata+ ";");
+    }catch(e){
+        var datalist = [];
+    }
 }else{
     var datalist = [];
 }
@@ -64,7 +68,7 @@ function getYiData(type) {
                 item.extra = extra;
             }
             item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                require(config.依赖);
                 erji();
             })
         })
