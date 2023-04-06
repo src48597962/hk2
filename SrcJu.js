@@ -90,7 +90,6 @@ function sousuo() {
 //二级+源搜索
 function erji() {
     addListener("onClose", $.toString(() => {
-        clearMyVar('erjidata');
         clearMyVar('erjiextra');
     }));
     let name = MY_PARAMS.name;
@@ -99,10 +98,9 @@ function erji() {
     let d = [];
     let parse;
     let stype = MY_PARAMS.stype;
-    let erjidata = storage0.getMyVar('erjidata') || getMark(name,stype) || MY_PARAMS;
-    let sname = erjidata.sname || "";
-    let surl = erjidata.surl || "";
-    log(erjidata)
+    let erjiextra = storage0.getMyVar('erjiextra') || getMark(name,stype) || MY_PARAMS;
+    let sname = erjiextra.sname || "";
+    let surl = erjiextra.surl || "";
     MY_URL = surl;
     let sauthor = "未知";
     let sourcedata = datalist.filter(it => {
@@ -224,6 +222,11 @@ function erji() {
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
+        if(typeof(setPageParams)!="undefined"){
+            erjiextra.parse = parse;
+            setPageParams(erjiextra);
+        }
+
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新) => {
@@ -288,13 +291,14 @@ function search(name, sdata) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索() || [];
                 if (data.length > 0) {
+                    let lists = [];
                     data.forEach(item => {
                         let extra = item.extra || {};
-                        extra.img = extra.img || item.img || item.pic_url;
                         extra.name = extra.name || item.title;
+                        extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = obj.type;
                         extra.sname = obj.name;
-                        extra.surl = item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,"");
+                        extra.surl = item.url?item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,""):"";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
                             item.url = item.url + $("#immersiveTheme##autoCache#").rule(() => {
@@ -303,7 +307,6 @@ function search(name, sdata) {
                             })
                         } else {
                             item.url = item.url + $("#noLoading#").lazyRule((extra) => {
-                                storage0.putMyVar('erjidata', extra);
                                 storage0.putMyVar('erjiextra', extra);
                                 refreshPage(false);
                                 return "toast://已切换源：" + extra.sname;
@@ -312,10 +315,13 @@ function search(name, sdata) {
                         item.content = item.desc;
                         item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
                         item.col_type = getMyVar('SrcJuSousuo') == "1" ? "video" : "avatar";
+                        if(extra.name.indexOf(name)>-1){
+                            lists.push(item);
+                        }
                     })
                     searchMark[name] = searchMark[name] || [];
-                    searchMark[name] = searchMark[name].concat(data);
-                    addItemBefore(loadid, data);
+                    searchMark[name] = searchMark[name].concat(lists);
+                    addItemBefore(loadid, lists);
                     success++;
                     hideLoading();
                 }
