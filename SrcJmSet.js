@@ -116,7 +116,7 @@ function SRCSet() {
                             }
                         });
                         setResult(d);
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
+                        require(config.依赖);
                         search(name,sdata);
                         clearMyVar('SrcJmSousuo');
                     },input,source)
