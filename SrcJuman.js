@@ -103,7 +103,7 @@ function yiji() {
             if(!item.col_type=="scroll_button" || item.extra){
                 item.extra = extra;
             }
-            item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            item.url = item.url || $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                 erji();
             })
