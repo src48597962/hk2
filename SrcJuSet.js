@@ -40,7 +40,7 @@ function SRCSet() {
     d.push({
         title: '增加',
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile) => {
-            setPageTitle('增加 | 聚漫接口');
+            setPageTitle('增加 | 聚宝阁接口');
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             jiekouapi(sourcefile);
         }, sourcefile),
@@ -49,10 +49,10 @@ function SRCSet() {
     });
     d.push({
         title: '导入',
-        url: $("", "聚漫分享口令的云剪贴板").input((sourcefile,ImportType) => {
+        url: $("", "聚宝阁分享口令的云剪贴板").input((sourcefile,ImportType) => {
             try {
                 let inputname = input.split('￥')[0];
-                if (inputname == "聚漫接口") {
+                if (inputname == "聚宝阁接口") {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
@@ -85,11 +85,11 @@ function SRCSet() {
                     refreshPage(false);
                     return "toast://合计" + datalist2.length + "个，导入" + num + "个";
                 } else {
-                    return "toast://聚影√：非聚漫口令";
+                    return "toast://聚宝阁√：非法口令";
                 }
             } catch (e) {
                 log(e.message);
-                return "toast://聚漫√：口令有误";
+                return "toast://聚宝阁√：口令有误";
             }
         }, sourcefile, Juconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
@@ -129,7 +129,7 @@ function SRCSet() {
 
     datalist.forEach(item => {
         d.push({
-            title: "🎃 " + item.name + (item.parse ? "（主页源）" : "") + (item.erparse ? "（搜索源）" : ""),
+            title: item.type+ "：" + item.name + (item.parse ? "（主页源）" : "") + (item.erparse ? "（搜索源）" : ""),
             url: $(["分享", "编辑", "删除"], 1).select((sourcefile, data) => {
                 if (input == "分享") {
                     showLoading('分享上传中，请稍后...');
@@ -138,15 +138,15 @@ function SRCSet() {
                     let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)));
                     hideLoading();
                     if (pasteurl) {
-                        let code = '聚漫接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
+                        let code = '聚宝阁接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
                         copy(code);
-                        return "toast://(单个)聚漫分享口令已生成";
+                        return "toast://(单个)聚宝阁分享口令已生成";
                     } else {
                         return "toast://分享失败，剪粘板或网络异常";
                     }
                 } else if (input == "编辑") {
                     return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
-                        setPageTitle('编辑 | 聚漫接口');
+                        setPageTitle('编辑 | 聚宝阁接口');
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         jiekouapi(sourcefile, data);
                     }, sourcefile, data)
@@ -154,7 +154,7 @@ function SRCSet() {
                     return $("确定删除："+dataname).confirm((sourcefile,data)=>{
                         let sourcedata = fetch(sourcefile);
                         eval("var datalist=" + sourcedata + ";");
-                        let index = datalist.indexOf(datalist.filter(d => d.name == data.name && d.type==data.type)[0]);
+                        let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
                         datalist.splice(index, 1);
                         writeFile(sourcefile, JSON.stringify(datalist));
                         clearMyVar('searchMark');
@@ -203,12 +203,11 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '接口类型：'+ getMyVar('jiekoutype','漫画'),
         col_type: 'text_1',
-        url: $(runModes,2,"接口类型").select((cfgfile,Juconfig) => {
-            Juconfig["runMode"] = input;
-            writeFile(cfgfile, JSON.stringify(Juconfig));
+        url: $(runModes,2,"接口类型").select(() => {
+            putMyVar('jiekoutype',input);
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
-        }, cfgfile, Juconfig),
+        }),
     });
     d.push({
         title: '主页数据源',
@@ -298,10 +297,12 @@ function jiekouapi(sourcefile, data) {
             }
             try {
                 let name = getMyVar('jiekouname');
+                let type = getMyVar('jiekoutype','漫画');
                 let parse = getMyVar('jiekouparse');
                 let erparse = getMyVar('jiekouerparse');
                 let newapi = {
-                    name: name
+                    name: name,
+                    type: type
                 }
                 if (parse) { newapi['parse'] = parse; }
                 if (erparse) { newapi['erparse'] = erparse; }
@@ -315,7 +316,7 @@ function jiekouapi(sourcefile, data) {
                 } else {
                     var datalist = [];
                 }
-                let index = datalist.indexOf(datalist.filter(d => d.name == name)[0]);
+                let index = datalist.indexOf(datalist.filter(d => d.name==name && d.type==type)[0]);
                 if (index > -1 && getMyVar('jiekouedit') != "1") {
                     return "toast://已存在-" + name;
                 } else {
