@@ -145,9 +145,11 @@ function erji() {
     let isload;//是否正确加载
     let d = [];
     let parse;
-    let erjidata = storage0.getMyVar('erjidata') || getMark(name);
-    let sname = erjidata.sname || MY_PARAMS.sname || "";
-    let surl = erjidata.surl || MY_PARAMS.surl || "";
+    let stype = MY_PARAMS.stype;
+    let erjidata = storage0.getMyVar('erjidata') || getMark(name,stype) || MY_PARAMS;
+    let sname = erjidata.sname || "";
+    let surl = erjidata.surl || "";
+    
     MY_URL = surl;
     let sauthor = "未知";
     let sourcedata = erdatalist.filter(it => {
@@ -266,7 +268,7 @@ function erji() {
         });
         setResult(d);
         //二级源浏览记录保存
-        let erjidata = { name: name, sname: sname, surl: surl };
+        let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         //收藏更新最新章节
         if (parse['最新']) {
@@ -401,7 +403,7 @@ function search(name, sdata) {
 }
 
 //取本地足迹记录
-function getMark(name) {
+function getMark(name,stype) {
     let markfile = "hiker://files/rules/Src/Ju/mark.json";
     let markdata = fetch(markfile);
     if (markdata != "") {
@@ -410,7 +412,7 @@ function getMark(name) {
         var marklist = [];
     }
     let mark = marklist.filter(item => {
-        return item.name == name;
+        return item.name==name && it.type==stype;
     })
     if (mark.length == 1) {
         return mark[0];
@@ -427,8 +429,8 @@ function setMark(data) {
     } else {
         var marklist = [];
     }
-    let mark = marklist.filter(item => {
-        return item.name == data.name;
+    let mark = marklist.filter(it => {
+        return it.name==data.name && it.type==data.stype;
     })
     if (mark.length == 1) {
         let index = marklist.indexOf(mark[0]);
