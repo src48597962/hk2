@@ -149,7 +149,9 @@ function erji() {
     let erjidata = storage0.getMyVar('erjidata') || getMark(name,stype) || MY_PARAMS;
     let sname = erjidata.sname || "";
     let surl = erjidata.surl || "";
-    
+    log(erjidata);
+    log(sname);
+    log(surl);
     MY_URL = surl;
     let sauthor = "未知";
     let sourcedata = datalist.filter(it => {
