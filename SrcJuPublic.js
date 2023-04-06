@@ -5,7 +5,7 @@ if(Jucfg != ""){
 }else{
     var Juconfig= {};
 }
-let runType = Juconfig["runType"] || "漫画";
+let runMode = Juconfig["runMode"] || "漫画";
 let yijisource = Juconfig['yijisource'] || "";
 
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
@@ -21,10 +21,10 @@ if(sourcedata != ""){
 }
 
 let yidatalist = datalist.filter(it=>{
-    return it.parse && it.type==runType;
+    return it.parse && it.type==runMode;
 });
 let erdatalist = datalist.filter(it=>{
-    return it.erparse && it.type==runType;
+    return it.erparse && it.type==runMode;
 });
 
 function getYiData(type) {
