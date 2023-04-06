@@ -188,7 +188,7 @@ function SRCSet() {
             refreshPage(false);
             return 'toast://主页源已设置为：' + input;
         }, cfgfile, JMconfig),
-        img: "https://lanmeiguojiang.com/tubiao/messy/145.svg",
+        img: "https://lanmeiguojiang.com/tubiao/messy/13.svg",
         col_type: "icon_2"
     });
     d.push({
@@ -199,7 +199,7 @@ function SRCSet() {
             refreshPage(false);
             return 'toast://导入模式已设置为：' + input;
         }, cfgfile, JMconfig),
-        img: "https://lanmeiguojiang.com/tubiao/messy/145.svg",
+        img: "https://lanmeiguojiang.com/tubiao/messy/84.svg",
         col_type: "icon_2"
     });
     d.push({
