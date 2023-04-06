@@ -104,19 +104,21 @@ function SRCSet() {
                 }
                 if(source){
                     return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
+                        putMyVar('SrcJmSousuo','1');
                         let d = [];
                         d.push({
                             title: "搜索中...",
                             url: "hiker://empty",
                             col_type: 'text_center_1',
                             extra: {
-                                id: "listloading",
+                                id: "sousuoloading",
                                 lineVisible: false
                             }
                         });
                         setResult(d);
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuman.js');
                         search(name,sdata);
+                        clearMyVar('SrcJmSousuo');
                     },input,source)
                 }else{
                     return "toast://确认搜索源接口数据？"
@@ -221,10 +223,19 @@ function SRCSet() {
                     }
                     let num = 0;
                     for (let i = 0; i < datalist2.length; i++) {
-                        if (!datalist.some(item => item.name == datalist2[i].name)) {
-                            datalist.push(datalist2[i]);
-                            num = num + 1;
+                        if (datalist.some(item => item.name == datalist2[i].name)) {
+                            confirm({
+                                title: '是否覆盖？', 
+                                content: datalist2[i].name + '已存在', 
+                                confirm: $.toString((datalist,name) => {
+                                    let index = datalist.indexOf(datalist.filter(d => d.name == name)[0]);
+                                    datalist.splice(index, 1);
+                                },datalist,datalist2[i].name),
+                                cancel:''
+                            })
                         }
+                        datalist.push(datalist2[i]);
+                        num = num + 1;
                     }
                     writeFile(filepath, JSON.stringify(datalist));
                     clearMyVar('searchMark');
