@@ -146,7 +146,6 @@ function erji() {
     let d = [];
     let parse;
     let stype = MY_PARAMS.stype;
-    log(getMark(name,stype));
     let erjidata = storage0.getMyVar('erjidata') || getMark(name,stype) || MY_PARAMS;
     let sname = erjidata.sname || "";
     let surl = erjidata.surl || "";
@@ -174,6 +173,7 @@ function erji() {
     }
     try {
         if (parse) {
+            setPageTitle(name+'-'+sname);
             sauthor = parse["作者"] || sauthor;
             let details = parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
@@ -413,11 +413,9 @@ function getMark(name,stype) {
     } else {
         var marklist = [];
     }
-    log(marklist)
     let mark = marklist.filter(it => {
-        return it.name==name && it.type==stype;
+        return it.name==name && it.stype==stype;
     })
-    log(mark)
     if (mark.length > 0) {
         return mark[0];
     } else {
