@@ -75,7 +75,7 @@ function yiji() {
                     title: it.name,
                     desc: "",
                     pic_url: it.img,
-                    url: surl,
+                    url: it.surl,
                     col_type: 'movie_1_vertical_pic_blur',
                     extra: {
                         sname: it.sname,
