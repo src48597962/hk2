@@ -11,20 +11,20 @@ function yiji() {
     });
     let parse;
     let page;
-    try{
-        if(sourcedata.length>0){
+    try {
+        if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
-            if(source.ext && /^http/.test(source.ext)){
+            if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = yidata;
-            }else{
+            } else {
                 parse = source;
             }
             page = parse["页码"];
-            toast("当前主页源："+sourcename+(parse["作者"]?"，作者："+parse["作者"]:""));
+            toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
         }
-    }catch(e){
-        log("一级源接口加载异常>"+e.message);
+    } catch (e) {
+        log("一级源接口加载异常>" + e.message);
     }
     page = page || {};
     let d = [];
@@ -39,7 +39,7 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: $("hiker://empty#noRecordHistory##noHistory#"+(page["排行"]?"?page=fypage":"")).rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["排行"] ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
         }),
@@ -48,7 +48,7 @@ function yiji() {
     })
     d.push({
         title: "分类",
-        url: $("hiker://empty#noRecordHistory##noHistory#"+(page["分类"]!=0?"?page=fypage":"")).rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
         }),
@@ -57,7 +57,7 @@ function yiji() {
     })
     d.push({
         title: "更新",
-        url: $("hiker://empty#noRecordHistory##noHistory#"+(page["更新"]?"?page=fypage":"")).rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["更新"] ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('更新');
         }),
@@ -66,28 +66,78 @@ function yiji() {
     })
     d.push({
         title: Juconfig["btnmenu5"] || "书架",
-        url: Juconfig["btnmenu5"]=="历史"?"hiker://history":Juconfig["btnmenu5"]=="收藏"?"hiker://collection":$("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+        url: Juconfig["btnmenu5"] == "历史" ? "hiker://history" : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection" : $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
-            booklist.forEach(it=>{
+            let type = [];
+            booklist.forEach(it => {
+                if(type.indexOf(it.stype)==-1){
+                    type.push(it.stype)
+                }
+            })
+            type.forEach(it=>{
                 d.push({
-                    title: it.name,
-                    pic_url: it.img,
-                    desc: "",
-                    url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                        require(config.依赖);
-                        erji();
-                    }),
-                    col_type: 'movie_1_vertical_pic',
-                    extra: {
-                        name: it.name,
-                        img: it.img,
-                        sname: it.sname,
-                        stype: it.stype,
-                        surl: it.surl,
-                        lineVisible: false
-                    }
+                    title: getMyVar("SrcJuBookType","")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    url: $('#noLoading#').lazyRule((it) => {
+                        putMyVar("SrcJuBookType",it);
+                        refreshPage(false);
+                        return "hiker://empty";
+                    },it),
+                    col_type: 'scroll_button'
                 })
+            })
+            d.push({
+                title: '获取最新',
+                url: $('hiker://empty#noRecordHistory##noHistory#').rule(() => {
+                    
+                }),
+                img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+                col_type: "icon_small_3"
+            });
+            d.push({
+                title: '书架搜索',
+                url: $('hiker://empty#noRecordHistory##noHistory#').rule(() => {
+                    
+                }),
+                img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+                col_type: "icon_small_3"
+            });
+            d.push({
+                title: '切换样式',
+                url: $('hiker://empty#noRecordHistory##noHistory#').rule((cfgfile, Juconfig) => {
+                    if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
+                        Juconfig["bookCase_col_type"] = "movie_3_marquee";
+                    }else{
+                        Juconfig["bookCase_col_type"] = "movie_1_vertical_pic";
+                    }
+                    writeFile(cfgfile, JSON.stringify(Juconfig));
+                    refreshPage(false);
+                    return 'toast://已切换为' + input;
+                }, cfgfile, Juconfig),
+                img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+                col_type: "icon_small_3"
+            });
+            booklist.forEach(it => {
+                if(getMyVar("SrcJuBookType")==it.stype || !getMyVar("SrcJuBookType")){
+                    d.push({
+                        title: it.name,
+                        pic_url: it.img,
+                        desc: "源："+it.sname+"\n",
+                        url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                            require(config.依赖);
+                            erji();
+                        }),
+                        col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
+                        extra: {
+                            name: it.name,
+                            img: it.img,
+                            sname: it.sname,
+                            stype: it.stype,
+                            surl: it.surl,
+                            lineVisible: false
+                        }
+                    })
+                }
             })
             setResult(d);
         }),
@@ -96,8 +146,8 @@ function yiji() {
         extra: {
             longClick: [{
                 title: "切换按钮",
-                js: $.toString((cfgfile,Juconfig) => {
-                    return $(["书架", "收藏", "历史"],1).select((cfgfile,Juconfig) => {
+                js: $.toString((cfgfile, Juconfig) => {
+                    return $(["书架", "收藏", "历史"], 1).select((cfgfile, Juconfig) => {
                         Juconfig["btnmenu5"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
@@ -110,7 +160,7 @@ function yiji() {
     d.push({
         col_type: 'line'
     })
-    getYiData('主页',d);
+    getYiData('主页', d);
 }
 //搜索页面
 function sousuo() {
@@ -141,21 +191,21 @@ function erji() {
     let d = [];
     let parse;
     let stype = MY_PARAMS.stype;
-    let erjiextra = storage0.getMyVar('erjiextra') || getMark(name,stype) || MY_PARAMS;
+    let erjiextra = storage0.getMyVar('erjiextra') || getMark(name, stype) || MY_PARAMS;
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
     let sauthor = "未知";
-    
+
     let sourcedata = datalist.filter(it => {
-        return it.name == sname && it.erparse && it.type==stype;
+        return it.name == sname && it.erparse && it.type == stype;
     });
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
-        if (sourcedata.length==0 && MY_PARAMS && MY_PARAMS.sourcedata) {
+        if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
             log('分享页面，且本地无对应接口');
             sourcedata.push(MY_PARAMS.sourcedata);
         }
-        if (sourcedata.length>0 && sourcedata[0].erparse) {
+        if (sourcedata.length > 0 && sourcedata[0].erparse) {
             eval("let source = " + sourcedata[0].erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
@@ -171,14 +221,14 @@ function erji() {
     try {
         if (parse && surl) {
             MY_URL = surl;
-            setPageTitle(name+'-'+sname);
+            setPageTitle(name + '-' + sname);
             sauthor = parse["作者"] || sauthor;
             let details = parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
                 desc: details.detail2 || "",
-                pic_url: pic.indexOf("@Referer=")==-1?pic+"@Referer=":pic,
+                pic_url: pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic,
                 url: surl,
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
@@ -186,13 +236,13 @@ function erji() {
                 }
             })
             let 列表 = details.list;//选集列表
-            if (getMyVar(sname+'sort') == '1') {
+            if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
             let bookdata = { name: name, img: pic, sname: sname, surl: surl, stype: stype };
             d.push({
-                title: bookCase(bookdata,"select")?"书架更新":"加入书架",
+                title: bookCase(bookdata, "select") ? "书架更新" : "加入书架",
                 url: $("#noLoading#").lazyRule((bookdata) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return bookCase(bookdata);
@@ -206,7 +256,7 @@ function erji() {
                         title: '书架删除',
                         js: $.toString((bookdata) => {
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                            return bookCase(bookdata,"delete");
+                            return bookCase(bookdata, "delete");
                         }, bookdata)
                     }]
                 }
@@ -220,11 +270,11 @@ function erji() {
                     cls: "loadlist",
                     chapterList: 列表,
                     "defaultView": "1",
-                    "info": { 
-                        "bookName": name, 
-                        "bookTopPic": pic, 
-                        "parseCode": "(\n(解析) => {\n return 解析(input);\n})("+解析+")", 
-                        "ruleName": MY_RULE.title 
+                    "info": {
+                        "bookName": name,
+                        "bookTopPic": pic,
+                        "parseCode": "(\n(解析) => {\n return 解析(input);\n})(" + 解析 + ")",
+                        "ruleName": MY_RULE.title
                     }
                 }
             })
@@ -243,16 +293,16 @@ function erji() {
                 }
             })
             d.push({
-                title: "排序"+(getMyVar(sname+'sort')=='1'?"🔽":"🔼"),
-                url: $("#noLoading#").lazyRule((列表,解析,name,sname) => {
+                title: "排序" + (getMyVar(sname + 'sort') == '1' ? "🔽" : "🔼"),
+                url: $("#noLoading#").lazyRule((列表, 解析, name, sname) => {
                     deleteItemByCls('playlist');
-                    if (getMyVar(sname+'sort') == '1') {
-                        putMyVar(sname+'sort', '0'); 
+                    if (getMyVar(sname + 'sort') == '1') {
+                        putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
                             title: "排序🔼"
                         });
                     } else {
-                        putMyVar(sname+'sort', '1')
+                        putMyVar(sname + 'sort', '1')
                         列表.reverse();
                         updateItem('listsort', {
                             title: "排序🔽"
@@ -281,7 +331,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            
+
             列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
@@ -316,7 +366,7 @@ function erji() {
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
-        if(typeof(setPageParams)!="undefined"){
+        if (typeof (setPageParams) != "undefined") {
             delete sourcedata2['parse']
             erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
@@ -393,7 +443,7 @@ function search(name, sdata) {
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = obj.type;
                         extra.sname = obj.name;
-                        extra.surl = item.url?item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,""):"";
+                        extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
                             item.url = item.url + $("#immersiveTheme##autoCache#").rule(() => {
@@ -410,7 +460,7 @@ function search(name, sdata) {
                         item.content = item.desc;
                         item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
                         item.col_type = getMyVar('SrcJuSousuo') == "1" ? "video" : "avatar";
-                        if(extra.name.indexOf(name)>-1){
+                        if (extra.name.indexOf(name) > -1) {
                             lists.push(item);
                         }
                     })
@@ -459,7 +509,7 @@ function search(name, sdata) {
 }
 
 //取本地足迹记录
-function getMark(name,stype) {
+function getMark(name, stype) {
     let markfile = "hiker://files/rules/Src/Ju/mark.json";
     let markdata = fetch(markfile);
     if (markdata != "") {
@@ -468,7 +518,7 @@ function getMark(name,stype) {
         var marklist = [];
     }
     let mark = marklist.filter(it => {
-        return it.name==name && it.stype==stype;
+        return it.name == name && it.stype == stype;
     })
     if (mark.length > 0) {
         return mark[0];
@@ -486,7 +536,7 @@ function setMark(data) {
         var marklist = [];
     }
     let mark = marklist.filter(it => {
-        return it.name==data.name && it.stype==data.stype;
+        return it.name == data.name && it.stype == data.stype;
     })
     if (mark.length > 0) {
         let index = marklist.indexOf(mark[0]);
