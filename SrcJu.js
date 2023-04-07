@@ -335,7 +335,14 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            
+            d.push({
+                col_type: "line_blank"
+            });
+            for (let i = 0; i < 10; i++) {
+                d.push({
+                    col_type: "blank_block"
+                })
+            }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #FF0000">排序∨</span></b>` : `““””<b><span style="color: #1aad19">排序∧</span></b>`,
                 url: $("#noLoading#").lazyRule((列表, 解析, name, sname) => {
