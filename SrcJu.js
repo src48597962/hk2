@@ -72,15 +72,19 @@ function yiji() {
             let type = [];
             let Julist = [];
             let collection = JSON.parse(fetch("hiker://collection"));
-            log(collection);
             collection.forEach(it => {
-                if(JSON.parse(it.params).title==MY_RULE.title){
-                    Julist.push(it);
-                    let t = JSON.parse(JSON.parse(it.params).params).stype;
-                    if(type.indexOf(t)==-1){
-                        type.push(t)
-                    } 
-                }
+                try{
+                    if(it.params&& (JSON.parse(it.params).title==MY_RULE.title)){
+                        Julist.push(it);
+                        let params = JSON.parse(it.params);
+                        if(params.params){
+                            let t = JSON.parse(params.params).stype;
+                            if(type.indexOf(t)==-1){
+                                type.push(t)
+                            }
+                        }
+                    }
+                }catch(e){}
             })
             for (let i = 0; i < 9; i++) {
                 d.push({
@@ -97,6 +101,34 @@ function yiji() {
                     },it),
                     col_type: 'scroll_button'
                 })
+            })
+            let list = [];
+            Julist.forEach(it => {
+                try{
+                    let params = JSON.parse(it.params);
+                    let stype = JSON.parse(params.params).stype;
+                    if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
+                        let name = JSON.parse(params.params).name;
+                        let last = JSON.parse(it.extraData).lastChapterStatus;
+                        let mask = it.lastClick.split('@@')[0];
+                        list.push({
+                            title: name,
+                            pic_url: it.picUrl,
+                            desc: stype+"\n"+mask+"\n"+last,
+                            url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                                require(config.依赖);
+                                erji();
+                            }),
+                            col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
+                            extra: {
+                                name: name,
+                                img: it.picUrl,
+                                lineVisible: false,
+                                cls: "caselist"
+                            }
+                        })
+                    }
+                }catch(e){ }
             })
             d.push({
                 title: '获取最新',
@@ -116,19 +148,24 @@ function yiji() {
             });
             d.push({
                 title: '切换样式',
-                url: $('#noLoading#').lazyRule((cfgfile, Juconfig) => {
+                url: $('#noLoading#').lazyRule((cfgfile, Juconfig, list) => {
+                    deleteItemByCls("caselist");
                     if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
                         Juconfig["bookCase_col_type"] = "movie_3_marquee";
                     }else{
                         Juconfig["bookCase_col_type"] = "movie_1_vertical_pic";
                     }
+                    list.forEach(it=>{
+                        it.col_type = Juconfig["bookCase_col_type"];
+                    })
                     writeFile(cfgfile, JSON.stringify(Juconfig));
-                    refreshPage(false);
+                    addItemBefore("caseloading", list);
                     return 'hiker://empty';
-                }, cfgfile, Juconfig),
+                }, cfgfile, Juconfig, list),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_small_3"
             });
+            d = d.concat(list);
             d.push({
                 title: "",
                 url: "hiker://empty",
@@ -139,32 +176,6 @@ function yiji() {
                 }
             })
             setResult(d);
-            let list = [];
-            Julist.forEach(it => {
-                let stype = JSON.parse(JSON.parse(it.params).params).stype;
-                if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
-                    let name = JSON.parse(JSON.parse(it.params).params).name;
-                    let last = JSON.parse(it.extraData).lastChapterStatus;
-                    let mask = it.lastClick.split('@@')[0];
-                    list.push({
-                        title: name,
-                        pic_url: it.picUrl,
-                        desc: stype+"\n"+mask+"\n"+last,
-                        url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                            require(config.依赖);
-                            erji();
-                        }),
-                        col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
-                        extra: {
-                            name: name,
-                            img: it.picUrl,
-                            lineVisible: false,
-                            cls: "caselist"
-                        }
-                    })
-                }
-            })
-            addItemBefore("caseloading", list);
         }),
         pic_url: "hiker://files/cache/src/收藏.svg",
         col_type: 'icon_5',
