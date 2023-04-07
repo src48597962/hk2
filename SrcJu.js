@@ -88,7 +88,7 @@ function yiji() {
             })
             d.push({
                 title: '获取最新',
-                url: $('hiker://empty#noRecordHistory##noHistory#').rule(() => {
+                url: $('#noLoading#').lazyRule(() => {
                     
                 }),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
@@ -96,7 +96,7 @@ function yiji() {
             });
             d.push({
                 title: '书架搜索',
-                url: $('hiker://empty#noRecordHistory##noHistory#').rule(() => {
+                url: $('#noLoading#').lazyRule(() => {
                     
                 }),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
@@ -104,7 +104,7 @@ function yiji() {
             });
             d.push({
                 title: '切换样式',
-                url: $('hiker://empty#noRecordHistory##noHistory#').rule((cfgfile, Juconfig) => {
+                url: $('#noLoading#').lazyRule((cfgfile, Juconfig) => {
                     if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
                         Juconfig["bookCase_col_type"] = "movie_3_marquee";
                     }else{
