@@ -65,22 +65,23 @@ function yiji() {
         col_type: 'icon_5'
     })
     d.push({
-        title: Juconfig["btnmenu5"]=="history" ? "历史" : "收藏",
-        url: Juconfig["btnmenu5"]=="history" ? "hiker://history" : "hiker://collection",
+        title: Juconfig["btnmenu5"] || "书架",
+        url: Juconfig["btnmenu5"]=="历史"?"hiker://history":Juconfig["btnmenu5"]=="收藏"?"hiker://collection":$("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+            
+        }),
         pic_url: "hiker://files/cache/src/收藏.svg",
         col_type: 'icon_5',
         extra: {
             longClick: [{
                 title: "切换按钮",
                 js: $.toString((cfgfile,Juconfig) => {
-                    if(Juconfig["btnmenu5"]=="history"){
-                        Juconfig["btnmenu5"]="collection";
-                    }else{
-                        Juconfig["btnmenu5"]="history";
-                    }
-                    writeFile(cfgfile, JSON.stringify(Juconfig));
-                    refreshPage(false);
-                    return 'toast://已切换';
+                    return $(["书架", "收藏", "历史"],1).select((cfgfile,Juconfig) => {
+                        Juconfig["btnmenu5"] = input;
+                        writeFile(cfgfile, JSON.stringify(Juconfig));
+                        refreshPage(false);
+                        return 'toast://已切换为' + input;
+                    }, cfgfile, Juconfig)
                 }, cfgfile, Juconfig)
             }]
         }
@@ -475,57 +476,7 @@ function setMark(data) {
     writeFile(markfile, JSON.stringify(marklist));
     return 1;
 }
-//操作书架
-function bookCase (data,x) {
-    let bookfile = "hiker://files/rules/Src/Ju/book.json";
-    let bookdata = fetch(bookfile);
-    if(bookdata != ""){
-        try{
-            eval("var booklist=" + bookdata+ ";");
-        }catch(e){
-            var booklist = [];
-        }
-    }else{
-        var booklist = [];
-    }
-    let book = booklist.filter(it => {
-        return it.name==data.name && it.stype==data.stype;
-    })
-    if(!x){
-        let sm;
-        if (book.length > 0) {
-            let index = booklist.indexOf(book[0]);
-            booklist.splice(index, 1);
-            sm = "书架更新成功";
-        }else{
-            sm = "加入书架成功";
-            updateItem('bookCase', {
-                title: "更新书架"
-            });
-        }
-        booklist.push(data);
-        writeFile(bookfile, JSON.stringify(booklist));
-        return "toast://"+data.name+" "+sm;
-    }else if(x=="select"){
-        if (book.length > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }else if(x=="delete"){
-        if (book.length > 0) {
-            let sm = "已从书架删除";
-            let index = booklist.indexOf(book[0]);
-            booklist.splice(index, 1);
-            updateItem('bookCase', {
-                title: "加入书架"
-            });
-            writeFile(bookfile, JSON.stringify(booklist));
-            return "toast://"+data.name+" "+sm;
-        }
-    }
-    return "toast://异常操作";
-}
+
 //图标下载
 function downloadicon() {
     try {
