@@ -67,10 +67,19 @@ function yiji() {
     d.push({
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"] == "历史" ? "hiker://history" : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection" : $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            //let history = JSON.parse(fetch("hiker://collection"));
-            let collection = JSON.parse(fetch("hiker://collection")) || [];
-            collection.forEach(it=>{
-                log(JSON.parse(it.params).params.stype);
+            let collectiondata = fetch("hiker://collection");
+            if(collectiondata != ""){
+                try{
+                    eval("var collectionlist=" + collectiondata+ ";");
+                }catch(e){
+                    var collectionlist = [];
+                }
+            }else{
+                var collectionlist = [];
+            }
+            //let collection = fetch("hiker://collection");
+            collectionlist.forEach(it=>{
+                log(it.params.params.stype);
             })
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
