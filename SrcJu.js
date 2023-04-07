@@ -34,7 +34,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             SRCSet();
         }),
-        pic_url: "hiker://files/cache/src/管理.svg",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
         col_type: 'icon_5'
     })
     d.push({
@@ -43,7 +43,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
         }),
-        pic_url: "hiker://files/cache/src/排行.webp",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/229.png",
         col_type: 'icon_5'
     })
     d.push({
@@ -52,7 +52,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
         }),
-        pic_url: "hiker://files/cache/src/分类.webp",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/287.png",
         col_type: 'icon_5'
     })
     d.push({
@@ -61,7 +61,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('更新');
         }),
-        pic_url: "hiker://files/cache/src/更新.webp",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/288.png",
         col_type: 'icon_5'
     })
     d.push({
@@ -169,7 +169,7 @@ function yiji() {
             })
             setResult(d);
         }),
-        pic_url: "hiker://files/cache/src/收藏.svg",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/109.png",
         col_type: 'icon_5',
         extra: {
             longClick: [{
