@@ -169,7 +169,7 @@ function erji() {
             }
             let 解析 = parse['解析'];
             d.push({
-                title: "转换排序",
+                title: "加入书架",
                 url: $("#noLoading#").lazyRule((列表,解析,name,sname) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname+'sort') == '1') {
@@ -236,6 +236,45 @@ function erji() {
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/25.svg',
                 col_type: 'icon_small_3',
                 extra: {
+                    cls: "loadlist"
+                }
+            })
+            d.push({
+                title: "排序"+(getMyVar(sname+'sort')=='1'?"🔽":"🔼"),
+                url: $("#noLoading#").lazyRule((列表,解析,name,sname) => {
+                    deleteItemByCls('playlist');
+                    if (getMyVar(sname+'sort') == '1') {
+                        putMyVar(sname+'sort', '0'); 
+                        updateItem('listsort', {
+                            title: "排序🔽"
+                        });
+                    } else {
+                        putMyVar(sname+'sort', '1')
+                        列表.reverse();
+                        updateItem('listsort', {
+                            title: "排序🔼"
+                        });
+                    };
+                    let d = [];
+                    列表.forEach((item, id) => {
+                        d.push({
+                            title: item.title,
+                            url: item.url + $("").lazyRule((解析) => {
+                                return 解析(input);
+                            }, 解析),
+                            col_type: "text_2",
+                            extra: {
+                                id: name + "_选集_" + id,
+                                cls: "loadlist playlist"
+                            }
+                        });
+                    })
+                    addItemBefore('listloading', d);
+                    return 'toast://切换排序成功'
+                }, 列表, 解析, name, sname),
+                col_type: 'scroll_button',
+                extra: {
+                    id: "listsort",
                     cls: "loadlist"
                 }
             })
