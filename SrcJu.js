@@ -131,7 +131,7 @@ function yiji() {
             d.push({
                 title: '切换样式',
                 url: $('#noLoading#').lazyRule((cfgfile, Juconfig, list) => {
-                    deleteItemByCls("caselist");
+                    //deleteItemByCls("caselist");
                     if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
                         Juconfig["bookCase_col_type"] = "movie_3_marquee";
                     }else{
