@@ -204,7 +204,6 @@ function erji() {
                 pic_url: getMyVar(sname+'sort') == '1' ? 'https://lanmeiguojiang.com/tubiao/messy/127.svg' : 'https://lanmeiguojiang.com/tubiao/messy/126.svg',
                 col_type: 'icon_small_3',
                 extra: {
-                    id: "listsort",
                     cls: "loadlist"
                 }
             })
