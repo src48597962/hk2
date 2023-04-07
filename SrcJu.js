@@ -110,6 +110,11 @@ function yiji() {
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_2"
             });
+            for (let i = 0; i < 8; i++) {
+                d.push({
+                    col_type: "blank_block"
+                })
+            }
             type.forEach(it=>{
                 d.push({
                     title: getMyVar("SrcJuBookType","")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
