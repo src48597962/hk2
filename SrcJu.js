@@ -74,12 +74,17 @@ function yiji() {
                 d.push({
                     title: it.name,
                     pic_url: it.img,
-                    url: it.surl,
+                    desc: "",
+                    url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                        require(config.依赖);
+                        erji();
+                    }),
                     col_type: 'movie_1_vertical_pic',
                     extra: {
                         sname: it.sname,
                         stype: it.sytpe,
-                        surl: it.surl
+                        surl: it.surl,
+                        lineVisible: false
                     }
                 })
             })
