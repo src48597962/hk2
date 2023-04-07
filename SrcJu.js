@@ -133,6 +133,7 @@ function yiji() {
                 url: "hiker://empty",
                 col_type: "text_center_1",
                 extra: {
+                    lineVisible: false,
                     id: "caseloading"
                 }
             })
@@ -142,12 +143,12 @@ function yiji() {
                 let stype = JSON.parse(JSON.parse(it.params).params).stype;
                 if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
                     let name = JSON.parse(JSON.parse(it.params).params).name;
-                    let sname = JSON.parse(JSON.parse(it.params).params).sname;
-                    let surl = JSON.parse(JSON.parse(it.params).params).surl;
+                    let last = JSON.parse(it.extraData).lastChapterStatus;
+                    let mask = it.lastClick.split('@@')[0];
                     list.push({
                         title: name,
                         pic_url: it.picUrl,
-                        desc: "源："+sname+"\n",
+                        desc: stype+"\n"+last+"\n"+mask,
                         url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                             require(config.依赖);
                             erji();
@@ -156,9 +157,6 @@ function yiji() {
                         extra: {
                             name: name,
                             img: it.picUrl,
-                            sname: sname,
-                            stype: stype,
-                            surl: surl,
                             lineVisible: false,
                             cls: "caselist"
                         }
