@@ -296,6 +296,7 @@ function erji() {
                             }
                         }]);
                     }
+                    return "hiker://empty";
                 }, details.desc||""),
                 pic_url: "https://lanmeiguojiang.com/tubiao/messy/32.svg",
                 col_type: 'icon_small_3',
@@ -335,7 +336,10 @@ function erji() {
                 }
             })
             d.push({
-                title: "排序" + (getMyVar(sname + 'sort') == '1' ? "🔽" : "🔼"),
+                col_type : "line"
+            })
+            d.push({
+                title: "排序" + (getMyVar(sname + 'sort') == '1' ? "🔽🔻" : "🔼🔺"),
                 url: $("#noLoading#").lazyRule((列表, 解析, name, sname) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
