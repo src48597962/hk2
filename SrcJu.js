@@ -445,7 +445,7 @@ function setMark(data) {
         var marklist = [];
     }
     let mark = marklist.filter(it => {
-        return it.name==data.name && it.type==data.stype;
+        return it.name==data.name && it.stype==data.stype;
     })
     if (mark.length > 0) {
         let index = marklist.indexOf(mark[0]);
