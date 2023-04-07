@@ -125,8 +125,9 @@ function erji() {
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type==stype;
     });
+    log(MY_PARAMS.parse);
     try {
-        if (sourcedata.length == 0) {
+        if (sourcedata.length==0 && MY_PARAMS && MY_PARAMS.parse) {
             sourcedata.push({ erparse: MY_PARAMS.parse });
         }
         if (sourcedata[0].erparse) {
