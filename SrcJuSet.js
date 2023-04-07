@@ -165,7 +165,7 @@ function SRCSet() {
                 }
             }, sourcefile, item),
             desc: item.type,
-            img: "https://lanmeiguojiang.com/tubiao/ke/108.png",
+            img: "https://lanmeiguojiang.com/tubiao/ke/19.png",
             col_type: "avatar"
         });
     })
@@ -320,7 +320,9 @@ function jiekouapi(sourcefile, data) {
                 } else {
                     var datalist = [];
                 }
+                log(newapi);
                 let index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==type||!d.type))[0]);
+                log(index);
                 if (index > -1 && getMyVar('jiekouedit') != "1") {
                     return "toast://已存在-" + name;
                 } else {
