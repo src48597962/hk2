@@ -119,7 +119,6 @@ function erji() {
     let d = [];
     let parse;
     let stype = MY_PARAMS.stype;
-    log(getMark(name,stype))
     let erjiextra = storage0.getMyVar('erjiextra') || getMark(name,stype) || MY_PARAMS;
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
