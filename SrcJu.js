@@ -68,7 +68,6 @@ function yiji() {
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"] == "历史" ? "hiker://history" : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection" : $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            let d = [];
             let type = [];
             let Julist = [];
             let collection = JSON.parse(fetch("hiker://collection"));
@@ -88,27 +87,14 @@ function yiji() {
                     log("书架加载异常>"+e.message);
                 }
             })
-            /*
-            for (let i = 0; i < 9; i++) {
-                d.push({
-                    col_type: "blank_block"
-                })
-            }*/
-            d.push({
-                title: '获取最新',
-                url: $('#noLoading#').lazyRule(() => {
-                    
-                }),
-                img: "https://lanmeiguojiang.com/tubiao/messy/120.svg",
-                col_type: "icon_small_3"
-            });
+            let d = [];
             d.push({
                 title: '书架搜索',
                 url: $('#noLoading#').lazyRule(() => {
                     
                 }),
                 img: "https://lanmeiguojiang.com/tubiao/messy/25.svg",
-                col_type: "icon_small_3"
+                col_type: "icon_2"
             });
             d.push({
                 title: '切换样式',
@@ -127,7 +113,7 @@ function yiji() {
                     return 'hiker://empty';
                 }, cfgfile, Juconfig, list),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
-                col_type: "icon_small_3"
+                col_type: "icon_2"
             });
             type.forEach(it=>{
                 d.push({
@@ -153,7 +139,7 @@ function yiji() {
                         list.push({
                             title: name,
                             pic_url: it.picUrl,
-                            desc: "💠 "+stype+"\n🕓 "+mask+"\n🔘 "+last,
+                            desc: "💠 "+stype+"\n\n🕓 "+mask+"\n🔘 "+last,
                             url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                                 require(config.依赖);
                                 erji();
