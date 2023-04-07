@@ -87,67 +87,26 @@ function yiji() {
                     log("书架加载异常>"+e.message);
                 }
             })
-            let list = [];
-            Julist.forEach(it => {
-                try{
-                    let params = JSON.parse(it.params);
-                    let stype = JSON.parse(params.params).stype;
-                    if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
-                        let name = JSON.parse(params.params).name;
-                        let extraData = it.extraData?JSON.parse(it.extraData):{};
-                        let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
-                        let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
-                        list.push({
-                            title: name + "\n\n‘‘’’<small>💠 "+stype+"</small>",
-                            pic_url: it.picUrl,
-                            desc: "🕓 "+mask+"\n\n🔘 "+last,
-                            url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                                require(config.依赖);
-                                erji();
-                            }),
-                            col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
-                            extra: {
-                                name: name,
-                                img: it.picUrl,
-                                stype: stype,
-                                lineVisible: false,
-                                cls: "caselist"
-                            }
-                        })
-                    }
-                }catch(e){
-                    log("书架加载异常>"+e.message);
-                }
-            })
+
             let d = [];
             d.push({
-                title: '书架搜索',
-                url: $('#noLoading#').lazyRule(() => {
-                    
-                }),
-                img: "https://lanmeiguojiang.com/tubiao/messy/25.svg",
+                title: '收藏列表',
+                url: "hiker://collection",
+                img: "https://lanmeiguojiang.com/tubiao/messy/120.svg",
                 col_type: "icon_2"
             });
             d.push({
                 title: '切换样式',
-                url: $('#noLoading#').lazyRule((cfgfile, Juconfig,list) => {
-                    deleteItemByCls("caselist");
+                url: $('#noLoading#').lazyRule((cfgfile, Juconfig) => {
                     if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
                         Juconfig["bookCase_col_type"] = "movie_3_marquee";
                     }else{
                         Juconfig["bookCase_col_type"] = "movie_1_vertical_pic";
                     }
-                    
-                    log(list);
-                    /*
-                    list.forEach(it=>{
-                        it.col_type = Juconfig["bookCase_col_type"];
-                    })
-                    addItemBefore("caseloading", list);
-                    */
                     writeFile(cfgfile, JSON.stringify(Juconfig));
+                    refreshPage(false);
                     return 'hiker://empty';
-                }, cfgfile, Juconfig,list),
+                }, cfgfile, Juconfig),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_2"
             });
@@ -162,8 +121,38 @@ function yiji() {
                     col_type: 'scroll_button'
                 })
             })
-            
-            d = d.concat(list);
+            Julist.forEach(it => {
+                try{
+                    let params = JSON.parse(it.params);
+                    let stype = JSON.parse(params.params).stype;
+                    if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
+                        let name = JSON.parse(params.params).name;
+                        let extraData = it.extraData?JSON.parse(it.extraData):{};
+                        let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
+                        let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
+                        let col = Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic';
+                        d.push({
+                            title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+"</small>":name,
+                            pic_url: it.picUrl,
+                            desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
+                            url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                                require(config.依赖);
+                                erji();
+                            }),
+                            col_type: col,
+                            extra: {
+                                name: name,
+                                img: it.picUrl,
+                                stype: stype,
+                                lineVisible: false,
+                                cls: "caselist"
+                            }
+                        })
+                    }
+                }catch(e){
+                    log("书架加载异常>"+e.message);
+                }
+            })
             d.push({
                 title: "",
                 url: "hiker://empty",
