@@ -137,9 +137,9 @@ function yiji() {
                         let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
                         let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
                         list.push({
-                            title: name,
+                            title: name + "\n‘‘’’<small>💠 "+stype+"</small>",
                             pic_url: it.picUrl,
-                            desc: "💠 "+stype+"\n\n🕓 "+mask+"\n🔘 "+last,
+                            desc: "🕓 "+mask+"\n\n🔘 "+last,
                             url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                                 require(config.依赖);
                                 erji();
