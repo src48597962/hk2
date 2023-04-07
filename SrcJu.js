@@ -193,19 +193,21 @@ function erji() {
             let bookdata = { name: name, img: pic, sname: sname, surl: surl, stype: stype };
             d.push({
                 title: bookCase(bookdata,"select")?"书架更新":"加入书架",
-                url: $("#noLoading#").lazyRule((bookdata,bookCase) => {
+                url: $("#noLoading#").lazyRule((bookdata) => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return bookCase(bookdata);
-                }, bookdata, bookCase),
+                }, bookdata),
                 pic_url: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
                 col_type: 'icon_small_3',
                 extra: {
                     id: "bookCase",
                     cls: "loadlist",
                     longClick: [{
-                        title: Juconfig['ImportType']=="Coverage"?'导入模式：覆盖':'导入模式：跳过',
-                        js: $.toString((bookdata,bookCase) => {
+                        title: '书架删除',
+                        js: $.toString((bookdata) => {
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                             return bookCase(bookdata,"delete");
-                        }, bookdata, bookCase)
+                        }, bookdata)
                     }]
                 }
             })
