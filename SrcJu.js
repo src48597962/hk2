@@ -123,7 +123,8 @@ function erji() {
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
     let sauthor = "未知";
-    
+    let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
+
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type==stype;
     });
@@ -168,43 +169,23 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
+            
             d.push({
-                title: "加入书架",
-                url: $("#noLoading#").lazyRule((列表,解析,name,sname) => {
-                    deleteItemByCls('playlist');
-                    if (getMyVar(sname+'sort') == '1') {
-                        putMyVar(sname+'sort', '0'); 
-                        updateItem('listsort', {
-                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/126.svg'
-                        });
-                    } else {
-                        putMyVar(sname+'sort', '1')
-                        列表.reverse();
-                        updateItem('listsort', {
-                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/127.svg'
-                        });
-                    };
-                    let d = [];
-                    列表.forEach((item, id) => {
-                        d.push({
-                            title: item.title,
-                            url: item.url + $("").lazyRule((解析) => {
-                                return 解析(input);
-                            }, 解析),
-                            col_type: "text_2",
-                            extra: {
-                                id: name + "_选集_" + id,
-                                cls: "loadlist playlist"
-                            }
-                        });
-                    })
-                    addItemBefore('listloading', d);
-                    return 'toast://切换排序成功'
-                }, 列表, 解析, name, sname),
-                pic_url: getMyVar(sname+'sort') == '1' ? 'https://lanmeiguojiang.com/tubiao/messy/127.svg' : 'https://lanmeiguojiang.com/tubiao/messy/126.svg',
+                title: bookCase(erjidata,"select")?"书架更新":"加入书架",
+                url: $("#noLoading#").lazyRule((erjidata,bookCase) => {
+                    return bookCase(erjidata);
+                }, erjidata, bookCase),
+                pic_url: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
                 col_type: 'icon_small_3',
                 extra: {
-                    cls: "loadlist"
+                    id: "bookCase",
+                    cls: "loadlist",
+                    longClick: [{
+                        title: Juconfig['ImportType']=="Coverage"?'导入模式：覆盖':'导入模式：跳过',
+                        js: $.toString((erjidata,bookCase) => {
+                            return bookCase(erjidata,"delete");
+                        }, erjidata, bookCase)
+                    }]
                 }
             })
             d.push({
@@ -245,13 +226,13 @@ function erji() {
                     if (getMyVar(sname+'sort') == '1') {
                         putMyVar(sname+'sort', '0'); 
                         updateItem('listsort', {
-                            title: "排序🔽"
+                            title: "排序🔼"
                         });
                     } else {
                         putMyVar(sname+'sort', '1')
                         列表.reverse();
                         updateItem('listsort', {
-                            title: "排序🔼"
+                            title: "排序🔽"
                         });
                     };
                     let d = [];
@@ -310,7 +291,6 @@ function erji() {
         });
         setResult(d);
         //二级源浏览记录保存
-        let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         if(typeof(setPageParams)!="undefined"){
             delete sourcedata2['parse']
@@ -494,6 +474,57 @@ function setMark(data) {
     }
     writeFile(markfile, JSON.stringify(marklist));
     return 1;
+}
+//操作书架
+function bookCase (data,x) {
+    let bookfile = "hiker://files/rules/Src/Ju/book.json";
+    let bookdata = fetch(bookfile);
+    if(bookdata != ""){
+        try{
+            eval("var booklist=" + bookdata+ ";");
+        }catch(e){
+            var booklist = [];
+        }
+    }else{
+        var booklist = [];
+    }
+    let book = booklist.filter(it => {
+        return it.name==data.name && it.stype==data.stype;
+    })
+    if(!x){
+        let sm;
+        if (book.length > 0) {
+            let index = booklist.indexOf(book[0]);
+            booklist.splice(index, 1);
+            sm = "书架更新成功";
+        }else{
+            sm = "加入书架成功";
+            updateItem('bookCase', {
+                title: "更新书架"
+            });
+        }
+        booklist.push(data);
+        writeFile(bookfile, JSON.stringify(booklist));
+        return "toast://"+data.name+" "+sm;
+    }else if(x=="select"){
+        if (book.length > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }else if(x=="delete"){
+        if (book.length > 0) {
+            let sm = "已从书架删除";
+            let index = booklist.indexOf(book[0]);
+            booklist.splice(index, 1);
+            updateItem('bookCase', {
+                title: "加入书架"
+            });
+            writeFile(bookfile, JSON.stringify(booklist));
+            return "toast://"+data.name+" "+sm;
+        }
+    }
+    return "toast://异常操作";
 }
 //图标下载
 function downloadicon() {
