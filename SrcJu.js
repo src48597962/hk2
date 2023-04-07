@@ -70,7 +70,7 @@ function yiji() {
             //let history = JSON.parse(fetch("hiker://collection"));
             let collection = JSON.parse(fetch("hiker://collection")) || [];
             collection.forEach(it=>{
-                log(it.params);
+                log(JSON.parse(it.params).params);
             })
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
