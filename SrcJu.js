@@ -174,14 +174,14 @@ function erji() {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname+'sort') == '1') {
                         putMyVar(sname+'sort', '0'); 
-                        列表.reverse();
                         updateItem('listsort', {
-                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/127.svg'
+                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/126.svg'
                         });
                     } else {
                         putMyVar(sname+'sort', '1')
+                        列表.reverse();
                         updateItem('listsort', {
-                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/126.svg'
+                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/127.svg'
                         });
                     };
                     let d = [];
