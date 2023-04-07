@@ -212,9 +212,9 @@ function jiekouapi(sourcefile, data) {
         }),
     });
     d.push({
-        title: '主页数据源',
+        title: '一级主页数据源',
         col_type: 'input',
-        desc: "主页数据源, 可以留空",
+        desc: "一级主页数据源, 可以留空",
         extra: {
             defaultValue: storage0.getMyVar('jiekouparse') || "",
             titleVisible: false,
@@ -222,16 +222,16 @@ function jiekouapi(sourcefile, data) {
             highlight: true,
             height: 4,
             onChange: $.toString(() => {
-                if (/{|}/.test(input)) {
+                if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekouparse", input)
                 }
             })
         }
     });
     d.push({
-        title: '搜索数据源',
+        title: '二级搜索数据源',
         col_type: 'input',
-        desc: "搜索数据源, 可以留空",
+        desc: "二级搜索数据源, 可以留空",
         extra: {
             defaultValue: storage0.getMyVar('jiekouerparse') || "",
             titleVisible: false,
@@ -239,7 +239,7 @@ function jiekouapi(sourcefile, data) {
             highlight: true,
             height: 4,
             onChange: $.toString(() => {
-                if (/{|}/.test(input)) {
+                if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekouerparse", input)
                 }
             })
@@ -308,8 +308,24 @@ function jiekouapi(sourcefile, data) {
                     name: name,
                     type: type
                 }
-                if (parse) { newapi['parse'] = parse; }
-                if (erparse) { newapi['erparse'] = erparse; }
+                if (parse) {
+                    try{
+                        eval("let yparse = " + parse);
+                    }catch(e){
+                        log(e.message);
+                        return "toast://一级主页源有错误，看日志"
+                    }
+                    newapi['parse'] = parse;
+                }
+                if (erparse) {
+                    try{
+                        eval("let eparse = " + erparse);
+                    }catch(e){
+                        log(e.message);
+                        return "toast://二级搜索源有错误，看日志"
+                    }
+                    newapi['erparse'] = erparse;
+                }
                 let sourcedata = fetch(sourcefile);
                 if (sourcedata != "") {
                     try {
@@ -320,9 +336,7 @@ function jiekouapi(sourcefile, data) {
                 } else {
                     var datalist = [];
                 }
-                log(newapi);
                 let index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==type||!d.type))[0]);
-                log(index);
                 if (index > -1 && getMyVar('jiekouedit') != "1") {
                     return "toast://已存在-" + name;
                 } else {
