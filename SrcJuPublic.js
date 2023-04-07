@@ -88,19 +88,20 @@ function getYiData(type,od) {
     }
     setResult(d);
 }
-//操作书架
-function bookCase (data,x) {
-    let bookfile = "hiker://files/rules/Src/Ju/book.json";
-    let bookdata = fetch(bookfile);
-    if(bookdata != ""){
-        try{
-            eval("var booklist=" + bookdata+ ";");
-        }catch(e){
-            var booklist = [];
-        }
-    }else{
+
+let bookfile = "hiker://files/rules/Src/Ju/book.json";
+let bookdata = fetch(bookfile);
+if(bookdata != ""){
+    try{
+        eval("var booklist=" + bookdata+ ";");
+    }catch(e){
         var booklist = [];
     }
+}else{
+    var booklist = [];
+}
+//操作书架
+function bookCase (data,x) {
     let book = booklist.filter(it => {
         return it.name==data.name && it.stype==data.stype;
     })
