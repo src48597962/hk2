@@ -205,9 +205,10 @@ let erdata = {
         let dataid = pdfh(html, "#COMMENT&&data-ssid");
         let 作者 = pdfh(html, '#detail&&.author&&Text');
         let 分类 = pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ");
+        let 更新 = pdfh(html, '#js_chapter-reverse&&.update_time&&Text');
         let 简介 = pdfh(html, '#js_desc_content&&Text');
-        let detail1 = "作者："+作者+"\n";
-        let detail2 = "分类："+分类;
+        let detail1 = "作者："+作者+"\n"+"分类："+分类;
+        let detail2 = "时间："+更新;
         let 图片 = pd(html, '#detail&&.thumbnail&&img&&data-src');
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
@@ -216,8 +217,8 @@ let erdata = {
             return 选集列表;//列表数组含title和url就行
         })
         return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]，暂未上线
-            detail1: detail1, 
-            detail2: detail2, 
+            detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
+            detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
             desc: 简介,
             img: 图片, 
             list: 选集 
