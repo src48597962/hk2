@@ -130,7 +130,7 @@ function SRCSet() {
 
     datalist.forEach(item => {
         d.push({
-            title: item.type+ "：" + item.name + (item.parse ? "（主页源）" : "") + (item.erparse ? "（搜索源）" : ""),
+            title: item.name + (item.parse ? "（主页源）" : "") + (item.erparse ? "（搜索源）" : ""),
             url: $(["分享", "编辑", "删除"], 1).select((sourcefile, data) => {
                 if (input == "分享") {
                     showLoading('分享上传中，请稍后...');
@@ -164,8 +164,9 @@ function SRCSet() {
                     },sourcefile,data)
                 }
             }, sourcefile, item),
-            desc: '',
-            col_type: "text_1"
+            desc: item.type,
+            img: "https://lanmeiguojiang.com/tubiao/ke/108.png",
+            col_type: "avatar"
         });
     })
     setResult(d);
