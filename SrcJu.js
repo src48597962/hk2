@@ -383,7 +383,7 @@ function erji() {
                 }
             })
             d.push({
-                title: `““””<b><span style="color: #f47983">`+(getMyVar('SrcJulistcol',"1")=="1"?"一列":getMyVar('SrcJulistcol',"1")=="2"?"两列":"三列")+`</span></b>`,
+                title: `““””<b><span style="color: #f47983">两列</span></b>`,
                 url: $(["一列","两列","三列"]).select((列表, 解析, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
@@ -401,11 +401,12 @@ function erji() {
                         });
                     })
                     addItemBefore('listloading', d);
+                    updateItem("listcol_type", { title: `““””<b><span style="color: #f47983">`+input+`</span></b>`})
                     return 'hiker://empty'
                 }, 列表, 解析, name),
                 col_type: 'scroll_button',
                 extra: {
-                    id: "listsort",
+                    id: "listcol_type",
                     cls: "loadlist"
                 }
             })
