@@ -6,6 +6,26 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 function yiji() {
     Version();
     downloadicon();
+    let sourcedata = yidatalist.filter(it => {
+        return it.name == yijisource;
+    });
+    let parse;
+    let page;
+    if(sourcedata.length>0){
+        try{
+            eval("let source = " + sourcedata[0].parse);
+            if (source.ext && /^http/.test(source.ext)) {
+                requireCache(source.ext, 48);
+                parse = yidata;
+            } else {
+                parse = source;
+            }
+            page = parse["页码"];
+        }catch(e){
+            log("一级源加载有错>"+e.message);
+        } 
+    }
+    page = page || {};
     let d = [];
     d.push({
         title: "管理",
@@ -18,7 +38,7 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#"+(page["排行"]?"?page=fypage":"")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
         }),
@@ -27,7 +47,7 @@ function yiji() {
     })
     d.push({
         title: "分类",
-        url: $("hiker://empty#noRecordHistory##noHistory#?page=fypage").rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#"+(page["分类"]!=0?"?page=fypage":"")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
         }),
@@ -36,7 +56,7 @@ function yiji() {
     })
     d.push({
         title: "更新",
-        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#"+(page["更新"]?"?page=fypage":"")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('更新');
         }),
@@ -289,7 +309,7 @@ function search(name, sdata) {
                 }
                 let data = [];
                 eval("let 搜索 = " + parse['搜索'])
-                data = 搜索() || [];
+                data = 搜索(name) || [];
                 if (data.length > 0) {
                     let lists = [];
                     data.forEach(item => {
