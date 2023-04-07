@@ -126,6 +126,7 @@ function yiji() {
                             extra: {
                                 name: name,
                                 img: it.picUrl,
+                                stype: stype,
                                 lineVisible: false,
                                 cls: "caselist"
                             }
