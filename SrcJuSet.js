@@ -111,12 +111,12 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: datalist.length == 0 ? "toast://聚漫接口为0，无法分享" : $().lazyRule((datalist) => {
+        url: datalist.length == 0 ? "toast://聚接口为0，无法分享" : $().lazyRule((datalist) => {
             let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)));
             if (pasteurl) {
-                let code = '聚漫接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
+                let code = '聚接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
                 copy(code);
-                return "toast://(全部)聚漫分享口令已生成";
+                return "toast://(全部)聚分享口令已生成";
             } else {
                 return "toast://分享失败，剪粘板或网络异常";
             }
