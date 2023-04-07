@@ -32,21 +32,21 @@ function getYiData(type,od) {
     let sourcedata = yidatalist.filter(it=>{
         return it.name==yijisource;
     });
-    if(sourcedata.length==0){
-        d.push({
-            title: "请先配置一个主页源",
-            url: "hiker://empty",
-            col_type: "text_center_1",
-        })
-    }else{
-        let parse;
-        eval("let source = " + sourcedata[0].parse);
-        if(source.ext && /^http/.test(source.ext)){
-            requireCache(source.ext, 48);
-            parse = yidata;
-        }else{
-            parse = source;
+    let parse;
+    try{
+        if(sourcedata.length>0){
+            eval("let source = " + sourcedata[0].parse);
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                parse = yidata;
+            }else{
+                parse = source;
+            }
         }
+    }catch(e){
+        log("一级源接口加载异常>"+e.message);
+    }
+    if(parse){
         let data = [];
         try{
             eval("let 数据 = " + parse[type])
@@ -79,6 +79,12 @@ function getYiData(type,od) {
             }):item.url
         })
         d = d.concat(data);
+    }else{
+        d.push({
+            title: "请先配置一个主页源",
+            url: "hiker://empty",
+            col_type: "text_center_1",
+        })
     }
     setResult(d);
 }
