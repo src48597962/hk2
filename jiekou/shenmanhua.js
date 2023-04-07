@@ -206,8 +206,8 @@ let erdata = {
         let 作者 = pdfh(html, '#detail&&.author&&Text');
         let 分类 = pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ");
         let 简介 = pdfh(html, '#js_desc_content&&Text');
-        let detail1 = "作者："+作者+"\n"+"分类："+分类;
-        let detail2 = "简介："+简介;
+        let detail1 = "作者："+作者+"\n";
+        let detail2 = "分类："+分类;
         let 图片 = pd(html, '#detail&&.thumbnail&&img&&data-src');
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
@@ -215,9 +215,10 @@ let erdata = {
             选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
             return 选集列表;//列表数组含title和url就行
         })
-        return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]
+        return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]，暂未上线
             detail1: detail1, 
             detail2: detail2, 
+            desc: 简介,
             img: 图片, 
             list: 选集 
         }//按格式返回
