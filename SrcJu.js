@@ -69,7 +69,22 @@ function yiji() {
         url: Juconfig["btnmenu5"]=="历史"?"hiker://history":Juconfig["btnmenu5"]=="收藏"?"hiker://collection":$("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
-            
+
+            booklist.forEach(it=>{
+                d.push({
+                    title: it.name,
+                    desc: "",
+                    pic_url: it.img,
+                    url: surl,
+                    col_type: 'movie_1_vertical_pic_blur',
+                    extra: {
+                        sname: it.sname,
+                        stype: it.sytpe,
+                        surl: it.surl
+                    }
+                })
+            })
+            setResult(d);
         }),
         pic_url: "hiker://files/cache/src/收藏.svg",
         col_type: 'icon_5',
