@@ -122,7 +122,7 @@ function yiji() {
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_small_3"
             });
-            data.push({
+            d.push({
                 title: "",
                 url: "hiker://empty",
                 col_type: "text_center_1",
