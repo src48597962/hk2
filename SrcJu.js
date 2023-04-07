@@ -82,10 +82,10 @@ function yiji() {
                     col_type: 'movie_1_vertical_pic',
                     extra: {
                         name: it.name,
+                        img: it.img,
                         sname: it.sname,
                         stype: it.stype,
                         surl: it.surl,
-                        img: it.img,
                         lineVisible: false
                     }
                 })
