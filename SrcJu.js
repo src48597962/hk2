@@ -79,7 +79,7 @@ function yiji() {
             }
             //let collection = fetch("hiker://collection");
             collectionlist.forEach(it=>{
-                log(it.params.params.stype);
+                log(it);
             })
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
