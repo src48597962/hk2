@@ -111,8 +111,7 @@ function yiji() {
                     let stype = JSON.parse(params.params).stype;
                     if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
                         let name = JSON.parse(params.params).name;
-                        let extraData = it.extraData?JSON.parse(extraData):{};
-                        log(extraData)
+                        let extraData = it.extraData?JSON.parse(it.extraData):{};
                         let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
                         let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
                         list.push({
@@ -188,14 +187,15 @@ function yiji() {
         extra: {
             longClick: [{
                 title: "切换按钮",
-                js: $.toString((cfgfile, Juconfig) => {
+                js: $.toString(() => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return $(["书架", "收藏", "历史"], 1).select((cfgfile, Juconfig) => {
                         Juconfig["btnmenu5"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
                         return 'toast://已切换为' + input;
                     }, cfgfile, Juconfig)
-                }, cfgfile, Juconfig)
+                })
             }]
         }
     })
