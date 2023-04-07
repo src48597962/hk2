@@ -67,16 +67,18 @@ function yiji() {
     d.push({
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"] == "历史" ? "hiker://history" : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection" : $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            let collection = JSON.parse(fetch("hiker://collection"));
-            collection.forEach(it=>{
-                log(JSON.parse(JSON.parse(it.params).params).stype);
-            })
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
             let type = [];
-            booklist.forEach(it => {
-                if(type.indexOf(it.stype)==-1){
-                    type.push(it.stype)
+            let Julist = [];
+            let collection = JSON.parse(fetch("hiker://collection"));
+            collection.forEach(it => {
+                if(JSON.parse(it.params).title==MY_RULE.title){
+                    Julist.push(it);
+                    let t = JSON.parse(JSON.parse(it.params).params).stype;
+                    if(type.indexOf(t)==-1){
+                        type.push(t)
+                    } 
                 }
             })
             for (let i = 0; i < 9; i++) {
@@ -136,23 +138,27 @@ function yiji() {
             })
             setResult(d);
             let list = [];
-            booklist.forEach(it => {
-                if(getMyVar("SrcJuBookType")==it.stype || !getMyVar("SrcJuBookType")){
+            Julist.forEach(it => {
+                let stype = JSON.parse(JSON.parse(it.params).params).stype;
+                if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
+                    let name = JSON.parse(JSON.parse(it.params).params).name;
+                    let sname = JSON.parse(JSON.parse(it.params).params).sname;
+                    let surl = JSON.parse(JSON.parse(it.params).params).surl;
                     list.push({
-                        title: it.name,
-                        pic_url: it.img,
-                        desc: "源："+it.sname+"\n",
+                        title: name,
+                        pic_url: it.picUrl,
+                        desc: "源："+sname+"\n",
                         url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                             require(config.依赖);
                             erji();
                         }),
                         col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
                         extra: {
-                            name: it.name,
-                            img: it.img,
-                            sname: it.sname,
-                            stype: it.stype,
-                            surl: it.surl,
+                            name: name,
+                            img: it.picUrl,
+                            sname: sname,
+                            stype: stype,
+                            surl: surl,
                             lineVisible: false,
                             cls: "caselist"
                         }
