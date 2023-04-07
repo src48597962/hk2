@@ -257,6 +257,7 @@ function jiekouapi(sourcefile, data) {
             try{
                 var source = {
                     name: name,
+                    type: type,
                     erparse: erparse
                 }
             }catch(e){
