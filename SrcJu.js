@@ -134,7 +134,7 @@ function erji() {
             log('分享页面，且本地无对应接口');
             sourcedata.push(MY_PARAMS.sourcedata);
         }
-        if (sourcedata[0].erparse) {
+        if (sourcedata.length>0 && sourcedata[0].erparse) {
             eval("let source = " + sourcedata[0].erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
