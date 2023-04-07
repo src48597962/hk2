@@ -169,14 +169,20 @@ function erji() {
             }
             let 解析 = parse['解析'];
             d.push({
-                title: "转向排序",
+                title: "转换排序",
                 url: $("#noLoading#").lazyRule((列表,解析,name,sname) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname+'sort') == '1') {
                         putMyVar(sname+'sort', '0'); 
+                        列表.reverse();
+                        updateItem('listsort', {
+                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/127.svg'
+                        });
                     } else {
                         putMyVar(sname+'sort', '1')
-                        列表.reverse();
+                        updateItem('listsort', {
+                            pic_url: 'https://lanmeiguojiang.com/tubiao/messy/126.svg'
+                        });
                     };
                     let d = [];
                     列表.forEach((item, id) => {
@@ -198,6 +204,7 @@ function erji() {
                 pic_url: getMyVar(sname+'sort') == '1' ? 'https://lanmeiguojiang.com/tubiao/messy/127.svg' : 'https://lanmeiguojiang.com/tubiao/messy/126.svg',
                 col_type: 'icon_small_3',
                 extra: {
+                    id: "listsort",
                     cls: "loadlist"
                 }
             })
