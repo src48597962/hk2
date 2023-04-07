@@ -6,7 +6,7 @@ if(Jucfg != ""){
     var Juconfig= {};
 }
 let runMode = Juconfig["runMode"] || "漫画";
-let yijisource = Juconfig['yijisource'] || "";
+let sourcename = Juconfig['yijisource'] || "";
 
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
@@ -30,7 +30,7 @@ let erdatalist = datalist.filter(it=>{
 function getYiData(type,od) {
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
-        return it.name==yijisource;
+        return it.name==sourcename;
     });
     let parse;
     try{
@@ -68,7 +68,7 @@ function getYiData(type,od) {
             extra.stype = sourcedata[0].type;
             if(item.url && /^http/.test(item.url)){
                 extra.surl = item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,"");
-                extra.sname = yijisource;
+                extra.sname = sourcename;
             }
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
