@@ -75,6 +75,11 @@ function yiji() {
                     type.push(it.stype)
                 }
             })
+            for (let i = 0; i < 9; i++) {
+                d.push({
+                    col_type: "blank_block"
+                })
+            }
             type.forEach(it=>{
                 d.push({
                     title: getMyVar("SrcJuBookType","")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -91,7 +96,7 @@ function yiji() {
                 url: $('#noLoading#').lazyRule(() => {
                     
                 }),
-                img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+                img: "https://lanmeiguojiang.com/tubiao/messy/120.svg",
                 col_type: "icon_small_3"
             });
             d.push({
@@ -99,7 +104,7 @@ function yiji() {
                 url: $('#noLoading#').lazyRule(() => {
                     
                 }),
-                img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+                img: "https://lanmeiguojiang.com/tubiao/messy/25.svg",
                 col_type: "icon_small_3"
             });
             d.push({
@@ -112,14 +117,24 @@ function yiji() {
                     }
                     writeFile(cfgfile, JSON.stringify(Juconfig));
                     refreshPage(false);
-                    return 'toast://已切换为' + input;
+                    return 'hiker://empty';
                 }, cfgfile, Juconfig),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_small_3"
             });
+            data.push({
+                title: "",
+                url: "hiker://empty",
+                col_type: "text_center_1",
+                extra: {
+                    id: "caseloading"
+                }
+            })
+            setResult(d);
+            let list = [];
             booklist.forEach(it => {
                 if(getMyVar("SrcJuBookType")==it.stype || !getMyVar("SrcJuBookType")){
-                    d.push({
+                    list.push({
                         title: it.name,
                         pic_url: it.img,
                         desc: "源："+it.sname+"\n",
@@ -134,12 +149,13 @@ function yiji() {
                             sname: it.sname,
                             stype: it.stype,
                             surl: it.surl,
-                            lineVisible: false
+                            lineVisible: false,
+                            cls: "caselist"
                         }
                     })
                 }
             })
-            setResult(d);
+            addItemBefore("caseloading", list);
         }),
         pic_url: "hiker://files/cache/src/收藏.svg",
         col_type: 'icon_5',
