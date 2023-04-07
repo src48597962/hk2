@@ -90,13 +90,13 @@ function yiji() {
 
             let d = [];
             d.push({
-                title: '收藏列表',
+                title: ' 收藏列表',
                 url: "hiker://collection",
-                img: "https://lanmeiguojiang.com/tubiao/messy/120.svg",
+                img: "https://lanmeiguojiang.com/tubiao/more/109.png",
                 col_type: "icon_2"
             });
             d.push({
-                title: '切换样式',
+                title: ' 切换样式',
                 url: $('#noLoading#').lazyRule((cfgfile, Juconfig) => {
                     if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
                         Juconfig["bookCase_col_type"] = "movie_3_marquee";
@@ -213,7 +213,9 @@ function sousuo() {
 function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjiextra');
+        clearMyVar('descloading');
     }));
+    clearMyVar('descloading');
     let name = MY_PARAMS.name;
     setPageTitle(name);
     let isload;//是否正确加载
@@ -260,6 +262,7 @@ function erji() {
                 url: surl,
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
+                    id: "detailid",
                     gradient: true
                 }
             })
@@ -270,12 +273,34 @@ function erji() {
             let 解析 = parse['解析'];
             
             d.push({
-                title: "备用按钮",
-                url: $("#noLoading#").lazyRule(() => {
-
-                }),
-                pic_url: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
-                col_type: 'icon_small_3'
+                title: "详情简介",
+                url: $("#noLoading#").lazyRule((desc) => {
+                    if(getMyVar('descloading')=="1"){
+                        clearMyVar('descloading');
+                        deleteItemByCls("descloading");
+                    }else{
+                        putMyVar('descloading',"1");
+                        addItemAfter('detailid', [{
+                            title: `<font color="#098AC1">详情简介  </font><small><font color="#f47983">已展开 ></font></small>`,
+                            col_type: "avatar",
+                            pic_url: "https://lanmeiguojiang.com",
+                            extra: {
+                                cls: "descloading"
+                            }
+                        },{
+                            title: desc,
+                            col_type: "rich_text",
+                            extra: {
+                                cls: "descloading"
+                            }
+                        }]);
+                    }
+                }, details.desc||""),
+                pic_url: "https://lanmeiguojiang.com/tubiao/messy/32.svg",
+                col_type: 'icon_small_3',
+                extra: {
+                    cls: "loadlist"
+                }
             })
             d.push({
                 title: "下载阅读",
