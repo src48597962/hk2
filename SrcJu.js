@@ -130,21 +130,23 @@ function yiji() {
             });
             d.push({
                 title: '切换样式',
-                url: $('#noLoading#').lazyRule((cfgfile, Juconfig, list) => {
-                    //deleteItemByCls("caselist");
+                url: $('#noLoading#').lazyRule((cfgfile, Juconfig) => {
+                    deleteItemByCls("caselist");
                     if(Juconfig["bookCase_col_type"]=="movie_1_vertical_pic"){
                         Juconfig["bookCase_col_type"] = "movie_3_marquee";
                     }else{
                         Juconfig["bookCase_col_type"] = "movie_1_vertical_pic";
                     }
+                    /*
                     log(list);
                     list.forEach(it=>{
                         it.col_type = Juconfig["bookCase_col_type"];
                     })
                     addItemBefore("caseloading", list);
+                    */
                     writeFile(cfgfile, JSON.stringify(Juconfig));
                     return 'hiker://empty';
-                }, cfgfile, Juconfig, list),
+                }, cfgfile, Juconfig),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_2"
             });
