@@ -68,8 +68,10 @@ function yiji() {
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"] == "历史" ? "hiker://history" : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection" : $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             //let history = JSON.parse(fetch("hiker://collection"));
-            let sc = JSON.parse(fetch("hiker://collection"));
-            log(sc);
+            let collection = JSON.parse(fetch("hiker://collection"));
+            collection.forEach(it=>{
+                log(it.params.params);
+            })
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
             let type = [];
