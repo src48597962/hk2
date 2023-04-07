@@ -81,6 +81,7 @@ function yiji() {
                     }),
                     col_type: 'movie_1_vertical_pic',
                     extra: {
+                        name: it.name,
                         sname: it.sname,
                         stype: it.sytpe,
                         surl: it.surl,
