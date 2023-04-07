@@ -123,8 +123,7 @@ function erji() {
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
     let sauthor = "未知";
-    let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
-
+    
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type==stype;
     });
@@ -169,12 +168,12 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
-            
+            let bookdata = { name: name, img: pic, sname: sname, surl: surl, stype: stype };
             d.push({
-                title: bookCase(erjidata,"select")?"书架更新":"加入书架",
-                url: $("#noLoading#").lazyRule((erjidata,bookCase) => {
-                    return bookCase(erjidata);
-                }, erjidata, bookCase),
+                title: bookCase(bookdata,"select")?"书架更新":"加入书架",
+                url: $("#noLoading#").lazyRule((bookdata,bookCase) => {
+                    return bookCase(bookdata);
+                }, bookdata, bookCase),
                 pic_url: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
                 col_type: 'icon_small_3',
                 extra: {
@@ -182,9 +181,9 @@ function erji() {
                     cls: "loadlist",
                     longClick: [{
                         title: Juconfig['ImportType']=="Coverage"?'导入模式：覆盖':'导入模式：跳过',
-                        js: $.toString((erjidata,bookCase) => {
-                            return bookCase(erjidata,"delete");
-                        }, erjidata, bookCase)
+                        js: $.toString((bookdata,bookCase) => {
+                            return bookCase(bookdata,"delete");
+                        }, bookdata, bookCase)
                     }]
                 }
             })
@@ -291,6 +290,7 @@ function erji() {
         });
         setResult(d);
         //二级源浏览记录保存
+        let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         if(typeof(setPageParams)!="undefined"){
             delete sourcedata2['parse']
