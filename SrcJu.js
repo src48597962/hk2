@@ -169,7 +169,7 @@ function yiji() {
             })
             setResult(d);
         }),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/109.png",
+        pic_url: "https://lanmeiguojiang.com/tubiao/more/286.png",
         col_type: 'icon_5',
         extra: {
             longClick: [{
@@ -307,7 +307,7 @@ function erji() {
             d.push({
                 title: "下载阅读",
                 url: "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理",
-                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/116.svg',
+                pic_url: 'https://lanmeiguojiang.com/tubiao/messy/124.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist",
