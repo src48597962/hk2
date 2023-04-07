@@ -7,7 +7,7 @@ function yiji() {
     Version();
     downloadicon();
     let sourcedata = yidatalist.filter(it => {
-        return it.name == yijisource;
+        return it.name == sourcename;
     });
     let parse;
     let page;
