@@ -11,7 +11,7 @@ function SRCSet() {
 
     let d = [];
     d.push({
-        title: yijisource?yijisource:'设置主页源',
+        title: sourcename?sourcename:'设置主页源',
         url: $(sourcenames,2).select((cfgfile,Juconfig) => {
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
