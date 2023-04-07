@@ -68,15 +68,14 @@ function yiji() {
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"]=="历史"?"hiker://history":Juconfig["btnmenu5"]=="收藏"?"hiker://collection":$("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+            log(booklist);
             let d = [];
-
             booklist.forEach(it=>{
                 d.push({
                     title: it.name,
-                    desc: "",
                     pic_url: it.img,
                     url: it.surl,
-                    col_type: 'movie_1_vertical_pic_blur',
+                    col_type: 'movie_1_vertical_pic',
                     extra: {
                         sname: it.sname,
                         stype: it.sytpe,
