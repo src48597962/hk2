@@ -67,7 +67,7 @@ function yiji() {
     d.push({
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"] == "历史" ? "hiker://history" : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection" : $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            let history = JSON.parse(fetch("hiker://history"));
+            let history = JSON.parse(fetch("hiker://collection"));
             log(history);
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let d = [];
