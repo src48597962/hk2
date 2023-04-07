@@ -109,8 +109,9 @@ function yiji() {
                     let stype = JSON.parse(params.params).stype;
                     if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
                         let name = JSON.parse(params.params).name;
-                        let last = JSON.parse(it.extraData).lastChapterStatus;
-                        let mask = it.lastClick.split('@@')[0];
+                        let extraData = it.extraData?JSON.parse(extraData):{};
+                        let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
+                        let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
                         list.push({
                             title: name,
                             pic_url: it.picUrl,
