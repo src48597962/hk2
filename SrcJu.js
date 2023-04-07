@@ -186,8 +186,8 @@ function erji() {
                                 cls: "loadlist playlist"
                             }
                         });
-                        addItemBefore('listloading', d);
                     })
+                    addItemBefore('listloading', d);
                     if (getMyVar(sname+'sort') == '1') { putMyVar(sname+'sort', '0'); } else { putMyVar(sname+'sort', '1') };
                     return 'toast://切换排序成功'
                 }, 列表, 解析, name, sname),
