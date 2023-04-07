@@ -154,25 +154,44 @@ function erji() {
             let details = parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
-                title: details.detail1,
-                desc: details.detail2,
-                pic_url: pic,
+                title: details.detail1 || "",
+                desc: details.detail2 || "",
+                pic_url: pic.indexOf("@Referer=")==-1?pic+"@Referer=":pic,
                 url: surl,
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
                     gradient: true
                 }
             })
-            let lists = details.list;//选集列表
+            let 列表 = details.list;//选集列表
+            if (getMyVar(sname+'sort') == '1') {
+                列表.reverse();
+            }
             let 解析 = parse['解析'];
             d.push({
-                title: "倒转排序",
-                url: $("#noLoading#").lazyRule(() => {
-                    if (getMyVar('shsort') == '1') { putMyVar('shsort', '0'); } else { putMyVar('shsort', '1') };
-                    refreshPage(false);
+                title: "转向排序",
+                url: $("#noLoading#").lazyRule((列表, 解析) => {
+                    deleteItemByCls('playlist');
+                    列表.reverse();
+                    let d = [];
+                    列表.forEach((item, id) => {
+                        d.push({
+                            title: item.title,
+                            url: item.url + $("").lazyRule((解析) => {
+                                return 解析(input);
+                            }, 解析),
+                            col_type: "text_2",
+                            extra: {
+                                id: name + "_选集_" + id,
+                                cls: "loadlist playlist"
+                            }
+                        });
+                        addItemBefore('listloading', d);
+                    })
+                    if (getMyVar(sname+'sort') == '1') { putMyVar(sname+'sort', '0'); } else { putMyVar(sname+'sort', '1') };
                     return 'toast://切换排序成功'
-                }),
-                pic_url: getMyVar('shsort') == '1' ? 'https://lanmeiguojiang.com/tubiao/messy/127.svg' : 'https://lanmeiguojiang.com/tubiao/messy/126.svg',
+                }, 列表, 解析),
+                pic_url: getMyVar(sname+'sort') == '1' ? 'https://lanmeiguojiang.com/tubiao/messy/127.svg' : 'https://lanmeiguojiang.com/tubiao/messy/126.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
@@ -185,7 +204,7 @@ function erji() {
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist",
-                    chapterList: lists,
+                    chapterList: 列表,
                     "defaultView": "1",
                     "info": { 
                         "bookName": name, 
@@ -210,10 +229,7 @@ function erji() {
                 }
             })
             
-            if (getMyVar('shsort') == '1') {
-                lists.reverse();
-            }
-            lists.forEach((item, id) => {
+            列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
                     url: item.url + $("").lazyRule((解析) => {
@@ -222,7 +238,7 @@ function erji() {
                     col_type: "text_2",
                     extra: {
                         id: name + "_选集_" + id,
-                        cls: "loadlist"
+                        cls: "loadlist playlist"
                     }
                 });
             })
