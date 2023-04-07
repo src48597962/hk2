@@ -244,7 +244,7 @@ function erji() {
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         if(typeof(setPageParams)!="undefined"){
-            erjiextra.parse = $.toString((parse) => {parse},parse);
+            erjiextra.parse = parse;//$.toString((parse) => {parse},parse);
             setPageParams(erjiextra);
         }
 
