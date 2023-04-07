@@ -213,9 +213,9 @@ function sousuo() {
 function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjiextra');
-        clearMyVar('descloading');
+        clearMyVar('SrcJudescload');
     }));
-    clearMyVar('descloading');
+    clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     setPageTitle(name);
     let isload;//是否正确加载
@@ -275,24 +275,24 @@ function erji() {
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
-                    if(getMyVar('descloading')=="1"){
-                        clearMyVar('descloading');
-                        deleteItemByCls("descloading");
+                    if(getMyVar('SrcJudescload')=="1"){
+                        clearMyVar('SrcJudescload');
+                        deleteItemByCls("SrcJudescload");
                     }else{
-                        putMyVar('descloading',"1");
+                        putMyVar('SrcJudescload',"1");
                         addItemAfter('detailid', [{
                             title: `<font color="#098AC1">详情简介 </font><small><font color="#f47983"> ></font></small>`,
                             col_type: "avatar",
                             url: "hiker://empty",
                             pic_url: "https://lanmeiguojiang.com/tubiao/ke/91.png",
                             extra: {
-                                cls: "descloading"
+                                cls: "SrcJudescload"
                             }
                         },{
                             title: desc,
                             col_type: "rich_text",
                             extra: {
-                                cls: "descloading"
+                                cls: "SrcJudescload"
                             }
                         }]);
                     }
@@ -338,7 +338,7 @@ function erji() {
             d.push({
                 col_type: "line_blank"
             });
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 10; i++) {
                 d.push({
                     col_type: "blank_block"
                 })
@@ -376,6 +376,33 @@ function erji() {
                     addItemBefore('listloading', d);
                     return 'toast://切换排序成功'
                 }, 列表, 解析, name, sname),
+                col_type: 'scroll_button',
+                extra: {
+                    id: "listsort",
+                    cls: "loadlist"
+                }
+            })
+            d.push({
+                title: `““””<b><span style="color: #f47983">`+(getMyVar('SrcJulistcol',"1")=="1"?"一列":getMyVar('SrcJulistcol',"1")=="2"?"两列":"三列")+`</span></b>`,
+                url: $(["一列","两列","三列"]).select((列表, 解析, name) => {
+                    deleteItemByCls('playlist');
+                    let d = [];
+                    列表.forEach((item, id) => {
+                        d.push({
+                            title: item.title,
+                            url: item.url + $("").lazyRule((解析) => {
+                                return 解析(input);
+                            }, 解析),
+                            col_type: input=="一列"?"text_1":input=="两列"?"text_2":"text_3",
+                            extra: {
+                                id: name + "_选集_" + id,
+                                cls: "loadlist playlist"
+                            }
+                        });
+                    })
+                    addItemBefore('listloading', d);
+                    return 'hiker://empty'
+                }, 列表, 解析, name),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
