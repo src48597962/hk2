@@ -12,20 +12,20 @@ function SRCSet() {
     let d = [];
     d.push({
         title: sourcename?sourcename:'设置主页源',
-        url: $(sourcenames,2).select((cfgfile,Juconfig) => {
+        url: $(sourcenames,2).select((runMode,cfgfile,Juconfig) => {
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
-            Juconfig["yijisource"] = input;
+            Juconfig[runMode+'sourcename'] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
             refreshPage(false);
-            return 'toast://主页源已设置为：' + input;
-        }, cfgfile, Juconfig),
+            return 'toast://'+runMode+' 主页源已设置为：' + input;
+        }, runMode, cfgfile, Juconfig),
         img: "https://lanmeiguojiang.com/tubiao/messy/13.svg",
         col_type: "icon_2"
     });
 
     d.push({
-        title: (Juconfig["runMode"]||runModes[0]) + "模式",
+        title: (runMode||runModes[0]) + "模式",
         url: $(runModes,2,"切换运行模式").select((cfgfile,Juconfig) => {
             Juconfig["runMode"] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
