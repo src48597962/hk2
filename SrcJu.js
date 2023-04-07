@@ -170,7 +170,7 @@ function erji() {
             let 解析 = parse['解析'];
             d.push({
                 title: "转向排序",
-                url: $("#noLoading#").lazyRule((列表, 解析) => {
+                url: $("#noLoading#").lazyRule((列表,解析,name,sname) => {
                     deleteItemByCls('playlist');
                     列表.reverse();
                     let d = [];
@@ -190,7 +190,7 @@ function erji() {
                     })
                     if (getMyVar(sname+'sort') == '1') { putMyVar(sname+'sort', '0'); } else { putMyVar(sname+'sort', '1') };
                     return 'toast://切换排序成功'
-                }, 列表, 解析),
+                }, 列表, 解析, name, sname),
                 pic_url: getMyVar(sname+'sort') == '1' ? 'https://lanmeiguojiang.com/tubiao/messy/127.svg' : 'https://lanmeiguojiang.com/tubiao/messy/126.svg',
                 col_type: 'icon_small_3',
                 extra: {
