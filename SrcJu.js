@@ -72,6 +72,7 @@ function yiji() {
             let type = [];
             let Julist = [];
             let collection = JSON.parse(fetch("hiker://collection"));
+            log(collection);
             collection.forEach(it => {
                 if(JSON.parse(it.params).title==MY_RULE.title){
                     Julist.push(it);
@@ -245,7 +246,6 @@ function erji() {
     try {
         if (parse && surl) {
             MY_URL = surl;
-            setPageTitle(name + '-' + sname);
             sauthor = parse["作者"] || sauthor;
             let details = parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
@@ -366,7 +366,7 @@ function erji() {
 
     if (isload) {
         d.push({
-            title: "‘‘’’<small><font color=#f20c00>当前数据来自接口源：" + sname + "，作者：" + sauthor + "</font></small>",
+            title: "‘‘’’<small><font color=#f20c00>此规则仅限学习交流使用，请于导入后24小时内删除！</font></small>",
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
@@ -375,6 +375,7 @@ function erji() {
             }
         });
         setResult(d);
+        toast('当前数据源：' + sname + ', 作者' + sauthor);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
@@ -383,7 +384,6 @@ function erji() {
             erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
         }
-
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新) => {
