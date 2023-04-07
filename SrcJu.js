@@ -122,13 +122,14 @@ function erji() {
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
     let sauthor = "未知";
+    
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type==stype;
     });
-    log(MY_PARAMS.sourcedata);
+    let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
-        if (sourcedata.length==0 && MY_PARAMS && MY_PARAMS.parse) {
-            sourcedata.push({ erparse: MY_PARAMS.parse });
+        if (sourcedata.length==0 && MY_PARAMS && MY_PARAMS.sourcedata) {
+            sourcedata.push(MY_PARAMS.sourcedata);
         }
         if (sourcedata[0].erparse) {
             eval("let source = " + sourcedata[0].erparse);
@@ -138,6 +139,7 @@ function erji() {
             } else {
                 parse = source;
             }
+            sourcedata2 = sourcedata[0];
         }
     } catch (e) {
         log(e.message);
@@ -244,7 +246,8 @@ function erji() {
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         if(typeof(setPageParams)!="undefined"){
-            erjiextra.sourcedata = sourcedata[0];
+            delete sourcedata2['parse']
+            erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
         }
 
