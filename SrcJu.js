@@ -70,7 +70,7 @@ function yiji() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             let type = [];
             let Julist = [];
-            let collection = JSON.parse(fetch("hiker://collection"));
+            let collection = JSON.parse(fetch("hiker://collection?rule="+MY_RULE.title));
             collection.forEach(it => {
                 try{
                     if(it.params&& (JSON.parse(it.params).title==MY_RULE.title)){
