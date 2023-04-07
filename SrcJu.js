@@ -125,7 +125,7 @@ function erji() {
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type==stype;
     });
-    log(MY_PARAMS.parse);
+    log(MY_PARAMS.sourcedata);
     try {
         if (sourcedata.length==0 && MY_PARAMS && MY_PARAMS.parse) {
             sourcedata.push({ erparse: MY_PARAMS.parse });
@@ -244,7 +244,7 @@ function erji() {
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         if(typeof(setPageParams)!="undefined"){
-            erjiextra.parse = parse;//$.toString((parse) => {parse},parse);
+            erjiextra.sourcedata = sourcedata[0];
             setPageParams(erjiextra);
         }
 
