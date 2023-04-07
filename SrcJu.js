@@ -148,7 +148,7 @@ function yiji() {
                     list.push({
                         title: name,
                         pic_url: it.picUrl,
-                        desc: stype+"\n"+last+"\n"+mask,
+                        desc: stype+"\n"+mask+"\n"+last,
                         url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                             require(config.依赖);
                             erji();
@@ -264,26 +264,14 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
-            let bookdata = { name: name, img: pic, sname: sname, surl: surl, stype: stype };
+            
             d.push({
-                title: bookCase(bookdata, "select") ? "书架更新" : "加入书架",
-                url: $("#noLoading#").lazyRule((bookdata) => {
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return bookCase(bookdata);
-                }, bookdata),
+                title: "备用按钮",
+                url: $("#noLoading#").lazyRule(() => {
+
+                }),
                 pic_url: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
-                col_type: 'icon_small_3',
-                extra: {
-                    id: "bookCase",
-                    cls: "loadlist",
-                    longClick: [{
-                        title: '书架删除',
-                        js: $.toString((bookdata) => {
-                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                            return bookCase(bookdata, "delete");
-                        }, bookdata)
-                    }]
-                }
+                col_type: 'icon_small_3'
             })
             d.push({
                 title: "下载阅读",
@@ -460,7 +448,6 @@ function search(name, sdata) {
                 eval("let 搜索 = " + parse['搜索'])
                 data = 搜索(name) || [];
                 if (data.length > 0) {
-                    let lists = [];
                     data.forEach(item => {
                         let extra = item.extra || {};
                         extra.name = extra.name || item.title;
@@ -470,7 +457,7 @@ function search(name, sdata) {
                         extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
-                            item.url = item.url + $("#immersiveTheme##autoCache#").rule(() => {
+                            item.url = $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
                                 erji();
                             })
@@ -484,13 +471,10 @@ function search(name, sdata) {
                         item.content = item.desc;
                         item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
                         item.col_type = getMyVar('SrcJuSousuo') == "1" ? "video" : "avatar";
-                        if (extra.name.indexOf(name) > -1) {
-                            lists.push(item);
-                        }
                     })
                     searchMark[name] = searchMark[name] || [];
-                    searchMark[name] = searchMark[name].concat(lists);
-                    addItemBefore(loadid, lists);
+                    searchMark[name] = searchMark[name].concat(data);
+                    addItemBefore(loadid, data);
                     success++;
                     hideLoading();
                 }
