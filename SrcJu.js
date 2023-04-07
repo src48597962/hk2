@@ -84,7 +84,9 @@ function yiji() {
                             }
                         }
                     }
-                }catch(e){}
+                }catch(e){
+                    log("书架加载异常>"+e.message);
+                }
             })
             for (let i = 0; i < 9; i++) {
                 d.push({
@@ -129,7 +131,9 @@ function yiji() {
                             }
                         })
                     }
-                }catch(e){ }
+                }catch(e){
+                    log("书架加载异常>"+e.message);
+                }
             })
             d.push({
                 title: '获取最新',
