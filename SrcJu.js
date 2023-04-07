@@ -137,11 +137,12 @@ function yiji() {
                     }else{
                         Juconfig["bookCase_col_type"] = "movie_1_vertical_pic";
                     }
+                    log(list);
                     list.forEach(it=>{
                         it.col_type = Juconfig["bookCase_col_type"];
                     })
-                    writeFile(cfgfile, JSON.stringify(Juconfig));
                     addItemBefore("caseloading", list);
+                    writeFile(cfgfile, JSON.stringify(Juconfig));
                     return 'hiker://empty';
                 }, cfgfile, Juconfig, list),
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
