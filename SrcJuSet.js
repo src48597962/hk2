@@ -250,6 +250,7 @@ function jiekouapi(sourcefile, data) {
         url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
             setItem("searchtestkey",input);
             let name = getMyVar('jiekouname');
+            let type = getMyVar('jiekoutype','漫画');
             let erparse = getMyVar('jiekouerparse');
             if(!name || !erparse){
                 return "toast://名称或搜索源接口不能为空";
