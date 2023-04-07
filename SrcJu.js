@@ -83,7 +83,7 @@ function yiji() {
                     extra: {
                         name: it.name,
                         sname: it.sname,
-                        stype: it.sytpe,
+                        stype: it.stype,
                         surl: it.surl,
                         img: it.img,
                         lineVisible: false
