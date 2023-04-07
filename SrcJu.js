@@ -85,6 +85,7 @@ function yiji() {
                         sname: it.sname,
                         stype: it.sytpe,
                         surl: it.surl,
+                        img: it.img,
                         lineVisible: false
                     }
                 })
