@@ -11,19 +11,19 @@ function yiji() {
     });
     let parse;
     let page;
-    if(sourcedata.length>0){
-        try{
+    try{
+        if(sourcedata.length>0){
             eval("let source = " + sourcedata[0].parse);
-            if (source.ext && /^http/.test(source.ext)) {
+            if(source.ext && /^http/.test(source.ext)){
                 requireCache(source.ext, 48);
                 parse = yidata;
-            } else {
+            }else{
                 parse = source;
             }
             page = parse["页码"];
-        }catch(e){
-            log("一级源加载有错>"+e.message);
-        } 
+        }
+    }catch(e){
+        log("一级源接口加载异常>"+e.message);
     }
     page = page || {};
     let d = [];
