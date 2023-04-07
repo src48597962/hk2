@@ -88,54 +88,12 @@ function yiji() {
                     log("书架加载异常>"+e.message);
                 }
             })
+            /*
             for (let i = 0; i < 9; i++) {
                 d.push({
                     col_type: "blank_block"
                 })
-            }
-            type.forEach(it=>{
-                d.push({
-                    title: getMyVar("SrcJuBookType","")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: $('#noLoading#').lazyRule((it) => {
-                        putMyVar("SrcJuBookType",it);
-                        refreshPage(false);
-                        return "hiker://empty";
-                    },it),
-                    col_type: 'scroll_button'
-                })
-            })
-            let list = [];
-            Julist.forEach(it => {
-                try{
-                    let params = JSON.parse(it.params);
-                    let stype = JSON.parse(params.params).stype;
-                    if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
-                        let name = JSON.parse(params.params).name;
-                        let extraData = it.extraData?JSON.parse(it.extraData):{};
-                        let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
-                        let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
-                        list.push({
-                            title: name,
-                            pic_url: it.picUrl,
-                            desc: stype+"\n"+mask+"\n"+last,
-                            url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                                require(config.依赖);
-                                erji();
-                            }),
-                            col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
-                            extra: {
-                                name: name,
-                                img: it.picUrl,
-                                stype: stype,
-                                lineVisible: false,
-                                cls: "caselist"
-                            }
-                        })
-                    }
-                }catch(e){
-                    log("书架加载异常>"+e.message);
-                }
-            })
+            }*/
             d.push({
                 title: '获取最新',
                 url: $('#noLoading#').lazyRule(() => {
@@ -171,6 +129,49 @@ function yiji() {
                 img: "https://lanmeiguojiang.com/tubiao/more/25.png",
                 col_type: "icon_small_3"
             });
+            type.forEach(it=>{
+                d.push({
+                    title: getMyVar("SrcJuBookType","")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    url: $('#noLoading#').lazyRule((it) => {
+                        putMyVar("SrcJuBookType",it);
+                        refreshPage(false);
+                        return "hiker://empty";
+                    },it),
+                    col_type: 'scroll_button'
+                })
+            })
+            let list = [];
+            Julist.forEach(it => {
+                try{
+                    let params = JSON.parse(it.params);
+                    let stype = JSON.parse(params.params).stype;
+                    if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
+                        let name = JSON.parse(params.params).name;
+                        let extraData = it.extraData?JSON.parse(it.extraData):{};
+                        let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
+                        let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
+                        list.push({
+                            title: name,
+                            pic_url: it.picUrl,
+                            desc: "💠 "+stype+"\n🕓 "+mask+"\n🔘 "+last,
+                            url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                                require(config.依赖);
+                                erji();
+                            }),
+                            col_type: Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic',
+                            extra: {
+                                name: name,
+                                img: it.picUrl,
+                                stype: stype,
+                                lineVisible: false,
+                                cls: "caselist"
+                            }
+                        })
+                    }
+                }catch(e){
+                    log("书架加载异常>"+e.message);
+                }
+            })
             d = d.concat(list);
             d.push({
                 title: "",
