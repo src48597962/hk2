@@ -6,7 +6,7 @@ if(Jucfg != ""){
     var Juconfig= {};
 }
 let runMode = Juconfig["runMode"] || "漫画";
-let sourcename = Juconfig['yijisource'] || "";
+let sourcename = Juconfig[runMode+'sourcename'] || "";
 
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
