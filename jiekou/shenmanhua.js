@@ -1,5 +1,6 @@
 let yidata = {
     "作者": "嗨又是我",//接口作者
+    "页码": {"主页": 0, "分类":0, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
     "主页": function () {
         let d = [];
         MY_URL = "https://m.taomanhua.com";
@@ -25,7 +26,7 @@ let yidata = {
     },
     "分类": function () {
         let d = [];
-        var 当前页 = getParam('page');
+        var 当前页 = getParam('page') || "1";
         var 类别 = MY_RULE.title + "类别"
         var 类别名 = getMyVar(类别, "");
         var 排序 = MY_RULE.title + "排序"
@@ -183,7 +184,7 @@ let yidata = {
 
 let erdata = {
     "作者": "嗨又是我",//接口作者
-    "搜索": function () {//聚合搜索换源列表数据，搜索关键字为name
+    "搜索": function (name) {//聚合搜索换源列表数据，搜索关键字为name
         let d = [];
         let ssurl = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page=1&size=30";
         let code = JSON.parse(request(ssurl)).data.data
@@ -212,9 +213,14 @@ let erdata = {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
             选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
-            return 选集列表;
+            return 选集列表;//列表数组含title和url就行
         })
-        return {detail1:detail1,detail2:detail2,img:图片,list:选集}//按格式返回
+        return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]
+            detail1: detail1, 
+            detail2: detail2, 
+            img: 图片, 
+            list: 选集 
+        }//按格式返回
     },
     "解析": function(url) {//url为播放链接
         let code = JSON.parse(request(url)).data.current_chapter.chapter_img_list;
