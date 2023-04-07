@@ -90,9 +90,9 @@ function yiji() {
 
             let d = [];
             d.push({
-                title: ' 收藏列表',
-                url: "hiker://collection",
-                img: "https://lanmeiguojiang.com/tubiao/more/109.png",
+                title: ' 本地书架',
+                url: "hiker://page/Main.view?rule=本地资源管理",
+                img: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
                 col_type: "icon_2"
             });
             d.push({
@@ -281,9 +281,10 @@ function erji() {
                     }else{
                         putMyVar('descloading',"1");
                         addItemAfter('detailid', [{
-                            title: `<font color="#098AC1">详情简介  </font><small><font color="#f47983">已展开 ></font></small>`,
+                            title: `<font color="#098AC1">详情简介 </font><small><font color="#f47983"> ></font></small>`,
                             col_type: "avatar",
-                            pic_url: "https://lanmeiguojiang.com",
+                            url: "hiker://empty",
+                            pic_url: "https://lanmeiguojiang.com/tubiao/ke/91.png",
                             extra: {
                                 cls: "descloading"
                             }
