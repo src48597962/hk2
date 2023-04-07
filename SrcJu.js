@@ -21,6 +21,7 @@ function yiji() {
                 parse = source;
             }
             page = parse["页码"];
+            toast("当前主页源："+sourcename+(parse["作者"]?"，作者："+parse["作者"]:""));
         }
     }catch(e){
         log("一级源接口加载异常>"+e.message);
