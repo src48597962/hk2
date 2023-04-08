@@ -107,7 +107,7 @@ function yiji() {
                     refreshPage(false);
                     return 'hiker://empty';
                 }, cfgfile, Juconfig),
-                img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+                img: "https://lanmeiguojiang.com/tubiao/messy/85.svg",
                 col_type: "icon_2"
             });
             for (let i = 0; i < 8; i++) {
