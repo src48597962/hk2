@@ -1,8 +1,9 @@
 let yidata = {
     "作者": "嗨又是我",//接口作者
     "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
-    //"公共": {a: 1,b: 2},//可以自行建需要的元素，其他函数中用parse["公共"]或eval("var 公共=" + fetch(config.public));取
+    //"公共": {a: 1,b: 2},//可以自行建需要的元素，其他函数中用全局变量:公共
     "主页": function () {
+        //log(公共);
         let d = [];
         MY_URL = "https://m.taomanhua.com";
         let html = request(MY_URL);
@@ -232,13 +233,13 @@ let erdata = {
     "公共": {
         a:1,b:2
     },
-    "解析": function(url) {//url为播放链接
-        log(公共);
+    "解析": function(url,公共) {//url为播放链接
+        //log(公共);
         let code = JSON.parse(request(url)).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
-    "最新": function(surl) {//收藏获取最新章节，surl为详情页链接
-        log(公共);
+    "最新": function(surl,公共) {//收藏获取最新章节，surl为详情页链接
+        //log(公共);
         setResult(pdfh(request(surl), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
