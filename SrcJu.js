@@ -268,9 +268,7 @@ function erji() {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
-            log(getMyVar('SrcJuloading'));
             if(getMyVar('SrcJuloading')){
-                log('a')
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
                     try{
