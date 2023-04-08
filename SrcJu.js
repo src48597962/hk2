@@ -374,7 +374,7 @@ function erji() {
                 })
             }
             d.push({
-                title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #FF0000">排序∨</span></b>` : `““””<b><span style="color: #1aad19">排序∧</span></b>`,
+                title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #FF0000">排序<small>∨</small></span></b>` : `““””<b><span style="color: #1aad19">排序<small>∧</small></span></b>`,
                 url: $("#noLoading#").lazyRule((列表, 解析, name, sname) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
@@ -413,7 +413,7 @@ function erji() {
                 }
             })
             d.push({
-                title: `““””<b><span style="color: #f47983">列表样式</span></b>`,
+                title: `““””<b><span style="color: #f47983">样式🎨</span></b>`,
                 url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, 解析, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
@@ -441,7 +441,7 @@ function erji() {
             })
             if(线路s.length>1){
                 d.push({
-                    title: `““””<b><span style="color: #004e66">`+线路s[indexid]+`</span></b>`,
+                    title: `““””<b><span style="color: #004e66">`+线路s[indexid]+`⚡</span></b>`,
                     url: $(线路s,2,"选择线路").select((线路s,surl) => {
                         let index = 线路s.indexOf(input);
                         putMyVar(surl,index);
