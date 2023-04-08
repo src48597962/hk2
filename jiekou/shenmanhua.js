@@ -229,11 +229,16 @@ let erdata = {
             list: 选集 
         }//按格式返回
     },
+    "公共": {
+        a:1,b:2
+    },
     "解析": function(url) {//url为播放链接
+        log(公共);
         let code = JSON.parse(request(url)).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
     "最新": function(surl) {//收藏获取最新章节，surl为详情页链接
+        log(公共);
         setResult(pdfh(request(surl), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
