@@ -400,7 +400,7 @@ function erji() {
             })
             d.push({
                 title: `““””<b><span style="color: #f47983">两列</span></b>`,
-                url: $(["一列","两列","三列"],1,"选择选集列表样式").select((列表, 解析, name) => {
+                url: $(["一列","两列","三列"],1,"选集列表样式").select((列表, 解析, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
                     列表.forEach((item, id) => {
