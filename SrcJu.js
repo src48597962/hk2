@@ -138,9 +138,9 @@ function yiji() {
                         let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
                         let col = Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic';
                         d.push({
-                            title: name,
+                            title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+" | "+sname+"</small>":name,
                             pic_url: it.picUrl,
-                            desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,//col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+" | "+sname+"</small>":
+                            desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
                             url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
                                 erji();
@@ -573,6 +573,7 @@ function search(name, sdata) {
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = obj.type;
                         extra.sname = obj.name;
+                        extra.pageTitle = extra.name;
                         extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
