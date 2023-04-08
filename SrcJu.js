@@ -216,8 +216,6 @@ function erji() {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
     }));
-    putMyVar('SrcJuloading','1');
-    log(getMyVar('SrcJuloading'))
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     setPageTitle(name);
@@ -270,7 +268,9 @@ function erji() {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
+            log(getMyVar('SrcJuloading'));
             if(getMyVar('SrcJuloading')){
+                log('a')
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
                     try{
@@ -509,6 +509,8 @@ function erji() {
                 最新(surl);
             }, surl, parse['最新']))
         }
+        //判断是否取本地缓存文件
+        putMyVar('SrcJuloading','1');
     } else {
         d.push({
             title: "\n搜索接口源结果如下",
