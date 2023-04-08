@@ -165,7 +165,7 @@ function SRCSet() {
                 }
             }, sourcefile, item),
             desc: item.type,
-            img: "https://lanmeiguojiang.com/tubiao/ke/19.png",
+            img: "https://lanmeiguojiang.com/tubiao/ke/31.png",
             col_type: "avatar"
         });
     })
