@@ -24,6 +24,11 @@ function yiji() {
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
             }
+            if(parse&&parse['公共']){
+                publicSave(parse['公共']);
+            }else{
+                publicSave('');
+            }
         }
     } catch (e) {
         log("一级源接口加载异常>" + e.message);
