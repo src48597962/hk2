@@ -140,7 +140,7 @@ function yiji() {
                         d.push({
                             title: name,
                             pic_url: it.picUrl,
-                            desc: col=='movie_1_vertical_pic'?"‘‘’’<small>💠 "+stype+" | "+sname+"</small>\n\n🕓 "+mask+"\n🔘 "+last:last,
+                            desc: col=='movie_1_vertical_pic'?"‘‘’’<small>💠 "+stype+" | "+sname+"</small>\n🔘 "+last:last+"\n🕓 "+mask,
                             url: $(it.cUrl).rule(() => {
                                 require(config.依赖);
                                 erji();
