@@ -380,13 +380,13 @@ function erji() {
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
-                            title: `““””<b><span style="color: #1aad19">排序∧</span></b>`
+                            title: `““””<b><span style="color: #1aad19">排序<small>∧</small></span></b>`
                         });
                     } else {
                         putMyVar(sname + 'sort', '1')
                         列表.reverse();
                         updateItem('listsort', {
-                            title: `““””<b><span style="color: #FF0000">排序∨</span></b>`
+                            title: `““””<b><span style="color: #FF0000">排序<small>∨</small></span></b>`
                         });
                     };
                     let d = [];
@@ -431,7 +431,6 @@ function erji() {
                         });
                     })
                     addItemBefore('listloading', d);
-                    updateItem("listcol_type", { title: `““””<b><span style="color: #f47983">`+input+`</span></b>`})
                     return 'hiker://empty'
                 }, 列表, 解析, name),
                 col_type: 'scroll_button',
