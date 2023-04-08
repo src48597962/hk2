@@ -226,9 +226,9 @@ function erji() {
     let details;
     let stype = MY_PARAMS.stype;
     let datasource = [storage0.getMyVar('erjiextra'), MY_PARAMS, getMark(name, stype)];
-    let erjiextra; //storage0.getMyVar('erjiextra');// = storage0.getMyVar('erjiextra') || MY_PARAMS || getMark(name, stype);
-    let sname;// = erjiextra.sname || "";
-    let surl;// = erjiextra.surl || "";
+    let erjiextra;
+    let sname;
+    let surl;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
             sname = datasource[i].sname || "";
