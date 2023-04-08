@@ -148,7 +148,7 @@ function yiji() {
                                 title: name,
                                 pic_url: it.picUrl,
                                 desc: col=='movie_1_vertical_pic'?"‘‘’’<small>💠 "+stype+" | "+sname+"\n🔘 "+last+"\n🕓 "+mask+"</small>":last,
-                                url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                                url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                                     require(config.依赖);
                                     erji();
                                 }),
