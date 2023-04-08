@@ -486,7 +486,7 @@ function erji() {
         }
     } catch (e) {
         toast('有异常，看日志');
-        log(MY_PARAMS.sname + '>加载详情失败>' + e.message);
+        log(sname + '>加载详情失败>' + e.message);
     }
 
     if (isload) {
@@ -547,6 +547,7 @@ function erji() {
         setResult(d);
         search(name);
     }
+    clearMyVar('SrcJuselectsname');
 }
 
 //搜索接口
