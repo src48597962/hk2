@@ -8,7 +8,7 @@ function ftPYStr(){
 function PYStr(cc,o){
 	var str='';
 	for(var i=0;i<cc.length;i++){
-		if(o==0){
+		if(o==2){
 			if(charPYStr().indexOf(cc.charAt(i))!=-1)
 				str+=ftPYStr().charAt(charPYStr().indexOf(cc.charAt(i)));
 			else
