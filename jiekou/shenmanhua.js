@@ -166,7 +166,7 @@ let yidata = {
         pdfa(code, 'li.comic-rank-top&&.comic-item').forEach((data, id) => {
             d.push({//主页源不需要url
                 title: pdfh(data, 'a&&title').split(',')[0],
-                url: 'https://m.taomanhua.com/'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
+                url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 desc: '：第' + (id + 1) + '名',
                 pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.taomanhua.com/",
                 col_type: "movie_3_marquee"
@@ -176,7 +176,7 @@ let yidata = {
             d.push({//主页源不需要url
                 title: '‘‘’’<b>' + pdfh(data, 'h3&&Text') + '</b> <small>&nbsp;&nbsp;&nbsp;&nbsp;排名：<font color="#FA7298"><b> ' + pdfh(data, '.order&&Text') + '  名</b></font>&nbsp;&nbsp;&nbsp;&nbsp;作者：' + pdfh(data, '.comic-author&&Text') + '</small>',
                 desc: '‘‘’’<font color="#004e66">动态：' + pdfh(data, '.clearfix&&.statistics&&Text') + '&nbsp;&nbsp;&nbsp;&nbsp;分类：' + pdfa(data, '.sort-list&&a').map(datas => pdfh(datas, 'Text')).join(" | ") + '</font>',
-                url: 'https://m.taomanhua.com/'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
+                url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 col_type: 'text_1',
                 extra: {
                     name: pdfh(data, 'h3&&Text')//如果上面的title不是单纯的名称可以单独写在附加中
