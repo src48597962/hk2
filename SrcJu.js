@@ -9,31 +9,30 @@ function yiji() {
     let sourcedata = yidatalist.filter(it => {
         return it.name == sourcename;
     });
-    let parse;
-    let page;
+    let 接口;
+    let 页码;
+    let 公共;
     try {
         if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
-                parse = yidata;
+                接口 = yidata;
             } else {
-                parse = source;
+                接口 = source;
             }
-            page = parse["页码"];
+            页码 = 接口["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
-                toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
+                toast("当前主页源：" + sourcename + (接口["作者"] ? "，作者：" + 接口["作者"] : ""));
             }
-            if(parse&&parse['公共']){
-                publicSave(parse['公共']);
-            }else{
-                publicSave('');
+            if(接口&&接口['公共']){
+                公共 = 接口['公共'];
             }
         }
     } catch (e) {
         log("一级源接口加载异常>" + e.message);
     }
-    page = page || {};
+    页码 = 页码 || {};
     let d = [];
     d.push({
         title: "管理",
@@ -50,7 +49,7 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["排行"] ? "?page=fypage" : "")).rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#" + (页码["排行"] ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
         }),
@@ -59,7 +58,7 @@ function yiji() {
     })
     d.push({
         title: "分类",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#" + (页码["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
         }),
@@ -68,7 +67,7 @@ function yiji() {
     })
     d.push({
         title: "更新",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["更新"] ? "?page=fypage" : "")).rule(() => {
+        url: $("hiker://empty#noRecordHistory##noHistory#" + (页码["更新"] ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('更新');
         }),
@@ -235,7 +234,8 @@ function erji() {
     let sauthor = "未知";
     let detailsfile = "hiker://files/cache/src/details.json";
     let d = [];
-    let parse;
+    let 接口;
+    let 公共;
     let details;
     let stype = MY_PARAMS.stype;
     let datasource = [storage0.getMyVar('erjiextra'), MY_PARAMS, getMark(name, stype)];
@@ -266,24 +266,22 @@ function erji() {
             eval("let source = " + sourcedata[0].erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
-                parse = erdata;
+                接口 = erdata;
             } else {
-                parse = source;
+                接口 = source;
             }
             sourcedata2 = sourcedata[0];
-            if(parse&&parse['公共']){
-                publicSave(parse['公共']);
-            }else{
-                publicSave('');
+            if(接口&&接口['公共']){
+                公共 = 接口['公共'];
             }
         }
     } catch (e) {
         log(e.message);
     }
     try {
-        if (parse && surl) {
+        if (接口 && surl) {
             MY_URL = surl;
-            sauthor = parse["作者"] || sauthor;
+            sauthor = 接口["作者"] || sauthor;
             let detailsmark;
             if(getMyVar('SrcJuloading')){
                 let detailsdata = fetch(detailsfile);
@@ -297,7 +295,7 @@ function erji() {
                 }
             }
             
-            details = detailsmark || parse['二级'](surl);
+            details = detailsmark || 接口['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -317,7 +315,7 @@ function erji() {
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
-            let 解析 = parse['解析'];
+            let 解析 = 接口['解析'];
             
             d.push({
                 title: "详情简介",
@@ -482,9 +480,9 @@ function erji() {
             列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
-                    url: item.url + $("").lazyRule((解析) => {
+                    url: item.url + $("").lazyRule((解析, 公共) => {
                         return 解析(input);
-                    }, 解析),
+                    }, 解析, 公共),
                     col_type: getItem('SrcJuList_col_type', 'text_2'),
                     extra: {
                         id: name + "_选集_" + id,
@@ -528,10 +526,10 @@ function erji() {
         details.surl = surl;
         writeFile(detailsfile, JSON.stringify(details));
         //收藏更新最新章节
-        if (parse['最新']) {
-            setLastChapterRule('js:' + $.toString((surl, 最新) => {
+        if (接口['最新']) {
+            setLastChapterRule('js:' + $.toString((surl, 最新, 公共) => {
                 最新(surl);
-            }, surl, parse['最新']))
+            }, surl, 接口['最新'], 公共))
         }
         putMyVar('SrcJuloading','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
     } else {
@@ -581,16 +579,16 @@ function search(name, sdata) {
         let success = 0;
         let task = function (obj) {
             try {
-                let parse;
+                let 接口;
                 eval("let source = " + obj.erparse);
                 if (source.ext && /^http/.test(source.ext)) {
                     requireCache(source.ext, 48);
-                    parse = erdata;
+                    接口 = erdata;
                 } else {
-                    parse = source;
+                    接口 = source;
                 }
                 let data = [];
-                eval("let 搜索 = " + parse['搜索'])
+                eval("let 搜索 = " + 接口['搜索'])
                 data = 搜索(name) || [];
                 if (data.length > 0) {
                     data.forEach(item => {
