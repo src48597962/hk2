@@ -138,10 +138,10 @@ function yiji() {
                         let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
                         let col = Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic';
                         d.push({
-                            title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+"|"+sname+"</small>":name,
+                            title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+" | "+sname+"</small>":name,
                             pic_url: it.picUrl,
                             desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
-                            url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                            url: $(it.cUrl).rule(() => {
                                 require(config.依赖);
                                 erji();
                             }),
