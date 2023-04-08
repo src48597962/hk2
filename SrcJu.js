@@ -217,6 +217,7 @@ function erji() {
         clearMyVar('SrcJudescload');
     }));
     putMyVar('SrcJuloading','1');
+    log(getMyVar('SrcJuloading'))
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     setPageTitle(name);
@@ -269,7 +270,6 @@ function erji() {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
-            log(getMyVar('SrcJuloading'))
             if(getMyVar('SrcJuloading')){
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
