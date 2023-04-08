@@ -646,7 +646,7 @@ function search(name, sdata) {
             be(list, {
                 func: function (obj, id, error, taskResult) {
                     if (getMyVar('JuSouSuoStoptask')) {
-                        //toast("我主动中断了");
+                        toast("线程已中止");
                         clearMyVar('JuSouSuoStoptask');
                         return "break";
                     }
