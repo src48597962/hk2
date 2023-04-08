@@ -147,6 +147,7 @@ function yiji() {
                             }),
                             col_type: col,
                             extra: {
+                                pageTitle: name,
                                 name: name,
                                 img: it.picUrl,
                                 stype: stype,
@@ -486,7 +487,7 @@ function erji() {
             }
         });
         setResult(d);
-        setPageTitle(name);
+        //setPageTitle(name);
         toast('当前数据源：' + sname + ', 作者' + sauthor);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
