@@ -216,7 +216,7 @@ let erdata = {
             选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
             return 选集列表;//列表数组含title和url就行
         })
-        return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]，暂未上线
+        return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]
             detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
             detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
             desc: 简介,
