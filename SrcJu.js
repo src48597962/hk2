@@ -218,7 +218,6 @@ function erji() {
     }));
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
-    setPageTitle(name);
     let isload;//是否正确加载
     let sauthor = "未知";
     let detailsfile = "hiker://files/cache/src/details.json";
@@ -487,6 +486,7 @@ function erji() {
             }
         });
         setResult(d);
+        setPageTitle(name);
         toast('当前数据源：' + sname + ', 作者' + sauthor);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
