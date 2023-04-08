@@ -545,9 +545,9 @@ function erji() {
             }
         });
         setResult(d);
+        clearMyVar('SrcJuselectsname');
         search(name);
     }
-    clearMyVar('SrcJuselectsname');
 }
 
 //搜索接口
