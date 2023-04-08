@@ -148,11 +148,9 @@ function yiji() {
                                 title: name,
                                 pic_url: it.picUrl,
                                 desc: col=='movie_1_vertical_pic'?"‘‘’’<small>💠 "+stype+" | "+sname+"\n🔘 "+last+"\n🕓 "+mask+"</small>":last,
-                                url: $('#noLoading#').lazyRule(() => {
-                                    return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-                                        require(config.依赖);
-                                        erji();
-                                    })
+                                url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                                    require(config.依赖);
+                                    erji();
                                 }),
                                 col_type: col,
                                 extra: {
