@@ -277,6 +277,7 @@ function jiekouapi(sourcefile, data) {
             if(source){
                 return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
                     putMyVar('SrcJuSousuo','1');
+                    putMyVar('SrcJuSousuoTest','1');
                     let d = [];
                     d.push({
                         title: "搜索中...",
@@ -291,6 +292,7 @@ function jiekouapi(sourcefile, data) {
                     require(config.依赖);
                     search(name,sdata);
                     clearMyVar('SrcJuSousuo');
+                    clearMyVar('SrcJuSousuoTest');
                 },input,source)
             }else{
                 return "toast://确认搜索源接口数据？"
