@@ -32,7 +32,7 @@ function SRCSet() {
             refreshPage(false);
             return 'toast://运行模式已设置为：' + input;
         }, cfgfile, Juconfig),
-        img: "https://lanmeiguojiang.com/tubiao/messy/84.svg",
+        img: "https://lanmeiguojiang.com/tubiao/messy/12.svg",
         col_type: "icon_2"
     });
     d.push({
