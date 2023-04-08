@@ -9,7 +9,7 @@ function yiji() {
     let sourcedata = yidatalist.filter(it => {
         return it.name == sourcename;
     });
-    let 接口;
+    let parse;
     let 页码;
     let 公共;
     try {
@@ -17,16 +17,16 @@ function yiji() {
             eval("let source = " + sourcedata[0].parse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
-                接口 = yidata;
+                parse = yidata;
             } else {
-                接口 = source;
+                parse = source;
             }
-            页码 = 接口["页码"];
+            页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
-                toast("当前主页源：" + sourcename + (接口["作者"] ? "，作者：" + 接口["作者"] : ""));
+                toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
             }
-            if(接口&&接口['公共']){
-                公共 = 接口['公共'];
+            if(parse&&parse['公共']){
+                公共 = parse['公共'];
             }
         }
     } catch (e) {
@@ -234,7 +234,7 @@ function erji() {
     let sauthor = "未知";
     let detailsfile = "hiker://files/cache/src/details.json";
     let d = [];
-    let 接口;
+    let parse;
     let 公共;
     let details;
     let stype = MY_PARAMS.stype;
@@ -266,22 +266,22 @@ function erji() {
             eval("let source = " + sourcedata[0].erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
-                接口 = erdata;
+                parse = erdata;
             } else {
-                接口 = source;
+                parse = source;
             }
             sourcedata2 = sourcedata[0];
-            if(接口&&接口['公共']){
-                公共 = 接口['公共'];
+            if(parse&&parse['公共']){
+                公共 = parse['公共'];
             }
         }
     } catch (e) {
         log(e.message);
     }
     try {
-        if (接口 && surl) {
+        if (parse && surl) {
             MY_URL = surl;
-            sauthor = 接口["作者"] || sauthor;
+            sauthor = parse["作者"] || sauthor;
             let detailsmark;
             if(getMyVar('SrcJuloading')){
                 let detailsdata = fetch(detailsfile);
@@ -295,7 +295,7 @@ function erji() {
                 }
             }
             
-            details = detailsmark || 接口['二级'](surl);
+            details = detailsmark || parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -315,7 +315,7 @@ function erji() {
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
-            let 解析 = 接口['解析'];
+            let 解析 = parse['解析'];
             
             d.push({
                 title: "详情简介",
@@ -361,7 +361,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": "(\n(解析) => {\n return 解析(input);\n})(" + 解析 + ")",
+                        "parseCode": "(\n(解析,公共) => {\n return 解析(input,公共);\n})(" + 解析 + ","+ 公共 +")",
                         "ruleName": MY_RULE.title
                     }
                 }
@@ -395,7 +395,7 @@ function erji() {
             }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #FF0000">排序<small>∨</small></span></b>` : `““””<b><span style="color: #1aad19">排序<small>∧</small></span></b>`,
-                url: $("#noLoading#").lazyRule((列表, 解析, name, sname) => {
+                url: $("#noLoading#").lazyRule((列表, 解析, 公共, name, sname) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
@@ -413,9 +413,9 @@ function erji() {
                     列表.forEach((item, id) => {
                         d.push({
                             title: item.title,
-                            url: item.url + $("").lazyRule((解析) => {
-                                return 解析(input);
-                            }, 解析),
+                            url: item.url + $("").lazyRule((解析,公共) => {
+                                return 解析(input,公共);
+                            }, 解析,公共),
                             col_type: "text_2",
                             extra: {
                                 id: name + "_选集_" + id,
@@ -425,7 +425,7 @@ function erji() {
                     })
                     addItemBefore('listloading', d);
                     return 'toast://切换排序成功'
-                }, 列表, 解析, name, sname),
+                }, 列表, 解析, 公共, name, sname),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
@@ -434,15 +434,15 @@ function erji() {
             })
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
-                url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, 解析, name) => {
+                url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, 解析, 公共, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
                     列表.forEach((item, id) => {
                         d.push({
                             title: item.title,
-                            url: item.url + $("").lazyRule((解析) => {
-                                return 解析(input);
-                            }, 解析),
+                            url: item.url + $("").lazyRule((解析,公共) => {
+                                return 解析(input,公共);
+                            }, 解析, 公共),
                             col_type: input,
                             extra: {
                                 id: name + "_选集_" + id,
@@ -453,7 +453,7 @@ function erji() {
                     addItemBefore('listloading', d);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
-                }, 列表, 解析, name),
+                }, 列表, 解析, 公共, name),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listcol_type",
@@ -481,7 +481,7 @@ function erji() {
                 d.push({
                     title: item.title,
                     url: item.url + $("").lazyRule((解析, 公共) => {
-                        return 解析(input);
+                        return 解析(input,公共);
                     }, 解析, 公共),
                     col_type: getItem('SrcJuList_col_type', 'text_2'),
                     extra: {
@@ -526,10 +526,10 @@ function erji() {
         details.surl = surl;
         writeFile(detailsfile, JSON.stringify(details));
         //收藏更新最新章节
-        if (接口['最新']) {
+        if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新, 公共) => {
-                最新(surl);
-            }, surl, 接口['最新'], 公共))
+                最新(surl,公共);
+            }, surl, parse['最新'], 公共))
         }
         putMyVar('SrcJuloading','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
     } else {
@@ -579,16 +579,16 @@ function search(name, sdata) {
         let success = 0;
         let task = function (obj) {
             try {
-                let 接口;
+                let parse;
                 eval("let source = " + obj.erparse);
                 if (source.ext && /^http/.test(source.ext)) {
                     requireCache(source.ext, 48);
-                    接口 = erdata;
+                    parse = erdata;
                 } else {
-                    接口 = source;
+                    parse = source;
                 }
                 let data = [];
-                eval("let 搜索 = " + 接口['搜索'])
+                eval("let 搜索 = " + parse['搜索'])
                 data = 搜索(name) || [];
                 if (data.length > 0) {
                     data.forEach(item => {
