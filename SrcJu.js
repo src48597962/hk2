@@ -37,11 +37,7 @@ function yiji() {
             SRCSet();
         }),
         pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
-        col_type: 'icon_5',
-        extra: {
-            newWindow: true,
-            windowId: MY_RULE.title + "管理"
-        }
+        col_type: 'icon_5'
     })
     d.push({
         title: "排行",
