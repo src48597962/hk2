@@ -606,8 +606,8 @@ function search(name, sdata) {
                             }, extra);
                         }
                         item.content = item.desc;
-                        item.desc = getMyVar('SrcJuSousuo') == "1" ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
-                        item.col_type = getMyVar('SrcJuSousuo') == "1" ? "video" : "avatar";
+                        item.desc = getMyVar('SrcJuSousuoTest')?item.desc:getMyVar('SrcJuSousuo') ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
+                        item.col_type = getMyVar('SrcJuSousuoTest')?"movie_1_vertical_pic":getMyVar('SrcJuSousuo') ? "video" : "avatar";
                     })
                     searchMark[name] = searchMark[name] || [];
                     searchMark[name] = searchMark[name].concat(data);
