@@ -4,7 +4,6 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 //一级
 function yiji() {
-    log(jianfan("为中华为崛起而读书",2))
     Version();
     downloadicon();
     let sourcedata = yidatalist.filter(it => {
