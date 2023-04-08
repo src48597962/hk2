@@ -431,6 +431,7 @@ function erji() {
                         });
                     })
                     addItemBefore('listloading', d);
+                    setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }, 列表, 解析, name),
                 col_type: 'scroll_button',
@@ -462,7 +463,7 @@ function erji() {
                     url: item.url + $("").lazyRule((解析) => {
                         return 解析(input);
                     }, 解析),
-                    col_type: "text_2",
+                    col_type: getItem('SrcJuList_col_type', 'text_2'),
                     extra: {
                         id: name + "_选集_" + id,
                         cls: "loadlist playlist"
