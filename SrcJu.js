@@ -486,7 +486,7 @@ function erji() {
             }
         });
         setResult(d);
-        //setPageTitle(name);
+        setPageTitle(name);
         toast('当前数据源：' + sname + ', 作者' + sauthor);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
@@ -494,7 +494,7 @@ function erji() {
         if (typeof (setPageParams) != "undefined") {
             delete sourcedata2['parse']
             erjiextra.sourcedata = sourcedata2;
-            //setPageParams(erjiextra);
+            setPageParams(erjiextra);
         }
         //当前二级详情数据保存
         details.sname = sname;
