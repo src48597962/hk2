@@ -1,7 +1,7 @@
 let yidata = {
     "作者": "嗨又是我",//接口作者
     "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
-    //"公共": {a: 1,b: 2},//可以自行建需要的元素，其他函数中用parse["公共"]取
+    //"公共": {a: 1,b: 2},//可以自行建需要的元素，其他函数中用parse["公共"]或eval("var 公共=" + fetch(config.public));取
     "主页": function () {
         let d = [];
         MY_URL = "https://m.taomanhua.com";
@@ -15,11 +15,12 @@ let yidata = {
             var item = pdfa(data, '.mult-warp.siw&&li.r1c3');
             item = item.length ? item : pdfa(data, '.mult-warp.siw&&li.r1c2');
             item.forEach((datas) => {
-                d.push({//主页源不需要url
+                d.push({
                     title: pdfh(datas, '.card-title&&Text'),
                     desc: pdfh(datas, '.card-text&&Text'),
                     pic_url: (item.length / 3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
-                    col_type: (item.length / 3) % 1 === 0 ? "movie_3_marquee" : "movie_2"
+                    col_type: (item.length / 3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
+                    url: pd(datas, 'a&&href')//如果只有主页源，这里就可以不用传url
                 });
             });
         });
@@ -86,6 +87,7 @@ let yidata = {
                 desc: data.last_chapter_name,
                 pic_url: data.cover_img + "@Referer=",
                 col_type: "movie_3_marquee",
+                url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
                 extra: {
                     name: data.comic_name
                 }
@@ -127,6 +129,7 @@ let yidata = {
                 desc:'‘‘’’<font color="#274c5e">分类：'+data.comic_type.join(" | ")+'\n简介：'+data.comic_feature+'</font>' ,
                 pic_url: data.feature_img + "@Referer=https://m.taomanhua.com/",
                 col_type: "movie_1_vertical_pic",
+                url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
                 extra: {
                     name : data.comic_name//如果上面的title不是单纯的名称可以单独写在附加中
                 }
@@ -163,6 +166,7 @@ let yidata = {
         pdfa(code, 'li.comic-rank-top&&.comic-item').forEach((data, id) => {
             d.push({//主页源不需要url
                 title: pdfh(data, 'a&&title').split(',')[0],
+                url: 'https://m.taomanhua.com/'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 desc: '：第' + (id + 1) + '名',
                 pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.taomanhua.com/",
                 col_type: "movie_3_marquee"
@@ -172,6 +176,7 @@ let yidata = {
             d.push({//主页源不需要url
                 title: '‘‘’’<b>' + pdfh(data, 'h3&&Text') + '</b> <small>&nbsp;&nbsp;&nbsp;&nbsp;排名：<font color="#FA7298"><b> ' + pdfh(data, '.order&&Text') + '  名</b></font>&nbsp;&nbsp;&nbsp;&nbsp;作者：' + pdfh(data, '.comic-author&&Text') + '</small>',
                 desc: '‘‘’’<font color="#004e66">动态：' + pdfh(data, '.clearfix&&.statistics&&Text') + '&nbsp;&nbsp;&nbsp;&nbsp;分类：' + pdfa(data, '.sort-list&&a').map(datas => pdfh(datas, 'Text')).join(" | ") + '</font>',
+                url: 'https://m.taomanhua.com/'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 col_type: 'text_1',
                 extra: {
                     name: pdfh(data, 'h3&&Text')//如果上面的title不是单纯的名称可以单独写在附加中
