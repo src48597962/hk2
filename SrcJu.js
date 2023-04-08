@@ -593,6 +593,7 @@ function search(name, sdata) {
                             })
                         } else {
                             item.url = item.url + $("#noLoading#").lazyRule((extra) => {
+                                showLoading('已选择 '+extra.sname);
                                 clearMyVar(extra.sname+"_"+extra.name);
                                 storage0.putMyVar('erjiextra', extra);
                                 refreshPage(false);
