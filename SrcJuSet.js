@@ -15,6 +15,13 @@ function SRCSet() {
         url: $(sourcenames,2).select((runMode,cfgfile,Juconfig) => {
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
+            clearMyVar(MY_RULE.title + "类别");
+            clearMyVar(MY_RULE.title + "地区");
+            clearMyVar(MY_RULE.title + "进度");
+            clearMyVar(MY_RULE.title + "排序");
+            clearMyVar("排名");
+            clearMyVar("分类");
+            clearMyVar("更新");
             Juconfig[runMode+'sourcename'] = input;
             writeFile(cfgfile, JSON.stringify(Juconfig));
             refreshPage(false);
