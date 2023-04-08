@@ -132,12 +132,13 @@ function yiji() {
                     let stype = JSON.parse(params.params).stype;
                     if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
                         let name = JSON.parse(params.params).name;
+                        let sname = JSON.parse(params.params).sname;
                         let extraData = it.extraData?JSON.parse(it.extraData):{};
                         let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
                         let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
                         let col = Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic';
                         d.push({
-                            title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+"</small>":name,
+                            title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+"|"+sname+"</small>":name,
                             pic_url: it.picUrl,
                             desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
                             url: $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
