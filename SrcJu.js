@@ -599,7 +599,9 @@ function search(name, sdata) {
                             })
                         } else {
                             item.url = item.url + $("#noLoading#").lazyRule((extra) => {
-                                if(getMyVar('SrcJuselectsname')){
+                                if(getMyVar('SrcJuSearching')){
+                                     return "toast://请等待搜索线程结束...";
+                                }else if(getMyVar('SrcJuselectsname')){
                                      return "toast://请勿重复点击，稍等...";
                                 }else{
                                     putMyVar('SrcJuselectsname','1');
