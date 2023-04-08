@@ -234,6 +234,7 @@ function erji() {
             sname = datasource[i].sname || "";
             surl = datasource[i].surl || "";
             if(sname&&surl){
+                erjiextra = datasource[i];
                 break;
             }
         }
