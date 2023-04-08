@@ -271,6 +271,11 @@ function erji() {
                 parse = source;
             }
             sourcedata2 = sourcedata[0];
+            if(parse&&parse['公共']){
+                publicSave(parse['公共']);
+            }else{
+                publicSave('');
+            }
         }
     } catch (e) {
         log(e.message);
