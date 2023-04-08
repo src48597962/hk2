@@ -221,6 +221,7 @@ function erji() {
     let isload;//是否正确加载
     let d = [];
     let parse;
+    let details;
     let stype = MY_PARAMS.stype;
     let erjiextra = storage0.getMyVar('erjiextra') || getMark(name, stype) || MY_PARAMS;
     let sname = erjiextra.sname || "";
@@ -253,7 +254,7 @@ function erji() {
         if (parse && surl) {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
-            let details = parse['二级'](surl);
+            details = parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -266,9 +267,10 @@ function erji() {
                     gradient: true
                 }
             })
-            let 线路 = details.line?details.line:["线路"];
-            let 列表 = details.line?details.list:[details.list];
-            log(列表)
+            let indexid = getMyVar(surl, '0');
+            let 线路s = details.line?details.line:["线路"];
+            let 列表s = details.line?details.list:[details.list];
+            let 列表 = 列表s[indexid];
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
@@ -386,7 +388,7 @@ function erji() {
             })
             d.push({
                 title: `““””<b><span style="color: #f47983">两列</span></b>`,
-                url: $(["一列","两列","三列"]).select((列表, 解析, name) => {
+                url: $(["一列","两列","三列"],1,"选择选集列表样式").select((列表, 解析, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
                     列表.forEach((item, id) => {
@@ -412,6 +414,22 @@ function erji() {
                     cls: "loadlist"
                 }
             })
+            if(线路s.length>1){
+                d.push({
+                    title: `““””<b><span style="color: #004e66">`+线路s[indexid]+`</span></b>`,
+                    url: $(线路s,2,"选择线路").select((线路s,surl) => {
+                        let index = 线路s.indexOf(input);
+                        putMyVar(surl,index);
+                        refreshPage(false);
+                        return 'hiker://empty'
+                    }, 线路s, surl),
+                    col_type: 'scroll_button',
+                    extra: {
+                        id: "listcol_type",
+                        cls: "loadlist"
+                    }
+                })
+            }
 
             列表.forEach((item, id) => {
                 d.push({
@@ -453,6 +471,11 @@ function erji() {
             erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
         }
+        //当前二级详情数据保存
+        details.sname = sname;
+        details.surl = surl;
+        let detailsfile = "hiker://files/cache/src/details.json";
+        writeFile(detailsfile, JSON.stringify(details));
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新) => {
@@ -626,7 +649,6 @@ function setMark(data) {
     writeFile(markfile, JSON.stringify(marklist));
     return 1;
 }
-
 //图标下载
 function downloadicon() {
     try {
