@@ -99,4 +99,5 @@ function publicSave(data) {
     let publicfile = "hiker://files/rules/Src/Ju/public.json";
     publicdata = data;
     writeFile(publicfile, JSON.stringify(publicdata));
+    initConfig({public:publicfile});
 }
