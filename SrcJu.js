@@ -487,7 +487,7 @@ function erji() {
             }
         });
         setResult(d);
-        //setPageTitle(name);
+        //setPageTitle(name);//不能用了，会影响收藏状态和足迹，软件反应不过来
         toast('当前数据源：' + sname + ', 作者' + sauthor);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
