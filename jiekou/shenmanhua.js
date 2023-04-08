@@ -3,7 +3,6 @@ let yidata = {
     "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
     //"公共": {a: 1,b: 2},//可以自行建需要的元素，其他函数中用parse["公共"]取
     "主页": function () {
-        log(parse["公共"]);
         let d = [];
         MY_URL = "https://m.taomanhua.com";
         let html = request(MY_URL);
