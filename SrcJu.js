@@ -545,9 +545,9 @@ function erji() {
             }
         });
         setResult(d);
-        clearMyVar('SrcJuselectsname');
         search(name);
     }
+    clearMyVar('SrcJuselectsname');
 }
 
 //搜索接口
@@ -599,8 +599,9 @@ function search(name, sdata) {
                             })
                         } else {
                             item.url = item.url + $("#noLoading#").lazyRule((extra) => {
+                                putMyVar('JuSouSuoStoptask','1');
                                 if(getMyVar('SrcJuSearching')){
-                                     return "toast://请等待搜索线程结束...";
+                                     return "toast://等待搜索线程结束...";
                                 }else if(getMyVar('SrcJuselectsname')){
                                      return "toast://请勿重复点击，稍等...";
                                 }else{
@@ -644,6 +645,11 @@ function search(name, sdata) {
             deleteItemByCls('loadlist');
             be(list, {
                 func: function (obj, id, error, taskResult) {
+                    if (getMyVar('JuSouSuoStoptask')) {
+                        //toast("我主动中断了");
+                        clearMyVar('JuSouSuoStoptask');
+                        return "break";
+                    }
                 },
                 param: {
                 }
