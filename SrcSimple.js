@@ -8,14 +8,14 @@ function ftPYStr(){
 function PYStr(cc,o){
 	var str='';
 	for(var i=0;i<cc.length;i++){
-		if(o==1){
-			if(ftPYStr().indexOf(cc.charAt(i))!=-1)
-				str+=charPYStr().charAt(ftPYStr().indexOf(cc.charAt(i)));
+		if(o==0){
+			if(charPYStr().indexOf(cc.charAt(i))!=-1)
+				str+=ftPYStr().charAt(charPYStr().indexOf(cc.charAt(i)));
 			else
 				str+=cc.charAt(i);
 		}else{
-			if(charPYStr().indexOf(cc.charAt(i))!=-1)
-				str+=ftPYStr().charAt(charPYStr().indexOf(cc.charAt(i)));
+			if(ftPYStr().indexOf(cc.charAt(i))!=-1)
+				str+=charPYStr().charAt(ftPYStr().indexOf(cc.charAt(i)));
 			else
 				str+=cc.charAt(i);
 		}
