@@ -266,7 +266,9 @@ function erji() {
                     gradient: true
                 }
             })
-            let 列表 = details.list;//选集列表
+            let 线路 = details.line?details.line:["线路"];
+            let 列表 = details.line?details.list:[details.list];
+            log(列表)
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
