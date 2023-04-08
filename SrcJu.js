@@ -219,15 +219,25 @@ function erji() {
     let name = MY_PARAMS.name;
     setPageTitle(name);
     let isload;//是否正确加载
+    let sauthor = "未知";
+    let detailsfile = "hiker://files/cache/src/details.json";
     let d = [];
     let parse;
     let details;
     let stype = MY_PARAMS.stype;
-    let erjiextra = storage0.getMyVar('erjiextra') || MY_PARAMS || getMark(name, stype);
-    let sname = erjiextra.sname || "";
-    let surl = erjiextra.surl || "";
-    let sauthor = "未知";
-    let detailsfile = "hiker://files/cache/src/details.json";
+    let datasource = [storage0.getMyVar('erjiextra'), MY_PARAMS, getMark(name, stype)];
+    let erjiextra; //storage0.getMyVar('erjiextra');// = storage0.getMyVar('erjiextra') || MY_PARAMS || getMark(name, stype);
+    let sname;// = erjiextra.sname || "";
+    let surl;// = erjiextra.surl || "";
+    for(let i=0; i<datasource.length; i++){
+        if(datasource[i]){
+            sname = datasource[i].sname || "";
+            surl = datasource[i].surl || "";
+            if(sname&&surl){
+                break;
+            }
+        }
+    }
 
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type == stype;
