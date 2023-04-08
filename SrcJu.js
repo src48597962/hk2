@@ -216,7 +216,6 @@ function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
-        clearMyVar('SrcJuerloading');
     }));
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
@@ -355,7 +354,7 @@ function erji() {
             d.push({
                 title: "切换书源",
                 url: getMyVar('backsousuo') == "1" ? `#noLoading#@lazyRule=.js:back(false);'hiker://empty'` : $("#noLoading#").lazyRule((name) => {
-                    if(getMyVar('SrcJuerloading') && !getMyVar('SrcJuSearching')){
+                    if(!getMyVar('SrcJuSearching')){
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         search(name);
@@ -484,7 +483,7 @@ function erji() {
 
     if (isload) {
         d.push({
-            title: "‘‘’’<small><font color=#f20c00>此规则仅限学习交流使用，请于导入后24小时内删除！</font></small>",
+            title: "‘‘’’<small><font color=#f20c00>此规则仅限学习交流，"+"当前数据源：" + sname + ", 作者" + sauthor+"</font></small>",
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
@@ -494,7 +493,10 @@ function erji() {
         });
         setResult(d);
         //setPageTitle(name);//不能用了，会影响收藏状态和足迹，软件反应不过来
-        toast('当前数据源：' + sname + ', 作者' + sauthor);
+        if(!getMyVar(sname+"_"+name)){
+            toast('当前数据源：' + sname + ', 作者' + sauthor);
+        }
+        putMyVar(sname+"_"+name, "1");
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
@@ -537,7 +539,6 @@ function erji() {
         setResult(d);
         search(name);
     }
-    putMyVar('SrcJuerloading','1');//判断二级是否加载完
 }
 
 //搜索接口
@@ -589,6 +590,7 @@ function search(name, sdata) {
                             })
                         } else {
                             item.url = item.url + $("#noLoading#").lazyRule((extra) => {
+                                clearMyVar(extra.sname+"_"+extra.name);
                                 storage0.putMyVar('erjiextra', extra);
                                 refreshPage(false);
                                 return "toast://已切换源：" + extra.sname;
