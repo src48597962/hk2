@@ -86,8 +86,7 @@ let yidata = {
                 pic_url: data.cover_img + "@Referer=",
                 col_type: "movie_3_marquee",
                 extra: {
-                    name: data.comic_name,
-                    url: 'https://m.taomanhua.com/'+ data.comic_newid +'/'
+                    name: data.comic_name
                 }
             });
         })
