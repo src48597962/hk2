@@ -39,10 +39,12 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (page["排行"] ? "?page=fypage" : "")).rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            getYiData('排行');
-        }),
+        url: $('#noLoading#').lazyRule((page) => {
+            return $("hiker://empty#noRecordHistory##noHistory#" + (page["排行"] ? "?page=fypage" : "")).rule(() => {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                getYiData('排行');
+            })
+        },page),
         pic_url: "https://lanmeiguojiang.com/tubiao/more/229.png",
         col_type: 'icon_5'
     })
