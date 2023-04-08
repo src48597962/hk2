@@ -89,3 +89,8 @@ function getYiData(type,od) {
     }
     setResult(d);
 }
+//简繁互转,x可不传，默认转成简体，传2则是转成繁体
+function jianfan(str,x) {
+    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcSimple.js');
+    return PYStr(str,x);
+}
