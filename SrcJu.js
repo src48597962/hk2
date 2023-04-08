@@ -21,7 +21,7 @@ function yiji() {
                 parse = source;
             }
             page = parse["页码"];
-            if(!getMyVar("SrcJu_"+sourcename)){
+            if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
             }
         }
@@ -194,7 +194,7 @@ function yiji() {
         col_type: 'line'
     })
     getYiData('主页', d);
-    putMyVar("SrcJu_"+sourcename, "1");
+    putMyVar(runMode+"_"+sourcename, "1");
 }
 //搜索页面
 function sousuo() {
