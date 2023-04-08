@@ -223,10 +223,11 @@ function erji() {
     let parse;
     let details;
     let stype = MY_PARAMS.stype;
-    let erjiextra = storage0.getMyVar('erjiextra') || getMark(name, stype) || MY_PARAMS;
+    let erjiextra = storage0.getMyVar('erjiextra') || MY_PARAMS || getMark(name, stype);
     let sname = erjiextra.sname || "";
     let surl = erjiextra.surl || "";
     let sauthor = "未知";
+    let detailsfile = "hiker://files/cache/src/details.json";
 
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type == stype;
@@ -254,7 +255,18 @@ function erji() {
         if (parse && surl) {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
-            details = parse['二级'](surl);
+            let detailsdata = fetch(detailsfile);
+            if (detailsdata != "") {
+                try{
+                    eval("let detailsjson=" + detailsdata + ";");
+                    if(detailsjson.sname==sname && detailsjson.surl==surl){
+                        var detailsmark = detailsjson;
+                    }
+                }catch(e){
+                    var detailsmark = "";
+                }
+            }
+            details = detailsmark || parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -474,7 +486,6 @@ function erji() {
         //当前二级详情数据保存
         details.sname = sname;
         details.surl = surl;
-        let detailsfile = "hiker://files/cache/src/details.json";
         writeFile(detailsfile, JSON.stringify(details));
         //收藏更新最新章节
         if (parse['最新']) {
