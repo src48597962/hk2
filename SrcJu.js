@@ -216,6 +216,7 @@ function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
+        clearMyVar('SrcJuerloading');
     }));
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
@@ -354,10 +355,14 @@ function erji() {
             d.push({
                 title: "切换书源",
                 url: getMyVar('backsousuo') == "1" ? `#noLoading#@lazyRule=.js:back(false);'hiker://empty'` : $("#noLoading#").lazyRule((name) => {
-                    require(config.依赖);
-                    deleteItemByCls('loadlist');
-                    search(name);
-                    return 'hiker://empty'
+                    if(getMyVar('SrcJuerloading') && !getMyVar('SrcJuSearching')){
+                        require(config.依赖);
+                        deleteItemByCls('loadlist');
+                        search(name);
+                        return 'hiker://empty'
+                    }else{
+                        return "toast://不要心急，稍等...";
+                    }
                 }, name),
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
@@ -508,8 +513,7 @@ function erji() {
                 最新(surl);
             }, surl, parse['最新']))
         }
-        //判断是否取本地缓存文件
-        putMyVar('SrcJuloading','1');
+        putMyVar('SrcJuloading','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
     } else {
         d.push({
             title: "\n搜索接口源结果如下",
@@ -533,6 +537,7 @@ function erji() {
         setResult(d);
         search(name);
     }
+    putMyVar('SrcJuerloading','1');//判断二级是否加载完
 }
 
 //搜索接口
@@ -617,6 +622,7 @@ function search(name, sdata) {
         });
 
         if (list.length > 0) {
+            putMyVar('SrcJuSearching','1');
             deleteItemByCls('loadlist');
             be(list, {
                 func: function (obj, id, error, taskResult) {
@@ -633,6 +639,7 @@ function search(name, sdata) {
         } else {
             toast('无接口，未找到源');
         }
+        clearMyVar('SrcJuSearching');
         hideLoading();
     }
 }
