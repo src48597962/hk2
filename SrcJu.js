@@ -216,6 +216,7 @@ function erji() {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
     }));
+    putMyVar('SrcJuloading','1');
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     setPageTitle(name);
@@ -267,17 +268,20 @@ function erji() {
         if (parse && surl) {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
-            let detailsdata = fetch(detailsfile);
-            if (detailsdata != "") {
-                try{
-                    eval("let detailsjson=" + detailsdata + ";");
-                    if(detailsjson.sname==sname && detailsjson.surl==surl){
-                        var detailsmark = detailsjson;
-                    }
-                }catch(e){
-                    var detailsmark = "";
+            let detailsmark;
+            log(getMyVar('SrcJuloading'))
+            if(getMyVar('SrcJuloading')){
+                let detailsdata = fetch(detailsfile);
+                if (detailsdata != "") {
+                    try{
+                        eval("let detailsjson=" + detailsdata + ";");
+                        if(detailsjson.sname==sname && detailsjson.surl==surl){
+                            detailsmark = detailsjson;
+                        }
+                    }catch(e){ }
                 }
             }
+            
             details = detailsmark || parse['二级'](surl);
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
