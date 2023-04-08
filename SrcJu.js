@@ -358,6 +358,7 @@ function erji() {
                 title: "切换书源",
                 url: getMyVar('backsousuo') == "1" ? `#noLoading#@lazyRule=.js:back(false);'hiker://empty'` : $("#noLoading#").lazyRule((name) => {
                     if(!getMyVar('SrcJuSearching')){
+                        clearMyVar('SrcJuselectsname');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         search(name);
@@ -593,11 +594,15 @@ function search(name, sdata) {
                             })
                         } else {
                             item.url = item.url + $("#noLoading#").lazyRule((extra) => {
-                                showLoading('已选择 '+extra.sname);
-                                clearMyVar(extra.sname+"_"+extra.name);
-                                storage0.putMyVar('erjiextra', extra);
-                                refreshPage(false);
-                                return "toast://已切换源：" + extra.sname;
+                                if(getMyVar('SrcJuselectsname')){
+                                     return "toast://请勿重复点击，稍等...";
+                                }else{
+                                    putMyVar('SrcJuselectsname','1');
+                                    clearMyVar(extra.sname+"_"+extra.name);
+                                    storage0.putMyVar('erjiextra', extra);
+                                    refreshPage(false);
+                                    return "toast://已切换源：" + extra.sname;
+                                }
                             }, extra);
                         }
                         item.content = item.desc;
