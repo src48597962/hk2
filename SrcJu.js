@@ -413,8 +413,8 @@ function erji() {
                 }
             })
             d.push({
-                title: `““””<b><span style="color: #f47983">两列</span></b>`,
-                url: $(["一列","两列","三列"],1,"选集列表样式").select((列表, 解析, name) => {
+                title: `““””<b><span style="color: #f47983">列表样式</span></b>`,
+                url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, 解析, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
                     列表.forEach((item, id) => {
@@ -423,7 +423,7 @@ function erji() {
                             url: item.url + $("").lazyRule((解析) => {
                                 return 解析(input);
                             }, 解析),
-                            col_type: input=="一列"?"text_1":input=="两列"?"text_2":"text_3",
+                            col_type: input,
                             extra: {
                                 id: name + "_选集_" + id,
                                 cls: "loadlist playlist"
