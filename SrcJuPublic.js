@@ -94,3 +94,9 @@ function jianfan(str,x) {
     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcSimple.js');
     return PYStr(str,x);
 }
+//公共属性临时保存
+function publicSave(data) {
+    let publicfile = "hiker://files/rules/Src/Ju/public.json";
+    publicdata = data;
+    writeFile(publicfile, JSON.stringify(publicdata));
+}
