@@ -102,4 +102,5 @@ function bookCase() {
         }
     })
     setResult(d);
+    putMyVar('SrcBookCase-in','1');
 }
