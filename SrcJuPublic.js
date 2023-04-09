@@ -76,7 +76,7 @@ function getYiData(type,od) {
         }
         data.forEach(item => {
             let extra = item.extra || {};
-            extra.name = extra.name || item.title;
+            extra.name = extra.name || extra.pageTitle ||item.title;
             extra.img = extra.img || item.pic_url || item.img;
             extra.stype = sourcedata[0].type;
             extra.pageTitle = extra.pageTitle || extra.name;
