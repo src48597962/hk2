@@ -207,11 +207,11 @@ function erji() {
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             try{
-                if(线路s.length != 列表s.length){
-                    log(sname+'接口返回的线路和列表不相等')
-                }
                 if(indexid > 线路s.length){
                     indexid = 0;
+                }
+                if(线路s.length != 列表s.length){
+                    log(sname+'接口返回的线路和列表不相等')
                 }
             }catch(e){
                 log(sname+">线路或列表返回数据有误"+e.message);
@@ -219,6 +219,23 @@ function erji() {
             }
             
             let 列表 = 列表s[indexid];
+            if(列表.length>0){
+                try{
+                    let i1 = parseInt(列表.length / 5);
+                    let i2 = parseInt(列表.length / 2);
+                    if(i1==i2){
+                        i1 = 0;
+                        i2 = list.length-1;
+                    }
+                    let list1 = 列表[i1].title;
+                    let list2 = 列表[i2].title;
+                    if(parseInt(list1.match(/(\d+)/)[0])>parseInt(list2.match(/(\d+)/)[0])){
+                        list.reverse();
+                    }
+                }catch(e){
+                    //log('修正选集顺序失败>'+e.message)
+                }
+            }
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
@@ -377,7 +394,7 @@ function erji() {
             })
             if(线路s.length>1){
                 d.push({
-                    title: `““””<b><span style="color: #006688">`+线路s[indexid]+`<small>⚡</small></span></b>`,
+                    title: `““””<b><span style="color: #AABBFF">`+线路s[indexid]+`<small>⚡</small></span></b>`,
                     url: $(线路s,2,"选择线路").select((线路s,surl) => {
                         let index = 线路s.indexOf(input);
                         putMyVar(surl,index);
