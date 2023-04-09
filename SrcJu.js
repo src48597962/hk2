@@ -206,6 +206,15 @@ function erji() {
             let indexid = getMyVar(surl, '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
+            try{
+                if(线路s.length != 列表s.length){
+                    log(sname+'接口返回的线路和列表不相等')
+                }
+            }catch(e){
+                log(sname+">线路或列表返回数据有误"+e.message);
+                线路s = ["线路"];
+            }
+            
             let 列表 = 列表s[indexid];
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
