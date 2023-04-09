@@ -4,91 +4,93 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 //一级
 function yiji() {
-    Version();
-    downloadicon();
-    let sourcedata = yidatalist.filter(it => {
-        return it.name == sourcename;
-    });
-    let parse;
-    let 页码;
-    try {
-        if (sourcedata.length > 0) {
-            eval("let source = " + sourcedata[0].parse);
-            if (source.ext && /^http/.test(source.ext)) {
-                requireCache(source.ext, 48);
-                parse = yidata;
-            } else {
-                parse = source;
+    if(MY_PARAMS==1){
+        Version();
+        downloadicon();
+        let sourcedata = yidatalist.filter(it => {
+            return it.name == sourcename;
+        });
+        let parse;
+        let 页码;
+        try {
+            if (sourcedata.length > 0) {
+                eval("let source = " + sourcedata[0].parse);
+                if (source.ext && /^http/.test(source.ext)) {
+                    requireCache(source.ext, 48);
+                    parse = yidata;
+                } else {
+                    parse = source;
+                }
+                页码 = parse["页码"];
+                if(!getMyVar(runMode+"_"+sourcename)){
+                    toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
+                }
             }
-            页码 = parse["页码"];
-            if(!getMyVar(runMode+"_"+sourcename)){
-                toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
-            }
+        } catch (e) {
+            log("一级源接口加载异常>" + e.message);
         }
-    } catch (e) {
-        log("一级源接口加载异常>" + e.message);
+        页码 = 页码 || {};
+        let d = [];
+        d.push({
+            title: "管理",
+            url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                SRCSet();
+            }),
+            pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
+            col_type: 'icon_5',
+            extra: {
+                newWindow: true,
+                windowId: MY_RULE.title + "管理"
+            }
+        })
+        d.push({
+            title: "排行",
+            url: rulePage('排行',页码["排行"]),
+            pic_url: "https://lanmeiguojiang.com/tubiao/more/229.png",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: "分类",
+            url: rulePage('分类',页码["分类"]),
+            pic_url: "https://lanmeiguojiang.com/tubiao/more/287.png",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: "更新",
+            url: rulePage('更新',页码["更新"]),
+            pic_url: "https://lanmeiguojiang.com/tubiao/more/288.png",
+            col_type: 'icon_5'
+        })
+        d.push({
+            title: Juconfig["btnmenu5"] || "书架",
+            url: Juconfig["btnmenu5"] == "历史" ? "hiker://history?rule="+MY_RULE.title : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection?rule="+MY_RULE.title : $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
+                bookCase();
+            }),
+            pic_url: "https://lanmeiguojiang.com/tubiao/more/286.png",
+            col_type: 'icon_5',
+            extra: {
+                longClick: [{
+                    title: "切换按钮",
+                    js: $.toString(() => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                        return $(["书架", "收藏", "历史"], 1).select((cfgfile, Juconfig) => {
+                            Juconfig["btnmenu5"] = input;
+                            writeFile(cfgfile, JSON.stringify(Juconfig));
+                            refreshPage(false);
+                            return 'toast://已切换为' + input;
+                        }, cfgfile, Juconfig)
+                    })
+                }]
+            }
+        })
+        d.push({
+            col_type: 'line'
+        })
+        putMyVar(runMode+"_"+sourcename, "1");
     }
-    页码 = 页码 || {};
-    let d = [];
-    d.push({
-        title: "管理",
-        url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-            SRCSet();
-        }),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
-        col_type: 'icon_5',
-        extra: {
-            newWindow: true,
-            windowId: MY_RULE.title + "管理"
-        }
-    })
-    d.push({
-        title: "排行",
-        url: rulePage('排行',页码["排行"]),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/229.png",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: "分类",
-        url: rulePage('分类',页码["分类"]),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/287.png",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: "更新",
-        url: rulePage('更新',页码["更新"]),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/288.png",
-        col_type: 'icon_5'
-    })
-    d.push({
-        title: Juconfig["btnmenu5"] || "书架",
-        url: Juconfig["btnmenu5"] == "历史" ? "hiker://history?rule="+MY_RULE.title : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection?rule="+MY_RULE.title : $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
-            bookCase();
-        }),
-        pic_url: "https://lanmeiguojiang.com/tubiao/more/286.png",
-        col_type: 'icon_5',
-        extra: {
-            longClick: [{
-                title: "切换按钮",
-                js: $.toString(() => {
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return $(["书架", "收藏", "历史"], 1).select((cfgfile, Juconfig) => {
-                        Juconfig["btnmenu5"] = input;
-                        writeFile(cfgfile, JSON.stringify(Juconfig));
-                        refreshPage(false);
-                        return 'toast://已切换为' + input;
-                    }, cfgfile, Juconfig)
-                })
-            }]
-        }
-    })
-    d.push({
-        col_type: 'line'
-    })
     getYiData('主页', d);
-    putMyVar(runMode+"_"+sourcename, "1");
 }
 //搜索页面
 function sousuo() {
