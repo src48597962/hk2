@@ -4,6 +4,7 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 //一级
 function yiji() {
+    let d = [];
     if(MY_PARAMS==1){
         Version();
         downloadicon();
@@ -30,7 +31,7 @@ function yiji() {
             log("一级源接口加载异常>" + e.message);
         }
         页码 = 页码 || {};
-        let d = [];
+        
         d.push({
             title: "管理",
             url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
