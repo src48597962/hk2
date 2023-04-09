@@ -305,7 +305,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": `(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+JSON.stringify(公共)+`)`,
+                        "parseCode": lazy,//`(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+JSON.stringify(公共)+`)`,
                         "ruleName": MY_RULE.title
                     }
                 }
@@ -573,7 +573,7 @@ function search(name, sdata) {
                             }, extra);
                         }
                         item.content = item.desc;
-                        item.desc = getMyVar('SrcJuSousuoTest')?item.desc:getMyVar('SrcJuSousuo') ? MY_RULE.title + ' · ' + obj.name : obj.name + ' · ' + item.desc;
+                        item.desc = getMyVar('SrcJuSousuoTest')?item.desc:getMyVar('SrcJuSousuo') ? MY_RULE.title + ' · ' + obj.name : obj.name + item.desc?(' · ' + item.desc):"";
                         item.col_type = getMyVar('SrcJuSousuoTest')?"movie_1_vertical_pic":getMyVar('SrcJuSousuo') ? "video" : "avatar";
                     })
                     searchMark[name] = searchMark[name] || [];
