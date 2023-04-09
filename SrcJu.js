@@ -499,6 +499,9 @@ function erji() {
 
 //搜索接口
 function search(name, sdata) {
+    if(getMyVar('SrcJuSearching')){
+        return "toast://上次搜索线程还未结束，等等再来"
+    }
     let searchMark = storage0.getMyVar('searchMark') || {};
     let loadid = getMyVar('SrcJuSousuo') == "1" ? 'sousuoloading' : 'listloading';
     if (searchMark[name] && !sdata) {
