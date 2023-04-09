@@ -252,6 +252,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
+            log(公共)
             d.push({
                 title: "我的书架",
                 url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
@@ -273,7 +274,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": `(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+公共+`)`,
+                        "parseCode": `(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+JSON.stringify(公共)+`)`,
                         "ruleName": MY_RULE.title
                     }
                 }
