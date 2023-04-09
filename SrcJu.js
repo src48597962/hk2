@@ -247,9 +247,9 @@ function erji() {
                     return 解析(input,公共);
                 }, 解析, 公共);
             }else if (stype=="阅读") {
-                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
-                    解析(input,公共);
-                }, 解析, 公共);
+                lazy = $("#readTheme##autoPage#").rule((解析, 公共, surl) => {
+                    解析(surl,公共);
+                }, 解析, 公共, surl);
             }
 
             d.push({
