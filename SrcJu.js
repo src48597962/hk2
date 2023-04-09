@@ -11,7 +11,6 @@ function yiji() {
     });
     let parse;
     let 页码;
-    let 公共;
     try {
         if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
@@ -25,15 +24,10 @@ function yiji() {
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
             }
-            if(parse){
-                eval("let gonggong = " + sourcedata[0].public);
-                公共 = gonggong || parse['公共'] || {};
-            }
         }
     } catch (e) {
         log("一级源接口加载异常>" + e.message);
     }
-    log(公共);
     页码 = 页码 || {};
     let d = [];
     d.push({
@@ -612,7 +606,7 @@ function search(name, sdata) {
                         extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
-                            item.url = $("hiker://empty#immersiveTheme#").rule(() => {
+                            item.url = $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
                                 erji();
                             })
