@@ -474,7 +474,7 @@ function erji() {
                     }
                 })
             }
-            log('0')
+            
             /*
             列表.forEach((item, id) => {
                 d.push({
@@ -490,6 +490,7 @@ function erji() {
                 });
             })
             */
+            log('0')
             for(let i=0; i<列表.length; i++) {
                 let item = 列表[i];
                 d.push({
