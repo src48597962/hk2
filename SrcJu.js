@@ -241,6 +241,13 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
+            let lazy;
+            if (stype=="漫画") {
+                lazy = $("").lazyRule((解析, 公共) => {
+                    return 解析(input,公共);
+                }, 解析, 公共);
+            }
+
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
@@ -412,9 +419,7 @@ function erji() {
             for(let i=0; i<列表.length; i++) {
                 d.push({
                     title: 列表[i].title,
-                    url: 列表[i].url + $("").lazyRule((解析, 公共) => {
-                        return 解析(input,公共);
-                    }, 解析, 公共),
+                    url: 列表[i].url + lazy,
                     col_type: list_col_type,
                     extra: {
                         id: name + "_选集_" + i,
