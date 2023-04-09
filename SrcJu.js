@@ -496,7 +496,7 @@ function erji() {
             列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
-                    url: iitem.url + $("").lazyRule((解析, 公共) => {
+                    url: item.url + $("").lazyRule((解析, 公共) => {
                         return 解析(input,公共);
                     }, 解析, 公共),
                     col_type: 'text_2',
