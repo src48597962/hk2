@@ -264,7 +264,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 3,
+            height: 2,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekoupublic", input)
