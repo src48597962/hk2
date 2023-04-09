@@ -408,19 +408,21 @@ function erji() {
                         });
                     };
                     let d = [];
-                    列表.forEach((item, id) => {
+                    let list_col_type = getItem('SrcJuList_col_type', 'text_2');
+                    for(let i=0; i<列表.length; i++) {
+                        let item = 列表[i];
                         d.push({
                             title: item.title,
                             url: item.url + $("").lazyRule((解析,公共) => {
                                 return 解析(input,公共);
                             }, 解析,公共),
-                            col_type: "text_2",
+                            col_type: list_col_type,
                             extra: {
-                                id: name + "_选集_" + id,
+                                id: name + "_选集_" + i,
                                 cls: "loadlist playlist"
                             }
                         });
-                    })
+                    }
                     addItemBefore('listloading', d);
                     return 'toast://切换排序成功'
                 }, 列表, 解析, 公共, name, sname),
@@ -435,7 +437,8 @@ function erji() {
                 url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, 解析, 公共, name) => {
                     deleteItemByCls('playlist');
                     let d = [];
-                    列表.forEach((item, id) => {
+                    for(let i=0; i<列表.length; i++) {
+                        let item = 列表[i];
                         d.push({
                             title: item.title,
                             url: item.url + $("").lazyRule((解析,公共) => {
@@ -443,18 +446,17 @@ function erji() {
                             }, 解析, 公共),
                             col_type: input,
                             extra: {
-                                id: name + "_选集_" + id,
+                                id: name + "_选集_" + i,
                                 cls: "loadlist playlist"
                             }
                         });
-                    })
+                    }
                     addItemBefore('listloading', d);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }, 列表, 解析, 公共, name),
                 col_type: 'scroll_button',
                 extra: {
-                    id: "listcol_type",
                     cls: "loadlist"
                 }
             })
@@ -469,30 +471,11 @@ function erji() {
                     }, 线路s, surl),
                     col_type: 'scroll_button',
                     extra: {
-                        id: "listcol_type",
                         cls: "loadlist"
                     }
                 })
             }
-
-            /*
-            列表.forEach((item, id) => {
-                d.push({
-                    title: item.title,
-                    url: item.url + $("").lazyRule((解析, 公共) => {
-                        return 解析(input,公共);
-                    }, 解析, 公共),
-                    col_type: getItem('SrcJuList_col_type', 'text_2'),
-                    extra: {
-                        id: name + "_选集_" + id,
-                        cls: "loadlist playlist"
-                    }
-                });
-            })
-
-            */
-            log('0')
-            
+            let list_col_type = getItem('SrcJuList_col_type', 'text_2');
             for(let i=0; i<列表.length; i++) {
                 let item = 列表[i];
                 d.push({
@@ -500,31 +483,13 @@ function erji() {
                     url: item.url + $("").lazyRule((解析, 公共) => {
                         return 解析(input,公共);
                     }, 解析, 公共),
-                    col_type: 'text_2',
+                    col_type: list_col_type,
                     extra: {
                         id: name + "_选集_" + i,
                         cls: "loadlist playlist"
                     }
                 });
             }
-            /*
-            
-            for(let i=0; i<列表.length; i++) {
-                let item = 列表[i];
-                d.push({
-                    title: item.title,
-                    url: item.url + $("").lazyRule((解析, 公共) => {
-                        return 解析(input,公共);
-                    }, 解析, 公共),
-                    col_type: getItem('SrcJuList_col_type', 'text_2'),
-                    extra: {
-                        id: name + "_选集_" + item.title,
-                        cls: "loadlist playlist"
-                    }
-                });
-            }
-            */
-            log('1')
             isload = 1;
         }
     } catch (e) {
@@ -641,7 +606,7 @@ function search(name, sdata) {
                         extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
-                            item.url = $("hiker://empty#immersiveTheme#").rule(() => {
+                            item.url = $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
                                 erji();
                             })
