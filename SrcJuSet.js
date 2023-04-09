@@ -187,6 +187,7 @@ function jiekouapi(sourcefile, data) {
         clearMyVar('jiekoutype');
         clearMyVar('jiekouparse');
         clearMyVar('jiekouerparse');
+        clearMyVar('jiekoupublic');
         clearMyVar('jiekouedit');
     }));
     if (data&&getMyVar('jiekouedit')!="1") {
@@ -196,6 +197,7 @@ function jiekouapi(sourcefile, data) {
         putMyVar('jiekoutype', data.type||"漫画");
         storage0.putMyVar('jiekouparse', data.parse);
         storage0.putMyVar('jiekouerparse', data.erparse ? data.erparse : "");
+        storage0.putMyVar('jiekoupublic', data.public ? data.public : "");
     }
     let d = [];
     d.push({
@@ -228,7 +230,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 4,
+            height: 3,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekouparse", input)
@@ -245,10 +247,27 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 4,
+            height: 3,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekouerparse", input)
+                }
+            })
+        }
+    });
+    d.push({
+        title: '公共变量',
+        col_type: 'input',
+        desc: "公共变量, {}对象",
+        extra: {
+            defaultValue: storage0.getMyVar('jiekoupublic') || "",
+            titleVisible: false,
+            type: "textarea",
+            highlight: true,
+            height: 3,
+            onChange: $.toString(() => {
+                if (/{|}/.test(input) || !input) {
+                    storage0.putMyVar("jiekoupublic", input)
                 }
             })
         }
@@ -261,6 +280,7 @@ function jiekouapi(sourcefile, data) {
             let name = getMyVar('jiekouname');
             let type = getMyVar('jiekoutype','漫画');
             let erparse = getMyVar('jiekouerparse');
+            let public = getMyVar('jiekoupublic');
             if(!name || !erparse){
                 return "toast://名称或搜索源接口不能为空";
             }
@@ -269,6 +289,9 @@ function jiekouapi(sourcefile, data) {
                     name: name,
                     type: type,
                     erparse: erparse
+                }
+                if(public){
+                    source.public = public;
                 }
             }catch(e){
                 log(e.message);
@@ -314,6 +337,7 @@ function jiekouapi(sourcefile, data) {
                 let type = getMyVar('jiekoutype','漫画');
                 let parse = getMyVar('jiekouparse');
                 let erparse = getMyVar('jiekouerparse');
+                let public = getMyVar('jiekoupublic');
                 let newapi = {
                     name: name,
                     type: type
@@ -335,6 +359,9 @@ function jiekouapi(sourcefile, data) {
                         return "toast://二级搜索源有错误，看日志"
                     }
                     newapi['erparse'] = erparse;
+                }
+                if (public) {
+                    newapi['public'] = public;
                 }
                 let sourcedata = fetch(sourcefile);
                 if (sourcedata != "") {
