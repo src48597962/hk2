@@ -271,7 +271,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": "(\n(解析,公共) => {\n return 解析(input,公共);\n})(" + 解析 + ","+ 公共 +")",
+                        "parseCode": "(\n(解析) => {\n return 解析(input);\n})(" + 解析 +")",
                         "ruleName": MY_RULE.title
                     }
                 }
