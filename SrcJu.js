@@ -246,6 +246,10 @@ function erji() {
                 lazy = $("").lazyRule((解析, 公共) => {
                     return 解析(input,公共);
                 }, 解析, 公共);
+            }else if (stype=="阅读") {
+                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                    解析(input,公共);
+                }, 解析, 公共);
             }
 
             d.push({
@@ -549,7 +553,7 @@ function search(name, sdata) {
                         extra.stype = obj.type;
                         extra.sname = obj.name;
                         extra.pageTitle = extra.name;
-                        extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
+                        extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
                             item.url = $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
