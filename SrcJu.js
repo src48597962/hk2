@@ -493,7 +493,8 @@ function erji() {
             */
             log('0')
             
-            列表.forEach((item, id) => {
+            for(let i=0; i<列表.length; i++) {
+                let item = 列表[i];
                 d.push({
                     title: item.title,
                     url: item.url + $("").lazyRule((解析, 公共) => {
@@ -501,11 +502,11 @@ function erji() {
                     }, 解析, 公共),
                     col_type: 'text_2',
                     extra: {
-                        id: name + "_选集_" + id,
+                        id: name + "_选集_" + i,
                         cls: "loadlist playlist"
                     }
                 });
-            })
+            }
             /*
             
             for(let i=0; i<列表.length; i++) {
