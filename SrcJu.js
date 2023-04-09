@@ -252,7 +252,6 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            log(公共)
             d.push({
                 title: "我的书架",
                 url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
@@ -375,7 +374,7 @@ function erji() {
             })
             if(线路s.length>1){
                 d.push({
-                    title: `““””<b><span style="color: #004e66">`+线路s[indexid]+`<small>⚡</small></span></b>`,
+                    title: `““””<b><span style="color: #006688">`+线路s[indexid]+`<small>⚡</small></span></b>`,
                     url: $(线路s,2,"选择线路").select((线路s,surl) => {
                         let index = 线路s.indexOf(input);
                         putMyVar(surl,index);
