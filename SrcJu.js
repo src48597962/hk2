@@ -27,7 +27,7 @@ function yiji() {
             }
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
-                公共 = gonggong || parse['公共'];
+                公共 = gonggong || parse['公共'] || {};
             }
         }
     } catch (e) {
