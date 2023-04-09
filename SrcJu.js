@@ -248,7 +248,7 @@ function erji() {
             }
         }
     }
-
+    log('1')
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type == stype;
     });
@@ -278,6 +278,7 @@ function erji() {
     } catch (e) {
         log(e.message);
     }
+    log('2')
     try {
         if (parse && surl) {
             MY_URL = surl;
@@ -296,6 +297,7 @@ function erji() {
             }
             
             details = detailsmark || parse['二级'](surl);
+            log('3')
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -508,6 +510,7 @@ function erji() {
             }
         });
         setResult(d);
+        log('4')
         //setPageTitle(name);//不能用了，会影响收藏状态和足迹，软件反应不过来
         if(!getMyVar(sname+"_"+name)){
             toast('当前数据源：' + sname + ', 作者：' + sauthor);
@@ -556,6 +559,7 @@ function erji() {
         search(name);
     }
     clearMyVar('SrcJuselectsname');
+    log('5')
 }
 
 //搜索接口
