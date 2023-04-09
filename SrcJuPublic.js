@@ -33,6 +33,7 @@ function getYiData(type,od) {
         return it.name==sourcename;
     });
     let parse;
+    let 公共;
     try{
         if(sourcedata.length>0){
             eval("let source = " + sourcedata[0].parse);
@@ -41,6 +42,10 @@ function getYiData(type,od) {
                 parse = yidata;
             }else{
                 parse = source;
+            }
+            if(parse){
+                eval("let gonggong = " + sourcedata[0].public);
+                公共 = gonggong || parse['公共'] || {};
             }
         }
     }catch(e){
