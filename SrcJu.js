@@ -91,7 +91,6 @@ function yiji() {
         putMyVar(runMode+"_"+sourcename, "1");
     }
     getYiData('主页', d);
-    log(MY_PAGE)
 }
 //搜索页面
 function sousuo() {
