@@ -339,7 +339,7 @@ function erji() {
             }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
-                url: $("#noLoading#").lazyRule((列表, 解析, 公共, name, sname) => {
+                url: $("#noLoading#").lazyRule((列表,name,sname,lazy) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
@@ -358,9 +358,7 @@ function erji() {
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: 列表[i].url + $("").lazyRule((解析,公共) => {
-                                return 解析(input,公共);
-                            }, 解析,公共),
+                            url: 列表[i].url + lazy,
                             col_type: list_col_type,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -370,7 +368,7 @@ function erji() {
                     }
                     addItemBefore('listloading', d);
                     return 'toast://切换排序成功'
-                }, 列表, 解析, 公共, name, sname),
+                }, 列表,name,sname,lazy),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
@@ -402,30 +400,6 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-
-            /*
-            $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, 解析, 公共, name) => {
-                    deleteItemByCls('playlist');
-                    let d = [];
-                    for(let i=0; i<列表.length; i++) {
-                        d.push({
-                            title: 列表[i].title,
-                            url: 列表[i].url + $("").lazyRule((解析,公共) => {
-                                return 解析(input,公共);
-                            }, 解析, 公共),
-                            col_type: input,
-                            extra: {
-                                id: name + "_选集_" + i,
-                                cls: "loadlist playlist"
-                            }
-                        });
-                    }
-                    addItemBefore('listloading', d);
-                    setItem('SrcJuList_col_type', input);
-                    return 'hiker://empty'
-                }, 列表, 解析, 公共, name)
-
-            */
             if(线路s.length>1){
                 d.push({
                     title: `““””<b><span style="color: #AABBFF">`+线路s[indexid]+`<small>⚡</small></span></b>`,
