@@ -392,7 +392,7 @@ function erji() {
                 })
             }
             d.push({
-                title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #BB2266">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
+                title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((列表, 解析, 公共, name, sname) => {
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
@@ -404,7 +404,7 @@ function erji() {
                         putMyVar(sname + 'sort', '1')
                         列表.reverse();
                         updateItem('listsort', {
-                            title: `““””<b><span style="color: #BB2266">排序⇅</span></b>`
+                            title: `““””<b><span style="color: #66CCEE">排序⇅</span></b>`
                         });
                     };
                     let d = [];
