@@ -45,19 +45,23 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (页码["排行"] ? "?page=fypage" : "")).rule(() => {
+        url: rulePage('排行')
+        /*$("hiker://empty#noRecordHistory##noHistory#" + (页码["排行"] ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
-        }),
+        })
+        */,
         pic_url: "https://lanmeiguojiang.com/tubiao/more/229.png",
         col_type: 'icon_5'
     })
     d.push({
         title: "分类",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (页码["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
+        url: rulePage('分类')
+        /*$("hiker://empty#noRecordHistory##noHistory#" + (页码["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
-        }),
+        })
+        */,
         pic_url: "https://lanmeiguojiang.com/tubiao/more/287.png",
         col_type: 'icon_5'
     })
