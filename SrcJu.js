@@ -107,7 +107,6 @@ function sousuo() {
     setResult(d);
     java.lang.Thread.sleep(1000);
     search(name);
-    clearMyVar('SrcJuSousuo');
 }
 
 //二级+源搜索
@@ -499,7 +498,7 @@ function erji() {
 
 //搜索接口
 function search(name, sdata) {
-    if(getMyVar('SrcJuSearching')){
+    if(getMyVar('SrcJuSearching')=="1"){
         return "toast://上次搜索线程还未结束，等等再来"
     }
     let searchMark = storage0.getMyVar('searchMark') || {};
@@ -614,12 +613,13 @@ function search(name, sdata) {
             }
             let sousuosm = getMyVar('SrcJuSousuo') == "1" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
             updateItem(loadid, { title: sousuosm })
-            clearMyVar('SrcJuSousuo');
-            toast('搜源完成');
         } else {
-            toast('无接口，未找到源');
+            let sousuosm = "无接口";
+            updateItem(loadid, { title: sousuosm })
         }
         clearMyVar('SrcJuSearching');
+        clearMyVar('SrcJuSousuo');
+        clearMyVar('SrcJuSousuoTest');
         hideLoading();
     }
 }
