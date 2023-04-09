@@ -122,6 +122,10 @@ function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
+        if(getMyVar('SrcBookCase')){
+            clearMyVar('SrcBookCase');
+            refreshPage(false);
+        }
     }));
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
