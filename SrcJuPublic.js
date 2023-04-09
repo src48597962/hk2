@@ -28,10 +28,10 @@ let erdatalist = datalist.filter(it=>{
 });
 
 function rulePage(type,页码) {
-    return $("hiker://empty#noRecordHistory##noHistory#" + (页码[type] ? "?page=fypage" : "")).rule(() => {
+    return $("hiker://empty#noRecordHistory##noHistory#" + (页码[type] ? "?page=fypage" : "")).rule((type) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
         getYiData(type);
-    })
+    },type)
 }
 
 //获取一级数据
