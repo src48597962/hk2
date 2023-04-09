@@ -279,7 +279,6 @@ function erji() {
     }
     try {
         if (parse && surl) {
-            log('0')
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
@@ -296,7 +295,6 @@ function erji() {
             }
             
             details = detailsmark || parse['二级'](surl);
-            log('1')
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -317,7 +315,6 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
-            log('2')
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
@@ -394,7 +391,6 @@ function erji() {
                     col_type: "blank_block"
                 })
             }
-            log('3')
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #FF0000">排序⇅</span></b>` : `““””<b><span style="color: #1aad19">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((列表, 解析, 公共, name, sname) => {
@@ -478,7 +474,8 @@ function erji() {
                     }
                 })
             }
-            log('4')
+            log('0')
+            /*
             列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
@@ -492,8 +489,23 @@ function erji() {
                     }
                 });
             })
+            */
+            for(let i=0; i<列表.length; i++) {
+                let item = 列表[i];
+                d.push({
+                    title: item.title,
+                    url: item.url + $("").lazyRule((解析, 公共) => {
+                        return 解析(input,公共);
+                    }, 解析, 公共),
+                    col_type: getItem('SrcJuList_col_type', 'text_2'),
+                    extra: {
+                        id: name + "_选集_" + id,
+                        cls: "loadlist playlist"
+                    }
+                });
+            }
+            log('1')
             isload = 1;
-            log('5')
         }
     } catch (e) {
         toast('有异常，看日志');
@@ -510,9 +522,7 @@ function erji() {
                 lineVisible: false
             }
         });
-        log('6')
         setResult(d);
-        log('7')
         //setPageTitle(name);//不能用了，会影响收藏状态和足迹，软件反应不过来
         if(!getMyVar(sname+"_"+name)){
             toast('当前数据源：' + sname + ', 作者：' + sauthor);
@@ -561,7 +571,6 @@ function erji() {
         search(name);
     }
     clearMyVar('SrcJuselectsname');
-    log('5')
 }
 
 //搜索接口
