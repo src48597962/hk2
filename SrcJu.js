@@ -45,7 +45,7 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: rulePage('排行')
+        url: rulePage('排行',页码)
         /*$("hiker://empty#noRecordHistory##noHistory#" + (页码["排行"] ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('排行');
@@ -56,7 +56,7 @@ function yiji() {
     })
     d.push({
         title: "分类",
-        url: rulePage('分类')
+        url: rulePage('分类',页码)
         /*$("hiker://empty#noRecordHistory##noHistory#" + (页码["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             getYiData('分类');
