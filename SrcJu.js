@@ -580,12 +580,16 @@ function search(name, sdata) {
         let task = function (obj) {
             try {
                 let parse;
+                let 公共;
                 eval("let source = " + obj.erparse);
                 if (source.ext && /^http/.test(source.ext)) {
                     requireCache(source.ext, 48);
                     parse = erdata;
                 } else {
                     parse = source;
+                }
+                if(parse&&parse['公共']){
+                    公共 = parse['公共'];
                 }
                 let data = [];
                 eval("let 搜索 = " + parse['搜索'])
