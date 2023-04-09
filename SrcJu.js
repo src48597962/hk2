@@ -73,7 +73,8 @@ function yiji() {
     d.push({
         title: Juconfig["btnmenu5"] || "书架",
         url: Juconfig["btnmenu5"] == "历史" ? "hiker://history?rule="+MY_RULE.title : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection?rule="+MY_RULE.title : $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
-            
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
+            bookCase();
         }),
         pic_url: "https://lanmeiguojiang.com/tubiao/more/286.png",
         col_type: 'icon_5',
@@ -247,7 +248,10 @@ function erji() {
             })
             d.push({
                 title: "我的书架",
-                url: "",
+                url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
+                    bookCase();
+                }),
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/70.svg',
                 col_type: 'icon_small_3',
                 extra: {
