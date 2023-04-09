@@ -474,14 +474,31 @@ function erji() {
                     }
                 })
             }
-            log('0')
-            
+
+            /*
             列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
                     url: item.url + $("").lazyRule((解析, 公共) => {
                         return 解析(input,公共);
                     }, 解析, 公共),
+                    col_type: getItem('SrcJuList_col_type', 'text_2'),
+                    extra: {
+                        id: name + "_选集_" + id,
+                        cls: "loadlist playlist"
+                    }
+                });
+            })
+
+            */
+            log('0')
+            
+            列表.forEach((item, id) => {
+                d.push({
+                    title: item.title,
+                    url: item.url + $("").lazyRule(() => {
+                        return "";
+                    }),
                     col_type: getItem('SrcJuList_col_type', 'text_2'),
                     extra: {
                         id: name + "_选集_" + id,
