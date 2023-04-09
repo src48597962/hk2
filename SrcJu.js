@@ -134,6 +134,7 @@ function erji() {
     let erjiextra;
     let sname;
     let surl;
+    let detailload;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
             sname = datasource[i].sname || "";
@@ -203,6 +204,7 @@ function erji() {
                     gradient: true
                 }
             })
+            detailload = 1;
             let indexid = getMyVar(surl, '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
@@ -421,7 +423,9 @@ function erji() {
                     }
                 });
             }
-            isload = 1;
+            if(列表.length>0 || getMyVar('jiekouedit')){
+                isload = 1;
+            }
         }
     } catch (e) {
         toast('有异常，看日志');
@@ -464,16 +468,18 @@ function erji() {
         }
         putMyVar('SrcJuloading','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
     } else {
-        d.push({
-            title: "\n搜索接口源结果如下",
-            desc: "\n\n选择一个源观看吧👇",
-            pic_url: MY_PARAMS.img + '@Referer=',
-            url: MY_PARAMS.img + '@Referer=',
-            col_type: 'movie_1_vertical_pic_blur',
-            extra: {
-                gradient: true
-            }
-        });
+        if(!detailload){
+            d.push({
+                title: "\n搜索接口源结果如下",
+                desc: "\n\n选择一个源观看吧👇",
+                pic_url: MY_PARAMS.img + '@Referer=',
+                url: MY_PARAMS.img + '@Referer=',
+                col_type: 'movie_1_vertical_pic_blur',
+                extra: {
+                    gradient: true
+                }
+            });
+        }
         d.push({
             title: "",
             url: 'hiker://empty',
