@@ -410,10 +410,9 @@ function erji() {
                     let d = [];
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     for(let i=0; i<列表.length; i++) {
-                        let item = 列表[i];
                         d.push({
-                            title: item.title,
-                            url: item.url + $("").lazyRule((解析,公共) => {
+                            title: 列表[i].title,
+                            url: 列表[i].url + $("").lazyRule((解析,公共) => {
                                 return 解析(input,公共);
                             }, 解析,公共),
                             col_type: list_col_type,
@@ -438,10 +437,9 @@ function erji() {
                     deleteItemByCls('playlist');
                     let d = [];
                     for(let i=0; i<列表.length; i++) {
-                        let item = 列表[i];
                         d.push({
-                            title: item.title,
-                            url: item.url + $("").lazyRule((解析,公共) => {
+                            title: 列表[i].title,
+                            url: 列表[i].url + $("").lazyRule((解析,公共) => {
                                 return 解析(input,公共);
                             }, 解析, 公共),
                             col_type: input,
@@ -477,10 +475,9 @@ function erji() {
             }
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');
             for(let i=0; i<列表.length; i++) {
-                let item = 列表[i];
                 d.push({
-                    title: item.title,
-                    url: item.url + $("").lazyRule((解析, 公共) => {
+                    title: 列表[i].title,
+                    url: 列表[i].url + $("").lazyRule((解析, 公共) => {
                         return 解析(input,公共);
                     }, 解析, 公共),
                     col_type: list_col_type,
