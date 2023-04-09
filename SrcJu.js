@@ -230,7 +230,7 @@ function erji() {
                     let list1 = 列表[i1].title;
                     let list2 = 列表[i2].title;
                     if(parseInt(list1.match(/(\d+)/)[0])>parseInt(list2.match(/(\d+)/)[0])){
-                        list.reverse();
+                        列表.reverse();
                     }
                 }catch(e){
                     //log('修正选集顺序失败>'+e.message)
