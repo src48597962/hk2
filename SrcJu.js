@@ -491,8 +491,8 @@ function erji() {
             })
             */
             log('0')
-            //for(let i=0; i<列表.length; i++) {
-            for (item of 列表) {
+            for(let i=0; i<列表.length; i++) {
+                let item = 列表[i];
                 d.push({
                     title: item.title,
                     url: item.url + $("").lazyRule((解析, 公共) => {
