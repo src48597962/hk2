@@ -26,6 +26,14 @@ let yidatalist = datalist.filter(it=>{
 let erdatalist = datalist.filter(it=>{
     return it.erparse && it.type==runMode;
 });
+
+function rulePage(type) {
+    return $("hiker://empty#noRecordHistory##noHistory#" + (页码[type] ? "?page=fypage" : "")).rule(() => {
+        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+        getYiData(type);
+    })
+}
+
 //获取一级数据
 function getYiData(type,od) {
     let d = od || [];
