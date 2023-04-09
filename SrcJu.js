@@ -224,7 +224,6 @@ function erji() {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
     }));
-    log('0')
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     let isload;//是否正确加载
@@ -249,7 +248,6 @@ function erji() {
             }
         }
     }
-    log('1')
     let sourcedata = datalist.filter(it => {
         return it.name == sname && it.erparse && it.type == stype;
     });
@@ -279,9 +277,9 @@ function erji() {
     } catch (e) {
         log(e.message);
     }
-    log('2')
     try {
         if (parse && surl) {
+            log('0')
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
@@ -298,7 +296,7 @@ function erji() {
             }
             
             details = detailsmark || parse['二级'](surl);
-            log('3-1')
+            log('1')
             let pic = (details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg") + '@Referer=';
             d.push({
                 title: details.detail1 || "",
@@ -319,7 +317,7 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
-            
+            log('2')
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
@@ -396,6 +394,7 @@ function erji() {
                     col_type: "blank_block"
                 })
             }
+            log('3')
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #FF0000">排序⇅</span></b>` : `““””<b><span style="color: #1aad19">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((列表, 解析, 公共, name, sname) => {
@@ -479,7 +478,7 @@ function erji() {
                     }
                 })
             }
-            log('3-2')
+            log('4')
             列表.forEach((item, id) => {
                 d.push({
                     title: item.title,
@@ -494,6 +493,7 @@ function erji() {
                 });
             })
             isload = 1;
+            log('5')
         }
     } catch (e) {
         toast('有异常，看日志');
@@ -510,9 +510,9 @@ function erji() {
                 lineVisible: false
             }
         });
-        log('3-3')
+        log('6')
         setResult(d);
-        log('4')
+        log('7')
         //setPageTitle(name);//不能用了，会影响收藏状态和足迹，软件反应不过来
         if(!getMyVar(sname+"_"+name)){
             toast('当前数据源：' + sname + ', 作者：' + sauthor);
