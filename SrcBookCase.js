@@ -76,6 +76,7 @@ function bookCase() {
                     url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
+                        putMyVar('SrcBookCase','1');
                     }),
                     col_type: col,
                     extra: {
@@ -102,5 +103,4 @@ function bookCase() {
         }
     })
     setResult(d);
-    putMyVar('SrcBookCase','1');
 }
