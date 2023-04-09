@@ -491,8 +491,8 @@ function erji() {
             })
             */
             log('0')
-            for(let i=0; i<列表.length; i++) {
-                let item = 列表[i];
+            //for(let i=0; i<列表.length; i++) {
+            for (item of 列表) {
                 d.push({
                     title: item.title,
                     url: item.url + $("").lazyRule((解析, 公共) => {
@@ -500,7 +500,7 @@ function erji() {
                     }, 解析, 公共),
                     col_type: getItem('SrcJuList_col_type', 'text_2'),
                     extra: {
-                        id: name + "_选集_" + i,
+                        id: name + "_选集_" + item.title,
                         cls: "loadlist playlist"
                     }
                 });
