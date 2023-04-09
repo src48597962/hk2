@@ -210,6 +210,9 @@ function erji() {
                 if(线路s.length != 列表s.length){
                     log(sname+'接口返回的线路和列表不相等')
                 }
+                if(indexid > 线路s.length){
+                    indexid = 0;
+                }
             }catch(e){
                 log(sname+">线路或列表返回数据有误"+e.message);
                 线路s = ["线路"];
