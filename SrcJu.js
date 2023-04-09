@@ -4,34 +4,33 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 //一级
 function yiji() {
+    let sourcedata = yidatalist.filter(it => {
+        return it.name == sourcename;
+    });
+    let parse;
+    let 页码;
+    try {
+        if (sourcedata.length > 0) {
+            eval("let source = " + sourcedata[0].parse);
+            if (source.ext && /^http/.test(source.ext)) {
+                requireCache(source.ext, 48);
+                parse = yidata;
+            } else {
+                parse = source;
+            }
+            页码 = parse["页码"];
+            if(!getMyVar(runMode+"_"+sourcename)){
+                toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
+            }
+        }
+    } catch (e) {
+        log("一级源接口加载异常>" + e.message);
+    }
+    页码 = 页码 || {};
     let d = [];
     if(MY_PARAMS==1){
         Version();
         downloadicon();
-        let sourcedata = yidatalist.filter(it => {
-            return it.name == sourcename;
-        });
-        let parse;
-        let 页码;
-        try {
-            if (sourcedata.length > 0) {
-                eval("let source = " + sourcedata[0].parse);
-                if (source.ext && /^http/.test(source.ext)) {
-                    requireCache(source.ext, 48);
-                    parse = yidata;
-                } else {
-                    parse = source;
-                }
-                页码 = parse["页码"];
-                if(!getMyVar(runMode+"_"+sourcename)){
-                    toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
-                }
-            }
-        } catch (e) {
-            log("一级源接口加载异常>" + e.message);
-        }
-        页码 = 页码 || {};
-        
         d.push({
             title: "管理",
             url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
