@@ -499,7 +499,7 @@ function erji() {
                     }, 解析, 公共),
                     col_type: getItem('SrcJuList_col_type', 'text_2'),
                     extra: {
-                        id: name + "_选集_" + id,
+                        id: name + "_选集_" + i,
                         cls: "loadlist playlist"
                     }
                 });
