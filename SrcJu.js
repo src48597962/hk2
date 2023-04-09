@@ -499,7 +499,7 @@ function erji() {
                     url: item.url + $("").lazyRule(() => {
                         return "";
                     }),
-                    col_type: getItem('SrcJuList_col_type', 'text_2'),
+                    col_type: text_2,
                     extra: {
                         id: name + "_选集_" + id,
                         cls: "loadlist playlist"
