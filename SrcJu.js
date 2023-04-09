@@ -611,6 +611,7 @@ function search(name, sdata) {
             }
             let sousuosm = getMyVar('SrcJuSousuo') == "1" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
             updateItem(loadid, { title: sousuosm })
+            clearMyVar('SrcJuSousuo');
             toast('搜源完成');
         } else {
             toast('无接口，未找到源');
