@@ -28,7 +28,7 @@ function yiji() {
     }
     页码 = 页码 || {};
     let d = [];
-    if(MY_PARAMS==1){
+    if(MY_PAGE==1){
         Version();
         downloadicon();
         d.push({
