@@ -33,6 +33,7 @@ function yiji() {
     } catch (e) {
         log("一级源接口加载异常>" + e.message);
     }
+    log(公共);
     页码 = 页码 || {};
     let d = [];
     d.push({
