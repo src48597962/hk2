@@ -45,32 +45,19 @@ function yiji() {
     })
     d.push({
         title: "排行",
-        url: rulePage('排行',页码)
-        /*$("hiker://empty#noRecordHistory##noHistory#" + (页码["排行"] ? "?page=fypage" : "")).rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            getYiData('排行');
-        })
-        */,
+        url: rulePage('排行',页码),
         pic_url: "https://lanmeiguojiang.com/tubiao/more/229.png",
         col_type: 'icon_5'
     })
     d.push({
         title: "分类",
-        url: rulePage('分类',页码)
-        /*$("hiker://empty#noRecordHistory##noHistory#" + (页码["分类"] != 0 ? "?page=fypage" : "")).rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            getYiData('分类');
-        })
-        */,
+        url: rulePage('分类',页码),
         pic_url: "https://lanmeiguojiang.com/tubiao/more/287.png",
         col_type: 'icon_5'
     })
     d.push({
         title: "更新",
-        url: $("hiker://empty#noRecordHistory##noHistory#" + (页码["更新"] ? "?page=fypage" : "")).rule(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            getYiData('更新');
-        }),
+        url: rulePage('更新',页码),
         pic_url: "https://lanmeiguojiang.com/tubiao/more/288.png",
         col_type: 'icon_5'
     })
