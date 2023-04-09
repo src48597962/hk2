@@ -610,7 +610,7 @@ function search(name, sdata) {
                         extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/, "") : "";
                         item.extra = extra;
                         if (getMyVar('SrcJuSousuo') == "1") {
-                            item.url = $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                            item.url = $("hiker://empty#immersiveTheme#").rule(() => {
                                 require(config.依赖);
                                 erji();
                             })
