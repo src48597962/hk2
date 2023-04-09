@@ -25,8 +25,9 @@ function yiji() {
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
             }
-            if(parse&&parse['公共']){
-                公共 = parse['公共'];
+            if(parse){
+                eval("let gonggong = " + sourcedata[0].public);
+                公共 = gonggong || parse['公共'];
             }
         }
     } catch (e) {
@@ -273,6 +274,10 @@ function erji() {
             sourcedata2 = sourcedata[0];
             if(parse&&parse['公共']){
                 公共 = parse['公共'];
+            }
+            if(parse){
+                eval("let gonggong = " + sourcedata[0].public);
+                公共 = gonggong || parse['公共'] || {};
             }
         }
     } catch (e) {
@@ -588,8 +593,9 @@ function search(name, sdata) {
                 } else {
                     parse = source;
                 }
-                if(parse&&parse['公共']){
-                    公共 = parse['公共'];
+                if(parse){
+                    eval("let gonggong = " + obj.public);
+                    公共 = gonggong || parse['公共'] || {};
                 }
                 let data = [];
                 eval("let 搜索 = " + parse['搜索'])
