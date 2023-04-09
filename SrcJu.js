@@ -224,6 +224,7 @@ function erji() {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
     }));
+    log('0')
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     let isload;//是否正确加载
