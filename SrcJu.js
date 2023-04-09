@@ -163,7 +163,7 @@ function erji() {
             }
             sourcedata2 = sourcedata[0];
             if(parse&&parse['公共']){
-                公共 = parse['公共'];
+                公共 = parse['公共'] || {};
             }
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
@@ -264,7 +264,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": `(\n(解析) => {\n return 解析(input);\n})(` + 解析 +`)`,
+                        "parseCode": `(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+公共+`)`,
                         "ruleName": MY_RULE.title
                     }
                 }
