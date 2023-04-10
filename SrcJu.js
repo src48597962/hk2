@@ -505,7 +505,7 @@ function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
         return "toast://上次搜索线程还未结束，等等再来"
     }
-    putMyVar('SrcJuSearching','1');
+    //putMyVar('SrcJuSearching','1');
     let name = keyword;//.split(' ')[0];
     let success = 0;
     let beresults = [];
