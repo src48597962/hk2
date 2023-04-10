@@ -92,13 +92,6 @@ function yiji() {
     }
     getYiData('主页', d);
 }
-//搜索页面
-function sousuo() {
-    let name = MY_URL.split('##')[1];
-    let d = [];
-    d = search(name,'sousuo');
-    setResult(d);
-}
 
 //二级+源搜索
 function erji() {
@@ -498,7 +491,20 @@ function erji() {
     }
     clearMyVar('SrcJuselectsname');
 }
-
+//搜索页面
+function sousuo() {
+    let name = MY_URL.split('##')[1];
+    let d = [];
+    d.push({
+        title: "搜索中...",
+        url: "hiker://empty",
+        extra: {
+            id: "sousuoloading"
+        }
+    });
+    setResult(d);
+    search(name,'sousuo');
+}
 //搜索接口
 function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
@@ -591,6 +597,8 @@ function search(keyword, mode, sdata) {
                                 addItemBefore("listloading", data);
                             }
                             hideLoading();
+                        }else if(mode=="sousuo"){
+                            addItemBefore("sousuoloading", data);
                         }
                     }
                 }else{
@@ -602,7 +610,7 @@ function search(keyword, mode, sdata) {
                 b: errors
             }
         });
-        if(/sousuo/.test(mode)){
+        if(mode=="sousuotest"){
             return results;
         }
         /*
