@@ -98,6 +98,7 @@ function erji() {
     addListener("onClose", $.toString(() => {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
+        clearMyVar('已选择换源列表');
         if(getMyVar('SrcBookCase')){
             clearMyVar('SrcBookCase');
             refreshPage(false);
@@ -508,7 +509,6 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
-        //MY_PAGE--;
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
             return [];
@@ -516,6 +516,9 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
+    log(MY_PGAE);
+    putMyVar('MY_PGAE',parseInt(getMyVar('MY_PGAE',0))+1);
+    log(getMyVar('MY_PGAE'));
     let name = keyword;//.split(' ')[0];
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
