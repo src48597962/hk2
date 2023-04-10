@@ -508,8 +508,8 @@ function search(keyword, mode, sdata) {
     //putMyVar('SrcJuSearching','1');
     let name = keyword;//.split(' ')[0];
     let success = 0;
-    let beresults = [];
-    let beerrors = [];
+    let results = [];
+    let errors = [];
     if (sdata) {
         erdatalist = [];
         erdatalist.push(sdata);
@@ -592,21 +592,19 @@ function search(keyword, mode, sdata) {
                         }
                         hideLoading();
                     }
-                    obj.results.push(data);
-                    log(obj.results.length)
+                    results = results.concat(data);
+                    log(results.length)
                 }else{
-                    obj.errors.push(id);
+                    errors.push(id);
                 }
             },
             param: {
-                results: beresults,
-                errors: beerrors
             }
         });
-        log(beerrors)
+
         if(mode=="sousuo"){
-            log(beresults);
-            return beresults;
+            log(results);
+            return results;
         }
         /*
         if (!sdata) {
