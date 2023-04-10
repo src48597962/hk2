@@ -521,17 +521,9 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
-
+    let page = parseInt(getMyVar('MY_PGAE','0'))+1;
     if(mode=="sousuo"){
-        let page = parseInt(getMyVar('MY_PGAE','0'))+1;
-        log(page);
-        /*
-        log(MY_PGAE);
-        let i = parseInt(getMyVar('MY_PGAE','0'))+1;
-        log(i);
-        putMyVar('MY_PGAE',i);
-        log(getMyVar('MY_PGAE'));
-        */
+        putMyVar('MY_PGAE',page);
     }
     
     let name = keyword;//.split(' ')[0];
@@ -651,7 +643,7 @@ function search(keyword, mode, sdata) {
         if(mode=="sousuotest"){
             return results;
         }else{
-            let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
+            let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
             updateItem(mode=="sousuo"?"sousuoloading":"listloading", { title: sousuosm });
         }
     } else {
