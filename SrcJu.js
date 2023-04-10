@@ -592,13 +592,16 @@ function search(keyword, mode, sdata) {
                         }
                         hideLoading();
                     }
-                    results = results.concat(data);
-                    log(results.length)
+                    log(obj)
+                    //results = results.concat(data);
+                    //log(results.length)
                 }else{
-                    errors.push(id);
+                    //errors.push(id);
                 }
             },
             param: {
+                a: results,
+                b: errors
             }
         });
 
