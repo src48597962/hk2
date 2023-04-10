@@ -509,7 +509,6 @@ function sousuo() {
         }
     });
     setResult(d);
-    clearMyVar('MY_PGAE');
     search(name,'sousuo');
 }
 //搜索接口
@@ -522,9 +521,9 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
-    let page = 0;
+    let page = 1;
     if(mode=="sousuo"){
-        page = parseInt(getMyVar('MY_PGAE','0'))+1;
+        page = MY_PGAE==1?1:parseInt(getMyVar('MY_PGAE','0'))+1;
         putMyVar('MY_PGAE',page);
     }else if(mode=="sousuotest"){
         page = MY_PAGE;
@@ -579,7 +578,7 @@ function search(keyword, mode, sdata) {
             }
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
-            data = 搜索(name) || [];
+            data = 搜索(name,page) || [];
             data.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
