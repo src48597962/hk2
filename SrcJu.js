@@ -566,7 +566,7 @@ function search(keyword, mode, sdata) {
                         extra.pageTitle = extra.name;
                         extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
                         item.extra = extra;
-                        item.url = mode=="sousuo" ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                        item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                             require(config.依赖);
                             erji();
                         }) : item.url + $("#noLoading#").lazyRule((extra) => {
@@ -582,8 +582,8 @@ function search(keyword, mode, sdata) {
                         }, extra);
                         item.content = item.desc;
                         item.sdesc = extra.sdesc || item.desc;
-                        item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name : obj.name + (item.sdesc?(' · ' + item.sdesc):"");
-                        item.col_type = mode=="sousuo"  ? "video" : "avatar";
+                        item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: obj.name + (item.sdesc?(' · ' + item.sdesc):"");
+                        item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
                         obj.a.push(item);
                     })
                     if(mode=="list"){
@@ -603,7 +603,7 @@ function search(keyword, mode, sdata) {
                 b: errors
             }
         });
-        if(mode=="sousuo"){
+        if(/sousuo/.test(mode)){
             return results;
         }
         /*
