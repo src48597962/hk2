@@ -303,12 +303,12 @@ function erji() {
             })
             d.push({
                 title: "切换书源",
-                url: getMyVar('backsousuo') == "1" ? `#noLoading#@lazyRule=.js:back(false);'hiker://empty'` : $("#noLoading#").lazyRule((name) => {
+                url: $("#noLoading#").lazyRule((name) => {
                     if(!getMyVar('SrcJuSearching')){
-                        clearMyVar('SrcJuselectsname');
+                        clearMyVar('已选择换源列表');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
-                        search(name);
+                        search(name,"erji");
                         return 'hiker://empty'
                     }else{
                         return "toast://不要心急，稍等...";
@@ -489,7 +489,7 @@ function erji() {
         setResult(d);
         search(name);
     }
-    clearMyVar('SrcJuselectsname');
+    clearMyVar('已选择换源列表');
 }
 //搜索页面
 function sousuo() {
@@ -508,16 +508,26 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
-        MY_PAGE--;
+        //MY_PAGE--;
         toast("上次搜索线程还未结束，等等再来");
-        return [];
+        if(mode=="sousuotest"){
+            return [];
+        }else{
+            return "hiker://empty";
+        }
     }
-    putMyVar('SrcJuSearching','1');
-    log(MY_PAGE);
     let name = keyword;//.split(' ')[0];
+    let searchMark = storage0.getMyVar('searchMark') || {};
+    if(mode=="erji" && searchMark[name]){
+        addItemBefore("listloading", searchMark[name]);
+        updateItem("listloading", { title: "‘‘’’<small>当前搜索为缓存</small>" });
+        return "hiker://empty";
+    }
+    log("111")
+    //log(MY_PAGE);
+    putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
-    let searchMark = storage0.getMyVar('searchMark') || {};
     if (sdata) {
         erdatalist = [];
         erdatalist.push(sdata);
@@ -555,10 +565,10 @@ function search(keyword, mode, sdata) {
                         require(config.依赖);
                         erji();
                     }) : item.url + $("#noLoading#").lazyRule((extra) => {
-                        if(getMyVar('SrcJuselectsname')){
+                        if(getMyVar('已选择换源列表')){
                             return "toast://请勿重复点击，稍等...";
                         }else{
-                            putMyVar('SrcJuselectsname','1');
+                            putMyVar('已选择换源列表','1');
                             clearMyVar(extra.sname+"_"+extra.name);
                             storage0.putMyVar('erjiextra', extra);
                             refreshPage(false);
@@ -596,7 +606,7 @@ function search(keyword, mode, sdata) {
                         if(mode=="erji"){
                             searchMark[name] = searchMark[name] || [];
                             searchMark[name] = searchMark[name].concat(data);
-                            if(!getMyVar('SrcJuselectsname')){
+                            if(!getMyVar('已选择换源列表')){
                                 addItemBefore("listloading", data);
                             }
                             hideLoading();
@@ -629,7 +639,7 @@ function search(keyword, mode, sdata) {
 /*    
 
     
-    let loadid = getMyVar('SrcJuSousuo') == "1" ? 'sousuoloading' : 'listloading';
+
     if (searchMark[name] && !sdata) {
         //log("重复搜索>"+name+"，调用搜索缓存");
         addItemBefore(loadid, searchMark[name]);
