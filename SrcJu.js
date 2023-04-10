@@ -592,7 +592,9 @@ function search(keyword, mode, sdata) {
                         }
                         hideLoading();
                     }
+                    obj.a = obj.a.concat(data);
                     log(obj)
+                    
                     //results = results.concat(data);
                     //log(results.length)
                 }else{
