@@ -309,10 +309,11 @@ function erji() {
                         clearMyVar('已选择换源列表');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
+                        showLoading('搜源中,请稍后.');
                         search(name,"erji");
                         return  "hiker://empty";
                     }else{
-                        return "toast://不要心急，稍等...";
+                        return "toast://上一个搜索线程还未结束，稍等...";
                     }
                 }, name),
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/20.svg',
@@ -523,10 +524,18 @@ function search(keyword, mode, sdata) {
     }
     
     let name = keyword;//.split(' ')[0];
+    
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
         addItemBefore("listloading", searchMark[name]);
         updateItem("listloading", { title: "‘‘’’<small>当前搜索为缓存</small>" });
+        let i = 0;
+        let one = "";
+        for (var k in searchMark) {
+            i++;
+            if (i == 1) { one = k }
+        }
+        if (i > 20) { delete searchMark[one]; }
         return "hiker://empty";
     }
     log('111')
@@ -602,8 +611,7 @@ function search(keyword, mode, sdata) {
     if (list.length > 0) {
         be(list, {
             func: function (obj, id, error, taskResult) {
-                let i = taskResult.success;//是否成功，用于判断有无报错1为成功无错
-                if(i==1){
+                if(taskResult.success==1){
                     let data = taskResult.result;
                     if(data.length>0){
                         success++;
@@ -630,7 +638,6 @@ function search(keyword, mode, sdata) {
         }
         clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"){
-
             return results;
         }else{
             let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
@@ -640,35 +647,7 @@ function search(keyword, mode, sdata) {
         toast("无接口");
     }
     clearMyVar('SrcJuSearching');
-/*    
-
-    
-
-    if (searchMark[name] && !sdata) {
-        //log("重复搜索>"+name+"，调用搜索缓存");
-        addItemBefore(loadid, searchMark[name]);
-        updateItem(loadid, { title: getMyVar('SrcJuSousuo') == "1" ? "当前搜索为缓存" : "‘‘’’<small>当前搜索为缓存</small>" })
-    } else {
-        showLoading('搜源中,请稍后.');
-        let searchMark = storage0.getMyVar('searchMark') || {};
-        let i = 0;
-        let one = "";
-        for (var k in searchMark) {
-            i++;
-            if (i == 1) { one = k }
-        }
-        if (i > 20) { delete searchMark[one]; }
-        
-        
-        
-
-        
-        clearMyVar('SrcJuSearching');
-        clearMyVar('SrcJuSousuo');
-        clearMyVar('SrcJuSousuoTest');
-        hideLoading();
-    }
-    */
+    hideLoading();
 }
 
 //取本地足迹记录
