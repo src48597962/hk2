@@ -313,7 +313,7 @@ function erji() {
                         "bookTopPic": pic,
                         "parseCode": download.split('js:')[1],
                         "ruleName": MY_RULE.title,
-                        "type": stype=="漫画"?"novel":""
+                        "type": stype=="阅读"?"novel":""
                     }
                 }
             })
