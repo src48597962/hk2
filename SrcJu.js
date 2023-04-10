@@ -517,7 +517,6 @@ function search(keyword, mode, sdata) {
     
     let task = function (obj) {
         try {
-            log(obj.name+" 进入线程")
             let parse;
             let 公共;
             eval("let source = " + obj.erparse);
@@ -534,6 +533,35 @@ function search(keyword, mode, sdata) {
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索(name) || [];
+            data.forEach(item => {
+                let extra = item.extra || {};
+                extra.name = extra.name || item.title;
+                extra.img = extra.img || item.img || item.pic_url;
+                extra.stype = obj.type;
+                extra.sname = obj.name;
+                extra.pageTitle = extra.name;
+                extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
+                item.extra = extra;
+                item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                    require(config.依赖);
+                    erji();
+                }) : item.url + $("#noLoading#").lazyRule((extra) => {
+                    if(getMyVar('SrcJuselectsname')){
+                        return "toast://请勿重复点击，稍等...";
+                    }else{
+                        putMyVar('SrcJuselectsname','1');
+                        clearMyVar(extra.sname+"_"+extra.name);
+                        storage0.putMyVar('erjiextra', extra);
+                        refreshPage(false);
+                        return "toast://已切换源：" + extra.sname;
+                    }
+                }, extra);
+                item.content = item.desc;
+                item.sdesc = extra.sdesc || item.desc;
+                item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: obj.name + (item.sdesc?(' · ' + item.sdesc):"");
+                item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
+                results.push(item);
+            })
             return {result:data, success:1};
         } catch (e) {
             log(obj.name + '>搜索失败>' + e.message);
@@ -554,44 +582,16 @@ function search(keyword, mode, sdata) {
                 let i = taskResult.success;//是否成功，用于判断有无报错1为成功无错
                 if(i==1){
                     let data = taskResult.result;
-                    log(id+' 获取到'+data.length);
-                    success++;
-                    data.forEach(item => {
-                        let extra = item.extra || {};
-                        extra.name = extra.name || item.title;
-                        extra.img = extra.img || item.img || item.pic_url;
-                        extra.stype = obj.type;
-                        extra.sname = obj.name;
-                        extra.pageTitle = extra.name;
-                        extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
-                        item.extra = extra;
-                        item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
-                            require(config.依赖);
-                            erji();
-                        }) : item.url + $("#noLoading#").lazyRule((extra) => {
-                            if(getMyVar('SrcJuselectsname')){
-                                return "toast://请勿重复点击，稍等...";
-                            }else{
-                                putMyVar('SrcJuselectsname','1');
-                                clearMyVar(extra.sname+"_"+extra.name);
-                                storage0.putMyVar('erjiextra', extra);
-                                refreshPage(false);
-                                return "toast://已切换源：" + extra.sname;
+                    if(data.length>0){
+                        success++;
+                        if(mode=="list"){
+                            searchMark[name] = searchMark[name] || [];
+                            searchMark[name] = searchMark[name].concat(data);
+                            if(!getMyVar('SrcJuselectsname')){
+                                addItemBefore("listloading", data);
                             }
-                        }, extra);
-                        item.content = item.desc;
-                        item.sdesc = extra.sdesc || item.desc;
-                        item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: obj.name + (item.sdesc?(' · ' + item.sdesc):"");
-                        item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
-                        obj.a.push(item);
-                    })
-                    if(mode=="list"){
-                        searchMark[name] = searchMark[name] || [];
-                        searchMark[name] = searchMark[name].concat(data);
-                        if(!getMyVar('SrcJuselectsname')){
-                            addItemBefore("listloading", data);
+                            hideLoading();
                         }
-                        hideLoading();
                     }
                 }else{
                     obj.b.push(id);
