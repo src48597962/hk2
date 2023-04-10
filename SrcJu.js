@@ -530,7 +530,11 @@ function search(keyword, mode, sdata) {
         page = MY_PAGE;
     }
 
-    let name = keyword;//.split(' ')[0];
+    let name = keyword.split('  ')[0];
+    let sssname;
+    if(keyword.indexOf('  ')>-1){
+        sssname = keyword.split('  ')[1] || sourcename;
+    }
     
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
@@ -552,6 +556,10 @@ function search(keyword, mode, sdata) {
     if (sdata) {
         erdatalist = [];
         erdatalist.push(sdata);
+    }else if (sssname){
+        erdatalist = erdatalist.filter(it=>{
+            return it.name==sssname;
+        });
     }
     
     let task = function (obj) {
