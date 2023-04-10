@@ -309,7 +309,8 @@ function erji() {
                         clearMyVar('已选择换源列表');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
-                        return search(name,"erji");
+                        search(name,"erji");
+                        return  "hiker://empty";
                     }else{
                         return "toast://不要心急，稍等...";
                     }
