@@ -301,7 +301,7 @@ function jiekouapi(sourcefile, data) {
                 return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
                     let d = [];
                     require(config.依赖);
-                    d = search(name,"sousuo",sdata);
+                    d = search(name,"sousuotest",sdata);
                     d.push({
                         title: "测试搜索结束",
                         url: "hiker://empty",
