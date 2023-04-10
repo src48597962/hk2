@@ -241,7 +241,6 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
-            log(解析)
             let lazy;
             let download;
             if (stype=="漫画") {
@@ -253,7 +252,11 @@ function erji() {
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共, surl) => {
                     解析(surl,公共);
                 }, 解析, 公共, surl);
-                download = lazy.replace('setResult(d)','d.forEach(item => {');
+                download = $("").lazyRule((解析, 公共) => {
+                    return 解析(input,公共);
+                }, 解析, 公共);
+                download = download.replace('setResult(d)',`let string = d.map(item=>{return item.title}).join('\n');\nreturn string;`);
+                log(download);
             }
 
             d.push({
