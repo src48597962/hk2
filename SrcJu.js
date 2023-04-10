@@ -313,7 +313,7 @@ function erji() {
                         "bookTopPic": pic,
                         "parseCode": download.split('js:')[1],
                         "ruleName": MY_RULE.title,
-                        "type": stype=="阅读"?"novel":""
+                        "type": stype=="阅读"?"novel":"comic"
                     }
                 }
             })
@@ -580,7 +580,7 @@ function search(name, sdata) {
                             }, extra);
                         }
                         item.content = item.desc;
-                        item.sdesc = item.sdesc || item.desc;
+                        item.sdesc = extra.sdesc || item.desc;
                         item.desc = getMyVar('SrcJuSousuoTest')?item.desc:getMyVar('SrcJuSousuo') ? MY_RULE.title + ' · ' + obj.name : obj.name + item.sdesc?(' · ' + item.sdesc):"";
                         item.col_type = getMyVar('SrcJuSousuoTest')?"movie_1_vertical_pic":getMyVar('SrcJuSousuo') ? "video" : "avatar";
                     })
