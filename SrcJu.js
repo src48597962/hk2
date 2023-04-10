@@ -255,8 +255,7 @@ function erji() {
                 download = $("").lazyRule((解析, 公共) => {
                     return 解析(input,公共);
                 }, 解析, 公共);
-                download = download.replace('setResult(d)',`let string = d.map(item=>{return item.title}).join('\n');\nreturn string;`);
-                log(download);
+                download = download.replace('setResult(d)',`return d[1].title;`);
             }
 
             d.push({
@@ -312,8 +311,9 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": download.split('js:')[1],//`(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+JSON.stringify(公共)+`)`,
-                        "ruleName": MY_RULE.title
+                        "parseCode": download.split('js:')[1],
+                        "ruleName": MY_RULE.title,
+                        "type": stype=="漫画"?"novel":""
                     }
                 }
             })
