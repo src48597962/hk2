@@ -241,7 +241,7 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
-            log(JSON.stringify(解析))
+            log(解析)
             let lazy;
             let download;
             if (stype=="漫画") {
