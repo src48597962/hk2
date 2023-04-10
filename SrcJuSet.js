@@ -299,26 +299,18 @@ function jiekouapi(sourcefile, data) {
             }
             if(source){
                 return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
-                    putMyVar('SrcJuSousuo','1');
-                    putMyVar('SrcJuSousuoTest','1');
                     let d = [];
+                    require(config.依赖);
+                    d = search(name,"sousuo",sdata);
                     d.push({
-                        title: "搜索中...",
+                        title: "测试搜索结束",
                         url: "hiker://empty",
                         col_type: 'text_center_1',
                         extra: {
-                            id: "sousuoloading",
                             lineVisible: false
                         }
                     });
-                    require(config.依赖);
-                    log(search(name,"sousuo",sdata));
-                    
                     setResult(d);
-                    //require(config.依赖);
-                    //search(name,"sousuo",sdata);
-                    clearMyVar('SrcJuSousuo');
-                    clearMyVar('SrcJuSousuoTest');
                 },input,source)
             }else{
                 return "toast://确认搜索源接口数据？"
