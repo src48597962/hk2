@@ -255,7 +255,7 @@ function erji() {
                 download = $("").lazyRule((解析, 公共) => {
                     return 解析(input,公共);
                 }, 解析, 公共);
-                download = download.replace('setResult(d)',`return d[1].title;`);
+                download = download.replace('setResult(d)',`return d[1].title`).replace('getResCode()','rquest(url)');
             }
 
             d.push({
