@@ -138,8 +138,8 @@ function SRCSet() {
 
     datalist.forEach(item => {
         d.push({
-            title: item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : ""),
-            url: $(["分享", "编辑", "删除"], 1).select((sourcefile, data) => {
+            title: (item.stop?`‘‘’’<font color=#f20c00>`+item.name+`</font>`:item.name) + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : ""),
+            url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用"], 1).select((sourcefile, data) => {
                 if (input == "分享") {
                     showLoading('分享上传中，请稍后...');
                     let oneshare = []
@@ -299,6 +299,10 @@ function jiekouapi(sourcefile, data) {
             }
             if(source){
                 return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
+                    addListener("onClose", $.toString(() => {
+                        clearMyVar('SrcJuSousuoTest');
+                    }));
+                    putMyVar('SrcJuSousuoTest','1');
                     let d = [];
                     require(config.依赖);
                     d = search(name,"sousuotest",sdata);
