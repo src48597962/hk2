@@ -21,10 +21,10 @@ if(sourcedata != ""){
 }
 
 let yidatalist = datalist.filter(it=>{
-    return it.parse && it.type==runMode;
+    return it.parse && it.type==runMode && !it.stop;
 });
 let erdatalist = datalist.filter(it=>{
-    return it.erparse && it.type==runMode;
+    return it.erparse && it.type==runMode && !it.stop;
 });
 
 function rulePage(type,page) {
