@@ -312,7 +312,7 @@ function jiekouapi(sourcefile, data) {
                         }
                     });
                     require(config.依赖);
-                    d = search(name,"sousuo",sdata);
+                    log(search(name,"sousuo",sdata));
                     
                     setResult(d);
                     //require(config.依赖);
