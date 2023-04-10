@@ -613,7 +613,9 @@ function search(keyword, mode, sdata) {
         if (mode=="erji") {
             storage0.putMyVar('searchMark', searchMark);
         }
+        clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"){
+
             return results;
         }else{
             let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
@@ -622,7 +624,7 @@ function search(keyword, mode, sdata) {
     } else {
         toast("无接口");
     }
-
+    clearMyVar('SrcJuSearching');
 /*    
 
     
