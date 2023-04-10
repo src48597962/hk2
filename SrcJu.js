@@ -583,6 +583,7 @@ function search(keyword, mode, sdata) {
                         item.sdesc = extra.sdesc || item.desc;
                         item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name : obj.name + (item.sdesc?(' · ' + item.sdesc):"");
                         item.col_type = mode=="sousuo"  ? "video" : "avatar";
+                        obj.a.push(item);
                     })
                     if(mode=="list"){
                         searchMark[name] = searchMark[name] || [];
@@ -592,11 +593,9 @@ function search(keyword, mode, sdata) {
                         }
                         hideLoading();
                     }
-                    obj.a = obj.a.concat(data);
-                    log(obj)
+                    //obj.a = obj.a.concat(data);
+                    //log(obj)
                     
-                    //results = results.concat(data);
-                    //log(results.length)
                 }else{
                     //errors.push(id);
                 }
@@ -606,6 +605,8 @@ function search(keyword, mode, sdata) {
                 b: errors
             }
         });
+        log(results);
+
 
         if(mode=="sousuo"){
             log(results);
