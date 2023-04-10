@@ -503,7 +503,8 @@ function erji() {
 //搜索接口
 function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
-        return "toast://上次搜索线程还未结束，等等再来"
+        toast("上次搜索线程还未结束，等等再来");
+        return [];
     }
     //putMyVar('SrcJuSearching','1');
     let name = keyword;//.split(' ')[0];
@@ -593,11 +594,8 @@ function search(keyword, mode, sdata) {
                         }
                         hideLoading();
                     }
-                    //obj.a = obj.a.concat(data);
-                    //log(obj)
-                    
                 }else{
-                    //errors.push(id);
+                    obj.b.push(id);
                 }
             },
             param: {
@@ -605,11 +603,7 @@ function search(keyword, mode, sdata) {
                 b: errors
             }
         });
-        log(results);
-
-
         if(mode=="sousuo"){
-            log(results);
             return results;
         }
         /*
