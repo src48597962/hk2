@@ -353,7 +353,7 @@ function erji() {
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: 列表[i].url + lazy,
+                            url: "hiker://empty##" + 列表[i].url + lazy,
                             col_type: list_col_type,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -378,7 +378,7 @@ function erji() {
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: 列表[i].url + lazy,
+                            url: "hiker://empty##" + 列表[i].url + lazy,
                             col_type: input,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -414,7 +414,7 @@ function erji() {
             for(let i=0; i<列表.length; i++) {
                 d.push({
                     title: 列表[i].title,
-                    url: 列表[i].url + lazy,
+                    url: "hiker://empty##" + 列表[i].url + lazy,
                     col_type: list_col_type,
                     extra: {
                         id: name + "_选集_" + i,
