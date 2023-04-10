@@ -521,11 +521,14 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
-    let page = parseInt(getMyVar('MY_PGAE','0'))+1;
+    let page = 0;
     if(mode=="sousuo"){
+        page = parseInt(getMyVar('MY_PGAE','0'))+1;
         putMyVar('MY_PGAE',page);
+    }else if(mode=="sousuotest"){
+        page = MY_PAGE;
     }
-    
+    log(page);
     let name = keyword;//.split(' ')[0];
     
     let searchMark = storage0.getMyVar('searchMark') || {};
