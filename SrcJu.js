@@ -305,7 +305,9 @@ function erji() {
             d.push({
                 title: "切换书源",
                 url: $("#noLoading#").lazyRule((name) => {
-                    if(!getMyVar('SrcJuSearching')){
+                    if(getMyVar('SrcJuSousuoTest')){
+                        return "toast://编辑测试模式下不允许换源.";
+                    }else if(!getMyVar('SrcJuSearching')){
                         clearMyVar('已选择换源列表');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
@@ -489,7 +491,9 @@ function erji() {
             }
         });
         setResult(d);
-        search(name,"erji");
+        if(!getMyVar('SrcJuSousuoTest')){
+            search(name,"erji");
+        }
     }
     clearMyVar('已选择换源列表');
 }
@@ -517,15 +521,19 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
-    /*
+
     if(mode=="sousuo"){
+        let page = parseInt(getMyVar('MY_PGAE','0'))+1;
+        log(page);
+        /*
         log(MY_PGAE);
         let i = parseInt(getMyVar('MY_PGAE','0'))+1;
         log(i);
         putMyVar('MY_PGAE',i);
         log(getMyVar('MY_PGAE'));
+        */
     }
-    */
+    
     let name = keyword;//.split(' ')[0];
     
     let searchMark = storage0.getMyVar('searchMark') || {};
