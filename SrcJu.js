@@ -516,9 +516,12 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
-    log(MY_PGAE);
-    putMyVar('MY_PGAE',parseInt(getMyVar('MY_PGAE',0))+1);
-    log(getMyVar('MY_PGAE'));
+    if(mode=="sousuo"){
+        log(MY_PGAE);
+        putMyVar('MY_PGAE',parseInt(getMyVar('MY_PGAE',0))+1);
+        log(getMyVar('MY_PGAE'));
+    }
+    log('111')
     let name = keyword;//.split(' ')[0];
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
