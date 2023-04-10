@@ -230,15 +230,18 @@ function erji() {
             let download;
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
-                    return 解析(input,公共);
+                    let url = input.split("##")[1];
+                    return 解析(url,公共);
                 }, 解析, 公共);
                 download = lazy;
             }else if (stype=="阅读") {
-                lazy = $("#readTheme##autoPage#").rule((解析, 公共, surl) => {
-                    解析(surl,公共);
-                }, 解析, 公共, surl);
+                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                    let url = input.split("##")[1].replace('#readTheme##autoPage#','');
+                    解析(url,公共);
+                }, 解析, 公共);
                 download = $("").lazyRule((解析, 公共) => {
-                    return 解析(input,公共);
+                    let url = input.split("##")[1];
+                    return 解析(url,公共);
                 }, 解析, 公共);
                 download = download.replace('setResult(d)',`return d[1].title`).replace('getResCode()','request(url)');
             }
