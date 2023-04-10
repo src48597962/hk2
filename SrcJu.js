@@ -593,6 +593,7 @@ function search(keyword, mode, sdata) {
                         hideLoading();
                     }
                     obj.results = obj.results.concat(data);
+                    log(obj.results.length)
                 }else{
                     obj.errors.push(id);
                 }
@@ -602,6 +603,7 @@ function search(keyword, mode, sdata) {
                 errors: beerrors
             }
         });
+        log(beerrors)
         if(mode=="sousuo"){
             log(beresults);
             return beresults;
