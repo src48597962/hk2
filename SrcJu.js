@@ -506,7 +506,7 @@ function search(keyword, mode, sdata) {
         return "toast://上次搜索线程还未结束，等等再来"
     }
     putMyVar('SrcJuSearching','1');
-    let name = keyword.split(' ')[0];
+    let name = keyword;//.split(' ')[0];
     let success = 0;
     let beresults = [];
     let beerrors = [];
@@ -517,6 +517,7 @@ function search(keyword, mode, sdata) {
     
     let task = function (obj) {
         try {
+            log(obj.name+" 进入线程")
             let parse;
             let 公共;
             eval("let source = " + obj.erparse);
@@ -553,6 +554,7 @@ function search(keyword, mode, sdata) {
                 let i = taskResult.success;//是否成功，用于判断有无报错1为成功无错
                 if(i==1){
                     let data = taskResult.result;
+                    log(id+' 获取到'+data.length);
                     success++;
                     data.forEach(item => {
                         let extra = item.extra || {};
@@ -601,6 +603,7 @@ function search(keyword, mode, sdata) {
             }
         });
         if(mode=="sousuo"){
+            log(beresults);
             return beresults;
         }
         /*
@@ -611,8 +614,7 @@ function search(keyword, mode, sdata) {
         updateItem(loadid, { title: sousuosm })
     */
     } else {
-        let sousuosm = "无接口";
-        updateItem(loadid, { title: sousuosm })
+        toast("无接口");
     }
 
 /*    
