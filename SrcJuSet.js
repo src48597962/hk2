@@ -298,7 +298,7 @@ function jiekouapi(sourcefile, data) {
                 return "toast://搜索源接口有异常，看日志"
             }
             if(source){
-                return $("hiker://empty#noRecordHistory##noHistory#").rule((name,sdata) => {
+                return $("hiker://empty#noRecordHistory##noHistory###fypage").rule((name,sdata) => {
                     addListener("onClose", $.toString(() => {
                         clearMyVar('SrcJuSousuoTest');
                     }));
