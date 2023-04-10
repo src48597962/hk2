@@ -252,10 +252,12 @@ function erji() {
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共, surl) => {
                     解析(surl,公共);
                 }, 解析, 公共, surl);
-                let 下载 = parse['下载'];
-                download = $("").lazyRule((下载, 公共) => {
-                    return 下载(input,公共);
-                }, 下载, 公共);
+                //let 下载 = parse['下载'];
+                download = $("").lazyRule((解析, 公共) => {
+                    let html = 解析(input,公共);
+                    log(html)
+                    return "toast://11"
+                }, 解析, 公共);
             }
 
             d.push({
