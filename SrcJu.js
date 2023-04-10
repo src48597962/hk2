@@ -511,7 +511,8 @@ function search(keyword, mode, sdata) {
         toast("上次搜索线程还未结束，等等再来");
         return [];
     }
-    //putMyVar('SrcJuSearching','1');
+    putMyVar('SrcJuSearching','1');
+    log(MY_PAGE);
     let name = keyword;//.split(' ')[0];
     let success = 0;
     let results = [];
