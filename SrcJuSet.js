@@ -311,10 +311,11 @@ function jiekouapi(sourcefile, data) {
                             lineVisible: false
                         }
                     });
+                    require(config.依赖);
                     d = search(name,"sousuo",sdata);
                     
                     setResult(d);
-                    require(config.依赖);
+                    //require(config.依赖);
                     //search(name,"sousuo",sdata);
                     clearMyVar('SrcJuSousuo');
                     clearMyVar('SrcJuSousuoTest');
