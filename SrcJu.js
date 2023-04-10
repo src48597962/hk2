@@ -515,7 +515,7 @@ function search(keyword, mode, sdata) {
     let name = keyword;//.split(' ')[0];
     let success = 0;
     let results = [];
-    let errors = [];
+    let searchMark = storage0.getMyVar('searchMark') || {};
     if (sdata) {
         erdatalist = [];
         erdatalist.push(sdata);
@@ -542,31 +542,33 @@ function search(keyword, mode, sdata) {
             data.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
-                extra.img = extra.img || item.img || item.pic_url;
-                extra.stype = obj.type;
-                extra.sname = obj.name;
-                extra.pageTitle = extra.name;
-                extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
-                item.extra = extra;
-                item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
-                    require(config.依赖);
-                    erji();
-                }) : item.url + $("#noLoading#").lazyRule((extra) => {
-                    if(getMyVar('SrcJuselectsname')){
-                        return "toast://请勿重复点击，稍等...";
-                    }else{
-                        putMyVar('SrcJuselectsname','1');
-                        clearMyVar(extra.sname+"_"+extra.name);
-                        storage0.putMyVar('erjiextra', extra);
-                        refreshPage(false);
-                        return "toast://已切换源：" + extra.sname;
-                    }
-                }, extra);
-                item.content = item.desc;
-                item.sdesc = extra.sdesc || item.desc;
-                item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: obj.name + (item.sdesc?(' · ' + item.sdesc):"");
-                item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
-                results.push(item);
+                if((mode=="erji"&&extra.name==name)||mode!="erji"){
+                    extra.img = extra.img || item.img || item.pic_url;
+                    extra.stype = obj.type;
+                    extra.sname = obj.name;
+                    extra.pageTitle = extra.name;
+                    extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
+                    item.extra = extra;
+                    item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                        require(config.依赖);
+                        erji();
+                    }) : item.url + $("#noLoading#").lazyRule((extra) => {
+                        if(getMyVar('SrcJuselectsname')){
+                            return "toast://请勿重复点击，稍等...";
+                        }else{
+                            putMyVar('SrcJuselectsname','1');
+                            clearMyVar(extra.sname+"_"+extra.name);
+                            storage0.putMyVar('erjiextra', extra);
+                            refreshPage(false);
+                            return "toast://已切换源：" + extra.sname;
+                        }
+                    }, extra);
+                    item.content = item.desc;
+                    item.sdesc = extra.sdesc || item.desc;
+                    item.title = mode=="erji"?obj.name:item.title;
+                    item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: (item.sdesc?(' · ' + item.sdesc):"");
+                    item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
+                }
             })
             return {result:data, success:1};
         } catch (e) {
@@ -582,7 +584,6 @@ function search(keyword, mode, sdata) {
         }
     });
     if (list.length > 0) {
-        //deleteItemByCls('loadlist');
         be(list, {
             func: function (obj, id, error, taskResult) {
                 let i = taskResult.success;//是否成功，用于判断有无报错1为成功无错
@@ -590,7 +591,7 @@ function search(keyword, mode, sdata) {
                     let data = taskResult.result;
                     if(data.length>0){
                         success++;
-                        if(mode=="list"){
+                        if(mode=="erji"){
                             searchMark[name] = searchMark[name] || [];
                             searchMark[name] = searchMark[name].concat(data);
                             if(!getMyVar('SrcJuselectsname')){
@@ -599,34 +600,31 @@ function search(keyword, mode, sdata) {
                             hideLoading();
                         }else if(mode=="sousuo"){
                             addItemBefore("sousuoloading", data);
+                        }else if(mode=="sousuotest"){
+                            results = data;
                         }
                     }
-                }else{
-                    obj.b.push(id);
                 }
             },
             param: {
-                a: results,
-                b: errors
             }
         });
-        if(mode=="sousuotest"){
-            return results;
-        }
-        /*
-        if (!sdata) {
+        if (mode=="erji") {
             storage0.putMyVar('searchMark', searchMark);
         }
-        let sousuosm = getMyVar('SrcJuSousuo') == "1" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
-        updateItem(loadid, { title: sousuosm })
-    */
+        if(mode=="sousuotest"){
+            return results;
+        }else{
+            let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
+            updateItem(mode=="sousuo"?"sousuoloading":"listloading", { title: sousuosm });
+        }
     } else {
         toast("无接口");
     }
 
 /*    
 
-    let searchMark = storage0.getMyVar('searchMark') || {};
+    
     let loadid = getMyVar('SrcJuSousuo') == "1" ? 'sousuoloading' : 'listloading';
     if (searchMark[name] && !sdata) {
         //log("重复搜索>"+name+"，调用搜索缓存");
