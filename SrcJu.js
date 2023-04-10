@@ -253,7 +253,7 @@ function erji() {
                     解析(surl,公共);
                 }, 解析, 公共, surl);
                 //let 下载 = parse['解析'];
-                log(JSON.stringify(parse['解析']))
+                log(lazy)
                 download = $("").lazyRule((解析, 公共) => {
                     //JSON.stringify(解析)
                     let html = 解析(input,公共);
