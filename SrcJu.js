@@ -508,6 +508,7 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
+        MY_PAGE--;
         toast("上次搜索线程还未结束，等等再来");
         return [];
     }
