@@ -517,6 +517,7 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
+    /*
     if(mode=="sousuo"){
         log(MY_PGAE);
         let i = parseInt(getMyVar('MY_PGAE','0'))+1;
@@ -524,7 +525,7 @@ function search(keyword, mode, sdata) {
         putMyVar('MY_PGAE',i);
         log(getMyVar('MY_PGAE'));
     }
-    
+    */
     let name = keyword;//.split(' ')[0];
     
     let searchMark = storage0.getMyVar('searchMark') || {};
@@ -540,7 +541,7 @@ function search(keyword, mode, sdata) {
         if (i > 20) { delete searchMark[one]; }
         return "hiker://empty";
     }
-    log('111')
+    //log('111')
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
