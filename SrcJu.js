@@ -94,10 +94,9 @@ function yiji() {
 }
 //搜索页面
 function sousuo() {
-    putMyVar('SrcJuSousuo', '1');
     let name = MY_URL.split('##')[1];
     let d = [];
-    d = d.concat(search(name,'sousuo'));
+    d = search(name,'sousuo');
     setResult(d);
 }
 
