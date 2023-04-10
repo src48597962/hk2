@@ -242,14 +242,20 @@ function erji() {
             }
             let 解析 = parse['解析'];
             let lazy;
+            let download;
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     return 解析(input,公共);
                 }, 解析, 公共);
+                download = lazy;
             }else if (stype=="阅读") {
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共, surl) => {
                     解析(surl,公共);
                 }, 解析, 公共, surl);
+                let 下载 = parse['下载'];
+                download = $("").lazyRule((下载, 公共) => {
+                    return 下载(input,公共);
+                }, 下载, 公共);
             }
 
             d.push({
@@ -305,7 +311,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": lazy,//`(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+JSON.stringify(公共)+`)`,
+                        "parseCode": download.split('js:')[1],//`(\n(解析,公共) => {\n return 解析(input,公共);\n})(` + 解析 +`,`+JSON.stringify(公共)+`)`,
                         "ruleName": MY_RULE.title
                     }
                 }
