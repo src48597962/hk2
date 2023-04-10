@@ -509,6 +509,7 @@ function sousuo() {
         }
     });
     setResult(d);
+    clearMyVar('MY_PGAE');
     search(name,'sousuo');
 }
 //搜索接口
@@ -528,7 +529,7 @@ function search(keyword, mode, sdata) {
     }else if(mode=="sousuotest"){
         page = MY_PAGE;
     }
-    log(page);
+
     let name = keyword;//.split(' ')[0];
     
     let searchMark = storage0.getMyVar('searchMark') || {};
@@ -544,7 +545,7 @@ function search(keyword, mode, sdata) {
         if (i > 20) { delete searchMark[one]; }
         return "hiker://empty";
     }
-    //log('111')
+
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
