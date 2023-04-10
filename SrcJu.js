@@ -519,7 +519,7 @@ function search(keyword, mode, sdata) {
     }
     if(mode=="sousuo"){
         log(MY_PGAE);
-        putMyVar('MY_PGAE',parseInt(getMyVar('MY_PGAE',0))+1);
+        putMyVar('MY_PGAE',parseInt(getMyVar('MY_PGAE','0'))+1);
         log(getMyVar('MY_PGAE'));
     }
     
