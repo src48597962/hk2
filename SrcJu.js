@@ -309,8 +309,7 @@ function erji() {
                         clearMyVar('已选择换源列表');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
-                        search(name,"erji");
-                        return 'hiker://empty'
+                        return search(name,"erji");
                     }else{
                         return "toast://不要心急，稍等...";
                     }
@@ -488,7 +487,7 @@ function erji() {
             }
         });
         setResult(d);
-        search(name);
+        search(name,"erji");
     }
     clearMyVar('已选择换源列表');
 }
@@ -521,7 +520,7 @@ function search(keyword, mode, sdata) {
         putMyVar('MY_PGAE',parseInt(getMyVar('MY_PGAE',0))+1);
         log(getMyVar('MY_PGAE'));
     }
-    log('111')
+    
     let name = keyword;//.split(' ')[0];
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
@@ -529,8 +528,7 @@ function search(keyword, mode, sdata) {
         updateItem("listloading", { title: "‘‘’’<small>当前搜索为缓存</small>" });
         return "hiker://empty";
     }
-    log("111")
-    //log(MY_PAGE);
+    log('111')
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
