@@ -22,11 +22,14 @@ if(sourcedata != ""){
 }
 datalist.reverse();
 
-let yidatalist = datalist.filter(it=>{
-    return it.parse && it.type==runMode && !it.stop;
+let yxdatalist = datalist.filter(it=>{
+    return !it.stop;
 });
-let erdatalist = datalist.filter(it=>{
-    return it.erparse && it.type==runMode && !it.stop;
+let yidatalist = yxdatalist.filter(it=>{
+    return it.parse && it.type==runMode;
+});
+let erdatalist = yxdatalist.filter(it=>{
+    return it.erparse && it.type==runMode;
 });
 
 function rulePage(type,page) {
