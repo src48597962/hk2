@@ -43,9 +43,10 @@ function yiji() {
                     })
                 }else{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    let sourcenames = yidatalist.map(it=>{
+                    let sourcenames = [];
+                    yidatalist.forEach(it=>{
                         if(it.type==input){
-                            return it.name;
+                            sourcenames.push(it.name);
                         }
                     })
                     return $(sourcenames,2).select((runMode,sourcename,cfgfile,Juconfig) => {
