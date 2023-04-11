@@ -547,6 +547,7 @@ function search(keyword, mode, sdata) {
     
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
+        log(searchMark[name]);
         addItemBefore("listloading", searchMark[name]);
         updateItem("listloading", {
             title: "‘‘’’<small>当前搜索为缓存</small>",
@@ -554,6 +555,7 @@ function search(keyword, mode, sdata) {
                 let searchMark = storage0.getMyVar('searchMark') || {};
                 delete searchMark[name];
                 storage0.putMyVar('searchMark', searchMark);
+                refreshPage(true);
                 return "toast://已清除";
             },name)
         });
@@ -600,9 +602,9 @@ function search(keyword, mode, sdata) {
             data.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
-                log(item)
-                if((mode=="erji"&&base64Encode(extra.name)==base64Encode(name)) || mode!="erji"){
-                    log(obj.name+">"+name+">"+extra.name)
+                //log(item)
+                if((mode=="erji" && extra.name===name) || mode!="erji"){
+                    //log(obj.name+">"+name+">"+extra.name)
                     extra.img = extra.img || item.img || item.pic_url;
                     extra.stype = obj.type;
                     extra.sname = obj.name;
@@ -627,7 +629,7 @@ function search(keyword, mode, sdata) {
                     item.title = mode=="erji"?obj.name:item.title;
                     item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
                     item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
-                    log(item)
+                    //log(item)
                 }
             })
             return {result:data, success:1};
