@@ -379,7 +379,7 @@ function jiekouapi(sourcefile, data) {
                     if (getMyVar('jiekouedit') == "1" && index > -1) {
                         datalist.splice(index, 1);
                     }
-                    datalist.unshift(newapi);
+                    datalist.push(newapi);
                     writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('searchMark');
                     back(true);
