@@ -588,6 +588,7 @@ function search(keyword, mode, sdata) {
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索(name,page) || [];
+            log(mode);
             data.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
@@ -601,7 +602,7 @@ function search(keyword, mode, sdata) {
                     item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
-                    }) : item.url + $("#noLoading#").lazyRule((extra) => {
+                    }) : "hiker://empty##"+ item.url + $("#noLoading#").lazyRule((extra) => {
                         if(getMyVar('已选择换源列表')){
                             return "toast://请勿重复点击，稍等...";
                         }else{
@@ -616,6 +617,7 @@ function search(keyword, mode, sdata) {
                     item.title = mode=="erji"?obj.name:item.title;
                     item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
                     item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
+                    log(item);
                 }
             })
             return {result:data, success:1};
