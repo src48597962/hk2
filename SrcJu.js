@@ -601,7 +601,8 @@ function search(keyword, mode, sdata) {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
                 if((mode=="erji"&&extra.name==name)||mode!="erji"){
-                    extra.img = extra.img || item.img || $.toString(item.pic_url);
+                    log(obj.name+">"+name+">"+extra.name)
+                    extra.img = extra.img || item.img || item.pic_url;
                     extra.stype = obj.type;
                     extra.sname = obj.name;
                     extra.pageTitle = extra.name;
