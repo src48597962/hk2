@@ -554,7 +554,7 @@ function search(keyword, mode, sdata) {
                 let searchMark = storage0.getMyVar('searchMark') || {};
                 delete searchMark[name];
                 storage0.putMyVar('searchMark', searchMark);
-                return "toast://已清除，再次换源吧";
+                return "toast://已清除";
             },name)
         });
         let i = 0;
