@@ -599,12 +599,11 @@ function search(keyword, mode, sdata) {
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索(name,page) || [];
+            let data2 = [];
             data.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
-                //log(item)
-                if((mode=="erji" && extra.name===name) || mode!="erji"){
-                    //log(obj.name+">"+name+">"+extra.name)
+                if((mode=="erji" && extra.name==name) || mode!="erji"){
                     extra.img = extra.img || item.img || item.pic_url;
                     extra.stype = obj.type;
                     extra.sname = obj.name;
@@ -629,10 +628,10 @@ function search(keyword, mode, sdata) {
                     item.title = mode=="erji"?obj.name:item.title;
                     item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
                     item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
-                    //log(item)
+                    data2.push(item);
                 }
             })
-            return {result:data, success:1};
+            return {result:data2, success:1};
         } catch (e) {
             log(obj.name + '>搜索失败>' + e.message);
             return {result:[], success:0};
