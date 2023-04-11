@@ -367,7 +367,7 @@ function erji() {
                             }
                         });
                     }
-                    addItemBefore('listloading', 列表);
+                    addItemBefore('listloading', d);
                     return 'toast://切换排序成功'
                 }, 列表,name,sname,base64Encode(lazy)),
                 col_type: 'scroll_button',
