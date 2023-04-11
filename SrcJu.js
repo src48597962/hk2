@@ -32,7 +32,6 @@ function yiji() {
         Version();
         downloadicon();
         let adminbtn = runModes;
-        adminbtn.unshift("切换");
         adminbtn.unshift("管理");
         d.push({
             title: "设置",
