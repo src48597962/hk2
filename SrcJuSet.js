@@ -117,7 +117,7 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().lazyRule((yxdatalist) => {
+        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().lazyRule((datalist) => {
             let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)));
             if (pasteurl) {
                 let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
