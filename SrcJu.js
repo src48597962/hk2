@@ -353,10 +353,6 @@ function erji() {
                             title: `““””<b><span style="color: #66CCEE">排序⇅</span></b>`
                         });
                     };
-                    let list_col_type = getItem('SrcJuList_col_type', 'text_2');
-                    列表.forEach(it => {
-                        it.col_type = list_col_type;
-                    })
                     let d = [];
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     for(let i=0; i<列表.length; i++) {
