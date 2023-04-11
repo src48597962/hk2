@@ -32,6 +32,7 @@ function yiji() {
         Version();
         downloadicon();
         let adminbtn = runModes;
+        adminbtn.unshift("切换");
         adminbtn.unshift("管理");
         d.push({
             title: "设置",
@@ -49,7 +50,7 @@ function yiji() {
                             sourcenames.push(it.name);
                         }
                     })
-                    return $(sourcenames,2).select((runMode,sourcename,cfgfile,Juconfig) => {
+                    return $(sourcenames,2,"请选择主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
                         clearMyVar(MY_RULE.title + "分类");
                         clearMyVar(MY_RULE.title + "更新");
                         clearMyVar(MY_RULE.title + "类别");
