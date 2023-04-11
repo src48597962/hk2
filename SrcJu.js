@@ -226,27 +226,38 @@ function erji() {
                 列表.reverse();
             }
             let 解析 = parse['解析'];
+            let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             let lazy;
-            let download;
             let itype;
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     let url = input.split("##")[1];
                     return 解析(url,公共);
                 }, 解析, 公共);
-                download = $.toString((解析, 公共) => {
-                    return 解析(input,公共);
-                }, 解析, 公共);
                 itype = "comic";
             }else if (stype=="阅读") {
-                lazy = $("").rule((解析, 公共) => {
+                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
-                download = $.toString((解析, 公共) => {
-                    return 解析(input,公共);
-                }, 解析, 公共);
                 itype = "novel";
+            }
+            let download = $.toString((解析, 公共) => {
+                return 解析(input,公共);
+            }, 解析, 公共);
+            //生成一个初始的选集列表
+            let playlists = [];
+            for(let i=0; i<列表.length; i++) {
+                playlists.push({
+                    title: 列表[i].title,
+                    url: "hiker://empty##" + 列表[i].url + lazy,
+                    col_type: list_col_type,
+                    extra: {
+                        id: name + "_选集_" + i,
+                        url: 列表[i].url,
+                        cls: "loadlist playlist"
+                    }
+                });
             }
 
             d.push({
@@ -341,10 +352,9 @@ function erji() {
             }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
-                url: $("#noLoading#").lazyRule((列表,name,sname,lazy) => {
+                url: $("#noLoading#").lazyRule((列表,sname) => {
                     log('1');
                     deleteItemByCls('playlist');
-                    log('2');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
@@ -357,12 +367,17 @@ function erji() {
                             title: `““””<b><span style="color: #66CCEE">排序⇅</span></b>`
                         });
                     };
+                    let list_col_type = getItem('SrcJuList_col_type', 'text_2');
+                    列表.forEach(it => {
+                        it.col_type = list_col_type;
+                    })
+                    /*
                     let d = [];
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: "hiker://empty##" + 列表[i].url + (stype=="漫画"?"":"#readTheme##autoPage#") + lazy,
+                            url: "hiker://empty##" + 列表[i].url + lazy,
                             col_type: list_col_type,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -371,9 +386,12 @@ function erji() {
                             }
                         });
                     }
-                    addItemBefore('listloading', d);
+                    */
+                    addItemBefore('listloading', 列表);
                     return 'toast://切换排序成功'
-                }, 列表,name,sname,lazy),
+                //}, 列表,name,sname,lazy),
+                }, playlists,sname),
+                
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
@@ -388,7 +406,7 @@ function erji() {
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: "hiker://empty##" + 列表[i].url + (stype=="漫画"?"":"#readTheme##autoPage#") + lazy,
+                            url: "hiker://empty##" + 列表[i].url + lazy,
                             col_type: input,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -421,11 +439,10 @@ function erji() {
                     }
                 })
             }
-            let list_col_type = getItem('SrcJuList_col_type', 'text_2');
             for(let i=0; i<列表.length; i++) {
                 d.push({
                     title: 列表[i].title,
-                    url: "hiker://empty##" + 列表[i].url + (stype=="漫画"?"":"#readTheme##autoPage#") + lazy,
+                    url: "hiker://empty##" + 列表[i].url + lazy,
                     col_type: list_col_type,
                     extra: {
                         id: name + "_选集_" + i,
