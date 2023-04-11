@@ -241,10 +241,6 @@ function erji() {
                     let url = input.split("##")[1].replace('#readTheme##autoPage#','');
                     解析(url,公共);
                 }, 解析, 公共);
-                log($.toString(解析));
-                download = $.toString((解析, 公共) => {
-                    return 解析(input,公共);
-                }, 解析, 公共);
                 if($.toString(解析).indexOf('return')>-1){
                     download = $.toString((解析, 公共) => {
                         return 解析(input,公共,1);
@@ -307,7 +303,7 @@ function erji() {
                     "info": {
                         "bookName": name,
                         "bookTopPic": pic,
-                        "parseCode": download.split('js:')[1],
+                        "parseCode": download,
                         "ruleName": MY_RULE.title,
                         "type": stype=="漫画"?"comic":"novel",
                         "decode": 公共["imgdec"] || ""
