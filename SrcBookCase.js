@@ -54,38 +54,40 @@ function bookCase() {
     })
 
     Julist.forEach(it => {
-        try{
-            let params = JSON.parse(it.params);
-            let stype = JSON.parse(params.params).stype;
-            if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
-                let name = JSON.parse(params.params).name;
-                let sname = JSON.parse(params.params).sname;
-                let extraData = it.extraData?JSON.parse(it.extraData):{};
-                let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
-                let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
-                let col = Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic';
-                d.push({
-                    title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+" | "+(sname||"")+"</small>":name,
-                    pic_url: it.picUrl,
-                    desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
-                    url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
-                        require(config.依赖);
-                        erji();
-                        putMyVar('SrcBookCase','1');
-                    }),
-                    col_type: col,
-                    extra: {
-                        pageTitle: name,
-                        name: name,
-                        img: it.picUrl,
-                        stype: stype,
-                        lineVisible: false,
-                        cls: "caselist"
-                    }
-                })
+        if(getMyVar("SrcJuBookType","全部")=="全部" || getMyVar("SrcJuBookType","全部")==item.type){
+            try{
+                let params = JSON.parse(it.params);
+                let stype = JSON.parse(params.params).stype;
+                if(getMyVar("SrcJuBookType")==stype || !getMyVar("SrcJuBookType")){
+                    let name = JSON.parse(params.params).name;
+                    let sname = JSON.parse(params.params).sname;
+                    let extraData = it.extraData?JSON.parse(it.extraData):{};
+                    let last = extraData.lastChapterStatus?extraData.lastChapterStatus:"";
+                    let mask = it.lastClick?it.lastClick.split('@@')[0]:"";
+                    let col = Juconfig["bookCase_col_type"] || 'movie_1_vertical_pic';
+                    d.push({
+                        title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+" | "+(sname||"")+"</small>":name,
+                        pic_url: it.picUrl,
+                        desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
+                        url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                            require(config.依赖);
+                            erji();
+                            putMyVar('SrcBookCase','1');
+                        }),
+                        col_type: col,
+                        extra: {
+                            pageTitle: name,
+                            name: name,
+                            img: it.picUrl,
+                            stype: stype,
+                            lineVisible: false,
+                            cls: "caselist"
+                        }
+                    })
+                }
+            }catch(e){
+                log("书架加载异常>"+e.message);
             }
-        }catch(e){
-            log("书架加载异常>"+e.message);
         }
     })
     d.push({
