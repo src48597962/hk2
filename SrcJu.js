@@ -390,7 +390,7 @@ function erji() {
                     addItemBefore('listloading', 列表);
                     return 'toast://切换排序成功'
                 //}, 列表,name,sname,lazy),
-                }, playlists,sname),
+                }, $.toString(playlists),sname),
                 
                 col_type: 'scroll_button',
                 extra: {
