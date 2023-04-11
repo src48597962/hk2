@@ -268,7 +268,7 @@ function erji() {
                     return 解析(url,公共);
                 }, 解析, 公共);
                 itype = "comic";
-            }else if (stype=="阅读") {
+            }else{
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
