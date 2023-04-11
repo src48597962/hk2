@@ -28,9 +28,11 @@ datalist.forEach(it => {
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
+
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse && it.type==runMode;
 });
+log(yidatalist)
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse && it.type==runMode;
 });
