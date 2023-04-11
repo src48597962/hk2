@@ -340,7 +340,6 @@ function erji() {
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").b64().lazyRule((列表,name,sname,lazy) => {
                     deleteItemByCls('playlist');
-                    //let lazy = base64Decode(解析);
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
@@ -369,7 +368,7 @@ function erji() {
                     }
                     addItemBefore('listloading', d);
                     return 'toast://切换排序成功'
-                }, 列表,name,sname,lazy),//base64Encode(lazy)
+                }, 列表,name,sname,lazy),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
