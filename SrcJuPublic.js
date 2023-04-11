@@ -21,6 +21,9 @@ if(sourcedata != ""){
     var datalist = [];
 }
 datalist.reverse();
+datalist.forEach(it => {
+    it.type = it.type=="阅读"?"小说":it.type
+})
 
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
