@@ -31,7 +31,8 @@ function yiji() {
     if(MY_PAGE==1){
         Version();
         downloadicon();
-        let adminbtn = runModes.unshift("管理");
+        let adminbtn = runModes;
+        adminbtn.unshift("管理");
         d.push({
             title: "设置",
             url: $(adminbtn, 1).select(() => {
