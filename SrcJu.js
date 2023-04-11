@@ -236,7 +236,7 @@ function erji() {
                 }, 解析, 公共);
                 itype = "comic";
             }else if (stype=="阅读") {
-                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                lazy = $("#readTheme##autoPage#").b64().rule((解析, 公共) => {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
@@ -390,7 +390,7 @@ function erji() {
                     addItemBefore('listloading', 列表);
                     return 'toast://切换排序成功'
                 //}, 列表,name,sname,lazy),
-                }, $.toString(playlists),sname),
+                }, playlists,sname),
                 
                 col_type: 'scroll_button',
                 extra: {
