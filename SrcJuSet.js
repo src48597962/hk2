@@ -133,6 +133,11 @@ function SRCSet() {
     d.push({
         col_type: "line"
     });
+    for (let i = 0; i < 8; i++) {
+        d.push({
+            col_type: "blank_block"
+        })
+    }
     let typebtn = runModes;
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
