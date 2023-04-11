@@ -31,21 +31,39 @@ function yiji() {
     if(MY_PAGE==1){
         Version();
         downloadicon();
-
-        /*
-        $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                SRCSet();
-            })
-        */
+        let adminbtn = runModes.unshift("管理");
         d.push({
-            title: "管理",
-            url: $(["书架", "收藏", "历史"], 1).select((cfgfile, Juconfig) => {
-                Juconfig["btnmenu5"] = input;
-                writeFile(cfgfile, JSON.stringify(Juconfig));
-                refreshPage(false);
-                return 'toast://已切换为' + input;
-            }, cfgfile, Juconfig),
+            title: "设置",
+            url: $(adminbtn, 1).select(() => {
+                if(input=="管理"){
+                    return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        SRCSet();
+                    })
+                }else{
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                    let sourcenames = yidatalist.map(it=>{
+                        return it.name && it.type==input;
+                    })
+                    return $(sourcenames,2).select((runMode,sourcename,cfgfile,Juconfig) => {
+                        clearMyVar(MY_RULE.title + "分类");
+                        clearMyVar(MY_RULE.title + "更新");
+                        clearMyVar(MY_RULE.title + "类别");
+                        clearMyVar(MY_RULE.title + "地区");
+                        clearMyVar(MY_RULE.title + "进度");
+                        clearMyVar(MY_RULE.title + "排序");
+                        clearMyVar("排名");
+                        clearMyVar("分类");
+                        clearMyVar("更新");
+                        clearMyVar(runMode+"_"+sourcename);
+                        Juconfig[runMode+'sourcename'] = input;
+                        writeFile(cfgfile, JSON.stringify(Juconfig));
+                        refreshPage(false);
+                        return 'toast://'+runMode+' 主页源已设置为：' + input;
+                    }, runMode, sourcename, cfgfile, Juconfig)
+                }
+                //return 'toast://已切换为' + input;
+            }),
             pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
             col_type: 'icon_5',
             extra: {
@@ -138,8 +156,8 @@ function erji() {
             }
         }
     }
-    let sourcedata = datalist.filter(it => {
-        return it.name == sname && it.erparse && it.type == stype && !it.stop;
+    let sourcedata = yxdatalist.filter(it => {
+        return it.name == sname && it.erparse && it.type == stype;
     });
 
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
