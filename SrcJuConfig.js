@@ -5,6 +5,8 @@ if(Jucfg != ""){
 }else{
     var Juconfig= {};
 }
-let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";
-let runModes = ["漫画", "小说"];
+let erji = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+    require(config.依赖);
+    erji();
+})
