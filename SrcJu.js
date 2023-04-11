@@ -139,8 +139,9 @@ function erji() {
         }
     }
     let sourcedata = datalist.filter(it => {
-        return it.name == sname && it.erparse && it.type == stype;
+        return it.name == sname && it.erparse && it.type == stype && !it.stop;
     });
+
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
