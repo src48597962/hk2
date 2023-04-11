@@ -310,7 +310,7 @@ function erji() {
                         "parseCode": download.split('js:')[1],
                         "ruleName": MY_RULE.title,
                         "type": stype=="漫画"?"comic":"novel",
-                        "decode": 公开["imgdec"] || ""
+                        "decode": 公共["imgdec"] || ""
                     }
                 }
             })
