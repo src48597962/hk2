@@ -531,7 +531,10 @@ function search(keyword, mode, sdata) {
     }
     let page = 1;
     if(mode=="sousuo"){
-        page = MY_PGAE==1?1:parseInt(getMyVar('MY_PGAE','0'))+1;
+        if(MY_PAGE==1){
+            putMyVar('MY_PAGE', '0');
+        }
+        page = parseInt(getMyVar('MY_PGAE','0'))+1;
         putMyVar('MY_PGAE',page);
     }else if(mode=="sousuotest"){
         page = MY_PAGE;
