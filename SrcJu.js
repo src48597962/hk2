@@ -547,7 +547,6 @@ function search(keyword, mode, sdata) {
     
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
-        log(searchMark[name]);
         addItemBefore("listloading", searchMark[name]);
         updateItem("listloading", {
             title: "‘‘’’<small>当前搜索为缓存</small>",
