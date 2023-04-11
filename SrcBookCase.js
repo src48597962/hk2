@@ -1,19 +1,11 @@
 function bookCase() {
     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-    let type = [];
     let Julist = [];
     let collection = JSON.parse(fetch("hiker://collection?rule="+MY_RULE.title));
     collection.forEach(it => {
         try{
             if(it.params&& (JSON.parse(it.params).title==MY_RULE.title)){
                 Julist.push(it);
-                let params = JSON.parse(it.params);
-                if(params.params){
-                    let t = JSON.parse(params.params).stype;
-                    if(type.indexOf(t)==-1){
-                        type.push(t)
-                    }
-                }
             }
         }catch(e){
             log("书架加载异常>"+e.message);
@@ -47,9 +39,11 @@ function bookCase() {
             col_type: "blank_block"
         })
     }
-    type.forEach(it=>{
+    let typebtn = runModes;
+    typebtn.unshift("全部");
+    typebtn.forEach(it =>{
         d.push({
-            title: getMyVar("SrcJuBookType","")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+            title: getMyVar("SrcJuBookType","全部")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
                 putMyVar("SrcJuBookType",it);
                 refreshPage(false);
@@ -58,6 +52,7 @@ function bookCase() {
             col_type: 'scroll_button'
         })
     })
+
     Julist.forEach(it => {
         try{
             let params = JSON.parse(it.params);
