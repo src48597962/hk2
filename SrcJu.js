@@ -5,7 +5,7 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 //一级
 function yiji() {
     let sourcedata = yidatalist.filter(it => {
-        return it.name == sourcename;
+        return it.name == sourcename && it.type==runMode;
     });
     let parse;
     let 页码;
