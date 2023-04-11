@@ -117,7 +117,7 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: datalist.length == 0 ? "toast://聚接口为0，无法分享" : $().lazyRule((datalist) => {
+        url: yxdatalist.length == 0 ? "toast://有效聚接口为0，无法分享" : $().lazyRule((yxdatalist) => {
             let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)));
             if (pasteurl) {
                 let code = '聚接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
@@ -126,7 +126,7 @@ function SRCSet() {
             } else {
                 return "toast://分享失败，剪粘板或网络异常";
             }
-        }, datalist),
+        }, yxdatalist),
         img: "https://lanmeiguojiang.com/tubiao/more/3.png",
         col_type: "icon_small_3"
     });
