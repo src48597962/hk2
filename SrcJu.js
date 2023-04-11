@@ -626,6 +626,7 @@ function search(keyword, mode, sdata) {
                     item.title = mode=="erji"?obj.name:item.title;
                     item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
                     item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
+                    log(item)
                 }
             })
             return {result:data, success:1};
