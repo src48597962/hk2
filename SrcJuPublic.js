@@ -26,7 +26,7 @@ let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
 let yidatalist = yxdatalist.filter(it=>{
-    return it.parse && it.type==runMode;
+    return it.parse;
 });
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
