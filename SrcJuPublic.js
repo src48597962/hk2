@@ -19,6 +19,7 @@ if(sourcedata != ""){
 }else{
     var datalist = [];
 }
+datalist.reverse();
 
 let yidatalist = datalist.filter(it=>{
     return it.parse && it.type==runMode && !it.stop;
