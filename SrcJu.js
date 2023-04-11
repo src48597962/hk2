@@ -60,13 +60,13 @@ function yiji() {
                         clearMyVar("分类");
                         clearMyVar("更新");
                         clearMyVar(runMode+"_"+sourcename);
+                        Juconfig["runMode"] = runMode;
                         Juconfig[runMode+'sourcename'] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
                         return 'toast://'+runMode+' 主页源已设置为：' + input;
-                    }, runMode, sourcename, cfgfile, Juconfig)
+                    }, input, sourcename, cfgfile, Juconfig)
                 }
-                //return 'toast://已切换为' + input;
             }),
             pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
             col_type: 'icon_5',
