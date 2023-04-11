@@ -346,7 +346,9 @@ function erji() {
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((列表,name,sname,lazy) => {
+                    log('1');
                     deleteItemByCls('playlist');
+                    log('2');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
