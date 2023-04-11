@@ -159,8 +159,8 @@ function erji() {
             }
         }
     }
-    let sourcedata = yxdatalist.filter(it => {
-        return it.name == sname && it.erparse && it.type == stype;
+    let sourcedata = erdatalist.filter(it => {
+        return it.name == sname && it.type == stype;
     });
 
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
@@ -607,7 +607,7 @@ function search(keyword, mode, sdata) {
         erdatalist.push(sdata);
     }else if (sssname){
         erdatalist = erdatalist.filter(it=>{
-            return it.name==sssname;
+            return it.name==sssname && it.type==runMode;
         });
     }
     
