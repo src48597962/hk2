@@ -7,3 +7,4 @@ if(Jucfg != ""){
 }
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";
+let runModes = ["漫画", "小说"];
