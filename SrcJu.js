@@ -236,7 +236,7 @@ function erji() {
                 }, 解析, 公共);
                 itype = "comic";
             }else if (stype=="阅读") {
-                lazy = $("#readTheme##autoPage#").b64().rule((解析, 公共) => {
+                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
@@ -245,20 +245,6 @@ function erji() {
             let download = $.toString((解析, 公共) => {
                 return 解析(input,公共);
             }, 解析, 公共);
-            //生成一个初始的选集列表
-            let playlists = [];
-            for(let i=0; i<列表.length; i++) {
-                playlists.push({
-                    title: 列表[i].title,
-                    url: "hiker://empty##" + 列表[i].url + lazy,
-                    col_type: list_col_type,
-                    extra: {
-                        id: name + "_选集_" + i,
-                        url: 列表[i].url,
-                        cls: "loadlist playlist"
-                    }
-                });
-            }
 
             d.push({
                 title: "详情简介",
@@ -352,9 +338,9 @@ function erji() {
             }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
-                url: $("#noLoading#").lazyRule((列表,sname) => {
-                    log(base64Decode(列表));
+                url: $("#noLoading#").lazyRule((列表,name,sname,解析) => {
                     deleteItemByCls('playlist');
+                    let lazy = base64Decode(解析);
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
@@ -371,7 +357,6 @@ function erji() {
                     列表.forEach(it => {
                         it.col_type = list_col_type;
                     })
-                    /*
                     let d = [];
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     for(let i=0; i<列表.length; i++) {
@@ -386,12 +371,9 @@ function erji() {
                             }
                         });
                     }
-                    */
                     addItemBefore('listloading', 列表);
                     return 'toast://切换排序成功'
-                //}, 列表,name,sname,lazy),
-                }, base64Encode(playlists), sname),
-                
+                }, 列表,name,sname,base64Encode(lazy)),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
