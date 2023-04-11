@@ -246,6 +246,9 @@ function erji() {
                         return 解析(input,公共,1);
                     }, 解析, 公共);
                 }else{
+                    download = $.toString((解析, 公共) => {
+                        return 解析(input,公共);
+                    }, 解析, 公共);
                     download = download.replace('setResult(d)',`return d[1].title`);
                 }
             }
