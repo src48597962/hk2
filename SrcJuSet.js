@@ -47,7 +47,7 @@ function SRCSet() {
     d.push({
         title: '增加',
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile) => {
-            setPageTitle('增加 | 聚接口');
+            setPageTitle('增加 | 聚阅接口');
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             jiekouapi(sourcefile);
         }, sourcefile),
@@ -59,7 +59,7 @@ function SRCSet() {
         url: $("", "聚分享口令的云剪贴板").input((sourcefile,ImportType) => {
             try {
                 let inputname = input.split('￥')[0];
-                if (inputname == "聚接口") {
+                if (inputname == "聚阅接口") {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
@@ -117,10 +117,10 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: yxdatalist.length == 0 ? "toast://有效聚接口为0，无法分享" : $().lazyRule((yxdatalist) => {
+        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().lazyRule((yxdatalist) => {
             let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)));
             if (pasteurl) {
-                let code = '聚接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
+                let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
                 copy(code);
                 return "toast://(全部)聚分享口令已生成";
             } else {
@@ -164,7 +164,7 @@ function SRCSet() {
                         let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)));
                         hideLoading();
                         if (pasteurl) {
-                            let code = '聚接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
+                            let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
                             copy(code);
                             return "toast://(单个)分享口令已生成";
                         } else {
@@ -172,7 +172,7 @@ function SRCSet() {
                         }
                     } else if (input == "编辑") {
                         return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
-                            setPageTitle('编辑 | 聚接口');
+                            setPageTitle('编辑 | 聚阅接口');
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                             jiekouapi(sourcefile, data);
                         }, sourcefile, data)
