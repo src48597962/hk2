@@ -317,6 +317,7 @@ function erji() {
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
                         search(name,"erji");
+                        hideLoading();
                         return  "hiker://empty";
                     }else{
                         return "toast://上一个搜索线程还未结束，稍等...";
@@ -547,7 +548,15 @@ function search(keyword, mode, sdata) {
     let searchMark = storage0.getMyVar('searchMark') || {};
     if(mode=="erji" && searchMark[name]){
         addItemBefore("listloading", searchMark[name]);
-        updateItem("listloading", { title: "‘‘’’<small>当前搜索为缓存</small>" });
+        updateItem("listloading", {
+            title: "‘‘’’<small>当前搜索为缓存</small>",
+            url: $("确定删除“"+name+"”搜索缓存吗？").confirm((name)=>{
+                let searchMark = storage0.getMyVar('searchMark') || {};
+                delete searchMark[name];
+                storage0.putMyVar('searchMark', searchMark);
+                return "toast://已清除，再次换源吧";
+            },name)
+        });
         let i = 0;
         let one = "";
         for (var k in searchMark) {
@@ -601,7 +610,7 @@ function search(keyword, mode, sdata) {
                     item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
-                    }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
+                    }) : "hiker://empty##"+ item.url + $("#noLoading#").lazyRule((extra) => {
                         if(getMyVar('已选择换源列表')){
                             return "toast://请勿重复点击，稍等...";
                         }else{
