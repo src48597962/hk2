@@ -238,6 +238,7 @@ function erji() {
                 }, 解析, 公共);
             }else if (stype=="阅读") {
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                    let input = MY_PARAMS.url || "";
                     let url = input.split("##")[1].replace('#readTheme##autoPage#','');
                     解析(url,公共);
                 }, 解析, 公共);
@@ -368,6 +369,7 @@ function erji() {
                             col_type: list_col_type,
                             extra: {
                                 id: name + "_选集_" + i,
+                                url: 列表[i].url,
                                 cls: "loadlist playlist"
                             }
                         });
@@ -393,6 +395,7 @@ function erji() {
                             col_type: input,
                             extra: {
                                 id: name + "_选集_" + i,
+                                url: 列表[i].url,
                                 cls: "loadlist playlist"
                             }
                         });
@@ -429,6 +432,7 @@ function erji() {
                     col_type: list_col_type,
                     extra: {
                         id: name + "_选集_" + i,
+                        url: 列表[i].url,
                         cls: "loadlist playlist"
                     }
                 });
