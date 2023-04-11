@@ -241,6 +241,10 @@ function erji() {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
+                download = $.toString((解析, 公共) => {
+                    解析(input,公共);
+                }, 解析, 公共);
+                /*
                 if($.toString(解析).indexOf('return')>-1){
                     download = $.toString((解析, 公共) => {
                         return 解析(input,公共,1);
@@ -251,6 +255,7 @@ function erji() {
                     }, 解析, 公共);
                     download = download.replace('setResult(d)',`return d[1].title`);
                 }
+                */
             }
 
             d.push({
