@@ -237,7 +237,7 @@ function erji() {
                     return 解析(input,公共);
                 }, 解析, 公共);
             }else if (stype=="阅读") {
-                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                lazy = $("").rule((解析, 公共) => {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
@@ -366,7 +366,7 @@ function erji() {
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: "hiker://empty##" + 列表[i].url + lazy,
+                            url: "hiker://empty##" + 列表[i].url + (stype=="漫画"?"":"#readTheme##autoPage#") + lazy,
                             col_type: list_col_type,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -392,7 +392,7 @@ function erji() {
                     for(let i=0; i<列表.length; i++) {
                         d.push({
                             title: 列表[i].title,
-                            url: "hiker://empty##" + 列表[i].url + lazy,
+                            url: "hiker://empty##" + 列表[i].url + (stype=="漫画"?"":"#readTheme##autoPage#") + lazy,
                             col_type: input,
                             extra: {
                                 id: name + "_选集_" + i,
@@ -429,7 +429,7 @@ function erji() {
             for(let i=0; i<列表.length; i++) {
                 d.push({
                     title: 列表[i].title,
-                    url: "hiker://empty##" + 列表[i].url + lazy,
+                    url: "hiker://empty##" + 列表[i].url + (stype=="漫画"?"":"#readTheme##autoPage#") + lazy,
                     col_type: list_col_type,
                     extra: {
                         id: name + "_选集_" + i,
