@@ -238,8 +238,7 @@ function erji() {
                 }, 解析, 公共);
             }else if (stype=="阅读") {
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
-                    let input = MY_PARAMS.url || "";
-                    let url = input.split("##")[1].replace('#readTheme##autoPage#','');
+                    let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
                 if($.toString(解析).indexOf('return')>-1){
