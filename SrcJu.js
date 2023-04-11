@@ -601,7 +601,7 @@ function search(keyword, mode, sdata) {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
                 log(item)
-                if((mode=="erji"&&extra.name==name)||mode!="erji"){
+                if((mode=="erji"&&base64Encode(extra.name)==base64Encode(name)) || mode!="erji"){
                     log(obj.name+">"+name+">"+extra.name)
                     extra.img = extra.img || item.img || item.pic_url;
                     extra.stype = obj.type;
