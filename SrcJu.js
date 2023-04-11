@@ -228,6 +228,7 @@ function erji() {
             let 解析 = parse['解析'];
             let lazy;
             let download;
+            let itype;
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     let url = input.split("##")[1];
@@ -236,26 +237,16 @@ function erji() {
                 download = $.toString((解析, 公共) => {
                     return 解析(input,公共);
                 }, 解析, 公共);
+                itype = "comic";
             }else if (stype=="阅读") {
                 lazy = $("").rule((解析, 公共) => {
                     let url = MY_PARAMS.url || "";
                     解析(url,公共);
                 }, 解析, 公共);
                 download = $.toString((解析, 公共) => {
-                    解析(input,公共);
+                    return 解析(input,公共);
                 }, 解析, 公共);
-                /*
-                if($.toString(解析).indexOf('return')>-1){
-                    download = $.toString((解析, 公共) => {
-                        return 解析(input,公共,1);
-                    }, 解析, 公共);
-                }else{
-                    download = $.toString((解析, 公共) => {
-                        return 解析(input,公共);
-                    }, 解析, 公共);
-                    download = download.replace('setResult(d)',`return d[1].title`);
-                }
-                */
+                itype = "novel";
             }
 
             d.push({
@@ -313,7 +304,7 @@ function erji() {
                         "bookTopPic": pic,
                         "parseCode": download,
                         "ruleName": MY_RULE.title,
-                        "type": stype=="漫画"?"comic":"novel",
+                        "type": itype,
                         "decode": 公共["imgdec"] || ""
                     }
                 }
