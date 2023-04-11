@@ -305,7 +305,7 @@ function jiekouapi(sourcefile, data) {
                     putMyVar('SrcJuSousuoTest','1');
                     let d = [];
                     require(config.依赖);
-                    d = search(name,"sousuotest",sdata);
+                    d = search(name,"erji",sdata);
                     d.push({
                         title: "测试搜索结束",
                         url: "hiker://empty",
