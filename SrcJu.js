@@ -600,6 +600,7 @@ function search(keyword, mode, sdata) {
             data.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
+                log(item)
                 if((mode=="erji"&&extra.name==name)||mode!="erji"){
                     log(obj.name+">"+name+">"+extra.name)
                     extra.img = extra.img || item.img || item.pic_url;
