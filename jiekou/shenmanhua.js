@@ -229,7 +229,7 @@ let erdata = {
             list: 选集 
         }//按格式返回
     },
-    "解析": function(url,公共,下载) {//url为播放链接必传，公共没有可不传，下载为1时由自己写代码判断，留空由程序自动处理
+    "解析": function(url,公共,下载) {//url为播放链接必传，公共没有可不传，下载为1时由自己写代码判断，留空由程序自动处理,仅小说需要
         let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
