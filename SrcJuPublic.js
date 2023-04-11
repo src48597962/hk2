@@ -1,13 +1,3 @@
-let cfgfile = "hiker://files/rules/Src/Ju/config.json";
-let Jucfg=fetch(cfgfile);
-if(Jucfg != ""){
-    eval("var Juconfig=" + Jucfg+ ";");
-}else{
-    var Juconfig= {};
-}
-let runMode = Juconfig["runMode"] || "漫画";
-let sourcename = Juconfig[runMode+'sourcename'] || "";
-
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
 if(sourcedata != ""){
