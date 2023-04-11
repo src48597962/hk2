@@ -31,12 +31,21 @@ function yiji() {
     if(MY_PAGE==1){
         Version();
         downloadicon();
-        d.push({
-            title: "管理",
-            url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+
+        /*
+        $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                 SRCSet();
-            }),
+            })
+        */
+        d.push({
+            title: "管理",
+            url: $(["书架", "收藏", "历史"], 1).select((cfgfile, Juconfig) => {
+                Juconfig["btnmenu5"] = input;
+                writeFile(cfgfile, JSON.stringify(Juconfig));
+                refreshPage(false);
+                return 'toast://已切换为' + input;
+            }, cfgfile, Juconfig),
             pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
             col_type: 'icon_5',
             extra: {
