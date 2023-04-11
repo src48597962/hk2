@@ -189,9 +189,9 @@ let yidata = {
 
 let erdata = {
     "作者": "嗨又是我",//接口作者
-    "搜索": function (name) {//聚合搜索换源列表数据，搜索关键字为name
+    "搜索": function (name,page) {//聚合搜索换源列表数据，搜索关键字为name,页码为page
         let d = [];
-        let ssurl = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page=1&size=30";
+        let ssurl = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page="+page+"&size=30";
         let code = JSON.parse(request(ssurl)).data.data
         code.forEach(item => {
             if (item.comic_name.includes(name)) {
@@ -206,7 +206,7 @@ let erdata = {
         return d;
     },
     "二级": function(surl) {//surl为详情页链接
-        let html = request(surl);
+        let html = request(surl, {timeout:8000});
         let dataid = pdfh(html, "#COMMENT&&data-ssid");
         let 作者 = pdfh(html, '#detail&&.author&&Text');
         let 分类 = pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ");
@@ -229,13 +229,12 @@ let erdata = {
             list: 选集 
         }//按格式返回
     },
-    "解析": function(url,公共) {//url为播放链接
-        //log(公共);
-        let code = JSON.parse(request(url)).data.current_chapter.chapter_img_list;
+    "解析": function(url,公共,下载) {//url为播放链接必传，公共没有可不传，下载为1时由自己写代码判断，留空由程序自动处理
+        let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
-    "最新": function(surl,公共) {//收藏获取最新章节，surl为详情页链接
+    "最新": function(url,公共) {//收藏获取最新章节，surl为详情页链接
         //log(公共);
-        setResult(pdfh(request(surl), '#js_chapter-reverse&&.last-chapter&&Text'));
+        setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
