@@ -233,17 +233,25 @@ function erji() {
                     let url = input.split("##")[1];
                     return 解析(url,公共);
                 }, 解析, 公共);
-                download = lazy;
+                download = $.toString((解析, 公共) => {
+                    return 解析(input,公共);
+                }, 解析, 公共);
             }else if (stype=="阅读") {
                 lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
                     let url = input.split("##")[1].replace('#readTheme##autoPage#','');
                     解析(url,公共);
                 }, 解析, 公共);
-                download = $("").lazyRule((解析, 公共) => {
-                    let url = input.split("##")[1];
-                    return 解析(url,公共);
+                log($.toString(解析));
+                download = $.toString((解析, 公共) => {
+                    return 解析(input,公共);
                 }, 解析, 公共);
-                download = download.replace('setResult(d)',`return d[1].title`).replace('getResCode()','request(url)');
+                if($.toString(解析).indexOf('return')>-1){
+                    download = $.toString((解析, 公共) => {
+                        return 解析(input,公共,1);
+                    }, 解析, 公共);
+                }else{
+                    download = download.replace('setResult(d)',`return d[1].title`);
+                }
             }
 
             d.push({
@@ -301,7 +309,8 @@ function erji() {
                         "bookTopPic": pic,
                         "parseCode": download.split('js:')[1],
                         "ruleName": MY_RULE.title,
-                        "type": stype=="阅读"?"novel":"comic"
+                        "type": stype=="漫画"?"comic":"novel",
+                        "decode":""
                     }
                 }
             })
