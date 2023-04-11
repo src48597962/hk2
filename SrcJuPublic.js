@@ -29,7 +29,7 @@ let yidatalist = yxdatalist.filter(it=>{
     return it.parse && it.type==runMode;
 });
 let erdatalist = yxdatalist.filter(it=>{
-    return it.erparse && it.type==runMode;
+    return it.erparse;
 });
 
 function rulePage(type,page) {
