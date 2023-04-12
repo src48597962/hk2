@@ -630,7 +630,6 @@ function search(keyword, mode, sdata) {
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索(name,page) || [];
-            log(data);
             let data2 = [];
             data.forEach(item => {
                 let extra = item.extra || {};
@@ -663,6 +662,7 @@ function search(keyword, mode, sdata) {
                     data2.push(item);
                 }
             })
+            log(data2)
             return {result:data2, success:1};
         } catch (e) {
             log(obj.name + '>搜索失败>' + e.message);
@@ -693,6 +693,7 @@ function search(keyword, mode, sdata) {
                         }else if(mode=="sousuo"){
                             addItemBefore("sousuoloading", data);
                         }else if(mode=="sousuotest"){
+                            log('111');
                             results = data;
                         }
                     }
