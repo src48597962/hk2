@@ -342,6 +342,12 @@ function erji() {
             d.push({
                 title: "切换书源",
                 url: $("#noLoading#").lazyRule((name) => {
+                    updateItem("listloading2", { 
+                        extra: {
+                            id: "listloading",
+                            lineVisible: false
+                        } 
+                    });
                     if(getMyVar('SrcJuSousuoTest')){
                         return "toast://编辑测试模式下不允许换源.";
                     }else if(!getMyVar('SrcJuSearching')){
@@ -479,7 +485,7 @@ function erji() {
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
-                id: "listloading",
+                id: getMyVar('已选择换源列表')?"listloading2":"listloading",
                 lineVisible: false
             }
         });
