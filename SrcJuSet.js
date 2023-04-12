@@ -187,6 +187,22 @@ function SRCSet() {
                             refreshPage(false);
                             return 'toast://已删除';
                         },sourcefile,data)
+                    } else if (input == "禁用" || input == "启用" ) {
+                        let sourcedata = fetch(sourcefile);
+                        eval("var datalist=" + sourcedata + ";");
+                        let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                        let sm;
+                        if(input == "禁用"){
+                            datalist[index].stop = 1;
+                            sm = data.name + "已禁用";
+                        }else{
+                            delete datalist[index].stop;
+                            sm = data.name + "已启用";
+                        }
+                        writeFile(sourcefile, JSON.stringify(datalist));
+                        clearMyVar('searchMark');
+                        refreshPage(false);
+                        return 'toast://' + sm;
                     }
                 }, sourcefile, item),
                 desc: item.type,
