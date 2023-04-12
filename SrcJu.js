@@ -510,11 +510,13 @@ function erji() {
         putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
     } else {
         if(!detailload){
+            let pic = MY_PARAMS.img || "";
+            pic = pic&&pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             d.push({
                 title: "\n搜索接口源结果如下",
                 desc: "\n\n选择一个源观看吧👇",
-                pic_url: MY_PARAMS.img + '@Referer=',
-                url: MY_PARAMS.img + '@Referer=',
+                pic_url: pic,
+                url: pic,
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
                     gradient: true
