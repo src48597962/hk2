@@ -35,7 +35,7 @@ function yiji() {
     }
     require(config.cd); 
     readData(runMode+"_"+sourcename,"1");
-
+    log(一级)
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
