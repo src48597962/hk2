@@ -18,6 +18,10 @@ function yiji() {
             } else {
                 parse = source;
             }
+            try{
+                let jiekoudata = sourcedata[0];
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+            }catch(e){}
             页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
