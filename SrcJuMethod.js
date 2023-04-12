@@ -1,3 +1,4 @@
+//修正按钮元素
 function toerji(item) {
     let info = storage0.getMyVar('主页源信息');
     let extra = item.extra || {};
@@ -17,4 +18,9 @@ function toerji(item) {
         erji();
     }):item.url
     return item;
+}
+//简繁互转,x可不传，默认转成简体，传2则是转成繁体
+function jianfan(str,x) {
+    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcSimple.js');
+    return PYStr(str,x);
 }
