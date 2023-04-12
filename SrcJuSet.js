@@ -155,7 +155,7 @@ function SRCSet() {
     datalist.forEach(item => {
         if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
             d.push({
-                title: (item.stop?`<font color=#f20c00>`+item.name+`</font>`:item.name) + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : ""),
+                title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用"], 1).select((sourcefile, data) => {
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
