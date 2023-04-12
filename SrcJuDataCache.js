@@ -6,7 +6,7 @@ function cacheData(data){
 }
 
 function readData(fileid){
-    let cfilename = jkid;
+    let cfilename = fileid;
     let cachefile = `hiker://files/cache/_fileSelect_${cfilename}.json`;
     let cachedata = fetch(cachefile);
     if(cachedata != ""){
