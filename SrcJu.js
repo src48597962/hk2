@@ -617,7 +617,6 @@ function search(keyword, mode, sdata) {
             return it.type==runMode;
         });
     }
-    log(ssdatalist);
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
@@ -700,7 +699,6 @@ function search(keyword, mode, sdata) {
                         }else if(mode=="sousuo"){
                             addItemBefore("sousuoloading", data);
                         }else if(mode=="sousuotest"){
-                            log('111');
                             results = data;
                         }
                     }
