@@ -630,6 +630,7 @@ function search(keyword, mode, sdata) {
             let data = [];
             eval("let 搜索 = " + parse['搜索'])
             data = 搜索(name,page) || [];
+            log(data);
             let data2 = [];
             data.forEach(item => {
                 let extra = item.extra || {};
