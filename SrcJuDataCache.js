@@ -1,14 +1,14 @@
 function cacheData(data){
     let jkdata = data;
-    let cfilename = jkdata.name+'-'+jkdata.type;
-    let cachefile = `hiker://files/cache/_fileSelect_${cfilename}.json`;
+    let fileid = jkdata.name+'-'+jkdata.type;
+    let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
     if (!fileExist(cachefile)) {
         writeFile(cachefile,JSON.stringify(jkdata));
     }
 }
 
-function readData(cfilename,datatype){
-    let cachefile = `hiker://files/cache/_fileSelect_${cfilename}.json`;
+function readData(fileid,datatype){
+    let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
     let cachedata = fetch(cachefile);
     if(cachedata != ""){
         try{
