@@ -3,12 +3,13 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 function SRCSet() {
     setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
+    let d = [];
     /*
     let sourcenames = yidatalist.map(it=>{
         return it.name;
     })
 
-    let d = [];
+    
     d.push({
         title: sourcename?sourcename:'设置主页源',
         url: $(sourcenames,2).select((runMode,sourcename,cfgfile,Juconfig) => {
