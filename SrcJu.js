@@ -18,6 +18,7 @@ function yiji() {
             } else {
                 parse = source;
             }
+            /*
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
                 cacheData(sourcedata[0]);
@@ -25,6 +26,7 @@ function yiji() {
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
+            */
             页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
@@ -33,10 +35,12 @@ function yiji() {
     } catch (e) {
         log("一级源接口加载异常>" + e.message);
     }
+    /*
     let {
         csdata
     } = $.require("hiker://page/jiekou");
     log(csdata);
+    */
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
@@ -190,6 +194,7 @@ function erji() {
                 parse = source;
             }
             sourcedata2 = sourcedata[0];
+            /*
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
                 cacheData(sourcedata[0]);
@@ -197,6 +202,7 @@ function erji() {
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
+            */
             if(parse&&parse['公共']){
                 公共 = parse['公共'] || {};
             }
