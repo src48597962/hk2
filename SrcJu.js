@@ -21,7 +21,9 @@ function yiji() {
             try{
                 let jiekoudata = sourcedata[0];
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            }catch(e){}
+            }catch(e){
+                log("缓存临时文件失败>"+e.message);
+            }
             页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
