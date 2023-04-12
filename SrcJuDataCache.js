@@ -19,11 +19,11 @@ function readData(fileid,datatype){
     }else{
         var jkdata = {};
     }
-    if(datatype=="主页"){
+    if(datatype=="1"){
         return jkdata.parse;
-    }else if(datatype=="二级"){
+    }else if(datatype=="2"){
         return jkdata.erparse;
-    }else if(datatype=="公共"){
+    }else if(datatype=="0"){
         return jkdata.public;
     }
 }
