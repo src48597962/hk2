@@ -21,7 +21,7 @@ function yiji() {
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
                 cacheData(sourcedata[0]);
-                initConfig({cfid: sourcedata[0].name+'-'+sourcedata[0].type});
+                initConfig({fileid: sourcedata[0].name+'-'+sourcedata[0].type});
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
@@ -189,6 +189,7 @@ function erji() {
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
                 cacheData(sourcedata[0]);
+                initConfig({fileid: sourcedata[0].name+'-'+sourcedata[0].type});
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
