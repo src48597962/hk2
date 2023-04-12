@@ -146,7 +146,6 @@ function erji() {
     let details;
     let stype = MY_PARAMS.stype;
     let datasource = [storage0.getMyVar('erjiextra'), MY_PARAMS, getMark(name, stype)];
-    log(MY_PARAMS)
     let erjiextra;
     let sname;
     let surl;
