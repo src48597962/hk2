@@ -705,6 +705,7 @@ function search(keyword, mode, sdata) {
         }
         clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"){
+            log(results)
             return results;
         }else{
             let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
