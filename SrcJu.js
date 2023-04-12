@@ -34,9 +34,6 @@ function yiji() {
         log("一级源接口加载异常>" + e.message);
     }
 
-    let csdata = $.require("hiker://page/jiekou")(sourcename+"_"+runMode);
-    log(csdata);
-
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
