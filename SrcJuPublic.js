@@ -8,7 +8,7 @@ if(Jucfg != ""){
 }
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
-let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
+
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
 if(sourcedata != ""){
