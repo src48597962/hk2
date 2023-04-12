@@ -1,6 +1,6 @@
 function cacheData(data){
     let jkdata = data;
-    let fileid = jkdata.name+'-'+jkdata.type;
+    let fileid = jkdata.type + '_'+ jkdata.name;
     let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
     if (!fileExist(cachefile)) {
         writeFile(cachefile,JSON.stringify(jkdata));
