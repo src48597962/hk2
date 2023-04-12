@@ -606,12 +606,16 @@ function search(keyword, mode, sdata) {
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
+    let ssdatalist = [];
     if (sdata) {
-        erdatalist = [];
-        erdatalist.push(sdata);
+        ssdatalist.push(sdata);
     }else if (sssname){
-        erdatalist = erdatalist.filter(it=>{
+        ssdatalist = erdatalist.filter(it=>{
             return it.name==sssname && it.type==runMode;
+        });
+    }else{
+        ssdatalist = erdatalist.filter(it=>{
+            return it.type==runMode;
         });
     }
     
@@ -673,7 +677,7 @@ function search(keyword, mode, sdata) {
             return {result:[], success:0};
         }
     }
-    let list = erdatalist.map((item) => {
+    let list = ssdatalist.map((item) => {
         return {
             func: task,
             param: {"data":item,"mode":mode},
