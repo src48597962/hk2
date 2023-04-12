@@ -3,8 +3,9 @@ require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 function SRCSet() {
     setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
+    /*
     let sourcenames = yidatalist.map(it=>{
-        return it.name && it.type==runMode;
+        return it.name;
     })
 
     let d = [];
@@ -44,6 +45,7 @@ function SRCSet() {
     d.push({
         col_type: "blank_block"
     })
+    */
     d.push({
         title: '增加',
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile) => {
