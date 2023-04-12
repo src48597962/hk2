@@ -85,7 +85,7 @@ function getYiData(type,od) {
             extra.img = extra.img || item.pic_url || item.img;
             extra.stype = sourcedata[0].type;
             extra.pageTitle = extra.pageTitle || extra.name;
-            if(item.url && !/js:/.test(item.url)){
+            if(item.url && !/js:|select:/.test(item.url)){
                 extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
                 extra.sname = sourcename;
             }
