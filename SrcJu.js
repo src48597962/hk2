@@ -617,7 +617,7 @@ function search(keyword, mode, sdata) {
             return it.type==runMode;
         });
     }
-    
+    log(ssdatalist);
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
@@ -714,7 +714,6 @@ function search(keyword, mode, sdata) {
         }
         clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"){
-            log(results)
             return results;
         }else{
             let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
@@ -722,6 +721,9 @@ function search(keyword, mode, sdata) {
         }
     } else {
         toast("无接口");
+        if(mode=="sousuo"){
+            updateItem("sousuoloading", { title: "无接口" });
+        }
     }
     clearMyVar('SrcJuSearching');
     hideLoading();
