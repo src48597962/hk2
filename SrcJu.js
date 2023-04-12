@@ -563,6 +563,7 @@ function search(keyword, mode, sdata) {
             return "hiker://empty";
         }
     }
+    log(MY_PAGE)
     let page = 1;
     if(mode=="sousuo"){
         if(MY_PAGE>1){
@@ -572,7 +573,7 @@ function search(keyword, mode, sdata) {
     }else if(mode=="sousuotest"){
         page = MY_PAGE;
     }
-
+    log(page)
     let name = keyword.split('  ')[0];
     let sssname;
     if(keyword.indexOf('  ')>-1){
