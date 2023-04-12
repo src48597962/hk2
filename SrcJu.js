@@ -567,7 +567,7 @@ function search(keyword, mode, sdata) {
     let page = 1;
     if(mode=="sousuo"){
         if(MY_PAGE>1){
-            page = parseInt(getMyVar('MY_PGAE','0'))+1;
+            page = parseInt(getMyVar('MY_PGAE','1'))+1;
             log(page)
             putMyVar('MY_PGAE',page);
         }
