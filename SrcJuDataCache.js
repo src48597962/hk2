@@ -5,7 +5,7 @@ function cacheData(data){
     writeFile(cachefile,JSON.stringify(jkdata));
 }
 
-function readData(jkid){
+function readData(fileid){
     let cfilename = jkid;
     let cachefile = `hiker://files/cache/_fileSelect_${cfilename}.json`;
     let cachedata = fetch(cachefile);
