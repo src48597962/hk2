@@ -66,6 +66,7 @@ function SRCSet() {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
+                    log(content)
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
                     let sourcedata = fetch(sourcefile);
                     if (sourcedata != "") {
