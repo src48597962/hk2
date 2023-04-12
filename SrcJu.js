@@ -663,7 +663,6 @@ function search(keyword, mode, sdata) {
                     item.col_type = objmode=="sousuo"  ? "video" : objmode=="sousuotest" ? "movie_1_vertical_pic" : "avatar";
                     resultdata.push(item);
                 }
-                log(resultdata)
             })
             return {result:resultdata, success:1};
         } catch (e) {
