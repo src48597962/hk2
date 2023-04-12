@@ -19,8 +19,8 @@ function yiji() {
                 parse = source;
             }
             try{
-                let jiekoudata = sourcedata[0];
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
+                cacheData(sourcedata[0]);
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
