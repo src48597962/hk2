@@ -18,16 +18,13 @@ function yiji() {
             } else {
                 parse = source;
             }
-            storage0.putMyVar('主页源信息',{name: sourcename, type: runMode});
-            /*
+            storage0.putMyVar('主页源接口信息',{name: sourcename, type: runMode});//传导给方法文件
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
                 cacheData(sourcedata[0]);
-                initConfig({fileid: sourcedata[0].name+'-'+sourcedata[0].type});
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
-            */
             页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast("当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : ""));
@@ -76,7 +73,7 @@ function yiji() {
                         clearMyVar("分类");
                         clearMyVar("更新");
                         clearMyVar(runMode+"_"+sourcename);
-                        clearMyVar("主页源信息");
+                        clearMyVar("主页源接口信息");
                         Juconfig["runMode"] = runMode;
                         Juconfig[runMode+'sourcename'] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
@@ -147,6 +144,7 @@ function erji() {
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
         clearMyVar('已选择换源列表');
+        clearMyVar('二级源接口信息');
         if(getMyVar('SrcBookCase')){
             clearMyVar('SrcBookCase');
             refreshPage(false);
@@ -174,6 +172,7 @@ function erji() {
             surl = datasource[i].surl || "";
             if(sname&&surl){
                 erjiextra = datasource[i];
+                storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
                 break;
             }
         }
