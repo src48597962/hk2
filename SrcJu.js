@@ -637,7 +637,7 @@ function search(keyword, mode, sdata) {
             let ssdata = [];
             eval("let 搜索 = " + parse['搜索'])
             ssdata = 搜索(name,page) || [];
-            log(objdata.name+">搜索结果>"+ssdata.length);
+            //log(objdata.name+">搜索结果>"+ssdata.length);
             let resultdata = [];
             ssdata.forEach(item => {
                 let extra = item.extra || {};
@@ -719,12 +719,12 @@ function search(keyword, mode, sdata) {
             updateItem(mode=="sousuo"?"sousuoloading":"listloading", { title: sousuosm });
         }
     } else {
+        clearMyVar('SrcJuSearching');
         toast("无接口");
         if(mode=="sousuo"){
             updateItem("sousuoloading", { title: "无接口" });
         }
     }
-    clearMyVar('SrcJuSearching');
     hideLoading();
 }
 
