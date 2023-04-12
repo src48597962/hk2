@@ -1,5 +1,4 @@
-function cacheData(data){
-    let jkdata = data;
+function cacheData(jkdata){
     let fileid = jkdata.type + '_'+ jkdata.name;
     let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
     if (!fileExist(cachefile)) {
