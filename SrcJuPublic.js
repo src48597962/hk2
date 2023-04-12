@@ -85,14 +85,14 @@ function getYiData(type,od) {
             extra.img = extra.img || item.pic_url || item.img;
             extra.stype = sourcedata[0].type;
             extra.pageTitle = extra.pageTitle || extra.name;
-            if(item.url && /^http/.test(item.url) && !/@/.test(item.url)){
-                extra.surl = item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#/,"");
+            if(item.url && !/js:/.test(item.url)){
+                extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|##|#noLoading#/g,"");
                 extra.sname = sourcename;
             }
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
             }
-            item.url = (extra.surl||!item.url)?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            item.url = /^hiker/.test(item.url)?item.url:(extra.surl||!item.url)?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖);
                 erji();
             }):item.url
