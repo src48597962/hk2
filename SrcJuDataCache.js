@@ -5,8 +5,7 @@ function cacheData(data){
     writeFile(cachefile,JSON.stringify(jkdata));
 }
 
-function readData(fileid){
-    let cfilename = fileid;
+function readData(cfilename,datatype){
     let cachefile = `hiker://files/cache/_fileSelect_${cfilename}.json`;
     let cachedata = fetch(cachefile);
     if(cachedata != ""){
@@ -18,8 +17,11 @@ function readData(fileid){
     }else{
         var jkdata = {};
     }
-    let public = jkdata.public;
-    let parse = jkdata.parse;
-    let erparse = jkdata.erparse;
-    return {parse:parse,erparse:erparse,public:public}
+    if(datatype=="主页"){
+        return jkdata.parse;
+    }else if(datatype=="二级"){
+        return jkdata.erparse;
+    }else if(datatype=="公共"){
+        return jkdata.public;
+    }
 }
