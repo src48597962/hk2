@@ -20,7 +20,7 @@ function yiji() {
             }
             storage0.putMyVar('主页源接口信息',{name: sourcename, type: runMode});//传导给方法文件
             try{
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
+                require(config.cd);
                 cacheData(sourcedata[0]);
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
