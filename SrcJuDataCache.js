@@ -18,7 +18,8 @@ function readData(fileid){
     }else{
         var jkdata = {};
     }
-    let 公共 = jkdata.public;
-    let 一级 = jkdata.parse;
-    let 二级 = jkdata.erparse;
+    let public = jkdata.public;
+    let parse = jkdata.parse;
+    let erparse = jkdata.erparse;
+    return {parse:parse,erparse:erparse,public:public}
 }
