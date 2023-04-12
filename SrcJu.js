@@ -191,15 +191,14 @@ function erji() {
                 parse = source;
             }
             sourcedata2 = sourcedata[0];
-            /*
+
             try{
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
+                require(config.cd);
                 cacheData(sourcedata[0]);
-                initConfig({fileid: sourcedata[0].name+'-'+sourcedata[0].type});
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
-            */
+
             if(parse&&parse['公共']){
                 公共 = parse['公共'] || {};
             }
