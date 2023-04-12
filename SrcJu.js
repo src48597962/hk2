@@ -648,6 +648,7 @@ function search(keyword, mode, sdata) {
                     extra.stype = objdata.type;
                     extra.sname = objdata.name;
                     extra.pageTitle = extra.name;
+                    log(item.url);
                     extra.surl = item.url&&!/js:|select:|(|)|=>/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
                     item.extra = extra;
                     item.url = /sousuo/.test(objmode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
