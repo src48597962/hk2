@@ -34,7 +34,7 @@ function yiji() {
         log("一级源接口加载异常>" + e.message);
     }
     require(config.cd); 
-    readData(runMode+"_"+sourcename,"1");
+    let 一级 = readData(runMode+"_"+sourcename,"1");
     log(一级)
     页码 = 页码 || {};
     let d = [];
