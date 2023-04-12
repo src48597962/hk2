@@ -653,7 +653,7 @@ function search(keyword, mode, sdata) {
                     item.url = /sousuo/.test(objmode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
-                    }) : "hiker://empty##"+ item.url + $("#noLoading#").lazyRule((extra) => {
+                    }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
                         if(getMyVar('已选择换源列表')){
                             return "toast://请勿重复点击，稍等...";
                         }else{
