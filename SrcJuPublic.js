@@ -86,13 +86,13 @@ function getYiData(type,od) {
             extra.stype = sourcedata[0].type;
             extra.pageTitle = extra.pageTitle || extra.name;
             if(item.url && !/js:/.test(item.url)){
-                extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|##|#noLoading#/g,"");
+                extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
                 extra.sname = sourcename;
             }
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
             }
-            item.url = /^hiker:\/\/page/.test(item.url)?item.url:(extra.surl||!item.url)?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            item.url = (extra.surl||!item.url)?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
                 require(config.依赖);
                 erji();
             }):item.url
