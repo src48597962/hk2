@@ -20,7 +20,7 @@ function yiji() {
             }
             try{
                 let jiekoudata = sourcedata[0];
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
             }catch(e){
                 log("缓存临时文件失败>"+e.message);
             }
