@@ -80,6 +80,7 @@ function getYiData(type,od) {
             })
         }
         data.forEach(item => {
+            log(item.url)
             let extra = item.extra || {};
             extra.name = extra.name || extra.pageTitle ||item.title;
             extra.img = extra.img || item.pic_url || item.img;
