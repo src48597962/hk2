@@ -613,10 +613,12 @@ function search(keyword, mode, sdata) {
     }
     
     let task = function (obj) {
+        let objdata = obj.data;
+        let objmode = obj.mode;
         try {
             let parse;
             let 公共;
-            eval("let source = " + obj.erparse);
+            eval("let source = " + objdata.erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = erdata;
@@ -624,24 +626,24 @@ function search(keyword, mode, sdata) {
                 parse = source;
             }
             if(parse){
-                eval("let gonggong = " + obj.public);
+                eval("let gonggong = " + objdata.public);
                 公共 = gonggong || parse['公共'] || {};
             }
-            let data = [];
+            let ssdata = [];
             eval("let 搜索 = " + parse['搜索'])
-            data = 搜索(name,page) || [];
-            let data2 = [];
-            data.forEach(item => {
+            ssdata = 搜索(name,page) || [];
+            let resultdata = [];
+            ssdata.forEach(item => {
                 let extra = item.extra || {};
                 extra.name = extra.name || item.title;
-                if((mode=="erji" && extra.name==name) || mode!="erji"){
+                if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                     extra.img = extra.img || item.img || item.pic_url;
-                    extra.stype = obj.type;
-                    extra.sname = obj.name;
+                    extra.stype = objdata.type;
+                    extra.sname = objdata.name;
                     extra.pageTitle = extra.name;
                     extra.surl = item.url&&!/js:/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
                     item.extra = extra;
-                    item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                    item.url = /sousuo/.test(objmode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
                     }) : "hiker://empty##"+ item.url + $("#noLoading#").lazyRule((extra) => {
@@ -656,23 +658,23 @@ function search(keyword, mode, sdata) {
                         }
                     }, extra);
                     item.content = item.desc;
-                    item.title = mode=="erji"?obj.name:item.title;
-                    item.desc = mode=="sousuo"  ? MY_RULE.title + ' · ' + obj.name :mode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
-                    item.col_type = mode=="sousuo"  ? "video":mode=="sousuotest"?"movie_1_vertical_pic": "avatar";
-                    data2.push(item);
+                    item.title = objmode=="erji"?objdata.name:item.title;
+                    item.desc = objmode=="sousuo"  ? MY_RULE.title + ' · ' + objdata.name :objmode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
+                    item.col_type = objmode=="sousuo"  ? "video" : objmode=="sousuotest" ? "movie_1_vertical_pic" : "avatar";
+                    resultdata.push(item);
                 }
+                log(resultdata)
             })
-            log(data2)
-            return {result:data2, success:1};
+            return {result:resultdata, success:1};
         } catch (e) {
-            log(obj.name + '>搜索失败>' + e.message);
+            log(objdata.name + '>搜索失败>' + e.message);
             return {result:[], success:0};
         }
     }
     let list = erdatalist.map((item) => {
         return {
             func: task,
-            param: item,
+            param: {"data":item,"mode":mode},
             id: item.name
         }
     });
