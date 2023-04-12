@@ -639,7 +639,7 @@ function search(keyword, mode, sdata) {
                     extra.stype = obj.type;
                     extra.sname = obj.name;
                     extra.pageTitle = extra.name;
-                    extra.surl = item.url ? item.url.replace(/#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#/, "") : "";
+                    extra.surl = item.url&&!/js:/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
                     item.extra = extra;
                     item.url = /sousuo/.test(mode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
