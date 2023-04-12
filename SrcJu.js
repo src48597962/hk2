@@ -33,6 +33,8 @@ function yiji() {
     } catch (e) {
         log("一级源接口加载异常>" + e.message);
     }
+    $.require("hiker://page/jiekou?name=神漫画&type=漫画");
+    log(data);
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
