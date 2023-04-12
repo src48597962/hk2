@@ -566,9 +566,10 @@ function search(keyword, mode, sdata) {
     log(MY_PAGE)
     let page = 1;
     if(mode=="sousuo"){
-        if(MY_PAGE>1){
+        if(MY_PAGE==1){
+            clearMyVar('MY_PGAE');
+        }else{
             page = parseInt(getMyVar('MY_PGAE','1'))+1;
-            log(page)
             putMyVar('MY_PGAE',page);
         }
     }else if(mode=="sousuotest"){
