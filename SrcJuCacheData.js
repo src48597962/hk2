@@ -20,10 +20,10 @@ function readData(fileid,datatype){
         var jkdata = {};
     }
     if(datatype=="1"){
-        return jkdata.parse;
+        var 一级 = jkdata.parse;
     }else if(datatype=="2"){
-        return jkdata.erparse;
+        var 二级 =  jkdata.erparse;
     }else if(datatype=="0"){
-        return jkdata.public;
+        var 公共 =  jkdata.public;
     }
 }
