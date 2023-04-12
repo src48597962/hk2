@@ -72,7 +72,7 @@ function getYiData(type,od) {
         }catch(e){
             log(e.message);
         }
-        if(data.length==0){
+        if(data.length==0 && MY_PAGE==1){
             data.push({
                 title: "未获取到数据",
                 url: "hiker://empty",
