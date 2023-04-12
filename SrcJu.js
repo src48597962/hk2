@@ -792,7 +792,7 @@ function downloadicon() {
 }
 //版本检测
 function Version() {
-    var nowVersion = "0.3";//现在版本 
+    var nowVersion = getItem('Version', "0.3");//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime', '0').replace('time', ''));
     if (getMyVar('SrcJu-VersionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
@@ -802,12 +802,13 @@ function Version() {
                 confirm({
                     title: '发现新版本，是否更新？',
                     content: nowVersion + '=>' + newVersion.SrcJu + '\n' + newVersion.SrcJudesc[newVersion.SrcJu],
-                    confirm: $.toString((nowtime) => {
+                    confirm: $.toString((nowtime,newVersion) => {
+                        setItem('Version', newVersion);
                         setItem('VersionChecktime', nowtime + 'time');
                         deleteCache();
                         delete config.依赖;
                         refreshPage();
-                    }, nowtime),
+                    }, nowtime, newVersion.SrcJu),
                     cancel: ''
                 })
                 log('检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
