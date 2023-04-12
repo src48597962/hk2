@@ -637,6 +637,7 @@ function search(keyword, mode, sdata) {
             let ssdata = [];
             eval("let 搜索 = " + parse['搜索'])
             ssdata = 搜索(name,page) || [];
+            log(objdata.name+">搜索结果>"+ssdata.length);
             let resultdata = [];
             ssdata.forEach(item => {
                 let extra = item.extra || {};
