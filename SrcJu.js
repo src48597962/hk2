@@ -155,6 +155,7 @@ function erji() {
     let isload;//是否正确加载
     let sauthor = "未知";
     let detailsfile = "hiker://files/cache/src/details.json";
+    let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
     let d = [];
     let parse;
     let 公共;
