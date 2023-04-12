@@ -2,9 +2,9 @@
 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 function SRCSet() {
-    setPageTitle('♥管理');
+    setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
     let sourcenames = yidatalist.map(it=>{
-        return it.name;
+        return it.name && it.type==runMode;
     })
 
     let d = [];
