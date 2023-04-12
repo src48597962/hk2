@@ -18,6 +18,7 @@ function yiji() {
             } else {
                 parse = source;
             }
+            storage0.putMyVar('主页源信息',{name: sourcename, type: runMode});
             /*
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuDataCache.js');
@@ -75,6 +76,7 @@ function yiji() {
                         clearMyVar("分类");
                         clearMyVar("更新");
                         clearMyVar(runMode+"_"+sourcename);
+                        clearMyVar("主页源信息");
                         Juconfig["runMode"] = runMode;
                         Juconfig[runMode+'sourcename'] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
