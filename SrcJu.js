@@ -34,9 +34,7 @@ function yiji() {
         log("一级源接口加载异常>" + e.message);
     }
 
-    let {
-        csdata
-    } = $.require("hiker://page/jiekou?fileid="+sourcename+"_"+runMode);
+    let csdata = $.require("hiker://page/jiekou")(sourcename+"_"+runMode);
     log(csdata);
 
     页码 = 页码 || {};
