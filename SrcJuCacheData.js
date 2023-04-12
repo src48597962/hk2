@@ -27,3 +27,8 @@ function readData(fileid,datatype){
         return jkdata.public;
     }
 }
+
+/*
+require(config.cd); 
+let 一级 = readData(runMode+"_"+sourcename,"1");
+*/
