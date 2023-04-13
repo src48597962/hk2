@@ -123,8 +123,8 @@ function SRCSet() {
         title: '分享',
         url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().lazyRule((datalist) => {
             let pastes = getPastes();
-            return $(pastes, 2 , "选择剪贴板").select((datalist) => {
-                let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)));
+            return $(pastes, 2 , "选择剪贴板").select((datalist,pastes) => {
+                let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)), pastes.indexOf(input));
                 if (pasteurl) {
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条';
                     copy(code);
@@ -132,7 +132,7 @@ function SRCSet() {
                 } else {
                     return "toast://分享失败，剪粘板或网络异常";
                 }
-            },datalist)
+            },datalist,pastes)
         }, yxdatalist),
         img: "https://lanmeiguojiang.com/tubiao/more/3.png",
         col_type: "icon_small_3"
