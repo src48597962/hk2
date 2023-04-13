@@ -141,6 +141,7 @@ function erji() {
         clearMyVar('SrcJudescload');
         clearMyVar('已选择换源列表');
         clearMyVar('二级源接口信息');
+        clearMyVar("listloading");
         if(getMyVar('SrcBookCase')){
             clearMyVar('SrcBookCase');
             refreshPage(false);
@@ -365,6 +366,7 @@ function erji() {
                             lineVisible: false
                         } 
                     });
+                    putMyVar("listloading","1");
                     if(getMyVar('SrcJuSousuoTest')){
                         return "toast://编辑测试模式下不允许换源.";
                     }else if(!getMyVar('SrcJuSearching')){
@@ -417,8 +419,7 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = list_col_type;
                     })
-                    let obj = findItem('listloading');
-                    addItemBefore(obj?"listloading":"listloading2", 列表);
+                    addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
                 }, sname),
                 col_type: 'scroll_button',
@@ -438,8 +439,7 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = input;
                     })
-                    let obj = findItem('listloading');
-                    addItemBefore(obj?"listloading":"listloading2", 列表);
+                    addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }),
@@ -487,6 +487,9 @@ function erji() {
     }
 
     if (isload) {
+        if(getMyVar('已选择换源列表')){
+            putMyVar("listloading","2");
+        }
         d.push({
             title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + ", 作者：" + sauthor+"</font></small>",
             url: 'hiker://empty',
