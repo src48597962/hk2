@@ -64,6 +64,13 @@ function readData(fileid,datatype){
         }
         return source;
     }else if(datatype=="0"){
-        return jkdata.public;
+        eval("let source = " + jkdata.public);
+        if (source.ext && /^http/.test(source.ext)) {
+            requireCache(source.ext, 48);
+            parse = public;
+        } else {
+            parse = source;
+        }
+        return parse;
     }
 }
