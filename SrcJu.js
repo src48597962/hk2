@@ -395,7 +395,7 @@ function erji() {
             }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
-                url: $("#noLoading#").b64().lazyRule((列表,name,sname,lazy) => {
+                url: $("#noLoading#").lazyRule((列表,name,sname,lazy) => {
                     let arr = findItemsByCls('playlist');
                     log(arr);
                     deleteItemByCls('playlist');
@@ -407,7 +407,7 @@ function erji() {
                     } else {
                         putMyVar(sname + 'sort', '1')
                         //列表.reverse();
-                        arr.reverse();
+                        //arr.reverse();
                         updateItem('listsort', {
                             title: `““””<b><span style="color: #66CCEE">排序⇅</span></b>`
                         });
