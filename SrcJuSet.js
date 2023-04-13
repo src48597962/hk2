@@ -55,7 +55,22 @@ function SRCSet() {
             jiekouapi(sourcefile);
         }, sourcefile),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
-        col_type: "icon_small_3"
+        col_type: "icon_small_3",
+        extra: {
+            longClick: [{
+                title: getMyVar("调试模式")?'退出调试':'调试模式',
+                js: $.toString(() => {
+                    return $().lazyRule(() => {
+                        if(getMyVar("调试模式")){
+                            clearMyVar("调试模式");
+                        }else{
+                            putMyVar("调试模式", "1");
+                        }
+                        return "toast://已设置"
+                    })
+                })
+            }]
+        }
     });
     d.push({
         title: '导入',
