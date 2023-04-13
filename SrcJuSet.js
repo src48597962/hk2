@@ -66,7 +66,7 @@ function SRCSet() {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
-                    log(content)
+                    //log(content)
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
                     let sourcedata = fetch(sourcefile);
                     if (sourcedata != "") {
@@ -99,7 +99,7 @@ function SRCSet() {
                     return "toast://非法口令";
                 }
             } catch (e) {
-                log(e.message);
+                log('√口令解析失败>'+e.message);
                 return "toast://口令有误";
             }
         }, sourcefile, Juconfig['ImportType']),
@@ -332,7 +332,7 @@ function jiekouapi(sourcefile, data) {
                     source.public = public;
                 }
             }catch(e){
-                log(e.message);
+                log('√源接口异常>'+e.message);
                 return "toast://搜索源接口有异常，看日志"
             }
             if(source){
@@ -383,7 +383,7 @@ function jiekouapi(sourcefile, data) {
                     try{
                         eval("let yparse = " + parse);
                     }catch(e){
-                        log(e.message);
+                        log('√一级主页源代码异常>'+e.message);
                         return "toast://一级主页源有错误，看日志"
                     }
                     newapi['parse'] = parse;
@@ -392,7 +392,7 @@ function jiekouapi(sourcefile, data) {
                     try{
                         eval("let eparse = " + erparse);
                     }catch(e){
-                        log(e.message);
+                        log('√二级主页源代码异常>'+e.message);
                         return "toast://二级搜索源有错误，看日志"
                     }
                     newapi['erparse'] = erparse;
