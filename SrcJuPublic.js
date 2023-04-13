@@ -8,7 +8,6 @@ if(Jucfg != ""){
 }
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
-initConfig({cd: config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuCacheData.js'});
 
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
