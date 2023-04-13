@@ -23,7 +23,7 @@ function yiji() {
                 require(config.cd);
                 cacheData(sourcedata[0]);
             }catch(e){
-                log("缓存临时文件失败>"+e.message);
+                log("√缓存临时文件失败>"+e.message);
             }
             页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
@@ -31,7 +31,7 @@ function yiji() {
             }
         }
     } catch (e) {
-        log("一级源接口加载异常>" + e.message);
+        log("√一级源接口加载异常>" + e.message);
     }
 
     页码 = 页码 || {};
@@ -180,7 +180,7 @@ function erji() {
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
-            log('分享页面，且本地无对应接口');
+            log('√分享页面，且本地无对应接口');
             sourcedata.push(MY_PARAMS.sourcedata);
         }
         if (sourcedata.length > 0 && sourcedata[0].erparse) {
@@ -197,7 +197,7 @@ function erji() {
                 require(config.cd);
                 cacheData(sourcedata[0]);
             }catch(e){
-                log("缓存临时文件失败>"+e.message);
+                log("√缓存临时文件失败>"+e.message);
             }
 
             if(parse&&parse['公共']){
@@ -209,7 +209,7 @@ function erji() {
             }
         }
     } catch (e) {
-        log(e.message);
+        log("√加载二级源接口>"+e.message);
     }
     try {
         if (parse && surl) {
@@ -251,10 +251,10 @@ function erji() {
                     indexid = 0;
                 }
                 if(线路s.length != 列表s.length){
-                    log(sname+'接口返回的线路和列表不相等')
+                    log('√'+sname+'接口返回的线路和列表不相等')
                 }
             }catch(e){
-                log(sname+">线路或列表返回数据有误"+e.message);
+                log('√'+sname+">线路或列表返回数据有误"+e.message);
                 线路s = ["线路"];
             }
             
@@ -273,7 +273,7 @@ function erji() {
                         列表.reverse();
                     }
                 }catch(e){
-                    //log('修正选集顺序失败>'+e.message)
+                    //log('√修正选集顺序失败>'+e.message)
                 }
             }
             if (getMyVar(sname + 'sort') == '1') {
@@ -497,7 +497,7 @@ function erji() {
         }
     } catch (e) {
         toast('有异常，看日志');
-        log(sname + '>加载详情失败>' + e.message);
+        log('√'+sname + '>加载详情失败>' + e.message);
     }
 
     if (isload) {
@@ -665,7 +665,7 @@ function search(keyword, mode, sdata) {
             let ssdata = [];
             eval("let 搜索 = " + parse['搜索'])
             ssdata = 搜索(name,page) || [];
-            //log(objdata.name+">搜索结果>"+ssdata.length);
+            //log('√'+objdata.name+">搜索结果>"+ssdata.length);
             let resultdata = [];
             ssdata.forEach(item => {
                 let extra = item.extra || {};
@@ -700,7 +700,7 @@ function search(keyword, mode, sdata) {
             })
             return {result:resultdata, success:1};
         } catch (e) {
-            log(objdata.name + '>搜索失败>' + e.message);
+            log('√'+objdata.name + '>搜索失败>' + e.message);
             return {result:[], success:0};
         }
     }
@@ -838,7 +838,7 @@ function Version() {
                     }, nowtime, newVersion.SrcJu),
                     cancel: ''
                 })
-                log('检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
+                log('√检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
             }
             putMyVar('SrcJu-Version', '-V' + newVersion.SrcJu);
         } catch (e) { }
