@@ -583,13 +583,15 @@ function search(keyword, mode, sdata) {
     if(mode=="sousuo"){
         if(MY_PAGE==1){
             clearMyVar('MY_PGAE');
-            clearMyVar('nosousuolist');
         }else{
             page = parseInt(getMyVar('MY_PGAE','1'))+1;
             putMyVar('MY_PGAE',page);
         }
     }else if(mode=="sousuotest"){
         page = MY_PAGE;
+    }
+    if(page==1){
+        clearMyVar('nosousuolist');
     }
     let name = keyword.split('  ')[0];
     let sssname;
