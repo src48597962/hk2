@@ -348,7 +348,7 @@ function jiekouapi(sourcefile, data) {
                     require(config.依赖);
                     d = search(name,"sousuotest",sdata);
                     d.push({
-                        title: "测试搜索结束",
+                        title: "测试搜索第"+MY_PAGE+"页结束",
                         url: "hiker://empty",
                         col_type: 'text_center_1',
                         extra: {
