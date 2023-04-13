@@ -27,14 +27,14 @@ function jianfan(str,x) {
 //写接口数据临时缓存
 function cacheData(jkdata){
     let fileid = jkdata.type + '_'+ jkdata.name;
-    let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
+    let cachefile = `hiker://files/_cache/${fileid}.json`;
     if (!fileExist(cachefile)) {
         writeFile(cachefile,JSON.stringify(jkdata));
     }
 }
 //读接口数据临时缓存
 function readData(fileid,datatype){
-    let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
+    let cachefile = `hiker://files/_cache/${fileid}.json`;
     let cachedata = fetch(cachefile);
     if(cachedata != ""){
         try{
