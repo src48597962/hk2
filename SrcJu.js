@@ -397,6 +397,7 @@ function erji() {
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").b64().lazyRule((列表,name,sname,lazy) => {
                     let arr = findItemsByCls('playlist');
+                    log(arr);
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
