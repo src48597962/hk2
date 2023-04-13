@@ -18,7 +18,7 @@ function yiji() {
             } else {
                 parse = source;
             }
-            storage0.putMyVar('主页源接口信息',{name: sourcename, type: runMode});//传导给方法文件
+            storage0.putMyVar('一级源接口信息',{name: sourcename, type: runMode});//传导给方法文件
             try{
                 require(config.cd);
                 cacheData(sourcedata[0]);
@@ -68,7 +68,7 @@ function yiji() {
                         clearMyVar("分类");
                         clearMyVar("更新");
                         clearMyVar(runMode+"_"+sourcename);
-                        clearMyVar("主页源接口信息");
+                        clearMyVar("一级源接口信息");
                         Juconfig["runMode"] = runMode;
                         Juconfig[runMode+'sourcename'] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
