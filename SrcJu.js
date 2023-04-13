@@ -396,7 +396,7 @@ function erji() {
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((sname) => {
-                    let 列表 = findItemsByCls('playlist');
+                    let 列表 = findItemsByCls('playlist') || [];
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
@@ -426,7 +426,7 @@ function erji() {
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
                 url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select(() => {
-                    let 列表 = findItemsByCls('playlist');
+                    let 列表 = findItemsByCls('playlist') || [];
                     列表.forEach(item => {
                         item.col_type = input;
                     })
