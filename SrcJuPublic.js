@@ -62,7 +62,7 @@ function getYiData(type,od) {
             }
         }
     }catch(e){
-        log("一级源接口加载异常>"+e.message);
+        log("√一级源接口加载异常>"+e.message);
     }
     if(parse){
         let data = [];
