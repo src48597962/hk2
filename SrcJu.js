@@ -366,7 +366,7 @@ function erji() {
                             lineVisible: false
                         } 
                     });
-                    putMyVar("listloading","1");
+                    putMyVar("listloading","1");//做为排序和样式动态处理插入列表时查找id判断
                     if(getMyVar('SrcJuSousuoTest')){
                         return "toast://编辑测试模式下不允许换源.";
                     }else if(!getMyVar('SrcJuSearching')){
