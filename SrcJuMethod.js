@@ -29,6 +29,20 @@ function cacheData(jkdata){
     let fileid = jkdata.type + '_'+ jkdata.name;
     let cachefile = `hiker://files/cache/_fileSelect_${fileid}.json`;
     if (!fileExist(cachefile)) {
+        if(jkdata.parse){
+            eval("let source = " + jkdata.parse);
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                jkdata.parse = yidata;
+            }
+        }
+        if(jkdata.erparse){
+            eval("let source = " + jkdata.erparse);
+            if(source.ext && /^http/.test(source.ext)){
+                requireCache(source.ext, 48);
+                jkdata.erparse = erdata;
+            }
+        }
         writeFile(cachefile,JSON.stringify(jkdata));
     }
 }
