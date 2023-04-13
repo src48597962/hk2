@@ -20,10 +20,10 @@ function yiji() {
             }
             storage0.putMyVar('一级源接口信息',{name: sourcename, type: runMode});//传导给方法文件
             try{
-                require(config.cd);
-                cacheData(sourcedata[0]);
+                //require(config.cd);
+                //cacheData(sourcedata[0]);
             }catch(e){
-                log("√缓存临时文件失败>"+e.message);
+                //log("√缓存临时文件失败>"+e.message);
             }
             页码 = parse["页码"];
             if(!getMyVar(runMode+"_"+sourcename)){
@@ -194,10 +194,10 @@ function erji() {
             sourcedata2 = sourcedata[0];
 
             try{
-                require(config.cd);
-                cacheData(sourcedata[0]);
+                //require(config.cd);
+                //cacheData(sourcedata[0]);
             }catch(e){
-                log("√缓存临时文件失败>"+e.message);
+                //log("√缓存临时文件失败>"+e.message);
             }
 
             if(parse&&parse['公共']){
