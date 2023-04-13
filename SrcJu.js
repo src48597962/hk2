@@ -417,7 +417,11 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = list_col_type;
                     })
-                    addItemBefore('listloading', 列表);
+                    let listid = 'listloading';
+                    if(getMyVar('SrcJuSearching')){
+                        listid = 'listloading2';
+                    }
+                    addItemBefore(listid, 列表);
                     return 'toast://切换排序成功'
                 }, sname),
                 col_type: 'scroll_button',
@@ -437,7 +441,11 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = input;
                     })
-                    addItemBefore('listloading', 列表);
+                    let listid = 'listloading';
+                    if(getMyVar('SrcJuSearching')){
+                        listid = 'listloading2';
+                    }
+                    addItemBefore(listid, 列表);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }),
