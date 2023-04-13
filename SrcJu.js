@@ -425,25 +425,16 @@ function erji() {
             })
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
-                url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select((列表, name,lazy) => {
+                url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select(() => {
+                    let 列表 = findItemsByCls('playlist');
+                    列表.forEach(item => {
+                        item.col_type = input;
+                    })
                     deleteItemByCls('playlist');
-                    let d = [];
-                    for(let i=0; i<列表.length; i++) {
-                        d.push({
-                            title: 列表[i].title,
-                            url: "hiker://empty##" + 列表[i].url + lazy,
-                            col_type: input,
-                            extra: {
-                                id: name + "_选集_" + i,
-                                url: 列表[i].url,
-                                cls: "loadlist playlist"
-                            }
-                        });
-                    }
-                    addItemBefore('listloading', d);
+                    addItemBefore('listloading', 列表);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
-                }, 列表,name,lazy),
+                }),
                 col_type: 'scroll_button',
                 extra: {
                     cls: "loadlist"
