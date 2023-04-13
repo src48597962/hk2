@@ -549,7 +549,7 @@ function erji() {
             }
         });
         setResult(d);
-        if(!getMyVar('SrcJuSousuoTest')){
+        if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
             search(name,"erji");
         }
     }
