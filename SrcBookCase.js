@@ -15,7 +15,7 @@ function bookCase() {
     let d = [];
     d.push({
         title: ' 本地书架',
-        url: "hiker://page/Main.view?rule=本地资源管理",
+        url: "hiker://page/Bookrack.view?rule=本地资源管理&ruleName="+MY_RULE.title+"&type=",
         img: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
         col_type: "icon_2"
     });
