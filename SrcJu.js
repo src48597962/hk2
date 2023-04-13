@@ -682,8 +682,12 @@ function search(keyword, mode, sdata) {
                 }
             })
             if(resultdata.length>0){
+                try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                cacheData(objdata);
+                    cacheData(objdata);
+                }catch(e){
+                    //log("√缓存临时文件失败>"+e.message);
+                }
             }
             return {result:resultdata, success:1};
         } catch (e) {
