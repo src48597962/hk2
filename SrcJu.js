@@ -594,6 +594,7 @@ function search(keyword, mode, sdata) {
     if(mode=="sousuo"){
         if(MY_PAGE==1){
             clearMyVar('MY_PGAE');
+            clearMyVar('nosousuolist');
         }else{
             page = parseInt(getMyVar('MY_PGAE','1'))+1;
             putMyVar('MY_PGAE',page);
@@ -645,6 +646,10 @@ function search(keyword, mode, sdata) {
             return it.type==runMode;
         });
     }
+    let nosousuolist = storage0.getMyVar('nosousuolist') || [];
+    ssdatalist = ssdatalist.filter(it => {
+        return nosousuolist.indexOf(it.name) == -1;
+    })
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
@@ -730,6 +735,9 @@ function search(keyword, mode, sdata) {
                         }else if(mode=="sousuotest"){
                             results = data;
                         }
+                    }else{
+                        nosousuolist.push(id);
+                        storage0.putMyVar('nosousuolist', nosousuolist);
                     }
                 }
             },
@@ -748,9 +756,11 @@ function search(keyword, mode, sdata) {
         }
     } else {
         clearMyVar('SrcJuSearching');
-        toast("无接口");
-        if(mode=="sousuo"){
-            updateItem("sousuoloading", { title: "无接口" });
+        if(page==1){
+            toast("无接口");
+            if(mode=="sousuo"){
+                updateItem("sousuoloading", { title: "无接口" });
+            }
         }
     }
     hideLoading();
