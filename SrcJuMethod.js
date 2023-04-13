@@ -46,9 +46,23 @@ function readData(fileid,datatype){
         var jkdata = {};
     }
     if(datatype=="1"){
-        return jkdata.parse;
+        eval("let source = " + jkdata.parse);
+        if (source.ext && /^http/.test(source.ext)) {
+            requireCache(source.ext, 48);
+            parse = yidata;
+        } else {
+            parse = source;
+        }
+        return source;
     }else if(datatype=="2"){
-        return jkdata.erparse;
+        eval("let source = " + jkdata.erparse);
+        if (source.ext && /^http/.test(source.ext)) {
+            requireCache(source.ext, 48);
+            parse = erdata;
+        } else {
+            parse = source;
+        }
+        return source;
     }else if(datatype=="0"){
         return jkdata.public;
     }
