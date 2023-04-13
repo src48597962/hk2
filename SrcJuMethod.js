@@ -1,7 +1,6 @@
 //修正按钮元素
 function toerji(item) {
     let info = storage0.getMyVar('一级源接口信息');
-    log(info)
     let extra = item.extra || {};
     extra.name = extra.name || extra.pageTitle ||item.title;
     extra.img = extra.img || item.pic_url || item.img;
