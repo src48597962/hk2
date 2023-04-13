@@ -396,6 +396,7 @@ function erji() {
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").b64().lazyRule((列表,name,sname,lazy) => {
+                    let arr = findItemsByCls('playlist');
                     deleteItemByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
@@ -404,11 +405,13 @@ function erji() {
                         });
                     } else {
                         putMyVar(sname + 'sort', '1')
-                        列表.reverse();
+                        //列表.reverse();
+                        arr.reverse();
                         updateItem('listsort', {
                             title: `““””<b><span style="color: #66CCEE">排序⇅</span></b>`
                         });
                     };
+                    /*
                     let d = [];
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     for(let i=0; i<列表.length; i++) {
@@ -424,6 +427,8 @@ function erji() {
                         });
                     }
                     addItemBefore('listloading', d);
+                    */
+                    addItemBefore('listloading', arr);
                     return 'toast://切换排序成功'
                 }, 列表,name,sname,lazy),
                 col_type: 'scroll_button',
