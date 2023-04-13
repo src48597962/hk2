@@ -417,7 +417,8 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = list_col_type;
                     })
-                    addItemBefore(getMyVar('已选择换源列表')?"listloading2":"listloading", 列表);
+                    let obj = findItem('listloading');
+                    addItemBefore(obj?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
                 }, sname),
                 col_type: 'scroll_button',
@@ -437,7 +438,8 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = input;
                     })
-                    addItemBefore(getMyVar('已选择换源列表')?"listloading2":"listloading", 列表);
+                    let obj = findItem('listloading');
+                    addItemBefore(obj?"listloading":"listloading2", 列表);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }),
