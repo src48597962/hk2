@@ -395,9 +395,8 @@ function erji() {
             }
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
-                url: $("#noLoading#").lazyRule((列表,name,sname,lazy) => {
-                    let arr = findItemsByCls('playlist');
-                    deleteItemByCls('playlist');
+                url: $("#noLoading#").lazyRule((sname) => {
+                    let 列表 = findItemsByCls('playlist');
                     if (getMyVar(sname + 'sort') == '1') {
                         putMyVar(sname + 'sort', '0');
                         updateItem('listsort', {
@@ -405,37 +404,19 @@ function erji() {
                         });
                     } else {
                         putMyVar(sname + 'sort', '1')
-                        //列表.reverse();
-                        arr.reverse();
                         updateItem('listsort', {
                             title: `““””<b><span style="color: #66CCEE">排序⇅</span></b>`
                         });
                     };
-                    
-                    /*
-                    let d = [];
+                    列表.reverse();
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
-                    for(let i=0; i<列表.length; i++) {
-                        d.push({
-                            title: 列表[i].title,
-                            url: "hiker://empty##" + 列表[i].url + lazy,
-                            col_type: list_col_type,
-                            extra: {
-                                id: name + "_选集_" + i,
-                                url: 列表[i].url,
-                                cls: "loadlist playlist"
-                            }
-                        });
-                    }
-                    addItemBefore('listloading', d);
-                    */
-                    let list_col_type = getItem('SrcJuList_col_type', 'text_2');
-                    arr.forEach(item => {
+                    列表.forEach(item => {
                         item.col_type = list_col_type;
                     })
-                    addItemBefore('listloading', arr);
+                    deleteItemByCls('playlist');
+                    addItemBefore('listloading', 列表);
                     return 'toast://切换排序成功'
-                }, 列表,name,sname,lazy),
+                }, sname),
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
