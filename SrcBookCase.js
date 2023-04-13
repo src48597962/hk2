@@ -8,7 +8,7 @@ function bookCase() {
                 Julist.push(it);
             }
         }catch(e){
-            log("书架加载异常>"+e.message);
+            log("√书架加载异常>"+e.message);
         }
     })
 
@@ -85,7 +85,7 @@ function bookCase() {
                 })
             }
         }catch(e){
-            log("书架加载异常>"+e.message);
+            log("√书架加载异常>"+e.message);
         }
     })
     d.push({
