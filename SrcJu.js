@@ -681,6 +681,10 @@ function search(keyword, mode, sdata) {
                     resultdata.push(item);
                 }
             })
+            if(resultdata.length>0){
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                cacheData(objdata);
+            }
             return {result:resultdata, success:1};
         } catch (e) {
             log('√'+objdata.name + '>搜索失败>' + e.message);
@@ -739,6 +743,9 @@ function search(keyword, mode, sdata) {
             if(mode=="sousuo"){
                 updateItem("sousuoloading", { title: "无接口" });
             }
+        }
+        if(mode=="sousuotest"){
+            return [];
         }
     }
     hideLoading();
