@@ -302,26 +302,27 @@ function erji() {
             if (stype=="漫画") {
                 lazy = $("").lazyRule((标识,规则名) => {
                     let url = input.split("##")[1];
-                    //let 二级 = $.require('jiekou?rule=' + 规则名).二级(标识);
-                    //let 解析 = 二级['解析'];
+                    let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
                     let 解析 = $.require('jiekou?rule=' + 规则名).属性(规则名,"二级",标识);
                     let obj = {"规则名": 规则名, "标识": 标识}
-                    return 解析(url,obj);
+                    return 解析(url, 公共, obj);
                 }, 标识, MY_RULE.title);
                 itype = "comic";
             }else{
-                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                lazy = $("#readTheme##autoPage#").rule((标识,规则名) => {
                     let url = MY_PARAMS.url || "";
-                    解析(url,公共);
-                }, 解析, 公共);
+                    let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
+                    let 解析 = $.require('jiekou?rule=' + 规则名).属性(规则名,"二级",标识);
+                    let obj = {"规则名": 规则名, "标识": 标识}
+                    解析(url,公共,obj);
+                }, 标识, MY_RULE.title);
                 itype = "novel";
             }
             let download = $.toString((标识,规则名) => {
-                let 二级 = $.require('jiekou?rule=' + 规则名).二级(标识);
                 let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
-                let 解析 = 二级['解析'];
-                let obj = {"公共": 公共, "标识": 标识}
-                return 解析(input,obj);
+                let 解析 = $.require('jiekou?rule=' + 规则名).属性(规则名,"二级",标识);
+                let obj = {"规则名": 规则名, "标识": 标识}
+                return 解析(input, 公共, obj);
             }, 标识, MY_RULE.title);
             d.push({
                 title: "详情简介",
