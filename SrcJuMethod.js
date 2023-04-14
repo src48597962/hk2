@@ -65,11 +65,11 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==0){
-            eval("parse = " + jkdata.public);
+            parse = jkdata.public;
         }
-        //let data;
-        //eval("data = " + parse);
-        return parse;
+        let data;
+        eval("data = " + parse);
+        return data;
     }catch(e){
         log("读取接口本地缓存文件失败>"+e.message);
         return "";
