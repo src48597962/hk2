@@ -47,8 +47,9 @@ function readData(fileid,datatype){
     }
     try{
         let parse;
+        let source;
         if(datatype=="1"){
-            eval("let source = " + jkdata.parse);
+            source = jkdata.parse;
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = yidata;
@@ -56,7 +57,7 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype=="2"){
-            eval("let source = " + jkdata.erparse);
+            source = jkdata.erparse;
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = erdata;
@@ -64,7 +65,7 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype=="0"){
-            eval("parse = " + jkdata.public);
+            parse = jkdata.public;
         }
         return parse;
     }catch(e){
