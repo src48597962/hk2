@@ -45,26 +45,30 @@ function readData(fileid,datatype){
     }else{
         var jkdata = {};
     }
-    if(datatype=="1"){
-        eval("let source = " + jkdata.parse);
-        if (source.ext && /^http/.test(source.ext)) {
-            requireCache(source.ext, 48);
-            parse = yidata;
-        } else {
-            parse = source;
+    try{
+        let parse;
+        if(datatype=="1"){
+            eval("let source = " + jkdata.parse);
+            if (source.ext && /^http/.test(source.ext)) {
+                requireCache(source.ext, 48);
+                parse = yidata;
+            } else {
+                parse = source;
+            }
+        }else if(datatype=="2"){
+            eval("let source = " + jkdata.erparse);
+            if (source.ext && /^http/.test(source.ext)) {
+                requireCache(source.ext, 48);
+                parse = erdata;
+            } else {
+                parse = source;
+            }
+        }else if(datatype=="0"){
+            eval("parse = " + jkdata.public);
         }
-        return source;
-    }else if(datatype=="2"){
-        eval("let source = " + jkdata.erparse);
-        if (source.ext && /^http/.test(source.ext)) {
-            requireCache(source.ext, 48);
-            parse = erdata;
-        } else {
-            parse = source;
-        }
-        return source;
-    }else if(datatype=="0"){
-        eval("let source = " + jkdata.public);
-        return source;
+        return parse;
+    }catch(e){
+        log("读取接口本地缓存文件失败>"+e.message);
+        return {};
     }
 }
