@@ -68,10 +68,10 @@ function readData(fileid,datatype){
             log("3-"+$.type(parse));
         }
         log('0-'+$.type(parse))
-        let data;
-        eval("data = " + parse);
-        log("data-"+$.type(data));
-        return data;
+        //let data;
+        //eval("data = " + parse);
+        //log("data-"+$.type(data));
+        return parse;
     }catch(e){
         log("读取接口本地缓存文件失败>"+e.message);
         return "";
