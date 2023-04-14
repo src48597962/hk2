@@ -54,7 +54,6 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==2){
-            log("2-"+$.type(jkdata.erparse))
             eval("source = " + jkdata.erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
@@ -65,12 +64,7 @@ function readData(fileid,datatype){
         }else if(datatype==3){
             eval("source = " + jkdata.public);
             parse = source;
-            log("3-"+$.type(parse));
         }
-        log('0-'+$.type(parse))
-        //let data;
-        //eval("data = " + parse);
-        //log("data-"+$.type(data));
         return parse;
     }catch(e){
         log("读取接口本地缓存文件失败>"+e.message);
