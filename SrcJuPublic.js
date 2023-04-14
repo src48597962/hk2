@@ -65,6 +65,7 @@ function getYiData(type,od) {
         log("√一级源接口加载异常>"+e.message);
     }
     if(parse){
+        let page = MY_PAGE || 1;
         let data = [];
         try{
             eval("let 数据 = " + parse[type])
@@ -72,7 +73,7 @@ function getYiData(type,od) {
         }catch(e){
             log(e.message);
         }
-        if(data.length==0 && MY_PAGE==1){
+        if(data.length==0 && page==1){
             data.push({
                 title: "未获取到数据",
                 url: "hiker://empty",
