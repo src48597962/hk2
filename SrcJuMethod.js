@@ -35,11 +35,12 @@ function cacheData(jkdata){
 //读接口数据临时缓存
 function readData(fileid,datatype){
     let cachefile = `hiker://files/_cache/${fileid}.json`;
-    let cachedata = fetch(cachefile);
+    log(`hiker://files/_cache/${fileid}.json`)
+    log(datatype)
     let jkdata = {};
     if(cachedata != ""){
         try{
-            eval("jkdata=" + cachedata);
+            eval("jkdata=" + fetch(cachefile));
         }catch(e){
         }
     }
