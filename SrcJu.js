@@ -660,6 +660,12 @@ function search(keyword, mode, sdata) {
             }
             let ssdata = [];
             eval("let 搜索 = " + parse['搜索'])
+            try{
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                cacheData(objdata);
+            }catch(e){
+                //log("√缓存临时文件失败>"+e.message);
+            }
             ssdata = 搜索(name,page) || [];
             //log('√'+objdata.name+">搜索结果>"+ssdata.length);
             let resultdata = [];
@@ -694,14 +700,6 @@ function search(keyword, mode, sdata) {
                     resultdata.push(item);
                 }
             })
-            if(resultdata.length>0){
-                try{
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                    cacheData(objdata);
-                }catch(e){
-                    //log("√缓存临时文件失败>"+e.message);
-                }
-            }
             return {result:resultdata, success:1};
         } catch (e) {
             log('√'+objdata.name + '>搜索失败>' + e.message);
