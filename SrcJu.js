@@ -281,8 +281,9 @@ function erji() {
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             let lazy;
             let itype;
-            /*
             let 解析 = parse['解析'];
+            /*
+            
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     let url = input.split("##")[1];
