@@ -65,7 +65,9 @@ function readData(fileid,datatype){
         }else if(datatype==0){
             parse = jkdata.public;
         }
-        return parse;
+        let data;
+        eval("data = " + parse);
+        return data;
     }catch(e){
         log("读取接口本地缓存文件失败>"+e.message);
         return "";
