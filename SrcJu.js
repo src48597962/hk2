@@ -283,7 +283,6 @@ function erji() {
             let itype;
             let 解析 = parse['解析'];
             /*
-            
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     let url = input.split("##")[1];
@@ -324,13 +323,9 @@ function erji() {
                 }, MY_RULE.title, 标识);
                 itype = "novel";
             }
-            let download = $.toString((规则名,标识) => {
-                const 子页面 = $.require('jiekou?rule=' + 规则名);
-                let 公共 = 子页面.公共(标识);
-                let 解析 = 子页面.属性(标识,"二级","解析");
-                let 参数 = {"规则名": 规则名, "标识": 标识}
-                return 解析(input, 公共, 参数);
-            }, MY_RULE.title, 标识);
+            let download = $.toString((解析,公共,参数) => {
+                return 解析(input,公共,参数);
+            }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
 
             d.push({
                 title: "详情简介",
