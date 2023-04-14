@@ -63,9 +63,11 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==3){
-            parse = jkdata.public;
+            eval("source = " + jkdata.public);
+            parse = source;
             log("3-"+$.type(parse));
         }
+        log('0-'+$.type(parse))
         let data;
         eval("data = " + parse);
         log("data-"+$.type(data));
