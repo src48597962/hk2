@@ -277,11 +277,12 @@ function erji() {
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
-            //let 解析 = parse['解析'];
+
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             let lazy;
             let itype;
             /*
+            let 解析 = parse['解析'];
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     let url = input.split("##")[1];
@@ -304,9 +305,9 @@ function erji() {
                     let url = input.split("##")[1];
                     //let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
                     //let 解析 = $.require('jiekou?rule=' + 规则名).属性(标识,"二级","解析");
-                    const 接口 = $.require('jiekou?rule=' + 规则名);
-                    let 公共 = 接口.公共(标识);
-                    let 解析 = 接口.属性(标识,"二级","解析");
+                    const 子页面 = $.require('jiekou?rule=' + 规则名);
+                    let 公共 = 子页面.公共(标识);
+                    let 解析 = 子页面.属性(标识,"二级","解析");
                     let 参数 = {"规则名": 规则名, "标识": 标识}
                     return 解析(url, 公共, 参数);
                 }, MY_RULE.title, 标识);
@@ -314,16 +315,18 @@ function erji() {
             }else{
                 lazy = $("#readTheme##autoPage#").rule((规则名,标识) => {
                     let url = MY_PARAMS.url || "";
-                    let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
-                    let 解析 = $.require('jiekou?rule=' + 规则名).属性(标识,"二级","解析");
+                    const 子页面 = $.require('jiekou?rule=' + 规则名);
+                    let 公共 = 子页面.公共(标识);
+                    let 解析 = 子页面.属性(标识,"二级","解析");
                     let 参数 = {"规则名": 规则名, "标识": 标识}
                     解析(url,公共,参数);
                 }, MY_RULE.title, 标识);
                 itype = "novel";
             }
             let download = $.toString((规则名,标识) => {
-                let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
-                let 解析 = $.require('jiekou?rule=' + 规则名).属性(标识,"二级","解析");
+                const 子页面 = $.require('jiekou?rule=' + 规则名);
+                let 公共 = 子页面.公共(标识);
+                let 解析 = 子页面.属性(标识,"二级","解析");
                 let 参数 = {"规则名": 规则名, "标识": 标识}
                 return 解析(input, 公共, 参数);
             }, MY_RULE.title, 标识);
