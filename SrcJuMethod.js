@@ -41,7 +41,7 @@ function readData(fileid,datatype){
     }catch(e){
         log("jkdata加载失败>"+fileid+">"+e.message);
     }
-    log("jkdata-"+$.type(jkdata));
+
     try{
         let parse;
         let source;
@@ -54,9 +54,8 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==2){
-            log(jkdata);
+            log("2-"+$.type(jkdata.erparse))
             eval("source = " + jkdata.erparse);
-            log("2source-"+$.type(source));
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = erdata;
@@ -65,6 +64,7 @@ function readData(fileid,datatype){
             }
         }else if(datatype==3){
             parse = jkdata.public;
+            log("3-"+$.type(parse));
         }
         let data;
         eval("data = " + parse);
