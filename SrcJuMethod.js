@@ -36,19 +36,18 @@ function cacheData(jkdata){
 function readData(fileid,datatype){
     let cachefile = `hiker://files/_cache/${fileid}.json`;
     let cachedata = fetch(cachefile);
+    let jkdata = {};
     if(cachedata != ""){
         try{
-            eval("var jkdata=" + cachedata+ ";");
+            eval("jkdata=" + cachedata);
         }catch(e){
-            var jkdata = {};
         }
-    }else{
-        var jkdata = {};
     }
     try{
         let parse;
         let source;
-        if(datatype=="1"){
+        if(datatype==1){
+            log("1")
             source = jkdata.parse;
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
@@ -56,7 +55,8 @@ function readData(fileid,datatype){
             } else {
                 parse = source;
             }
-        }else if(datatype=="2"){
+        }else if(datatype==2){
+            log("2")
             source = jkdata.erparse;
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
@@ -64,12 +64,14 @@ function readData(fileid,datatype){
             } else {
                 parse = source;
             }
-        }else if(datatype=="0"){
+        }else if(datatype==0){
+            log("0")
             parse = jkdata.public;
         }
+        log(parse);
         return parse;
     }catch(e){
         log("读取接口本地缓存文件失败>"+e.message);
-        return {};
+        return "";
     }
 }
