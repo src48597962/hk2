@@ -53,6 +53,7 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==2){
+            log(jkdata);
             eval("source = " + jkdata.erparse);
             log("2source-"+$.type(source));
             if (source.ext && /^http/.test(source.ext)) {
