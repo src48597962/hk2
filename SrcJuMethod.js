@@ -36,11 +36,9 @@ function cacheData(jkdata){
 function readData(fileid,datatype){
     let cachefile = `hiker://files/_cache/${fileid}.json`;
     let jkdata = {};
-    if(cachedata != ""){
-        try{
-            eval("jkdata=" + fetch(cachefile));
-        }catch(e){
-        }
+    try{
+        eval("jkdata=" + fetch(cachefile));
+    }catch(e){
     }
 
     try{
