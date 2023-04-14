@@ -35,8 +35,6 @@ function cacheData(jkdata){
 //读接口数据临时缓存
 function readData(fileid,datatype){
     let cachefile = `hiker://files/_cache/${fileid}.json`;
-    log(`hiker://files/_cache/${fileid}.json`)
-    log(datatype)
     let jkdata = {};
     if(cachedata != ""){
         try{
@@ -44,6 +42,7 @@ function readData(fileid,datatype){
         }catch(e){
         }
     }
+
     try{
         let parse;
         let source;
@@ -66,6 +65,7 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==0){
+            log($.type(jkdata));
             parse = jkdata.public;
         }
         let data;
