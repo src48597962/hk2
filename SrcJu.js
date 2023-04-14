@@ -330,6 +330,7 @@ function erji() {
                 let 参数 = {"规则名": 规则名, "标识": 标识}
                 return 解析(input, 公共, 参数);
             }, MY_RULE.title, 标识);
+            log(download)
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
