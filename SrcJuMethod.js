@@ -47,7 +47,7 @@ function readData(fileid,datatype){
         let parse;
         let source;
         if(datatype==1){
-            source = jkdata.parse;
+            eval("source = " + jkdata.parse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = yidata;
@@ -55,8 +55,7 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==2){
-            source = jkdata.erparse;
-            log(source.ext);
+            eval("source = " + jkdata.erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = erdata;
@@ -64,11 +63,11 @@ function readData(fileid,datatype){
                 parse = source;
             }
         }else if(datatype==0){
-            parse = jkdata.public;
+            eval("parse = " + jkdata.public);
         }
-        let data;
-        eval("data = " + parse);
-        return data;
+        //let data;
+        //eval("data = " + parse);
+        return parse;
     }catch(e){
         log("读取接口本地缓存文件失败>"+e.message);
         return "";
