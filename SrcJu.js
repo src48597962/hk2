@@ -156,6 +156,7 @@ function erji() {
     let d = [];
     let parse;
     let 公共;
+    let 标识;
     let details;
     let stype = MY_PARAMS.stype;
     let datasource = [myerjiextra, MY_PARAMS, getMark(name, stype)];
@@ -181,7 +182,7 @@ function erji() {
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
-            log('√分享页面，且本地无对应接口');
+            //log('√分享页面，且本地无对应接口');
             sourcedata.push(MY_PARAMS.sourcedata);
         }
         if (sourcedata.length > 0 && sourcedata[0].erparse) {
@@ -200,7 +201,12 @@ function erji() {
             }catch(e){
                 //log("√缓存临时文件失败>"+e.message);
             }
-
+        }
+    } catch (e) {
+        log("√加载二级源接口>"+e.message);
+    }
+    try {
+        if (parse && surl) {
             if(parse&&parse['公共']){
                 公共 = parse['公共'] || {};
             }
@@ -208,12 +214,7 @@ function erji() {
                 eval("let gonggong = " + sourcedata[0].public);
                 公共 = gonggong || parse['公共'] || {};
             }
-        }
-    } catch (e) {
-        log("√加载二级源接口>"+e.message);
-    }
-    try {
-        if (parse && surl) {
+            标识 = stype + "_" + sname;
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
@@ -276,10 +277,11 @@ function erji() {
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
-            let 解析 = parse['解析'];
+            //let 解析 = parse['解析'];
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             let lazy;
             let itype;
+            /*
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析, 公共) => {
                     let url = input.split("##")[1];
@@ -296,7 +298,31 @@ function erji() {
             let download = $.toString((解析, 公共) => {
                 return 解析(input,公共);
             }, 解析, 公共);
-
+            */
+            if (stype=="漫画") {
+                lazy = $("").lazyRule((标识,规则名) => {
+                    let url = input.split("##")[1];
+                    let 一级 = $.require('jiekou?rule=' + 规则名).一级(标识);
+                    let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
+                    let 解析 = 一级['解析'];
+                    let obj = {"公共": 公共, "标识": 标识}
+                    return 解析(url,obj);
+                }, 标识, MY_RULE.title);
+                itype = "comic";
+            }else{
+                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
+                    let url = MY_PARAMS.url || "";
+                    解析(url,公共);
+                }, 解析, 公共);
+                itype = "novel";
+            }
+            let download = $.toString((标识,规则名) => {
+                let 一级 = $.require('jiekou?rule=' + 规则名).一级(标识);
+                let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
+                let 解析 = 一级['解析'];
+                let obj = {"公共": 公共, "标识": 标识}
+                return 解析(input,obj);
+            }, 标识, MY_RULE.title);
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
