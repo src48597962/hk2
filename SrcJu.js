@@ -302,8 +302,11 @@ function erji() {
             if (stype=="漫画") {
                 lazy = $("").lazyRule((规则名,标识) => {
                     let url = input.split("##")[1];
-                    let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
-                    let 解析 = $.require('jiekou?rule=' + 规则名).属性(标识,"二级","解析");
+                    //let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
+                    //let 解析 = $.require('jiekou?rule=' + 规则名).属性(标识,"二级","解析");
+                    const 接口 = $.require('jiekou?rule=' + 规则名);
+                    let 公共 = 接口.公共(标识);
+                    let 解析 = 接口.属性(标识,"二级","解析");
                     let 参数 = {"规则名": 规则名, "标识": 标识}
                     return 解析(url, 公共, 参数);
                 }, MY_RULE.title, 标识);
