@@ -674,6 +674,7 @@ function search(keyword, mode, sdata) {
         try {
             let parse;
             let 公共;
+            let 标识;
             eval("let source = " + objdata.erparse);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
@@ -684,50 +685,53 @@ function search(keyword, mode, sdata) {
             if(parse){
                 eval("let gonggong = " + objdata.public);
                 公共 = gonggong || parse['公共'] || {};
-            }
-            let ssdata = [];
-            eval("let 搜索 = " + parse['搜索'])
-            try{
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                cacheData(objdata);
-            }catch(e){
-                //log("√缓存临时文件失败>"+e.message);
-            }
-            ssdata = 搜索(name,page) || [];
-            //log('√'+objdata.name+">搜索结果>"+ssdata.length);
-            let resultdata = [];
-            ssdata.forEach(item => {
-                let extra = item.extra || {};
-                extra.name = extra.name || item.title;
-                if((objmode=="erji" && extra.name==name) || objmode!="erji"){
-                    extra.img = extra.img || item.img || item.pic_url;
-                    extra.stype = objdata.type;
-                    extra.sname = objdata.name;
-                    extra.pageTitle = extra.name;
-                    extra.surl = item.url && !/js:|select:|\(|\)|=>|@/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
-                    item.extra = extra;
-                    item.url = /sousuo/.test(objmode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
-                        require(config.依赖);
-                        erji();
-                    }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
-                        if(getMyVar('已选择换源列表')){
-                            return "toast://请勿重复点击，稍等...";
-                        }else{
-                            putMyVar('已选择换源列表','1');
-                            clearMyVar(extra.sname+"_"+extra.name);
-                            storage0.putMyVar('erjiextra', extra);
-                            refreshPage(false);
-                            return "toast://已切换源：" + extra.sname;
-                        }
-                    }, extra);
-                    item.content = item.desc;
-                    item.title = objmode=="erji"?objdata.name:item.title;
-                    item.desc = objmode=="sousuo"  ? MY_RULE.title + ' · ' + objdata.name :objmode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
-                    item.col_type = objmode=="sousuo"  ? "video" : objmode=="sousuotest" ? "movie_1_vertical_pic" : "avatar";
-                    resultdata.push(item);
+                标识 = objdata.type + "_" + objdata.name;
+                    let ssdata = [];
+                eval("let 搜索 = " + parse['搜索'])
+                try{
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                    cacheData(objdata);
+                }catch(e){
+                    //log("√缓存临时文件失败>"+e.message);
                 }
-            })
-            return {result:resultdata, success:1};
+                let obj = {"规则名": MY_RULE.title, "标识": 标识}
+                ssdata = 搜索(name,page) || [];
+                //log('√'+objdata.name+">搜索结果>"+ssdata.length);
+                let resultdata = [];
+                ssdata.forEach(item => {
+                    let extra = item.extra || {};
+                    extra.name = extra.name || item.title;
+                    if((objmode=="erji" && extra.name==name) || objmode!="erji"){
+                        extra.img = extra.img || item.img || item.pic_url;
+                        extra.stype = objdata.type;
+                        extra.sname = objdata.name;
+                        extra.pageTitle = extra.name;
+                        extra.surl = item.url && !/js:|select:|\(|\)|=>|@/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
+                        item.extra = extra;
+                        item.url = /sousuo/.test(objmode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                            require(config.依赖);
+                            erji();
+                        }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
+                            if(getMyVar('已选择换源列表')){
+                                return "toast://请勿重复点击，稍等...";
+                            }else{
+                                putMyVar('已选择换源列表','1');
+                                clearMyVar(extra.sname+"_"+extra.name);
+                                storage0.putMyVar('erjiextra', extra);
+                                refreshPage(false);
+                                return "toast://已切换源：" + extra.sname;
+                            }
+                        }, extra);
+                        item.content = item.desc;
+                        item.title = objmode=="erji"?objdata.name:item.title;
+                        item.desc = objmode=="sousuo"  ? MY_RULE.title + ' · ' + objdata.name :objmode=="sousuotest"?item.desc: (extra.sdesc || item.desc);
+                        item.col_type = objmode=="sousuo"  ? "video" : objmode=="sousuotest" ? "movie_1_vertical_pic" : "avatar";
+                        resultdata.push(item);
+                    }
+                })
+                return {result:resultdata, success:1};
+            }
+            return {result:[], success:0};
         } catch (e) {
             log('√'+objdata.name + '>搜索失败>' + e.message);
             return {result:[], success:0};
