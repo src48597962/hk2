@@ -56,6 +56,7 @@ function readData(fileid,datatype){
             }
         }else if(datatype==2){
             source = jkdata.erparse;
+            log(source.ext);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = erdata;
