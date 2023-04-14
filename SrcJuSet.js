@@ -95,7 +95,7 @@ function SRCSet() {
                     }
                     let num = 0;
                     for (let i = 0; i < datalist2.length; i++) {
-                        if (ImportType!="Coverage" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
+                        if (ImportType!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                             let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
                             datalist.splice(index, 1);
                             datalist.push(datalist2[i]);
@@ -122,7 +122,7 @@ function SRCSet() {
         col_type: "icon_small_3",
         extra: {
             longClick: [{
-                title: Juconfig['ImportType']!="Coverage"?'导入模式：跳过':'导入模式：覆盖',
+                title: Juconfig['ImportType']!="Skip"?'导入模式：覆盖':'导入模式：跳过',
                 js: $.toString((cfgfile, Juconfig) => {
                     return $(["覆盖", "跳过"],2).select((cfgfile,Juconfig) => {
                         Juconfig["ImportType"] = input=="覆盖"?"Coverage":"Skip";
