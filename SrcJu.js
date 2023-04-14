@@ -386,7 +386,7 @@ function erji() {
                         "decode": 公共["imgdec"]?$.type(公共["imgdec"])=="function"?$.toString((imgdec)=>{
                             let imgDecrypt = imgdec;
                             return imgDecrypt();
-                        },公共["imgdec"]):"":""
+                        },公共["imgdec"]):公共["imgdec"]:""
                     }
                 }
             })
