@@ -304,8 +304,8 @@ function erji() {
                     let url = input.split("##")[1];
                     let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
                     let 解析 = $.require('jiekou?rule=' + 规则名).属性(规则名,"二级",标识);
-                    let obj = {"规则名": 规则名, "标识": 标识}
-                    return 解析(url, 公共, obj);
+                    let 参数 = {"规则名": 规则名, "标识": 标识}
+                    return 解析(url, 公共, 参数);
                 }, 标识, MY_RULE.title);
                 itype = "comic";
             }else{
@@ -313,16 +313,16 @@ function erji() {
                     let url = MY_PARAMS.url || "";
                     let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
                     let 解析 = $.require('jiekou?rule=' + 规则名).属性(规则名,"二级",标识);
-                    let obj = {"规则名": 规则名, "标识": 标识}
-                    解析(url,公共,obj);
+                    let 参数 = {"规则名": 规则名, "标识": 标识}
+                    解析(url,公共,参数);
                 }, 标识, MY_RULE.title);
                 itype = "novel";
             }
             let download = $.toString((标识,规则名) => {
                 let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
                 let 解析 = $.require('jiekou?rule=' + 规则名).属性(规则名,"二级",标识);
-                let obj = {"规则名": 规则名, "标识": 标识}
-                return 解析(input, 公共, obj);
+                let 参数 = {"规则名": 规则名, "标识": 标识}
+                return 解析(input, 公共, 参数);
             }, 标识, MY_RULE.title);
             d.push({
                 title: "详情简介",
@@ -694,8 +694,8 @@ function search(keyword, mode, sdata) {
                 }catch(e){
                     //log("√缓存临时文件失败>"+e.message);
                 }
-                let obj = {"规则名": MY_RULE.title, "标识": 标识}
-                ssdata = 搜索(name,page) || [];
+                let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
+                ssdata = 搜索(name,page,公共,参数) || [];
                 //log('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
