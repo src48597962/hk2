@@ -39,6 +39,7 @@ function readData(fileid,datatype){
     try{
         eval("jkdata=" + fetch(cachefile));
     }catch(e){
+        log("jkdata加载失败>"+fileid+">"+e.message);
     }
     log("jkdata-"+$.type(jkdata));
     try{
