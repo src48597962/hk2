@@ -323,6 +323,7 @@ function erji() {
                 }, MY_RULE.title, 标识);
                 itype = "novel";
             }
+            /*
             let download = $.toString((规则名,标识) => {
                 const 子页面 = $.require('jiekou?rule=' + 规则名);
                 let 公共 = 子页面.公共(标识);
@@ -331,6 +332,10 @@ function erji() {
                 return 解析(input, 公共, 参数);
             }, MY_RULE.title, 标识);
             log(download)
+            */
+            let download = $.toString((解析, 公共) => {
+                return 解析(input,公共);
+            }, 解析, 公共);
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
