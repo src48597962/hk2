@@ -1,8 +1,8 @@
 function bookCase() {
-    log("1");
-    log(config);
+    //log("1");
+    //log(config);
     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-    log("2");
+    //log("2");
     let Julist = [];
     let collection = JSON.parse(fetch("hiker://collection?rule="+MY_RULE.title));
     collection.forEach(it => {
