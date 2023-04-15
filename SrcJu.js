@@ -296,10 +296,6 @@ function erji() {
                 }, 解析, 公共);
                 itype = "novel";
             }
-            let download = $.toString((解析, 公共) => {
-                return 解析(input,公共);
-            }, 解析, 公共);
-            */
             if (stype=="漫画") {
                 lazy = $("").lazyRule((规则名,标识) => {
                     let url = input.split("##")[1];
@@ -321,6 +317,20 @@ function erji() {
                     let 参数 = {"规则名": 规则名, "标识": 标识}
                     解析(url,公共,参数);
                 }, MY_RULE.title, 标识);
+                itype = "novel";
+            }
+            */
+            if (stype=="漫画") {
+                lazy = $("").lazyRule((解析,公共,参数) => {
+                    let url = input.split("##")[1];
+                    return 解析(url,公共,参数);
+                }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
+                itype = "comic";
+            }else{
+                lazy = $("#readTheme##autoPage#").rule((解析,公共,参数) => {
+                    let url = MY_PARAMS.url || "";
+                    解析(url,公共,参数);
+                }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
                 itype = "novel";
             }
             let download = $.toString((解析,公共,参数) => {
@@ -360,7 +370,7 @@ function erji() {
                 }
             })
             d.push({
-                title: "我的书架",
+                title: "书架/下载",
                 url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
                     bookCase();
