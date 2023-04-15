@@ -14,7 +14,7 @@ function bookCase() {
 
     let d = [];
     d.push({
-        title: ' 本地书架',
+        title: ' 下载书架',
         url: getMyVar("SrcJuBookType","全部")=="全部"?"hiker://page/Main.view?rule=本地资源管理":"hiker://page/Bookrack.view?rule=本地资源管理&ruleName="+MY_RULE.title+"&type="+(getMyVar("SrcJuBookType")=="漫画"?"comic":"novel"),
         img: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
         col_type: "icon_2"
