@@ -20,6 +20,15 @@ if(sourcedata != ""){
 }else{
     var datalist = [];
 }
+let datatypes = [];
+datalist.forEach(it=>{
+    if(datatypes.indexOf(it.type)==-1){
+        datatypes.push(it.type);
+    }
+})
+if(datatypes.length != runModes.length){
+    writeFile(cfgfile, JSON.stringify(Juconfig));
+}
 datalist.reverse();
 
 let yxdatalist = datalist.filter(it=>{
