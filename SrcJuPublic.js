@@ -56,15 +56,15 @@ function getYiData(type,od) {
             }else{
                 parse = source;
             }
-            if(parse){
-                eval("let gonggong = " + sourcedata[0].public);
-                公共 = gonggong || parse['公共'] || {};
-            }
         }
     }catch(e){
         log("√一级源接口加载异常>"+e.message);
     }
     if(parse){
+        eval("let gonggong = " + sourcedata[0].public);
+        公共 = gonggong || parse['公共'] || {};
+        let info = storage0.getMyVar('一级源接口信息');
+        let 标识 = info.type + "_" + info.name;
         let page = MY_PAGE || 1;
         let data = [];
         try{
