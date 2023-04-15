@@ -5,7 +5,7 @@ if(Jucfg != ""){
 }else{
     var Juconfig= {};
 }
-let runModes = Juconfig["runModes"]?Juconfig["runMode"].split(","):["漫画","小说"];
+let runModes = ["漫画","小说"];
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
 
@@ -19,15 +19,6 @@ if(sourcedata != ""){
     }
 }else{
     var datalist = [];
-}
-let datatypes = [];
-datalist.forEach(it=>{
-    if(datatypes.indexOf(it.type)==-1){
-        datatypes.push(it.type);
-    }
-})
-if(datatypes.length != runModes.length){
-    writeFile(cfgfile, JSON.stringify(Juconfig));
 }
 datalist.reverse();
 
