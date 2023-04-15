@@ -379,6 +379,7 @@ function erji() {
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist",
+                    inheritTitle: false,
                     longClick: [{
                         title: "下载本地📥",
                         js: $.toString(() => {
