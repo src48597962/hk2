@@ -21,6 +21,7 @@ let yidata = {
                     pic_url: (item.length / 3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
                     col_type: (item.length / 3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
                     url: pd(datas, 'a&&href')//如果只有主页源，这里就可以不用传url
+                    //如果title不等于片名，则可以单独传extra.name
                 });
             });
         });
@@ -89,7 +90,7 @@ let yidata = {
                 col_type: "movie_3_marquee",
                 url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
                 extra: {
-                    name: data.comic_name
+                    name: data.comic_name//如果title不等于片名，则可以单独传extra.name
                 }
             });
         })
@@ -131,7 +132,7 @@ let yidata = {
                 col_type: "movie_1_vertical_pic",
                 url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
                 extra: {
-                    name : data.comic_name//如果上面的title不是单纯的名称可以单独写在附加中
+                    name : data.comic_name//如果title不等于片名，则可以单独传extra.name
                 }
             });
 
@@ -179,7 +180,7 @@ let yidata = {
                 url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 col_type: 'text_1',
                 extra: {
-                    name: pdfh(data, 'h3&&Text')//如果上面的title不是单纯的名称可以单独写在附加中
+                    name: pdfh(data, 'h3&&Text')//如果title不等于片名，则可以单独传extra.name
                 }
             });
         });
@@ -221,20 +222,19 @@ let erdata = {
             选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
             return 选集列表;//列表数组含title和url就行
         })
-        return { //如果传line: 线路, 则list应为[线路1选集列表，线路2选集列表]
+        return { //如果有多线路，则传line: 线路数组, 则list应为多线路合并后的数组[线路1选集列表，线路2选集列表]
             detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
             detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
             desc: 简介,
-            img: 图片, 
+            img: 图片, //图片也可以不传，则用上一级的原图片
             list: 选集 
         }//按格式返回
     },
-    "解析": function(url,obj) {//url为播放链接必传，公共没有可不传
+    "解析": function(url,公共) {//url为播放链接必传，公共没有可不传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
         let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
-    "最新": function(url,obj) {//收藏获取最新章节，surl为详情页链接
-        //log(公共);
+    "最新": function(url,公共) {//收藏获取最新章节，surl为详情页链接
         setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
