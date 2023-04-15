@@ -84,7 +84,6 @@ function SRCSet() {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
-                    log(content)
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
                     let sourcedata = fetch(sourcefile);
                     if (sourcedata != "") {
@@ -153,7 +152,11 @@ function SRCSet() {
                 if (pasteurl) {
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条('+input+')';
                     copy(code);
-                    return "toast://(全部)聚分享口令已生成";
+                    clearMyVar('duoselect');
+                    for(var i = 0; i < datalist.length; i++) {
+                        updateItem(datalist[i].type+"_"+datalist[i].name, {title:datalist[i].name})
+                    }
+                    return "toast://聚阅分享口令已生成";
                 } else {
                     return "toast://分享失败，剪粘板或网络异常";
                 }
@@ -240,7 +243,7 @@ function SRCSet() {
                         let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
                         if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
                             duoselect.push(data);
-                            updateItem(id, {title:'‘‘’’<span style="color:red">'+data.name})
+                            updateItem(id, {title:'<font color=#006400>'+data.name})
                         }else{
                             for(var i = 0; i < duoselect.length; i++) {
                                 if(duoselect[i].type+"_"+duoselect[i].name == id) {
