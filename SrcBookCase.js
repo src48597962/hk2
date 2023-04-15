@@ -89,7 +89,7 @@ function bookCase() {
         }
     })
     d.push({
-        title: "",
+        title: Julist.length==0?"书架空空如也~♥收藏即加入书架":"",
         url: "hiker://empty",
         col_type: "text_center_1",
         extra: {
