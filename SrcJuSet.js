@@ -2,6 +2,9 @@
 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
 
 function SRCSet() {
+    addListener("onClose", $.toString(() => {
+        clearMyVar('duoselect');
+    }));
     setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
     let d = [];
     /*
@@ -137,6 +140,13 @@ function SRCSet() {
     d.push({
         title: '分享',
         url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().lazyRule((datalist) => {
+            let pastelist;
+            let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+            if(duoselect.length>0){
+                pastelist = duoselect;
+            }else{
+                pastelist = datalist;
+            }
             let pastes = getPastes();
             return $(pastes, 2 , "选择剪贴板").select((datalist) => {
                 let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)), input);
@@ -147,7 +157,7 @@ function SRCSet() {
                 } else {
                     return "toast://分享失败，剪粘板或网络异常";
                 }
-            },datalist)
+            },pastelist)
         }, yxdatalist),
         img: "https://lanmeiguojiang.com/tubiao/more/3.png",
         col_type: "icon_small_3"
@@ -178,7 +188,7 @@ function SRCSet() {
         if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
-                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用"], 1).select((sourcefile, data) => {
+                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择"], 1).select((sourcefile, data) => {
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
                         let oneshare = []
@@ -225,11 +235,31 @@ function SRCSet() {
                         clearMyVar('searchMark');
                         refreshPage(false);
                         return 'toast://' + sm;
+                    } else if (input=="选择") {
+                        let id = data.type+"_"+data.name;
+                        let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+                        if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
+                            duoselect.push(data);
+                            updateItem(id, {title:'‘‘’’<span style="color:red">'+data.name})
+                        }else{
+                            for(var i = 0; i < duoselect.length; i++) {
+                                if(duoselect[i].type+"_"+duoselect[i].name == id) {
+                                    duoselect.splice(i, 1);
+                                    break;
+                                }
+                            }
+                            updateItem(id, {title:data.name})
+                        }
+                        storage0.putMyVar('duoselect',duoselect);
+                        return "hiker://empty";
                     }
                 }, sourcefile, item),
                 desc: item.type,
                 img: "https://lanmeiguojiang.com/tubiao/ke/31.png",
-                col_type: "avatar"
+                col_type: "avatar",
+                extra: {
+                    id: item.type+"_"+item.name
+                }
             });
         }
     })
