@@ -1,9 +1,13 @@
 function bookCase() {
     let publicfile;
-    let cfgfile = "hiker://files/rules/Src/Ju/config.json";
-    if (fileExist(cfgfile)) {
-        eval("let Juconfig=" + fetch(cfgfile) + ";");
-        publicfile = Juconfig["依赖"].match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js';
+    try{
+        publicfile = config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js';
+    }catch(e){
+        let cfgfile = "hiker://files/rules/Src/Ju/config.json";
+        if (fileExist(cfgfile)) {
+            eval("let Juconfig=" + fetch(cfgfile) + ";");
+            publicfile = Juconfig["依赖"].match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js';
+        }
     }
     require(publicfile);
     let Julist = [];
