@@ -72,12 +72,15 @@ function readData(fileid,datatype){
     }
 }
 let 一级 = function(fileid) {
-    let info = storage0.getMyVar('一级源接口信息');
+    let info = storage0.getMyVar('一级源接口信息') || {};
     let 标识 = info.type + "_" + info.name;
     fileid = fileid || 标识;
     return readData(fileid, 1)
 }
 let 二级 = function(fileid) {
+    let info = storage0.getMyVar('二级源接口信息') || {};
+    let 标识 = info.type + "_" + info.name;
+    fileid = fileid || 标识;
     return readData(fileid, 2)
 }
 let 公共 = function(fileid) {
