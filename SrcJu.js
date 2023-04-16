@@ -141,7 +141,11 @@ function yiji() {
         })
         putMyVar(runMode+"_"+sourcename, "1");
     }
-    getYiData('主页', d);
+    try{
+        getYiData('主页', d);
+    }catch(e){
+        setResult(d);
+    }
 }
 
 //二级+源搜索
