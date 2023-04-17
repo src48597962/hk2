@@ -388,6 +388,10 @@ function erji() {
                     cls: "loadlist"
                 }
             })
+            let 下载列表 = 列表;
+            下载列表.forEach(it=>{
+                it.title = it.title.replace(/‘|’|“|”|<[^>]+>/g,"")
+            })
             d.push({
                 title: "书架/下载",
                 url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
@@ -405,7 +409,7 @@ function erji() {
                             return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
                         })
                     }],
-                    chapterList: 列表,
+                    chapterList: 下载列表,
                     "defaultView": "1",
                     "info": {
                         "bookName": name,
