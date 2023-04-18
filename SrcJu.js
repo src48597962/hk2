@@ -534,36 +534,23 @@ function erji() {
                 })
             }
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
-            /*
             for(let i=0; i<列表.length; i++) {
-                d.push({
-                    title: 列表[i].title,
-                    url: "hiker://empty##" + 列表[i].url + lazy,
-                    col_type: list_col_type,
-                    extra: {
-                        id: name + "_选集_" + i,
-                        url: 列表[i].url,
-                        cls: "loadlist playlist"
-                    }
-                });
-            }
-            */
-            列表.forEach(item => {
                 let extra = {
                     id: name + "_选集_" + i,
                     url: item.url,
                     cls: "loadlist playlist"
                 }
-                if(input.indexOf("_left")>-1){
+                if(list_col_type.indexOf("_left")>-1){
                     extra.textAlign = 'left';
                 }
                 d.push({
-                    title: item.title,
-                    url: "hiker://empty##" + item.url + lazy,
+                    title: 列表[i].title,
+                    url: "hiker://empty##" + 列表[i].url + lazy,
                     col_type: list_col_type.replace("_left",""),
                     extra: extra
                 });
-            })
+            }
+            
             if(列表.length>0 || getMyVar('jiekouedit')){
                 isload = 1;
             }else if(列表.length==0){
