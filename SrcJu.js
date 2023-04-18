@@ -297,7 +297,6 @@ function erji() {
                 列表.reverse();
             }
 
-            let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             let lazy;
             let itype;
             let 解析 = parse['解析'];
@@ -388,10 +387,6 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            let 下载列表 = 列表;
-            下载列表.forEach(it=>{
-                it.title = it.title.replace(/‘|’|“|”|<[^>]+>/g,"")
-            })
             d.push({
                 title: "书架/下载",
                 url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
@@ -409,7 +404,7 @@ function erji() {
                             return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
                         })
                     }],
-                    chapterList: 下载列表,
+                    chapterList: 列表,
                     "defaultView": "1",
                     "info": {
                         "bookName": name,
@@ -482,10 +477,12 @@ function erji() {
                         });
                     };
                     列表.reverse();
+                    /*
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     列表.forEach(item => {
                         item.col_type = list_col_type;
                     })
+                    */
                     addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
                 }, sname),
@@ -497,14 +494,20 @@ function erji() {
             })
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
-                url: $(["text_1","text_2","text_3","flex_button"],1,"选集列表样式").select(() => {
+                url: $(["flex_button","text_1","text_2","text_3","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
                     let 列表 = findItemsByCls('playlist') || [];
                     if(列表.length==0){
                         return 'toast://未获取到列表'
                     }
                     deleteItemByCls('playlist');
+                    let list_col_type = input.replace("_left","");
                     列表.forEach(item => {
-                        item.col_type = input;
+                        item.col_type = list_col_type;
+                        if(input.indexOf("_left")>-1){
+                            item.extra.textAlign = 'left';
+                        }else{
+                            delete item.extra.textAlign;
+                        }
                     })
                     addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     setItem('SrcJuList_col_type', input);
@@ -530,6 +533,8 @@ function erji() {
                     }
                 })
             }
+            let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
+            /*
             for(let i=0; i<列表.length; i++) {
                 d.push({
                     title: 列表[i].title,
@@ -542,6 +547,23 @@ function erji() {
                     }
                 });
             }
+            */
+            列表.forEach(item => {
+                let extra = {
+                    id: name + "_选集_" + i,
+                    url: item.url,
+                    cls: "loadlist playlist"
+                }
+                if(input.indexOf("_left")>-1){
+                    extra.textAlign = 'left';
+                }
+                d.push({
+                    title: item.title,
+                    url: "hiker://empty##" + item.url + lazy,
+                    col_type: list_col_type.replace("_left",""),
+                    extra: extra
+                });
+            })
             if(列表.length>0 || getMyVar('jiekouedit')){
                 isload = 1;
             }else if(列表.length==0){
