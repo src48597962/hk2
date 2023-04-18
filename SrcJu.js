@@ -634,7 +634,8 @@ function erji() {
         });
         setResult(d);
         if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
-            search(name,"erji",false,sgroup);
+            let info = storage0.getMyVar('一级源接口信息') || {};
+            search(name,"erji",false,sgroup||info.group);
         }
     }
     clearMyVar('已选择换源列表');
