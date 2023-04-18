@@ -186,7 +186,6 @@ function erji() {
     let erjiextra;
     let sname;
     let surl;
-    let sgroup;
     let detailload;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
@@ -218,8 +217,6 @@ function erji() {
                 parse = source;
             }
             sourcedata2 = sourcedata[0];
-            let info = storage0.getMyVar('一级源接口信息');
-            sgroup = info.group || sourcedata2.group;
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
@@ -427,7 +424,7 @@ function erji() {
             })
             d.push({
                 title: "切换书源",
-                url: $("#noLoading#").lazyRule((name,sgroup) => {
+                url: $("#noLoading#").lazyRule((name) => {
                     updateItem("listloading2", { 
                         extra: {
                             id: "listloading",
@@ -442,13 +439,13 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
-                        search(name,"erji",false,sgroup);
+                        search(name,"erji");
                         hideLoading();
                         return  "hiker://empty";
                     }else{
                         return "toast://上一个搜索线程还未结束，稍等...";
                     }
-                }, name, sgroup),
+                }, name),
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
@@ -638,7 +635,7 @@ function erji() {
         });
         setResult(d);
         if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
-            search(name,"erji",false,sgroup);
+            search(name,"erji");
         }
     }
     clearMyVar('已选择换源列表');
@@ -655,11 +652,10 @@ function sousuo() {
         }
     });
     setResult(d);
-    let info = storage0.getMyVar('一级源接口信息') || {};
-    search(name,'sousuo',false,info.group);
+    search(name,'sousuo');
 }
 //搜索接口
-function search(keyword, mode, sdata, sgroup) {
+function search(keyword, mode, sdata) {
     if(getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
@@ -712,6 +708,7 @@ function search(keyword, mode, sdata, sgroup) {
     }
 
     putMyVar('SrcJuSearching','1');
+    let info = storage0.getMyVar('一级源接口信息') || {};
     let success = 0;
     let results = [];
     let ssdatalist = [];
@@ -723,10 +720,10 @@ function search(keyword, mode, sdata, sgroup) {
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
-            if(sgroup=="全全"){
+            if(info.group=="全全"){
                 return it.type==runMode;
             }else{
-                return it.type==runMode && (it.group==sgroup||it.group=="全全");
+                return it.type==runMode && (it.group==info.group||it.group=="全全");
             }
         });
     }
