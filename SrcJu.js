@@ -562,6 +562,9 @@ function erji() {
             
             if(列表.length>0 || getMyVar('jiekouedit')){
                 isload = 1;
+                if(pic&&pic.indexOf('@js=')==-1){
+                    setPagePicUrl(pic);
+                }
             }else if(列表.length==0){
                 toast("选集列表为空，请更换其他源");
             }
