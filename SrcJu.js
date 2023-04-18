@@ -218,7 +218,8 @@ function erji() {
                 parse = source;
             }
             sourcedata2 = sourcedata[0];
-            sgroup = sourcedata2.group;
+            let info = storage0.getMyVar('一级源接口信息');
+            sgroup = info.group || sourcedata2.group;
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
@@ -634,8 +635,7 @@ function erji() {
         });
         setResult(d);
         if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
-            let info = storage0.getMyVar('一级源接口信息') || {};
-            search(name,"erji",false,sgroup||info.group);
+            search(name,"erji",false,sgroup);
         }
     }
     clearMyVar('已选择换源列表');
