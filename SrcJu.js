@@ -537,7 +537,7 @@ function erji() {
             for(let i=0; i<列表.length; i++) {
                 let extra = {
                     id: name + "_选集_" + i,
-                    url: item.url,
+                    url: 列表[i].url,
                     cls: "loadlist playlist"
                 }
                 if(list_col_type.indexOf("_left")>-1){
