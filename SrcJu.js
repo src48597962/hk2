@@ -477,12 +477,15 @@ function erji() {
                         });
                     };
                     列表.reverse();
-                    /*
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     列表.forEach(item => {
-                        item.col_type = list_col_type;
+                        item.col_type = list_col_type.replace("_left","");
+                        if(list_col_type.indexOf("_left")>-1){
+                            item.extra.textAlign = 'left';
+                        }else{
+                            delete item.extra.textAlign;
+                        }
                     })
-                    */
                     addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
                 }, sname),
@@ -494,16 +497,16 @@ function erji() {
             })
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
-                url: $(["flex_button","text_1","text_2","text_3","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
+                url: $(["text_1","text_2","text_3","flex_button","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
                     let 列表 = findItemsByCls('playlist') || [];
                     if(列表.length==0){
                         return 'toast://未获取到列表'
                     }
                     deleteItemByCls('playlist');
-                    let list_col_type = input.replace("_left","");
+                    let list_col_type = input;
                     列表.forEach(item => {
-                        item.col_type = list_col_type;
-                        if(input.indexOf("_left")>-1){
+                        item.col_type = list_col_type.replace("_left","");
+                        if(list_col_type.indexOf("_left")>-1){
                             item.extra.textAlign = 'left';
                         }else{
                             delete item.extra.textAlign;
