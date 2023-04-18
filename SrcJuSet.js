@@ -265,7 +265,7 @@ function SRCSet() {
                         return "hiker://empty";
                     }
                 }, sourcefile, item),
-                desc: item.type,
+                desc: item.group?"["+item.group+"] ":"" + item.type,
                 img: "https://lanmeiguojiang.com/tubiao/ke/31.png",
                 col_type: "avatar",
                 extra: {
