@@ -323,7 +323,7 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '搜索分组：'+ getMyVar('jiekougroup',''),
         col_type: 'input',
-        desc:"留空则搜索时默认调用",
+        desc:"如需要强制搜索此接口则输入全全",
         extra: {
             defaultValue: getMyVar('jiekougroup') || "",
             titleVisible: false,
