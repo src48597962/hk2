@@ -282,6 +282,7 @@ function jiekouapi(sourcefile, data) {
         clearMyVar('jiekoudata');
         clearMyVar('jiekouname');
         clearMyVar('jiekoutype');
+        clearMyVar('jiekougroup');
         clearMyVar('jiekouparse');
         clearMyVar('jiekouerparse');
         clearMyVar('jiekoupublic');
@@ -292,6 +293,7 @@ function jiekouapi(sourcefile, data) {
         putMyVar('jiekouedit', '1');
         putMyVar('jiekouname', data.name);
         putMyVar('jiekoutype', data.type||"漫画");
+        putMyVar('jiekougroup', data.group||"");
         storage0.putMyVar('jiekouparse', data.parse);
         storage0.putMyVar('jiekouerparse', data.erparse ? data.erparse : "");
         storage0.putMyVar('jiekoupublic', data.public ? data.public : "");
@@ -302,7 +304,7 @@ function jiekouapi(sourcefile, data) {
         col_type: 'input',
         desc: "接口名称",
         extra: {
-            defaultValue: getMyVar('jiekouname') ? getMyVar('jiekouname') : "",
+            defaultValue: getMyVar('jiekouname') || "",
             titleVisible: false,
             onChange: $.toString(() => {
                 putMyVar('jiekouname', input);
@@ -317,6 +319,18 @@ function jiekouapi(sourcefile, data) {
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
         }),
+    });
+    d.push({
+        title: '搜索分组：'+ getMyVar('jiekougroup',''),
+        col_type: 'input',
+        desc:"留空则搜索时默认调用",
+        extra: {
+            defaultValue: getMyVar('jiekougroup') || "",
+            titleVisible: false,
+            onChange: $.toString(() => {
+                putMyVar('jiekougroup', input);
+            })
+        }
     });
     d.push({
         title: '一级主页数据源',
@@ -431,12 +445,16 @@ function jiekouapi(sourcefile, data) {
             try {
                 let name = getMyVar('jiekouname');
                 let type = getMyVar('jiekoutype','漫画');
+                let group = getMyVar('jiekougroup');
                 let parse = getMyVar('jiekouparse');
                 let erparse = getMyVar('jiekouerparse');
                 let public = getMyVar('jiekoupublic');
                 let newapi = {
                     name: name,
                     type: type
+                }
+                if(group){
+                    newapi['group'] = group;
                 }
                 if (parse) {
                     try{
