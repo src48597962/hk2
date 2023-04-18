@@ -547,7 +547,7 @@ function erji() {
                     extra.textAlign = 'left';
                 }
                 d.push({
-                    title: 列表[i].title,
+                    title: 列表[i].title.trim(),
                     url: "hiker://empty##" + 列表[i].url + lazy,
                     col_type: list_col_type.replace("_left",""),
                     extra: extra
