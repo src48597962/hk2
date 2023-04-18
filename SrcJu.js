@@ -720,7 +720,11 @@ function search(keyword, mode, sdata, sgroup) {
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
-            return it.type==runMode && (it.group==sgroup||it.group=="全全");
+            if(sgroup=="全全"){
+                return it.type==runMode;
+            }else{
+                return it.type==runMode && (it.group==sgroup||it.group=="全全");
+            }
         });
     }
     let nosousuolist = storage0.getMyVar('nosousuolist') || [];
