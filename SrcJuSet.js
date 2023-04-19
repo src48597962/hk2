@@ -14,6 +14,7 @@ require(publicfile);
 function SRCSet() {
     addListener("onClose", $.toString(() => {
         clearMyVar('duoselect');
+        clearMyVar("seacrhjiekou");
     }));
     clearMyVar('duoselect');
     setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
@@ -194,8 +195,29 @@ function SRCSet() {
             col_type: 'scroll_button'
         })
     })
-
-    datalist.forEach(item => {
+    d.push({
+        title: "🔍",
+        url: $.toString(() => {
+            putMyVar("seacrhjiekou",input);
+            refreshPage(false);
+        }),
+        desc: "搜你想要的...",
+        col_type: "input",
+        extra: {
+            titleVisible: true
+        }
+    });
+    let jkdatalist = [];
+    if(getMyVar("seacrhjiekou")){
+        datalist.forEach(it=>{
+            if(it.name.indexOf(getMyVar("seacrhjiekou"))>-1){
+                jkdatalist.push(it);
+            }
+        })
+    }else{
+        jkdatalist = datalist;
+    }
+    jkdatalist.forEach(item => {
         if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
