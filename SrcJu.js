@@ -441,7 +441,6 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
-                        log("发起："+name)
                         search(name,"erji",false,sgroup);
                         hideLoading();
                         return  "hiker://empty";
@@ -762,6 +761,7 @@ function search(keyword, mode, sdata, group) {
                     //log("√缓存临时文件失败>"+e.message);
                 }
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
+                log("搜索："+name)
                 ssdata = 搜索(name,page,公共,参数) || [];
                 //log('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
