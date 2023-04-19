@@ -682,7 +682,6 @@ function search(keyword, mode, sdata, group) {
         clearMyVar('nosousuolist');
     }
     let name = keyword.split('  ')[0];
-    log("收到："+name)
     let sssname;
     if(keyword.indexOf('  ')>-1){
         sssname = keyword.split('  ')[1] || sourcename;
@@ -737,7 +736,7 @@ function search(keyword, mode, sdata, group) {
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
-        let objname = obj.name;
+        let name = obj.name;
         try {
             let parse;
             let 公共;
@@ -762,15 +761,13 @@ function search(keyword, mode, sdata, group) {
                     //log("√缓存临时文件失败>"+e.message);
                 }
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
-                log("搜索："+objname)
-                ssdata = 搜索(objname,page,公共,参数) || [];
+                ssdata = 搜索(name,page,公共,参数) || [];
                 //log('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || item.title;
-                    log(extra.name+"=="+objname)
-                    if((objmode=="erji" && extra.name==objname) || objmode!="erji"){
+                    if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
                         extra.sname = objdata.name;
