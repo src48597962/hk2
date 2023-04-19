@@ -765,10 +765,12 @@ function search(keyword, mode, sdata, group) {
                 ssdata = 搜索(name,page,公共,参数) || [];
                 //log('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
+                let ssname = name;
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || item.title;
-                    log(extra.name+"=="+name)
+                    log(ssname)
+                    log(name)
                     if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
