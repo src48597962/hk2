@@ -761,7 +761,7 @@ function search(keyword, mode, sdata, group) {
                 }
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 ssdata = 搜索(name,page,公共,参数) || [];
-                //log('√'+objdata.name+">搜索结果>"+ssdata.length);
+                log('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
