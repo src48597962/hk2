@@ -441,7 +441,6 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
-                        log(sgroup)
                         search(name,"erji",false,sgroup);
                         hideLoading();
                         return  "hiker://empty";
@@ -655,7 +654,8 @@ function sousuo() {
         }
     });
     setResult(d);
-    search(name,'sousuo');
+    let info = storage0.getMyVar('一级源接口信息') || {};
+    search(name,'sousuo',false,info.group);
 }
 //搜索接口
 function search(keyword, mode, sdata, group) {
@@ -711,8 +711,6 @@ function search(keyword, mode, sdata, group) {
     }
 
     putMyVar('SrcJuSearching','1');
-    let info = storage0.getMyVar('一级源接口信息') || {};
-    group = group || info.group;
     let success = 0;
     let results = [];
     let ssdatalist = [];
