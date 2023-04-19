@@ -761,11 +761,12 @@ function search(keyword, mode, sdata, group) {
                 }
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 ssdata = 搜索(name,page,公共,参数) || [];
-                log('√'+objdata.name+">搜索结果>"+ssdata.length);
+                //log('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || item.title;
+                    log(extra.name+"=="+name)
                     if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
