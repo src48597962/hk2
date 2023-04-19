@@ -441,6 +441,7 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
+                        log(sgroup)
                         search(name,"erji",false,sgroup);
                         hideLoading();
                         return  "hiker://empty";
