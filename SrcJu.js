@@ -186,6 +186,7 @@ function erji() {
     let erjiextra;
     let sname;
     let surl;
+    let sgroup;
     let detailload;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
@@ -217,6 +218,7 @@ function erji() {
                 parse = source;
             }
             sourcedata2 = sourcedata[0];
+            sgroup = sourcedata2.group;
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
@@ -424,7 +426,7 @@ function erji() {
             })
             d.push({
                 title: "切换书源",
-                url: $("#noLoading#").lazyRule((name) => {
+                url: $("#noLoading#").lazyRule((name,sgroup) => {
                     updateItem("listloading2", { 
                         extra: {
                             id: "listloading",
@@ -439,13 +441,13 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
-                        search(name,"erji");
+                        search(name,"erji",false,sgroup);
                         hideLoading();
                         return  "hiker://empty";
                     }else{
                         return "toast://上一个搜索线程还未结束，稍等...";
                     }
-                }, name),
+                }, name,sgroup),
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
@@ -635,7 +637,7 @@ function erji() {
         });
         setResult(d);
         if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
-            search(name,"erji");
+            search(name,"erji",false,sgroup);
         }
     }
     clearMyVar('已选择换源列表');
@@ -655,7 +657,7 @@ function sousuo() {
     search(name,'sousuo');
 }
 //搜索接口
-function search(keyword, mode, sdata) {
+function search(keyword, mode, sdata, group) {
     if(getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
@@ -709,6 +711,7 @@ function search(keyword, mode, sdata) {
 
     putMyVar('SrcJuSearching','1');
     let info = storage0.getMyVar('一级源接口信息') || {};
+    group = group || info.group;
     let success = 0;
     let results = [];
     let ssdatalist = [];
@@ -720,10 +723,10 @@ function search(keyword, mode, sdata) {
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
-            if(info.group=="全全"){
+            if(group=="全全"){
                 return it.type==runMode;
             }else{
-                return it.type==runMode && (it.group==info.group||it.group=="全全");
+                return it.type==runMode && (it.group==group||it.group=="全全");
             }
         });
     }
