@@ -441,6 +441,7 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
+                        log("发起："+name)
                         search(name,"erji",false,sgroup);
                         hideLoading();
                         return  "hiker://empty";
@@ -682,6 +683,7 @@ function search(keyword, mode, sdata, group) {
         clearMyVar('nosousuolist');
     }
     let name = keyword.split('  ')[0];
+    log("收到："+name)
     let sssname;
     if(keyword.indexOf('  ')>-1){
         sssname = keyword.split('  ')[1] || sourcename;
