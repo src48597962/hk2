@@ -297,7 +297,7 @@ function SRCSet() {
         }
     })
     d.push({
-        title: "‘‘’’<small><font color=#f20c00>当前共有接口数：" + jkdatalist.length + "</font></small>",
+        title: "‘‘’’<small><font color=#f20c00>当前接口数：" + jkdatalist.length + "，有效数："+yxdatalist.length+"</font></small>",
         url: 'hiker://empty',
         col_type: 'text_center_1'
     });
