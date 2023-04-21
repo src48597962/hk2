@@ -202,7 +202,8 @@ function erji() {
     let sourcedata = erdatalist.filter(it => {
         return it.name == sname && it.type == stype;
     });
-
+    MY_PARAMS = {}
+    log("test>"+MY_PARAMS.img);
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
