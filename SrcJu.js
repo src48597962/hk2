@@ -417,7 +417,12 @@ function erji() {
                             return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
                         })
                     }],
-                    chapterList: 列表,
+                    chapterList: $("#noLoading#").lazyRule((列表) => {
+                        列表.forEach(it=>{
+                            it.title = it.title.replace(/‘|’|“|”|<[^>]+>/g,"");
+                        })
+                        return 列表;
+                    },列表),
                     "defaultView": "1",
                     "info": {
                         "bookName": name,
