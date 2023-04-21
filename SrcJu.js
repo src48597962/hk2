@@ -253,7 +253,7 @@ function erji() {
                     }catch(e){ }
                 }
             }
-            if(!detailsmark){//刷新页面动作不重复写入
+            if(!detailsmark || !MY_PARAMS.sourcedata){//非页面刷新或进入二级时写入
                 //将修改params提到页面元素加载前，方便换源时二级代码中使用MY_PARAMS
                 if (typeof (setPageParams) != "undefined") {
                     delete sourcedata2['parse']
