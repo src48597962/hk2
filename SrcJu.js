@@ -253,11 +253,13 @@ function erji() {
                     }catch(e){ }
                 }
             }
-            //将修改params提到页面元素加载前，方便换源时二级代码中使用MY_PARAMS
-            if (typeof (setPageParams) != "undefined") {
-                delete sourcedata2['parse']
-                erjiextra.sourcedata = sourcedata2;
-                setPageParams(erjiextra);
+            if(!detailsmark){//刷新页面动作不重复写入
+                //将修改params提到页面元素加载前，方便换源时二级代码中使用MY_PARAMS
+                if (typeof (setPageParams) != "undefined") {
+                    delete sourcedata2['parse']
+                    erjiextra.sourcedata = sourcedata2;
+                    setPageParams(erjiextra);
+                }
             }
             
             details = detailsmark || parse['二级'](surl);
