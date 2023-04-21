@@ -638,6 +638,7 @@ function erji() {
         });
         setResult(d);
         if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
+            showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup);
         }
     }
