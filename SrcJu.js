@@ -253,6 +253,12 @@ function erji() {
                     }catch(e){ }
                 }
             }
+            //将修改params提到页面元素加载前，方便换源时二级代码中使用MY_PARAMS
+            if (typeof (setPageParams) != "undefined") {
+                delete sourcedata2['parse']
+                erjiextra.sourcedata = sourcedata2;
+                setPageParams(erjiextra);
+            }
             
             details = detailsmark || parse['二级'](surl);
             let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
@@ -595,11 +601,6 @@ function erji() {
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
-        if (typeof (setPageParams) != "undefined") {
-            delete sourcedata2['parse']
-            erjiextra.sourcedata = sourcedata2;
-            setPageParams(erjiextra);
-        }
         //当前二级详情数据保存
         details.sname = sname;
         details.surl = surl;
