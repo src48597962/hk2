@@ -202,9 +202,6 @@ function erji() {
     let sourcedata = erdatalist.filter(it => {
         return it.name == sname && it.type == stype;
     });
-    log("test1>"+MY_PARAMS.img);
-    MY_PARAMS = {}
-    log("test2>"+MY_PARAMS.img);
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
@@ -255,15 +252,8 @@ function erji() {
                     }catch(e){ }
                 }
             }
-            if(!detailsmark || !MY_PARAMS.sourcedata){//非页面刷新或进入二级时写入
-                //将修改params提到页面元素加载前，方便换源时二级代码中使用MY_PARAMS
-                if (typeof (setPageParams) != "undefined") {
-                    delete sourcedata2['parse']
-                    erjiextra.sourcedata = sourcedata2;
-                    setPageParams(erjiextra);
-                }
-            }
-            
+            //方便换源时二级代码中使用MY_PARAMS
+            MY_PARAMS = erjiextra;
             details = detailsmark || parse['二级'](surl);
             let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
@@ -597,7 +587,6 @@ function erji() {
             }
         });
         setResult(d);
-        //setPageTitle(name);//不能用了，会影响收藏状态和足迹，软件反应不过来
         if(!getMyVar(sname+"_"+name)){
             toast('当前数据源：' + sname + ', 作者：' + sauthor);
         }
@@ -609,6 +598,12 @@ function erji() {
         details.sname = sname;
         details.surl = surl;
         writeFile(detailsfile, JSON.stringify(details));
+        //切换源时更新收藏数据，以及分享时附带接口
+        if (typeof (setPageParams) != "undefined") {
+            delete sourcedata2['parse']
+            erjiextra.sourcedata = sourcedata2;
+            setPageParams(erjiextra);
+        }
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新, 公共) => {
