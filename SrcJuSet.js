@@ -296,6 +296,11 @@ function SRCSet() {
             });
         }
     })
+    d.push({
+        title: "‘‘’’<small><font color=#f20c00>当前共有接口数：" + jkdatalist.length + "</font></small>",
+        url: 'hiker://empty',
+        col_type: 'text_center_1'
+    });
     setResult(d);
 }
 
