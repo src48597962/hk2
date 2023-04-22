@@ -219,8 +219,8 @@ function erji() {
             sourcedata2 = sourcedata[0];
             sgroup = sourcedata2.group;
             try{
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                cacheData(sourcedata[0]);
+                //require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                //cacheData(sourcedata[0]);
             }catch(e){
                 //log("√缓存临时文件失败>"+e.message);
             }
