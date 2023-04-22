@@ -348,18 +348,20 @@ function erji() {
                 lazy = $("").lazyRule((解析,公共,参数) => {
                     let url = input.split("##")[1];
                     eval("let 解析2 = " + 解析);
-                    return 解析2(url);//,公共,参数
+                    return 解析2(url,公共,参数);
                 }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
                 itype = "comic";
             }else{
                 lazy = $("#readTheme##autoPage#").rule((解析,公共,参数) => {
                     let url = MY_PARAMS.url || "";
-                    解析(url,公共,参数);
+                    eval("let 解析2 = " + 解析);
+                    解析2(url,公共,参数);
                 }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
                 itype = "novel";
             }
             let download = $.toString((解析,公共,参数) => {
-                return 解析(input,公共,参数);
+                eval("let 解析2 = " + 解析);
+                return 解析2(input,公共,参数);
             }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
 
             d.push({
@@ -609,7 +611,8 @@ function erji() {
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新, 公共) => {
-                最新(surl,公共);
+                eval("let 最新2 = " + 最新);
+                最新2(surl,公共);
             }, surl, parse['最新'], 公共))
         }
         putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
