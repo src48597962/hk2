@@ -233,7 +233,7 @@ function erji() {
         if (parse && surl) {
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
-                log(gonggong);
+                log(JSON.stringify(gonggong));
                 if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
                     gonggong = ggdata;
