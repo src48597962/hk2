@@ -221,6 +221,7 @@ function erji() {
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
+                //log(公共);
             }catch(e){
                 //log("√缓存临时文件失败>"+e.message);
             }
@@ -258,6 +259,7 @@ function erji() {
             }
             //方便换源时二级代码中使用MY_PARAMS
             MY_PARAMS = erjiextra;
+            log(公共);
             details = detailsmark || parse['二级'](surl);
             let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
