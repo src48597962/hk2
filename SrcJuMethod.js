@@ -63,7 +63,12 @@ function readData(fileid,datatype){
             }
         }else if(datatype==3){
             eval("source = " + jkdata.public);
-            parse = source;
+            if (source.ext && /^http/.test(source.ext)) {
+                requireCache(source.ext, 48);
+                parse = ggparse;
+            } else {
+                parse = source;
+            }
         }
         return parse;
     }catch(e){
