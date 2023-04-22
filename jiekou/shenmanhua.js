@@ -223,6 +223,7 @@ let erdata = {
         return d;
     },
     "二级": function(surl) {//surl为详情页链接
+        log(公共.host);
         let html = request(surl, {timeout:8000});
         let dataid = pdfh(html, "#COMMENT&&data-ssid");
         let 作者 = pdfh(html, '#detail&&.author&&Text');
