@@ -237,7 +237,7 @@ function erji() {
                 eval("let gonggong = " + sourcedata[0].public);
                 if (gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
-                    gonggong = public;
+                    gonggong = ggparse;
                 }
                 公共 = gonggong || parse['公共'] || {};
             }
@@ -757,7 +757,7 @@ function search(keyword, mode, sdata, group) {
                 eval("let gonggong = " + objdata.public);
                 if (gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
-                    gonggong = public;
+                    gonggong = ggparse;
                 }
                 公共 = gonggong || parse['公共'] || {};
                 标识 = objdata.type + "_" + objdata.name;
