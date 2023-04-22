@@ -255,7 +255,6 @@ function erji() {
             }
             //方便换源时二级代码中使用MY_PARAMS
             MY_PARAMS = erjiextra;
-            log(公共.host)
             details = detailsmark || parse['二级'](surl);
             let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
