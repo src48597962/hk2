@@ -231,18 +231,16 @@ function erji() {
     }
     try {
         if (parse && surl) {
-            if(parse&&parse['公共']){
-                公共 = parse['公共'] || {};
-            }
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
+                log(gonggong);
                 if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
                     gonggong = ggdata;
                 }
                 公共 = gonggong || parse['公共'] || {};
             }
-            log(公共);
+            
             标识 = stype + "_" + sname;
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
