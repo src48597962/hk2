@@ -348,8 +348,8 @@ function erji() {
                 lazy = $("").lazyRule((解析,公共,参数) => {
                     let url = input.split("##")[1];
                     let 公共 = 公共;
-                    let 解析 = 解析;
-                    return 解析(url);//,公共,参数
+                    eval("let 解析2 = " + 解析);
+                    return 解析2(url);//,公共,参数
                 }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
                 itype = "comic";
             }else{
