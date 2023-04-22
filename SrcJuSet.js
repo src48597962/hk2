@@ -165,6 +165,7 @@ function SRCSet() {
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
                 showLoading('分享上传中，请稍后...');
                 let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
+                log(pasteurl)
                 hideLoading();
                 if (pasteurl) {
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
