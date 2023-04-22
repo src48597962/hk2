@@ -221,7 +221,6 @@ function erji() {
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
-                //log(公共);
             }catch(e){
                 //log("√缓存临时文件失败>"+e.message);
             }
@@ -233,14 +232,12 @@ function erji() {
         if (parse && surl) {
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
-                log(JSON.stringify(gonggong));
                 if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
                     gonggong = ggdata;
                 }
                 公共 = gonggong || parse['公共'] || {};
             }
-            
             标识 = stype + "_" + sname;
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
