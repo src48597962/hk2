@@ -207,6 +207,7 @@ let yidata = {
 let erdata = {
     "作者": "嗨又是我",//接口作者
     "搜索": function (name,page) {//聚合搜索换源列表数据，搜索关键字为name,页码为page
+        log(公共.host)
         let d = [];
         let ssurl = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page="+page+"&size=30";
         let code = JSON.parse(request(ssurl)).data.data
