@@ -64,7 +64,7 @@ function getYiData(type,od) {
         eval("let gonggong = " + sourcedata[0].public);
         if (gonggong.ext && /^http/.test(gonggong.ext)) {
             requireCache(gonggong.ext, 48);
-            gonggong = public;
+            gonggong = ggparse;
         }
         公共 = gonggong || parse['公共'] || {};
         let info = storage0.getMyVar('一级源接口信息');
