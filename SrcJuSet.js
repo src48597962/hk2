@@ -95,6 +95,7 @@ function SRCSet() {
                 if (inputname == "聚阅接口") {
                     showLoading("正在导入，请稍后...");
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
+                    log(parseurl)
                     let content = parsePaste(parseurl);
                     log(content)
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
