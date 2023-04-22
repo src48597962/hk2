@@ -76,22 +76,22 @@ function readData(fileid,datatype){
         return "";
     }
 }
-let 一级 = function(fileid) {
+let 一级z = function(fileid) {
     let info = storage0.getMyVar('一级源接口信息') || {};
     let 标识 = info.type + "_" + info.name;
     fileid = fileid || 标识;
     return readData(fileid, 1)
 }
-let 二级 = function(fileid) {
+let 二级z = function(fileid) {
     let info = storage0.getMyVar('二级源接口信息') || {};
     let 标识 = info.type + "_" + info.name;
     fileid = fileid || 标识;
     return readData(fileid, 2)
 }
-let 公共 = function(fileid) {
+let 公共z = function(fileid) {
     return readData(fileid, 3)
 }
-let 属性 = function(fileid, parse, attribut) {
+let 属性z = function(fileid, parse, attribut) {
     let 接口;
     eval("接口 = " + parse);
     return 接口(fileid)[attribut];
