@@ -219,8 +219,8 @@ function erji() {
             sourcedata2 = sourcedata[0];
             sgroup = sourcedata2.group;
             try{
-                //require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                //cacheData(sourcedata[0]);
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                cacheData(sourcedata[0]);
             }catch(e){
                 //log("√缓存临时文件失败>"+e.message);
             }
@@ -254,7 +254,6 @@ function erji() {
             }
             //方便换源时二级代码中使用MY_PARAMS
             MY_PARAMS = erjiextra;
-            log(公共)
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
             let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
