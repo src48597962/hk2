@@ -238,6 +238,7 @@ function erji() {
                 }
                 公共 = gonggong || parse['公共'] || {};
             }
+            log(公共)
             标识 = stype + "_" + sname;
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
