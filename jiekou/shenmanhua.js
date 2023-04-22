@@ -246,12 +246,11 @@ let erdata = {
             list: 选集 
         }//按格式返回
     },
-    "解析": function(url) {//url为播放链接必传，公共没有可不传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
+    "解析": function(url) {//url为播放链接必传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
         let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
     "最新": function(url) {//收藏获取最新章节，surl为详情页链接
-        log(公共.host)
         setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
