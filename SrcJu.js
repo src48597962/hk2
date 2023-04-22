@@ -231,10 +231,10 @@ function erji() {
     }
     try {
         if (parse && surl) {
-            log(公共);
             if(parse&&parse['公共']){
                 公共 = parse['公共'] || {};
             }
+            log(公共);
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
                 if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
