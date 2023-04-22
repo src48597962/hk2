@@ -235,7 +235,7 @@ function erji() {
             }
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
-                if (gonggong.ext && /^http/.test(gonggong.ext)) {
+                if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
                     gonggong = ggdata;
                 }
@@ -755,7 +755,7 @@ function search(keyword, mode, sdata, group) {
             }
             if(parse){
                 eval("let gonggong = " + objdata.public);
-                if (gonggong.ext && /^http/.test(gonggong.ext)) {
+                if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
                     gonggong = ggdata;
                 }
