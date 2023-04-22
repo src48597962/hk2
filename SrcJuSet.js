@@ -164,16 +164,17 @@ function SRCSet() {
             let pastes = getPastes();
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
                 showLoading('分享上传中，请稍后...');
+                log(JSON.stringify(sharelist).length)
+                log(aesEncode('SrcJu', JSON.stringify(sharelist)).length)
                 let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
-                log(pasteurl)
                 hideLoading();
-                if (pasteurl) {
+                if (/^http/.test(pasteurl)) {
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
                     copy(code);
                     refreshPage(false);
                     return "toast://聚阅分享口令已生成";
                 } else {
-                    return "toast://分享失败，剪粘板或网络异常";
+                    return "toast://分享失败，剪粘板或网络异常"+pasteurl;
                 }
             },sharelist)
         }, yxdatalist),
