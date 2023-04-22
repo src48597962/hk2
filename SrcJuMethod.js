@@ -65,7 +65,7 @@ function readData(fileid,datatype){
             eval("source = " + jkdata.public);
             if (source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
-                parse = ggparse;
+                parse = ggdata;
             } else {
                 parse = source;
             }
