@@ -235,13 +235,17 @@ function erji() {
             }
             if(parse){
                 eval("let gonggong = " + sourcedata[0].public);
+                if (gonggong.ext && /^http/.test(gonggong.ext)) {
+                    requireCache(gonggong.ext, 48);
+                    gonggong = public;
+                }
                 公共 = gonggong || parse['公共'] || {};
             }
             标识 = stype + "_" + sname;
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
-            if(getMyVar('是否取缓存文件')){
+            if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息')){
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
                     try{
@@ -751,6 +755,10 @@ function search(keyword, mode, sdata, group) {
             }
             if(parse){
                 eval("let gonggong = " + objdata.public);
+                if (gonggong.ext && /^http/.test(gonggong.ext)) {
+                    requireCache(gonggong.ext, 48);
+                    gonggong = public;
+                }
                 公共 = gonggong || parse['公共'] || {};
                 标识 = objdata.type + "_" + objdata.name;
                     let ssdata = [];
