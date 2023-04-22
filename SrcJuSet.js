@@ -97,6 +97,7 @@ function SRCSet() {
                     let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
                     let content = parsePaste(parseurl);
                     let datalist2 = JSON.parse(aesDecode('SrcJu', content));
+                    log(datalist2)
                     let sourcedata = fetch(sourcefile);
                     if (sourcedata != "") {
                         try {
