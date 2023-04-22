@@ -47,7 +47,7 @@ function readData(fileid,datatype){
         let source;
         if(datatype==1){
             eval("source = " + jkdata.parse);
-            if (source.ext && /^http/.test(source.ext)) {
+            if (source && source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = yidata;
             } else {
@@ -55,7 +55,7 @@ function readData(fileid,datatype){
             }
         }else if(datatype==2){
             eval("source = " + jkdata.erparse);
-            if (source.ext && /^http/.test(source.ext)) {
+            if (source && source.ext && /^http/.test(source.ext)) {
                 requireCache(source.ext, 48);
                 parse = erdata;
             } else {
