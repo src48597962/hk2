@@ -254,3 +254,7 @@ let erdata = {
         setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
+
+let ggdata = {
+    
+}
