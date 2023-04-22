@@ -62,7 +62,7 @@ function getYiData(type,od) {
     }
     if(parse){
         eval("let gonggong = " + sourcedata[0].public);
-        if (gonggong.ext && /^http/.test(gonggong.ext)) {
+        if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
             requireCache(gonggong.ext, 48);
             gonggong = ggdata;
         }
