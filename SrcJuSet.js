@@ -150,26 +150,28 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().lazyRule((datalist) => {
-            let pastelist;
+        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().b64().lazyRule((yxdatalist) => {
+            let sharelist;
             let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
             if(duoselect.length>0){
-                pastelist = duoselect;
+                sharelist = duoselect;
             }else{
-                pastelist = datalist;
+                sharelist = yxdatalist;
             }
             let pastes = getPastes();
-            return $(pastes, 2 , "选择剪贴板").select((datalist) => {
-                let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(datalist)), input);
+            return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
+                showLoading('分享上传中，请稍后...');
+                let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
+                hideLoading();
                 if (pasteurl) {
-                    let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + datalist.length + '条('+input+')';
+                    let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
                     copy(code);
                     refreshPage(false);
                     return "toast://聚阅分享口令已生成";
                 } else {
                     return "toast://分享失败，剪粘板或网络异常";
                 }
-            },pastelist)
+            },sharelist)
         }, yxdatalist),
         img: "https://lanmeiguojiang.com/tubiao/more/3.png",
         col_type: "icon_small_3"
