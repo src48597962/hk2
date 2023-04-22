@@ -256,5 +256,5 @@ let erdata = {
 }
 
 let ggdata = {
-    
+    host: "https://m.taomanhua.com"
 }
