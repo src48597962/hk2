@@ -43,7 +43,7 @@ function rulePage(type,page) {
 function getYiData(type,od) {
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
-        return it.name==sourcename;
+        return it.name==sourcename && it.type==runMode;
     });
     let parse;
     let 公共;
