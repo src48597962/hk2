@@ -751,6 +751,12 @@ function search(keyword, mode, sdata, group) {
                 parse = source;
             }
             if(parse){
+                try{
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                    cacheData(objdata);
+                }catch(e){
+                    //log("√缓存临时文件失败>"+e.message);
+                }
                 eval("let gonggong = " + objdata.public);
                 if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
                     requireCache(gonggong.ext, 48);
@@ -760,12 +766,6 @@ function search(keyword, mode, sdata, group) {
                 标识 = objdata.type + "_" + objdata.name;
                     let ssdata = [];
                 eval("let 搜索 = " + parse['搜索'])
-                try{
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                    cacheData(objdata);
-                }catch(e){
-                    //log("√缓存临时文件失败>"+e.message);
-                }
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 ssdata = 搜索(name,page,公共,参数) || [];
                 //log('√'+objdata.name+">搜索结果>"+ssdata.length);
