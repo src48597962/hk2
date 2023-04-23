@@ -67,7 +67,7 @@ function yiji() {
                     yidatalist.forEach(it=>{
                         if(it.type==input && sourcenames.indexOf(it.name)==-1){
                             if(Juconfig[runMode+'sourcename'] == it.name){
-                                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name;
+                                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
                             }
                             sourcenames.push(it.name);
                         }
