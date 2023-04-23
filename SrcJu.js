@@ -66,7 +66,7 @@ function yiji() {
                     let sourcenames = [];
                     yidatalist.forEach(it=>{
                         if(it.type==input && sourcenames.indexOf(it.name)==-1){
-                            if(Juconfig[runMode+'sourcename'] = it.name){
+                            if(Juconfig[runMode+'sourcename'] == it.name){
                                 it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name;
                             }
                             sourcenames.push(it.name);
