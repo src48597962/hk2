@@ -73,8 +73,8 @@ function yiji() {
                         }
                     })
                     return $(sourcenames,2,"请选择主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
-                        if(input.includes(Juconfig[runMode+'sourcename'])){
-                            return 'toast://'+runMode+' 主页源未变化：' + input.replace(/‘|’|“|”|<[^>]+>/g,"");
+                        if(Juconfig["runMode"] == runMode && input.includes(Juconfig[runMode+'sourcename'])){
+                            return 'toast://'+runMode+' 主页源：' + input.replace(/‘|’|“|”|<[^>]+>/g,"");
                         }
                         if (typeof (unRegisterTask) != "undefined") {
                             unRegisterTask("juyue");
