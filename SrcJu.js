@@ -65,11 +65,17 @@ function yiji() {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     let sourcenames = [];
                     yidatalist.forEach(it=>{
-                        if(it.type==input){
+                        if(it.type==input && sourcenames.indexOf(it.name)==-1){
+                            if(Juconfig[runMode+'sourcename'] = it.name){
+                                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name;
+                            }
                             sourcenames.push(it.name);
                         }
                     })
                     return $(sourcenames,2,"请选择主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+                        if(Juconfig[runMode+'sourcename'] == input){
+                            return 'toast://'+runMode+' 主页源未变化：' + input;
+                        }
                         if (typeof (unRegisterTask) != "undefined") {
                             unRegisterTask("juyue");
                         }else{
