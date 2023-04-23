@@ -498,12 +498,18 @@ function jiekouapi(sourcefile, data) {
                     try{
                         eval("let eparse = " + erparse);
                     }catch(e){
-                        log('√二级主页源代码异常>'+e.message);
+                        log('√二级搜索源代码异常>'+e.message);
                         return "toast://二级搜索源有错误，看日志"
                     }
                     newapi['erparse'] = erparse;
                 }
                 if (public) {
+                    try{
+                        eval("let gparse = " + public);
+                    }catch(e){
+                        log('√公共代码异常>'+e.message);
+                        return "toast://公共代码有错误，看日志"
+                    }
                     newapi['public'] = public;
                 }
                 let sourcedata = fetch(sourcefile);
