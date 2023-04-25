@@ -779,8 +779,8 @@ function search(keyword, mode, sdata, group) {
                     let ssdata = [];
                 eval("let 搜索 = " + parse['搜索'])
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
-                function SrcVerify(imgurl) {
-                    let img = convertBase64Image(imgurl).replace('data:image/jpeg;base64,','');
+                function ocr(codeurl) {
+                    let img = convertBase64Image(codeurl).replace('data:image/jpeg;base64,','');
                     let code = post("https://api.nn.ci/ocr/b64/text", {headers: {"Content-Type": "application/json"}, body: img});
                     log('识别验证码：'+code);
                     return code;
