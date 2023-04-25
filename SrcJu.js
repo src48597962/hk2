@@ -247,7 +247,7 @@ function erji() {
             MY_URL = surl;
             sauthor = parse["作者"] || sauthor;
             let detailsmark;
-            if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息')){
+            if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息') && !getMyVar("调试模式")){
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
                     try{
@@ -605,9 +605,11 @@ function erji() {
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
         setMark(erjidata);
         //当前二级详情数据保存
-        details.sname = sname;
-        details.surl = surl;
-        writeFile(detailsfile, JSON.stringify(details));
+        if(!getMyVar("调试模式")){
+            details.sname = sname;
+            details.surl = surl;
+            writeFile(detailsfile, JSON.stringify(details));
+        }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined") {
             delete sourcedata2['parse']
