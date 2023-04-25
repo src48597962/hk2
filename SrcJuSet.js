@@ -89,26 +89,26 @@ function SRCSet() {
     });
     d.push({
         title: '操作',
-        url: $(["接口更新"], 2).select((yxdatalist) => {
+        url: $(["接口更新"], 2).select(() => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+            let updatelist = [];
             yxdatalist.forEach(it=>{
-                let yparse = it.parse;
-                let eparse = it.erparse;
-                let gparse = it.public;
-                let yfile = yparse&&yparse.ext?yparse.ext:"";
-                let efile = eparse&&eparse.ext?eparse.ext:"";
-                let gfile = gparse&&gparse.ext?gparse.ext:"";
-                if(yfile){
-                    let ii = fetchCache(yfile, 1, 1);
+                eval("let yparse = " + it.parse);
+                if (yparse && yparse.ext && /^http/.test(yparse.ext) && updatelist.indexOf(yparse.ext)==-1) {
+                    fetchCache(yparse.ext, 0);
+                    updatelist.push(yparse.ext);
                 }
-                if(efile && efile!=yfile){
-                    let ii = fetchCache(efile, 1, 1);
+                eval("let eparse = " + it.erparse);
+                if (eparse && eparse.ext && /^http/.test(eparse.ext) && updatelist.indexOf(eparse.ext)==-1) {
+                    fetchCache(eparse.ext, 0);
                 }
-                if(gfile && gfile!=yfile && gfile!=efile ){
-                    let ii = fetchCache(gfile, 1, 1);
+                eval("let gparse = " + it.public);
+                if (gparse && gparse.ext && /^http/.test(gparse.ext) && updatelist.indexOf(gparse.ext)==-1) {
+                    fetchCache(gparse.ext, 0);
                 }
             })
             return "toast://在线接口更新完成";
-        }, yxdatalist),
+        }),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
         col_type: "icon_4"
     });
