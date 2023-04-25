@@ -783,7 +783,7 @@ function search(keyword, mode, sdata, group) {
                     log(codeurl)
                     let img = convertBase64Image(codeurl).replace('data:image/jpeg;base64,','');
                     log(img)
-                    let code = post("https://api.nn.ci/ocr/b64/text", {body: img});
+                    let code = request('https://api.nn.ci/ocr/b64/text', { body: img, method: 'POST' });
                     log('识别验证码：'+code);
                     return code;
                 }
