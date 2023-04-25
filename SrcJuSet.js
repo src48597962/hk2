@@ -98,13 +98,13 @@ function SRCSet() {
                 let efile = eparse&&eparse.ext?eparse.ext:"";
                 let gfile = gparse&&gparse.ext?gparse.ext:"";
                 if(yfile){
-                    let ii = fetchCache(yfile, 0.01);
+                    let ii = fetchCache(yfile, 1, 1);
                 }
                 if(efile && efile!=yfile){
-                    let ii = fetchCache(efile.ext, 0.01);
+                    let ii = fetchCache(efile, 1, 1);
                 }
                 if(gfile && gfile!=yfile && gfile!=efile ){
-                    let ii = fetchCache(gfile.ext, 0.01);
+                    let ii = fetchCache(gfile, 1, 1);
                 }
             })
             return "toast://在线接口更新完成";
