@@ -780,10 +780,8 @@ function search(keyword, mode, sdata, group) {
                 eval("let 搜索 = " + parse['搜索'])
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 function ocr(codeurl) {
-                    log(codeurl)
                     let img = convertBase64Image(codeurl).replace('data:image/jpeg;base64,','');
-                    log(img)
-                    let code = request('https://api.nn.ci/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"application/x-www-form-urlencoded"}});
+                    let code = request('https://api.nn.ci/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"text/html"}});
                     log('识别验证码：'+code);
                     return code;
                 }
