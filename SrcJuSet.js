@@ -89,27 +89,45 @@ function SRCSet() {
     });
     d.push({
         title: '操作',
-        url: $(["接口更新"], 2).select(() => {
+        url: $(["接口更新","清空接口"], 2).select(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            let updatelist = [];
-            yxdatalist.forEach(it=>{
-                eval("let yparse = " + it.parse);
-                if (yparse && yparse.ext && /^http/.test(yparse.ext) && updatelist.indexOf(yparse.ext)==-1) {
-                    fetchCache(yparse.ext, 0);
-                    updatelist.push(yparse.ext);
-                }
-                eval("let eparse = " + it.erparse);
-                if (eparse && eparse.ext && /^http/.test(eparse.ext) && updatelist.indexOf(eparse.ext)==-1) {
-                    fetchCache(eparse.ext, 0);
-                }
-                eval("let gparse = " + it.public);
-                if (gparse && gparse.ext && /^http/.test(gparse.ext) && updatelist.indexOf(gparse.ext)==-1) {
-                    fetchCache(gparse.ext, 0);
-                }
-            })
-            return "toast://在线接口更新完成";
+            if(input=="接口更新"){
+                showLoading("更新中...");
+                let updatelist = [];
+                yxdatalist.forEach(it=>{
+                    try{
+                        eval("let yparse = " + it.parse);
+                        if (yparse && yparse.ext && /^http/.test(yparse.ext) && updatelist.indexOf(yparse.ext)==-1) {
+                            fetchCache(yparse.ext, 0);
+                            updatelist.push(yparse.ext);
+                        }
+                        eval("let eparse = " + it.erparse);
+                        if (eparse && eparse.ext && /^http/.test(eparse.ext) && updatelist.indexOf(eparse.ext)==-1) {
+                            fetchCache(eparse.ext, 0);
+                        }
+                        eval("let gparse = " + it.public);
+                        if (gparse && gparse.ext && /^http/.test(gparse.ext) && updatelist.indexOf(gparse.ext)==-1) {
+                            fetchCache(gparse.ext, 0);
+                        }
+                    }catch(e){
+
+                    }
+                })
+                hideLoading();
+                return "toast://在线接口更新完成";
+            }else if(input=="清空接口"){
+                return $("确定清空所有接口吗？").confirm((sourcefile)=>{
+                    return $("确定想好了吗，清空接口后无法恢复？").confirm((sourcefile)=>{
+                        let datalist = [];
+                        writeFile(sourcefile, JSON.stringify(datalist));
+                        clearMyVar('searchMark');
+                        refreshPage(false);
+                        return 'toast://已删除';
+                    },sourcefile)
+                },sourcefile)
+            }
         }),
-        img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+        img: "https://lanmeiguojiang.com/tubiao/more/290.png",
         col_type: "icon_4"
     });
     d.push({
@@ -175,12 +193,13 @@ function SRCSet() {
     });
     d.push({
         title: '分享',
-        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().b64().lazyRule((yxdatalist) => {
+        url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().b64().lazyRule(() => {
             let sharelist;
             let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
             if(duoselect.length>0){
                 sharelist = duoselect;
             }else{
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                 sharelist = yxdatalist;
             }
             let pastes = getPastes();
@@ -197,7 +216,7 @@ function SRCSet() {
                     return "toast://分享失败，剪粘板或网络异常"+pasteurl;
                 }
             },sharelist)
-        }, yxdatalist),
+        }),
         img: "https://lanmeiguojiang.com/tubiao/more/3.png",
         col_type: "icon_4"
     });
