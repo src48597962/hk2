@@ -117,12 +117,12 @@ function SRCSet() {
                 return "toast://在线接口更新完成";
             }else if(input=="清空接口"){
                 return $("确定清空所有接口吗？").confirm((sourcefile)=>{
-                    return $("确定想好了吗，清空接口后无法恢复？").confirm((sourcefile)=>{
+                    return $("确定想好了吗，清空后无法恢复！").confirm((sourcefile)=>{
                         let datalist = [];
                         writeFile(sourcefile, JSON.stringify(datalist));
                         clearMyVar('searchMark');
                         refreshPage(false);
-                        return 'toast://已删除';
+                        return 'toast://已清空';
                     },sourcefile)
                 },sourcefile)
             }
@@ -267,7 +267,7 @@ function SRCSet() {
         if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
-                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择"], 1).select((sourcefile, data) => {
+                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择"], 2).select((sourcefile, data) => {
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
                         let oneshare = []
