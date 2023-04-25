@@ -790,7 +790,7 @@ function search(keyword, mode, sdata, group) {
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
-                    extra.name = extra.name || item.title;
+                    extra.name = extra.name || item.title.replace(/‘|’|“|”|<[^>]+>/g,"");
                     if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
