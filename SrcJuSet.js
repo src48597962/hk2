@@ -70,7 +70,7 @@ function SRCSet() {
             jiekouapi(sourcefile);
         }, sourcefile),
         img: "https://lanmeiguojiang.com/tubiao/more/25.png",
-        col_type: "icon_small_3",
+        col_type: "icon_4",
         extra: {
             longClick: [{
                 title: getMyVar("调试模式")?'退出调试':'调试模式',
@@ -86,6 +86,31 @@ function SRCSet() {
                 })
             }]
         }
+    });
+    d.push({
+        title: '操作',
+        url: $(["接口更新"], 2).select((yxdatalist) => {
+            yxdatalist.forEach(it=>{
+                let yparse = it.parse;
+                let eparse = it.erparse;
+                let gparse = it.public;
+                let yfile = yparse&&yparse.ext?yparse.ext:"";
+                let efile = eparse&&eparse.ext?eparse.ext:"";
+                let gfile = gparse&&gparse.ext?gparse.ext:"";
+                if(yfile){
+                    fetchCache(yfile, 0);
+                }
+                if(efile && efile!=yfile){
+                    fetchCache(efile.ext, 0);
+                }
+                if(gfile && gfile!=yfile && gfile!=efile ){
+                    fetchCache(gfile.ext, 0);
+                }
+            })
+            return "toast://在线接口更新完成";
+        }, yxdatalist),
+        img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+        col_type: "icon_4"
     });
     d.push({
         title: '导入',
@@ -133,7 +158,7 @@ function SRCSet() {
             }
         }, sourcefile, Juconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
-        col_type: "icon_small_3",
+        col_type: "icon_4",
         extra: {
             longClick: [{
                 title: Juconfig['ImportType']!="Skip"?'导入模式：覆盖':'导入模式：跳过',
@@ -174,7 +199,7 @@ function SRCSet() {
             },sharelist)
         }, yxdatalist),
         img: "https://lanmeiguojiang.com/tubiao/more/3.png",
-        col_type: "icon_small_3"
+        col_type: "icon_4"
     });
     d.push({
         col_type: "line"
