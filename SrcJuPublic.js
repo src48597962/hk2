@@ -89,6 +89,7 @@ function getYiData(type,od) {
             extra.name = extra.name || extra.pageTitle ||item.title;
             extra.img = extra.img || item.pic_url || item.img;
             extra.stype = sourcedata[0].type;
+            extra.name = extra.name.replace(/‘|’|“|”|<[^>]+>/g,"");
             extra.pageTitle = extra.pageTitle || extra.name;
             if(item.url && !/js:|select:|\(|\)|=>|@|toast:/.test(item.url)){
                 extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
