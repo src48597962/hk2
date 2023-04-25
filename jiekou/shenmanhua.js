@@ -19,7 +19,7 @@ let yidata = {
     "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
     "主页": function () {
         //log(公共);
-        log("1111");
+        log("2222");
         let d = [];
         MY_URL = "https://m.taomanhua.com";
         let html = request(MY_URL);
