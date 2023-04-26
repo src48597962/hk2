@@ -1,4 +1,4 @@
-//读接口数据临时缓存
+//子页面读接口临时缓存
 function readData(fileid,datatype){
     let cachefile = `hiker://files/_cache/${fileid}.json`;
     let jkdata = {};
