@@ -2,7 +2,7 @@
 function toerji(item) {
     let info = storage0.getMyVar('一级源接口信息');
     let extra = item.extra || {};
-    extra.name = extra.name || extra.pageTitle ||item.title.replace(/‘|’|“|”|<[^>]+>/g,"");
+    extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
     extra.img = extra.img || item.pic_url || item.img;
     extra.stype = info.type;
     extra.pageTitle = extra.pageTitle || extra.name;
