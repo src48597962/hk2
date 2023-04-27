@@ -49,13 +49,9 @@ function yiji() {
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
-        log(getMyVar('SrcJu-VersionCheck', '0'));
         if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
-            log("aaa");
             let programversion = $.require("config").version || 0;
-            log(programversion);
             if(programversion<10){
-                log("需要update");
                 confirm({
                     title: "温馨提示",
                     content: "发现小程序新版本",
@@ -968,7 +964,7 @@ function downloadicon() {
         }
     } catch (e) { }
 }
-/*
+
 //版本检测
 function Version() {
     var nowVersion = getItem('Version', "0.3");//现在版本 
@@ -999,4 +995,3 @@ function Version() {
         putMyVar('SrcJu-Version', '-V' + nowVersion);
     }
 }
-*/
