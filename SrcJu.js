@@ -968,6 +968,7 @@ function downloadicon() {
         }
     } catch (e) { }
 }
+/*
 //版本检测
 function Version() {
     var nowVersion = getItem('Version', "0.3");//现在版本 
@@ -998,3 +999,4 @@ function Version() {
         putMyVar('SrcJu-Version', '-V' + nowVersion);
     }
 }
+*/
