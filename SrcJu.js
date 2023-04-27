@@ -64,8 +64,8 @@ function yiji() {
                     })
                 });
             }
+            downloadicon();
         }
-        downloadicon();
         let adminbtn = runModes;
         adminbtn.unshift("管理");
         d.push({
