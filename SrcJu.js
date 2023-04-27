@@ -14,7 +14,6 @@ require(publicfile);
 
 //一级
 function yiji() {
-    log($.require("config").version);
     let sourcedata = yidatalist.filter(it => {
         return it.name == sourcename && it.type==runMode;
     });
@@ -50,7 +49,22 @@ function yiji() {
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
-        Version();
+        if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
+            Version();
+            let programversion = $.require("config").version || 0;
+            if(programversion<10){
+                confirm({
+                    title: "温馨提示",
+                    content: "发现小程序新版本",
+                    confirm: $.toString(() => {
+                        return "海阔视界首页频道规则【聚阅√】￥home_rule_url￥http://hiker.nokia.press/hikerule/rulelist.json?id=6337"
+                    }),
+                    cancel: $.toString(() => {
+                        return "toast://不升级小程序，则功能不全或有异常"
+                    })
+                });
+            }
+        }
         downloadicon();
         let adminbtn = runModes;
         adminbtn.unshift("管理");
