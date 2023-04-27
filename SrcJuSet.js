@@ -212,7 +212,8 @@ function SRCSet() {
                 hideLoading();
                 if (/^http/.test(pasteurl)) {
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
-                    copy(code);
+                    copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule="`+MY_RULE.title+`);`);
+                    //copy(code);
                     refreshPage(false);
                     return "toast://聚阅分享口令已生成";
                 } else {
@@ -599,6 +600,7 @@ function JYimport(input) {
             let content = parsePaste(parseurl);
             let datalist2 = JSON.parse(aesDecode('SrcJu', content));
             let num = 0;
+            datalist.reverse();
             for (let i = 0; i < datalist2.length; i++) {
                 if (Juconfig['ImportType']!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                     let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
