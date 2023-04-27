@@ -131,53 +131,10 @@ function SRCSet() {
     });
     d.push({
         title: '导入',
-        url: $("", "聚分享口令的云剪贴板").input((sourcefile,ImportType) => {
+        url: $("", "聚阅分享口令").input(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             JYimport(input)
-            /*
-            try {
-                let inputname = input.split('￥')[0];
-                if (inputname == "聚阅接口") {
-                    showLoading("正在导入，请稍后...");
-                    let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
-                    let content = parsePaste(parseurl);
-                    let datalist2 = JSON.parse(aesDecode('SrcJu', content));
-                    let sourcedata = fetch(sourcefile);
-                    if (sourcedata != "") {
-                        try {
-                            eval("var datalist=" + sourcedata + ";");
-                        } catch (e) {
-                            var datalist = [];
-                        }
-                    } else {
-                        var datalist = [];
-                    }
-                    let num = 0;
-                    for (let i = 0; i < datalist2.length; i++) {
-                        if (ImportType!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
-                            let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
-                            datalist.splice(index, 1);
-                            datalist.push(datalist2[i]);
-                            num = num + 1;
-                        }else if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
-                            datalist.push(datalist2[i]);
-                            num = num + 1;
-                        }
-                    }
-                    writeFile(sourcefile, JSON.stringify(datalist));
-                    clearMyVar('searchMark');
-                    hideLoading();
-                    refreshPage(false);
-                    return "toast://合计" + datalist2.length + "个，导入" + num + "个";
-                } else {
-                    return "toast://非法口令";
-                }
-            } catch (e) {
-                log('√口令解析失败>'+e.message);
-                return "toast://口令有误";
-            }
-            */
-        }, sourcefile, Juconfig['ImportType']),
+        }),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
         col_type: "icon_4",
         extra: {
@@ -212,8 +169,7 @@ function SRCSet() {
                 hideLoading();
                 if (/^http/.test(pasteurl)) {
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
-                    copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule="`+MY_RULE.title+`);`);
-                    //copy(code);
+                    copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                     refreshPage(false);
                     return "toast://聚阅分享口令已生成";
                 } else {
@@ -280,7 +236,7 @@ function SRCSet() {
                         hideLoading();
                         if (pasteurl) {
                             let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
-                            copy(code);
+                            copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                             return "toast://(单个)分享口令已生成";
                         } else {
                             return "toast://分享失败，剪粘板或网络异常";
@@ -593,6 +549,7 @@ function jiekouapi(sourcefile, data) {
 
 function JYimport(input) {
     try {
+        input = input.replace("云口令：","");
         let inputname = input.split('￥')[0];
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
