@@ -50,9 +50,10 @@ function yiji() {
     let d = [];
     if(MY_PAGE==1){
         if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
-            Version();
             let programversion = $.require("config").version || 0;
+            log(programversion);
             if(programversion<10){
+                log("需要update");
                 confirm({
                     title: "温馨提示",
                     content: "发现小程序新版本",
@@ -64,6 +65,7 @@ function yiji() {
                     })
                 });
             }
+            Version();
             downloadicon();
         }
         let adminbtn = runModes;
