@@ -49,7 +49,9 @@ function yiji() {
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
+        log(getMyVar('SrcJu-VersionCheck', '0'));
         if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
+            log("aaa");
             let programversion = $.require("config").version || 0;
             log(programversion);
             if(programversion<10){
