@@ -14,6 +14,7 @@ require(publicfile);
 
 //一级
 function yiji() {
+    log($.require("config").version);
     let sourcedata = yidatalist.filter(it => {
         return it.name == sourcename && it.type==runMode;
     });
