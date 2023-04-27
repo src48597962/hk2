@@ -23,7 +23,6 @@ function SRCSet() {
     let sourcenames = yidatalist.map(it=>{
         return it.name;
     })
-
     
     d.push({
         title: sourcename?sourcename:'设置主页源',
@@ -133,6 +132,9 @@ function SRCSet() {
     d.push({
         title: '导入',
         url: $("", "聚分享口令的云剪贴板").input((sourcefile,ImportType) => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+            JYimport(input)
+            /*
             try {
                 let inputname = input.split('￥')[0];
                 if (inputname == "聚阅接口") {
@@ -174,6 +176,7 @@ function SRCSet() {
                 log('√口令解析失败>'+e.message);
                 return "toast://口令有误";
             }
+            */
         }, sourcefile, Juconfig['ImportType']),
         img: "https://lanmeiguojiang.com/tubiao/more/43.png",
         col_type: "icon_4",
@@ -585,4 +588,38 @@ function jiekouapi(sourcefile, data) {
         }, sourcefile)
     });
     setResult(d);
+}
+
+function JYimport(input) {
+    try {
+        let inputname = input.split('￥')[0];
+        if (inputname == "聚阅接口") {
+            showLoading("正在导入，请稍后...");
+            let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
+            let content = parsePaste(parseurl);
+            let datalist2 = JSON.parse(aesDecode('SrcJu', content));
+            let num = 0;
+            for (let i = 0; i < datalist2.length; i++) {
+                if (Juconfig['ImportType']!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
+                    let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
+                    datalist.splice(index, 1);
+                    datalist.push(datalist2[i]);
+                    num = num + 1;
+                }else if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
+                    datalist.push(datalist2[i]);
+                    num = num + 1;
+                }
+            }
+            writeFile(sourcefile, JSON.stringify(datalist));
+            clearMyVar('searchMark');
+            hideLoading();
+            refreshPage(false);
+            return "toast://合计" + datalist2.length + "个，导入" + num + "个";
+        } else {
+            return "toast://非法口令";
+        }
+    } catch (e) {
+        log('√口令解析失败>'+e.message);
+        return "toast://口令有误";
+    }
 }
