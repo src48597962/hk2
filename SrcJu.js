@@ -303,7 +303,7 @@ function erji() {
             try{
                 log(pageid);
                 if(pageid>0){//details.page && details.pageparse && 
-                    log('111');
+                    log(details.pageparse);
                     let 分页s = details.page;
                     if(pageid > 分页s.length){
                         pageid = 0;
