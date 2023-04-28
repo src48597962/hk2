@@ -219,10 +219,6 @@ function erji() {
             if(sname&&surl){
                 erjiextra = datasource[i];
                 storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
-                lineid = getMyVar("SrcJu_"+surl+"_line") || datasource[i].lineid || "";
-                pageid = getMyVar("SrcJu_"+surl+"_page") || datasource[i].pageid || "";
-                log(i);
-                log(lineid)
                 break;
             }
         }
@@ -298,10 +294,10 @@ function erji() {
                 }
             })
             detailload = 1;
-            lineid = lineid || getMyVar("SrcJu_"+surl+"_line", '0');
+            lineid = datasource[2].lineid || getMyVar("SrcJu_"+surl+"_line", '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
-            pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
+            pageid = datasource[2].pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             try{
                 if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
                     let 分页s = details.page;
