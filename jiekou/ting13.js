@@ -192,6 +192,7 @@ let erdata = {
         let ssurl = 公共.host+"/api/ajax/solist?word="+name+"&type=name&page="+page+"&order=1";
         let code = JSON.parse(request(ssurl)).data;
         code.forEach(item => {
+            log(item)
             if (item.novel.name(name)) {
                 d.push({
                     title: item.novel.name,
