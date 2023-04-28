@@ -300,16 +300,13 @@ function erji() {
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
-            /*
             try{
-                
-                log(pageid);
                 if(details.page && pageid>0){
                     let 分页s = details.page
                     if(pageid > 分页s.length){
                         pageid = 0;
                     }
-                    eval("let 分页解析" = details.pageparse);
+                    eval("let 分页解析 = " + details.pageparse);
                     let 分页选集 = 分页解析(分页s[pageid].url);
                     列表s[lineid] = 分页选集;
                     details.list = 列表s;
@@ -317,7 +314,6 @@ function erji() {
             }catch{e}{
                 log('√'+sname+'分页选集处理失败>'+e.message);
             }
-            */
             try{
                 if(lineid > 线路s.length){
                     lineid = 0;
