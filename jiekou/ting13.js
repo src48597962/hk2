@@ -210,7 +210,7 @@ let erdata = {
         let 分类 = pdfh(html, '.book-cell&&.book-rand-a,0&&Text');
         let 更新 = pdfh(html, '.book-cell&&.book-rand-a,4&&Text');
         let 播音 = pdfh(html, '.book-cell&&.book-rand-a,3&&Text');
-        let 简介 = pdfh(html, '#js_desc_content&&Text');
+        let 简介 = pdfh(html, '.ellipsis&&Text');
         let detail1 = "作者："+作者+"\n"+"分类："+分类;
         let detail2 = "状态："+更新+"\n"+"播讲："+播音;
         let 图片 = pd(html, '.book&&div&&img&&src');
@@ -221,7 +221,20 @@ let erdata = {
             return 选集列表;
         })
         let 分页 = pdfa(html, '.hd-sel&&option');
-        log(分页)
+        if(分页.lenght>1){
+            分页.splice(0, 1);
+            分页.forEach(it=>{
+                iturl = pd(it,"option&&value");
+                let ithtml = request(iturl, {timeout:8000});
+                let itlist = pdfa(ithtml, '.play-list&&li').map((data) => {
+                    let 选集列表 = {};
+                    选集列表.title = pdfh(data, 'a--span--i&&Text')
+                    选集列表.url = pd(data, 'a&&href');
+                    return 选集列表;
+                })
+                选集 = 选集.concat(itlist);
+            })
+        }
         return { //如果有多线路，则传line: 线路数组, 则list应为多线路合并后的数组[线路1选集列表，线路2选集列表]
             detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
             detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
