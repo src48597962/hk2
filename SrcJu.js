@@ -300,24 +300,17 @@ function erji() {
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
-            log($.type(details.pageparse));
             try{
                 if(pageid>0){//details.page && details.pageparse && 
-                    //log(details.pageparse);
                     let 分页s = details.page;
                     if(pageid > 分页s.length){
                         pageid = 0;
                     }
-                    log(分页s.length);
                     //log($.type(details.pageparse))
-                    log("开始分页解析");
-                    
-                    //eval("let 分页解析 = " + details.pageparse)
-                    //let 分页选集 = 分页解析(分页s[pageid].url);
-                    //let 分页选集 = 分页s[pageid].url + "@js=" +details.pageparse;
-                    //log(分页选集);
-                    //列表s[lineid] = 分页选集;
-                    //details.list = 列表s;
+                    let 分页选集 = details.pageparse(分页s[pageid].url);
+                    log($.type(分页选集));
+                    列表s[lineid] = 分页选集;
+                    details.list = 列表s;
                 }
             }catch(e){
                 log('√'+sname+'分页选集处理失败>'+e.message);
@@ -632,10 +625,8 @@ function erji() {
         setMark(erjidata);
         //当前二级详情数据保存
         if(!getMyVar("调试模式")){
-            log($.type(details.pageparse));
             details.sname = sname;
             details.surl = surl;
-            log($.type(details.pageparse));
             writeFile(detailsfile, $.stringify(details));
         }
         //切换源时更新收藏数据，以及分享时附带接口
