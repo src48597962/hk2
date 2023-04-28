@@ -309,7 +309,7 @@ function erji() {
                     let 分页选集 = details.pageparse(分页s[pageid].url);
                     if($.type(分页选集)=="array"){
                         列表s[lineid] = 分页选集;
-                        details.list = 列表s;
+                        details.list = details.line?列表s:分页选集;
                     }
                 }
             }catch(e){
