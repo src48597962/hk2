@@ -549,6 +549,7 @@ function erji() {
                     }
                 })
             }
+            /*
             if(details.page){
                 d.push({
                     col_type: "line_blank"
@@ -569,6 +570,7 @@ function erji() {
                     })
                 })
             }
+            */
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             for(let i=0; i<列表.length; i++) {
                 let extra = {
