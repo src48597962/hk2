@@ -209,6 +209,8 @@ function erji() {
     let sname;
     let surl;
     let sgroup;
+    let lineid;
+    let pageid;
     let detailload;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
@@ -217,6 +219,8 @@ function erji() {
             if(sname&&surl){
                 erjiextra = datasource[i];
                 storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
+                lineid = datasource[i].lineid || "";
+                pageid = datasource[i].pageid || "";
                 break;
             }
         }
@@ -292,22 +296,38 @@ function erji() {
                 }
             })
             detailload = 1;
-            let indexid = getMyVar(surl, '0');
+            
+            lineid = lineid || getMyVar("SrcJu_"+surl, '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             try{
-                if(indexid > 线路s.length){
-                    indexid = 0;
+                pageid = pageid || getMyVar("SrcJu_"+surl+"#page", '0');
+                if(details.page && pageid>0){
+                    let 分页s = details.page
+                    if(pageid > 分页s.length){
+                        pageid = 0;
+                    }
+                    eval("let 分页解析" = details.pageparse);
+                    let 分页选集 = 分页解析(分页s[pageid].url);
+                    列表s[lineid] = 分页选集;
+                    details.list = 列表s;
+                }
+            }catch{e}{
+                log('√'+sname+'分页选集处理失败>'+e.message);
+            }
+            try{
+                if(lineid > 线路s.length){
+                    lineid = 0;
                 }
                 if(线路s.length != 列表s.length){
-                    log('√'+sname+'接口返回的线路和列表不相等')
+                    log('√'+sname+'接口返回的线路和列表不相等');
                 }
             }catch(e){
                 log('√'+sname+">线路或列表返回数据有误"+e.message);
                 线路s = ["线路"];
             }
+            let 列表 = 列表s[lineid];
             
-            let 列表 = 列表s[indexid];
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
@@ -328,44 +348,6 @@ function erji() {
             let lazy;
             let itype;
             let 解析 = parse['解析'];
-            /*
-            if (stype=="漫画") {
-                lazy = $("").lazyRule((解析, 公共) => {
-                    let url = input.split("##")[1];
-                    return 解析(url,公共);
-                }, 解析, 公共);
-                itype = "comic";
-            }else{
-                lazy = $("#readTheme##autoPage#").rule((解析, 公共) => {
-                    let url = MY_PARAMS.url || "";
-                    解析(url,公共);
-                }, 解析, 公共);
-                itype = "novel";
-            }
-            if (stype=="漫画") {
-                lazy = $("").lazyRule((规则名,标识) => {
-                    let url = input.split("##")[1];
-                    //let 公共 = $.require('jiekou?rule=' + 规则名).公共(标识);
-                    //let 解析 = $.require('jiekou?rule=' + 规则名).属性(标识,"二级","解析");
-                    const 子页面 = $.require('jiekou?rule=' + 规则名);
-                    let 公共 = 子页面.公共(标识);
-                    let 解析 = 子页面.属性(标识,"二级","解析");
-                    let 参数 = {"规则名": 规则名, "标识": 标识}
-                    return 解析(url, 公共, 参数);
-                }, MY_RULE.title, 标识);
-                itype = "comic";
-            }else{
-                lazy = $("#readTheme##autoPage#").rule((规则名,标识) => {
-                    let url = MY_PARAMS.url || "";
-                    const 子页面 = $.require('jiekou?rule=' + 规则名);
-                    let 公共 = 子页面.公共(标识);
-                    let 解析 = 子页面.属性(标识,"二级","解析");
-                    let 参数 = {"规则名": 规则名, "标识": 标识}
-                    解析(url,公共,参数);
-                }, MY_RULE.title, 标识);
-                itype = "novel";
-            }
-            */
             if (stype=="漫画") {
                 lazy = $("").lazyRule((解析,公共,参数) => {
                     let url = input.split("##")[1];
@@ -554,10 +536,10 @@ function erji() {
             })
             if(线路s.length>1){
                 d.push({
-                    title: `““””<b><span style="color: #AABBFF">`+线路s[indexid]+`<small>⚡</small></span></b>`,
+                    title: `““””<b><span style="color: #AABBFF">`+线路s[lineid]+`<small>⚡</small></span></b>`,
                     url: $(线路s,2,"选择线路").select((线路s,surl) => {
                         let index = 线路s.indexOf(input);
-                        putMyVar(surl,index);
+                        putMyVar("SrcJu_"+surl, index);
                         refreshPage(false);
                         return 'hiker://empty'
                     }, 线路s, surl),
@@ -565,6 +547,26 @@ function erji() {
                     extra: {
                         cls: "loadlist"
                     }
+                })
+            }
+            if(details.page){
+                d.push({
+                    col_type: "line_blank"
+                });
+                let 分页s = details.page
+                分页s.forEach((it,i)=>{
+                    d.push({
+                        title: pageid==i?it.title:`““””<b><span style="color: #AABBFF">`+it.title+`<small>⚡</small></span></b>`,
+                        url: $("#noLoading#").lazyRule((pageurl,i) => {
+                            putMyVar(pageurl, i);
+                            refreshPage(false);
+                            return 'hiker://empty'
+                        }, "SrcJu_"+surl+"#page", i),
+                        col_type: 'scroll_button',
+                        extra: {
+                            cls: "loadlist"
+                        }
+                    })
                 })
             }
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
@@ -618,7 +620,7 @@ function erji() {
         }
         putMyVar(sname+"_"+name, "1");
         //二级源浏览记录保存
-        let erjidata = { name: name, sname: sname, surl: surl, stype: stype };
+        let erjidata = { name: name, sname: sname, surl: surl, stype: stype, lineid: lineid, pageid: pageid };
         setMark(erjidata);
         //当前二级详情数据保存
         if(!getMyVar("调试模式")){
