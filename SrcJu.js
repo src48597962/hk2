@@ -301,13 +301,16 @@ function erji() {
             let 列表s = details.line?details.list:[details.list];
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             try{
+                log(pageid);
                 if(details.page && pageid>0){
                     let 分页s = details.page
                     if(pageid > 分页s.length){
                         pageid = 0;
                     }
                     eval("let 分页解析 = " + details.pageparse);
+                    log(分页s[pageid].url);
                     let 分页选集 = 分页解析(分页s[pageid].url);
+                    log(分页选集);
                     列表s[lineid] = 分页选集;
                     details.list = 列表s;
                 }
