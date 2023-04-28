@@ -219,8 +219,8 @@ function erji() {
             if(sname&&surl){
                 erjiextra = datasource[i];
                 storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
-                lineid = datasource[i].lineid || "";
-                pageid = datasource[i].pageid || "";
+                lineid = getMyVar("SrcJu_"+surl+"_line") || datasource[i].lineid || "";
+                pageid = getMyVar("SrcJu_"+surl+"_page") || datasource[i].pageid || "";
                 break;
             }
         }
@@ -296,7 +296,7 @@ function erji() {
                 }
             })
             detailload = 1;
-            lineid = lineid || getMyVar("SrcJu_"+surl, '0');
+            lineid = lineid || getMyVar("SrcJu_"+surl+"_line", '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
@@ -538,7 +538,7 @@ function erji() {
                     title: `““””<b><span style="color: #AABBFF">`+线路s[lineid]+`<small>⚡</small></span></b>`,
                     url: $(线路s,2,"选择线路").select((线路s,surl) => {
                         let index = 线路s.indexOf(input);
-                        putMyVar("SrcJu_"+surl, index);
+                        putMyVar("SrcJu_"+surl+"_line", index);
                         refreshPage(false);
                         return 'hiker://empty'
                     }, 线路s, surl),
