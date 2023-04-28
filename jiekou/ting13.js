@@ -226,16 +226,7 @@ let erdata = {
             分页列表.url = pd(data,"option&&value");
             return 分页列表;
         });
-        function 分页解析 (surl) {
-            let html = request(surl, {timeout:8000});
-            let 选集 = pdfa(html, '.play-list&&li').map((data) => {
-                let 选集列表 = {};
-                选集列表.title = pdfh(data, 'a--span--i&&Text')
-                选集列表.url = pd(data, 'a&&href');
-                return 选集列表;
-            })
-            return 选集;
-        }
+        
         return {
             "detail1": "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
             "detail2": "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
@@ -243,7 +234,16 @@ let erdata = {
             "img": 图片,
             "list": 选集,
             "page": 分页,
-            "pageparse": 分页解析
+            "pageparse": $.toString(() => {
+                let html = request(pageurl, {timeout:8000});
+                let 选集 = pdfa(html, '.play-list&&li').map((data) => {
+                    let 选集列表 = {};
+                    选集列表.title = pdfh(data, 'a--span--i&&Text')
+                    选集列表.url = pd(data, 'a&&href');
+                    return 选集列表;
+                })
+                return 选集;
+            })
         }
     },
     "解析": function(url) {//url为播放链接必传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
