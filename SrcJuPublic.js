@@ -5,7 +5,7 @@ if(Jucfg != ""){
 }else{
     var Juconfig= {};
 }
-let runModes = ["漫画","小说"];
+let runModes = ["漫画","小说","听书"];
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
 
