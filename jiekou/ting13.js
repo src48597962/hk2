@@ -221,10 +221,10 @@ let erdata = {
             return 选集列表;
         })
         let 分页 = pdfa(html, '.hd-sel&&option');
-        if(分页.lenght>1){
-            log(分页.lenght)
+        if(分页.length > 1){
+            log(分页.length)
             分页.splice(0, 1);
-            log(分页.lenght)
+            log(分页.length)
             分页.forEach(it=>{
                 iturl = pd(it,"option&&value");
                 log(iturl)
