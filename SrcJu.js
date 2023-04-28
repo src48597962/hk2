@@ -299,9 +299,10 @@ function erji() {
             lineid = lineid || getMyVar("SrcJu_"+surl, '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
+            pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             /*
             try{
-                pageid = pageid || getMyVar("SrcJu_"+surl+"#page", '0');
+                
                 log(pageid);
                 if(details.page && pageid>0){
                     let 分页s = details.page
@@ -564,7 +565,7 @@ function erji() {
                             putMyVar(pageurl, i);
                             refreshPage(false);
                             return 'hiker://empty'
-                        }, "SrcJu_"+surl+"#page", i),
+                        }, "SrcJu_"+surl+"_page", i),
                         col_type: 'scroll_button',
                         extra: {
                             cls: "loadlist"
