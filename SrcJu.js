@@ -301,6 +301,7 @@ function erji() {
             let 列表s = details.line?details.list:[details.list];
             try{
                 pageid = pageid || getMyVar("SrcJu_"+surl+"#page", '0');
+                log(pageid);
                 if(details.page && pageid>0){
                     let 分页s = details.page
                     if(pageid > 分页s.length){
