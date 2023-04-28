@@ -204,22 +204,24 @@ let erdata = {
         });
         return d;
     },
-    "二级": function(surl) {//surl为详情页链接
+    "二级": function(surl) {
         let html = request(surl, {timeout:8000});
-        let dataid = pdfh(html, "#COMMENT&&data-ssid");
-        let 作者 = pdfh(html, '#detail&&.author&&Text');
-        let 分类 = pdfa(html, '#detail&&.type').map(data => pdfh(data, 'Text')).join("  ");
-        let 更新 = pdfh(html, '#js_chapter-reverse&&.update_time&&Text');
+        let 作者 = pdfh(html, '.book-cell&&.book-rand-a,2&&Text');
+        let 分类 = pdfh(html, '.book-cell&&.book-rand-a,0&&Text');
+        let 更新 = pdfh(html, '.book-cell&&.book-rand-a,4&&Text');
+        let 播音 = pdfh(html, '.book-cell&&.book-rand-a,3&&Text');
         let 简介 = pdfh(html, '#js_desc_content&&Text');
         let detail1 = "作者："+作者+"\n"+"分类："+分类;
-        let detail2 = "时间："+更新;
-        let 图片 = pd(html, '#detail&&.thumbnail&&img&&data-src');
-        let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
+        let detail2 = "状态："+更新+"\n"+"播讲："+播音;
+        let 图片 = pd(html, '.book&&div&&img&&src');
+        let 选集 = pdfa(html, '.play-list&&li').map((data) => {
             let 选集列表 = {};
-            选集列表.title = pdfh(data, 'Text')
-            选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
-            return 选集列表;//列表数组含title和url就行
+            选集列表.title = pdfh(data, 'a&&Text')
+            选集列表.url = pd(data, 'a&&href');
+            return 选集列表;
         })
+        let 分页 = pdfa(html, '.hd-sel&&option');
+        log(分页)
         return { //如果有多线路，则传line: 线路数组, 则list应为多线路合并后的数组[线路1选集列表，线路2选集列表]
             detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
             detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
