@@ -3,24 +3,22 @@ let yidata = {
     "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
     "主页": function () {
         let d = [];
-        MY_URL = "https://m.taomanhua.com";
+        MY_URL = 公共.host;
         let html = request(MY_URL);
-        var Label_set = pdfa(html, '#js_content&&.mult.sow')
+        var Label_set = pdfa(html, 'body&&.list')
         Label_set.forEach((data) => {
             d.push({
                 title: pdfh(data, 'h2&&Text'),
                 col_type: "rich_text"
             });
-            var item = pdfa(data, '.mult-warp.siw&&li.r1c3');
-            item = item.length ? item : pdfa(data, '.mult-warp.siw&&li.r1c2');
+            var item = pdfa(data, 'ul&&li');
             item.forEach((datas) => {
                 d.push({
-                    title: pdfh(datas, '.card-title&&Text'),
-                    desc: pdfh(datas, '.card-text&&Text'),
-                    pic_url: (item.length / 3) % 1 === 0 ? pd(datas, 'img&&data-src').replace('-300x400.jpg', '') : pd(datas, 'img&&data-src'),
-                    col_type: (item.length / 3) % 1 === 0 ? "movie_3_marquee" : "movie_2",
-                    url: pd(datas, 'a&&href')//如果只有主页源，这里就可以不用传url
-                    //如果title不等于片名，则可以单独传extra.name
+                    title: pdfh(datas, 'a&&.list-name&&Text'),
+                    desc: pdfh(datas, 'a&&.score&&Text'),
+                    pic_url: pdfh(datas, 'a&&img&&src'),
+                    col_type: "movie_3_marquee",
+                    url: pd(datas, 'a&&href')
                 });
             });
         });
@@ -239,5 +237,5 @@ let erdata = {
 }
 
 let ggdata = {
-    host: "https://m.taomanhua.com"
+    host: "https://m.ting13.com"
 }
