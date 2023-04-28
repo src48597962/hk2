@@ -14,7 +14,7 @@ let yidata = {
             var item = pdfa(data, 'ul&&li');
             item.forEach((datas) => {
                 d.push({
-                    title: pdfh(datas, 'a&&.list-name&&Text'),
+                    title: pdfh(datas, 'a&&figcaption&&Text'),
                     desc: pdfh(datas, 'a&&.score&&Text'),
                     pic_url: pdfh(datas, 'a&&img&&data-original'),
                     col_type: "movie_3_marquee",
