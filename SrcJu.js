@@ -301,16 +301,16 @@ function erji() {
             let 列表s = details.line?details.list:[details.list];
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             try{
-                if(pageid>0){//details.page && details.pageparse && 
+                if(pageid > 0 && pageid != details.pageid){
                     let 分页s = details.page;
                     if(pageid > 分页s.length){
                         pageid = 0;
                     }
-                    //log($.type(details.pageparse))
                     let 分页选集 = details.pageparse(分页s[pageid].url);
-                    log($.type(分页选集));
-                    列表s[lineid] = 分页选集;
-                    details.list = 列表s;
+                    if($.type(分页选集)=="array"){
+                        列表s[lineid] = 分页选集;
+                        details.list = 列表s;
+                    }
                 }
             }catch(e){
                 log('√'+sname+'分页选集处理失败>'+e.message);
@@ -549,17 +549,24 @@ function erji() {
                     }
                 })
             }
-            if(details.page){
+            if(details.page && details.pageparse){
                 d.push({
-                    col_type: "line_blank"
+                    col_type: "blank_block"
                 });
+                for (let i = 0; i < 10; i++) {
+                    d.push({
+                        col_type: "blank_block"
+                    })
+                }
                 let 分页s = details.page
                 分页s.forEach((it,i)=>{
                     d.push({
-                        title: pageid==i?it.title:`““””<b><span style="color: #AABBFF">`+it.title+`<small>⚡</small></span></b>`,
+                        title: pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title,
                         url: $("#noLoading#").lazyRule((pageurl,i) => {
-                            putMyVar(pageurl, i);
-                            refreshPage(false);
+                            if(getMyVar(pageurl)!=i){
+                                putMyVar(pageurl, i);
+                                refreshPage(false);
+                            }
                             return 'hiker://empty'
                         }, "SrcJu_"+surl+"_page", i),
                         col_type: 'scroll_button',
@@ -627,6 +634,7 @@ function erji() {
         if(!getMyVar("调试模式")){
             details.sname = sname;
             details.surl = surl;
+            details.pageid = pageid;
             writeFile(detailsfile, $.stringify(details));
         }
         //切换源时更新收藏数据，以及分享时附带接口
