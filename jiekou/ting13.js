@@ -16,7 +16,7 @@ let yidata = {
                 d.push({
                     title: pdfh(datas, 'a&&.list-name&&Text'),
                     desc: pdfh(datas, 'a&&.score&&Text'),
-                    pic_url: pdfh(datas, 'a&&img&&src'),
+                    pic_url: pdfh(datas, 'a&&img&&data-original'),
                     col_type: "movie_3_marquee",
                     url: pd(datas, 'a&&href')
                 });
