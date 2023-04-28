@@ -220,31 +220,30 @@ let erdata = {
             选集列表.url = pd(data, 'a&&href');
             return 选集列表;
         })
-        let 分页 = pdfa(html, '.hd-sel&&option');
-        if(分页.length > 1){
-            log(分页.length)
-            分页.splice(0, 1);
-            log(分页.length)
-            分页.forEach(it=>{
-                iturl = pd(it,"option&&value");
-                log(iturl)
-                let ithtml = request(iturl, {timeout:8000});
-                let itlist = pdfa(ithtml, '.play-list&&li').map((data) => {
+        let 分页 = pdfa(html, '.hd-sel&&option').map((data) => {
+            let 分页列表 = {};
+            分页列表.title = pdfh(data, 'option&&Text')
+            分页列表.url = pd(data,"option&&value");
+            return 分页列表;
+        });
+        return {
+            detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
+            detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
+            desc: 简介,
+            img: 图片,
+            list: 选集,
+            page: 分页,
+            pageparse: function(surl){
+                let html = request(surl, {timeout:8000});
+                let 选集 = pdfa(html, '.play-list&&li').map((data) => {
                     let 选集列表 = {};
                     选集列表.title = pdfh(data, 'a--span--i&&Text')
                     选集列表.url = pd(data, 'a&&href');
                     return 选集列表;
                 })
-                选集 = 选集.concat(itlist);
-            })
+                return 选集;
+            }
         }
-        return { //如果有多线路，则传line: 线路数组, 则list应为多线路合并后的数组[线路1选集列表，线路2选集列表]
-            detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
-            detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
-            desc: 简介,
-            img: 图片, //图片也可以不传，则用上一级的原图片
-            list: 选集 
-        }//按格式返回
     },
     "解析": function(url) {//url为播放链接必传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
         let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
