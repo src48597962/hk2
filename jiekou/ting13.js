@@ -216,7 +216,7 @@ let erdata = {
         let 图片 = pd(html, '.book&&div&&img&&src');
         let 选集 = pdfa(html, '.play-list&&li').map((data) => {
             let 选集列表 = {};
-            选集列表.title = pdfh(data, 'a&&Text')
+            选集列表.title = pdfh(data, 'a:span&&Text')
             选集列表.url = pd(data, 'a&&href');
             return 选集列表;
         })
