@@ -299,6 +299,7 @@ function erji() {
             lineid = lineid || getMyVar("SrcJu_"+surl+"_line", '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
+            log(pageid);
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             try{
                 if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
