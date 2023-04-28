@@ -235,7 +235,7 @@ let erdata = {
             "list": 选集,
             "page": 分页,
             "pageparse": $.toString(() => {
-                let html = request(pageurl, {timeout:8000});
+                let html = request(input, {timeout:8000});
                 let 选集 = pdfa(html, '.play-list&&li').map((data) => {
                     let 选集列表 = {};
                     选集列表.title = pdfh(data, 'a--span--i&&Text')
