@@ -302,12 +302,13 @@ function erji() {
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             try{
                 log(pageid);
-                log(details);
                 if(details.page && details.pageparse && pageid>0){
-                    let 分页s = details.page
+                    log('111');
+                    let 分页s = details.page;
                     if(pageid > 分页s.length){
                         pageid = 0;
                     }
+                    log(分页s.length);
                     log("开始分页解析");
                     let 分页选集 = details.pageparse(分页s[pageid].url);
                     log(分页选集);
