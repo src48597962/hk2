@@ -311,7 +311,7 @@ function erji() {
                     列表s[lineid] = 分页选集;
                     details.list = 列表s;
                 }
-            }catch{e}{
+            }catch(e){
                 log('√'+sname+'分页选集处理失败>'+e.message);
             }
             try{
