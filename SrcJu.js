@@ -302,7 +302,7 @@ function erji() {
             pageid = pageid || getMyVar("SrcJu_"+surl+"_page", '0');
             try{
                 log(pageid);
-                if(details.page && details.pageparse && pageid>0){
+                if(pageid>0){//details.page && details.pageparse && 
                     log('111');
                     let 分页s = details.page;
                     if(pageid > 分页s.length){
