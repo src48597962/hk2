@@ -299,6 +299,7 @@ function erji() {
             lineid = lineid || getMyVar("SrcJu_"+surl, '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
+            /*
             try{
                 pageid = pageid || getMyVar("SrcJu_"+surl+"#page", '0');
                 log(pageid);
@@ -315,6 +316,7 @@ function erji() {
             }catch{e}{
                 log('√'+sname+'分页选集处理失败>'+e.message);
             }
+            */
             try{
                 if(lineid > 线路s.length){
                     lineid = 0;
