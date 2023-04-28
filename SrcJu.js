@@ -310,7 +310,8 @@ function erji() {
                     }
                     log(分页s.length);
                     log("开始分页解析");
-                    let 分页选集 = details.pageparse(分页s[pageid].url);
+                    eval("let 分页解析 = " + details.pageparse)
+                    let 分页选集 = 分页解析(分页s[pageid].url);
                     log(分页选集);
                     列表s[lineid] = 分页选集;
                     details.list = 列表s;
