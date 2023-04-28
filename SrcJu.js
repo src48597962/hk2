@@ -636,7 +636,7 @@ function erji() {
             details.sname = sname;
             details.surl = surl;
             log($.type(details.pageparse));
-            writeFile(detailsfile, JSON.stringify(details));
+            writeFile(detailsfile, details);//JSON.stringify(
         }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined") {
