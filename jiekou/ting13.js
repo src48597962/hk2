@@ -226,7 +226,7 @@ let erdata = {
             分页列表.url = pd(data,"option&&value");
             return 分页列表;
         });
-        let 分页解析 = function(surl) {
+        function 分页解析 (surl) {
             let html = request(surl, {timeout:8000});
             let 选集 = pdfa(html, '.play-list&&li').map((data) => {
                 let 选集列表 = {};
