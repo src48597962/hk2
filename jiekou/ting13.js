@@ -246,11 +246,13 @@ let erdata = {
             }
         }
     },
-    "解析": function(url) {//url为播放链接必传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
-        let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
-        return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
+    "解析": function(url) {
+        let urlid = url.match(/play\/(.*?)\./)[1];
+        let data = "nid="+urlid.split("_")[0]+"&cid="+urlid.split("_")[2];
+        let play = JSON.parse(request("https://m.ting13.com/api/mapi/play", {timeout:8000,body: data, method: 'POST',headers:{referer: url}})).url;
+        return play + "#isMusic=true#";
     },
-    "最新": function(url) {//收藏获取最新章节，surl为详情页链接
+    "最新": function(url) {
         setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
     }
 }
