@@ -227,13 +227,13 @@ let erdata = {
             return 分页列表;
         });
         return {
-            detail1: "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
-            detail2: "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
-            desc: 简介,
-            img: 图片,
-            list: 选集,
-            page: 分页,
-            pageparse: function(surl) {
+            "detail1": "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
+            "detail2": "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
+            "desc": 简介,
+            "img": 图片,
+            "list": 选集,
+            "page": 分页,
+            "pageparse": function(surl) {
                 let html = request(surl, {timeout:8000});
                 let 选集 = pdfa(html, '.play-list&&li').map((data) => {
                     let 选集列表 = {};
