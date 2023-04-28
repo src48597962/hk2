@@ -222,9 +222,12 @@ let erdata = {
         })
         let 分页 = pdfa(html, '.hd-sel&&option');
         if(分页.lenght>1){
+            log(分页.lenght)
             分页.splice(0, 1);
+            log(分页.lenght)
             分页.forEach(it=>{
                 iturl = pd(it,"option&&value");
+                log(iturl)
                 let ithtml = request(iturl, {timeout:8000});
                 let itlist = pdfa(ithtml, '.play-list&&li').map((data) => {
                     let 选集列表 = {};
