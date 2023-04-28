@@ -632,8 +632,10 @@ function erji() {
         setMark(erjidata);
         //当前二级详情数据保存
         if(!getMyVar("调试模式")){
+            log($.type(details.pageparse));
             details.sname = sname;
             details.surl = surl;
+            log($.type(details.pageparse));
             writeFile(detailsfile, JSON.stringify(details));
         }
         //切换源时更新收藏数据，以及分享时附带接口
