@@ -222,7 +222,7 @@ let erdata = {
         })
         let 分页 = pdfa(html, '.hd-sel&&option').map((data) => {
             let 分页列表 = {};
-            分页列表.title = pdfh(data, 'option&&Text')
+            分页列表.title = pdfh(data, 'option&&Text').replace(/ |第|集/,"");
             分页列表.url = pd(data,"option&&value");
             return 分页列表;
         });
