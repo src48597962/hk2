@@ -588,6 +588,10 @@ function erji() {
                     url: 列表[i].url,
                     cls: "loadlist playlist"
                 }
+                if(stype=="听书"){
+                    extra.jsLoadingInject = true;
+                    extra.blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com'];
+                }
                 if(list_col_type.indexOf("_left")>-1){
                     extra.textAlign = 'left';
                 }
