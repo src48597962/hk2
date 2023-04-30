@@ -249,7 +249,12 @@ let erdata = {
     "解析": function(url) {
         let urlid = url.match(/play\/(.*?)\./)[1];
         let data = "nid="+urlid.split("_")[0]+"&cid="+urlid.split("_")[2];
-        let play = JSON.parse(request("https://m.ting13.com/api/mapi/play", {timeout:8000,body: data, method: 'POST',headers:{referer: url}})).url;
+        let headers = {
+            "Referer": url
+        };
+        let cook = fetchCookie(url, {headers: headers});
+        headers.Cookie = JSON.parse(cook||'[]').join(';');
+        let play = JSON.parse(request("https://m.ting13.com/api/mapi/play", {timeout:8000,body: data, method: 'POST',headers:headers})).url;
         return play + "#isMusic=true#";
     },
     "最新": function(url) {
