@@ -590,7 +590,7 @@ function erji() {
                 }
                 if(stype=="听书"){
                     extra.jsLoadingInject = true;
-                    extra.blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com'];
+                    extra.blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com', '51.la'];
                 }
                 if(list_col_type.indexOf("_left")>-1){
                     extra.textAlign = 'left';
