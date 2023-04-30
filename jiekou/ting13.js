@@ -247,15 +247,31 @@ let erdata = {
         }
     },
     "解析": function(url) {
-        let urlid = url.match(/play\/(.*?)\./)[1];
-        let data = "nid="+urlid.split("_")[0]+"&cid="+urlid.split("_")[2];
-        let headers = {
-            "Referer": url
-        };
-        let cook = fetchCookie(url, {headers: headers});
-        headers.Cookie = JSON.parse(cook||'[]').join(';');
-        let play = JSON.parse(request("https://m.ting13.com/api/mapi/play", {timeout:8000,body: data, method: 'POST',headers:headers})).url;
-        return play + "#isMusic=true#";
+        return 'webRule://' + url + '@' + $.toString(() => {
+            if (typeof (request) == 'undefined' || !request) {
+                eval(fba.getInternalJs());
+            };
+            if (window.c == null) {
+                window.c = 0;
+            };
+            window.c++;
+            if (window.c * 250 >= 15 * 1000) {
+                fba.hideLoading();
+                return "toast://解析超时";
+            }
+            //fba.log(fy_bridge_app.getUrls());
+            var urls = _getUrls();
+            var exclude = /m3u8\.tv/;
+            var contain = /\.m4a|\.mp3/;
+            for (var i in urls) {
+                if (!exclude.test(urls[i]) && contain.test(urls[i])) {
+                    //fba.log(urls[i]);
+                    return $$$("#noLoading#").lazyRule((url) => {
+                        return url;
+                    }, fy_bridge_app.getHeaderUrl(urls[i]));
+                }
+            }
+        })
     },
     "最新": function(url) {
         setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
