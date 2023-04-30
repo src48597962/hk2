@@ -346,20 +346,22 @@ function erji() {
             let lazy;
             let itype;
             let 解析 = parse['解析'];
-            if (stype=="漫画") {
-                lazy = $("").lazyRule((解析,公共,参数) => {
-                    let url = input.split("##")[1];
-                    eval("let 解析2 = " + 解析);
-                    return 解析2(url,公共,参数);
-                }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
-                itype = "comic";
-            }else{
+            if (stype=="小说") {
                 lazy = $("#readTheme##autoPage#").rule((解析,公共,参数) => {
                     let url = MY_PARAMS.url || "";
                     eval("let 解析2 = " + 解析);
                     解析2(url,公共,参数);
                 }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
                 itype = "novel";
+            }else{
+                lazy = $("").lazyRule((解析,公共,参数) => {
+                    let url = input.split("##")[1];
+                    eval("let 解析2 = " + 解析);
+                    return 解析2(url,公共,参数);
+                }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
+                if(stype=="漫画"){
+                    itype = "comic";
+                }
             }
             let download = $.toString((解析,公共,参数) => {
                 eval("let 解析2 = " + 解析);
@@ -411,9 +413,13 @@ function erji() {
                     inheritTitle: false,
                     longClick: [{
                         title: "下载本地📥",
-                        js: $.toString(() => {
-                            return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
-                        })
+                        js: $.toString((itype) => {
+                            if(itype){
+                                return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
+                            }else{
+                                return "toast://不支持下载的类型"
+                            }
+                        },itype)
                     }],
                     chapterList: 列表,
                     "defaultView": "1",
