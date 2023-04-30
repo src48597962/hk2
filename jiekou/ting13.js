@@ -247,6 +247,7 @@ let erdata = {
         }
     },
     "解析": function(url) {
+        showLoading('√解析中，请稍候');
         return 'webRule://' + url + '@' + $.toString(() => {
             if (typeof (request) == 'undefined' || !request) {
                 eval(fba.getInternalJs());
@@ -267,8 +268,8 @@ let erdata = {
                 if (!exclude.test(urls[i]) && contain.test(urls[i])) {
                     //fba.log(urls[i]);
                     return $$$("#noLoading#").lazyRule((url) => {
-                        return url;
-                    }, fy_bridge_app.getHeaderUrl(urls[i]));
+                        return base64Decode(url);
+                    }, fy_bridge_app.base64Encode(fy_bridge_app.getHeaderUrl(urls[i])));
                 }
             }
         })
