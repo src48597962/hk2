@@ -139,17 +139,17 @@ let yidata = {
     "排行": function() {
         let d = [];
         let list_name = MY_RULE.title + "排行榜";
-        let list_url = getMyVar(list_name, 公共.host+'/paihang/allvisit.html');
-        let code = request(list_url);
-        let list_class = pdfa(code, 'body&&nav&&a');
-        list_class.forEach((data) => {
-            let title = pdfh(data, 'a&&Text')
-            let url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
-                putMyVar(list_name, Url)
+        let list_url = getMyVar(list_name, "allvisit");
+        let paihang_name = ["人气榜","收藏榜","推荐榜","新书榜","更新榜","下载榜"];
+        let paihang_id = ["allvisit","marknum","votenum","postdate","lastupdate","downnum"];
+        paihang_id.forEach((data,i) => {
+            let title = paihang_name[i];
+            let url_qz = $("#noLoading#").lazyRule((list_name, data) => {
+                putMyVar(list_name, data)
                 refreshPage(false);
                 return "hiker://empty"
-            }, list_name, 公共.host + pdfh(data, 'a&&href'))
-            if (data.includes('nav-on')) {
+            }, list_name, data)
+            if (data==list_url) {
                 setPageTitle(title);
                 title = '““””<b><font color=#FA7298>' + title + '</font></b>';
             }
@@ -159,12 +159,13 @@ let yidata = {
                 col_type: "scroll_button"
             });
         });
-        pdfa(code, 'body&&.list-mt&&ul&&li').forEach((data) => {
-            log(data);
+        let code = JSON.parse(request("https://m.ting13.com/api/ajax/toplist?sort=1&type="+list_url+"&page=1"));
+        code.forEach((data) => {
             d.push({
-                title: pdfh(data, 'figcaption&&a&&Text'),
-                desc: '🎧 ' + pdfh(data, '.playCountText&&Text'),
-                url: 公共.host + pdfh(data, 'figcaption&&a&&href'),
+                title: data.novel.name,
+                desc: '🎧 ' + data.data.allvisit,
+                url: 公共.host + data.novel.url,
+                img: data.novel.cover,
                 col_type: 'movie_3'
             });
         });
