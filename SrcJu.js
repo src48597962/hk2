@@ -557,11 +557,6 @@ function erji() {
                 d.push({
                     col_type: "blank_block"
                 });
-                for (let i = 0; i < 3; i++) {
-                    d.push({
-                        col_type: "blank_block"
-                    })
-                }
                 let 分页s = details.page
                 分页s.forEach((it,i)=>{
                     d.push({
