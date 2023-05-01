@@ -243,7 +243,8 @@ let erdata = {
                     return 选集列表;
                 })
                 return 选集;
-            }
+            },
+            "blockRules": ['history/ajax','cityjson','.css','gif']
         }
     },
     "解析": function(url) {
