@@ -186,7 +186,7 @@ let yidata = {
 }
 
 let erdata = {
-    "作者": "帅",
+    "作者": "",
     "搜索": function (name,page) {
         let d = [];
         let ssurl = 公共.host+"/api/ajax/solist?word="+name+"&type=name&page="+page+"&order=1";
@@ -222,7 +222,7 @@ let erdata = {
         })
         let 分页 = pdfa(html, '.hd-sel&&option').map((data) => {
             let 分页列表 = {};
-            分页列表.title = pdfh(data, 'option&&Text').replace(/ |第|集/,"");
+            分页列表.title = pdfh(data, 'option&&Text').replace(/ |第|集/g,"");
             分页列表.url = pd(data,"option&&value");
             return 分页列表;
         });
@@ -244,7 +244,7 @@ let erdata = {
                 })
                 return 选集;
             },
-            "blockRules": ['history/ajax','cityjson','.css','gif']
+            "blockRules": ['.css']
         }
     },
     "解析": function(url) {
@@ -276,7 +276,7 @@ let erdata = {
         })
     },
     "最新": function(url) {
-        setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
+        setResult("最新：" + pdfh(request(url, {timeout:8000}), 'body&&em&&Text'));
     }
 }
 
