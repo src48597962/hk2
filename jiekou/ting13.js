@@ -1,5 +1,5 @@
 let yidata = {
-    "作者": "帅",//接口作者
+    "作者": "",//接口作者
     "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
     "主页": function () {
         let d = [];
@@ -138,20 +138,18 @@ let yidata = {
     },
     "排行": function() {
         let d = [];
-        let list_name = MY_RULE.title + "排行榜"
-        let list_url = getMyVar(list_name, 'https://m.taomanhua.com/top/dianji.html');
+        let list_name = MY_RULE.title + "排行榜";
+        let list_url = getMyVar(list_name, 公共.host+'/paihang/allvisit.html');
         let code = request(list_url);
-        let url_wzqz = 'https://m.taomanhua.com';
-        MY_URL=url_wzqz;
-        let list_class = pdfa(code, '#J_rankOptionMenu&&li')
+        let list_class = pdfa(code, 'body&&nav&&a');
         list_class.forEach((data) => {
             let title = pdfh(data, 'a&&Text')
             let url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
                 putMyVar(list_name, Url)
                 refreshPage(false);
                 return "hiker://empty"
-            }, list_name, url_wzqz + pdfh(data, 'a&&href'))
-            if (data.includes('active')) {
+            }, list_name, 公共.host + pdfh(data, 'a&&href'))
+            if (data.includes('nav-on')) {
                 setPageTitle(title);
                 title = '““””<b><font color=#FA7298>' + title + '</font></b>';
             }
@@ -161,24 +159,12 @@ let yidata = {
                 col_type: "scroll_button"
             });
         });
-        pdfa(code, 'li.comic-rank-top&&.comic-item').forEach((data, id) => {
-            d.push({//主页源不需要url
-                title: pdfh(data, 'a&&title').split(',')[0],
-                url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
-                desc: '：第' + (id + 1) + '名',
-                pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.taomanhua.com/",
-                col_type: "movie_3_marquee"
-            });
-        })
-        pdfa(code, '.rank-comic-list&&.list').forEach(function(data) {
-            d.push({//主页源不需要url
-                title: '‘‘’’<b>' + pdfh(data, 'h3&&Text') + '</b> <small>&nbsp;&nbsp;&nbsp;&nbsp;排名：<font color="#FA7298"><b> ' + pdfh(data, '.order&&Text') + '  名</b></font>&nbsp;&nbsp;&nbsp;&nbsp;作者：' + pdfh(data, '.comic-author&&Text') + '</small>',
-                desc: '‘‘’’<font color="#004e66">动态：' + pdfh(data, '.clearfix&&.statistics&&Text') + '&nbsp;&nbsp;&nbsp;&nbsp;分类：' + pdfa(data, '.sort-list&&a').map(datas => pdfh(datas, 'Text')).join(" | ") + '</font>',
-                url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
-                col_type: 'text_1',
-                extra: {
-                    name: pdfh(data, 'h3&&Text')//如果title不等于片名，则可以单独传extra.name
-                }
+        pdfa(code, '.list-ul&&li').forEach(data=>{
+            d.push({
+                title: pdfh(data, 'figcaption&&a&&Text'),
+                desc: '🎧 ' + pdfh(data, '.playCountText&&Text'),
+                url: 公共.host + pdfh(data, 'figcaption&&a&&href'),
+                col_type: 'movie_3'
             });
         });
         return d;
