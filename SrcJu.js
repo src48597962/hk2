@@ -566,13 +566,13 @@ function erji() {
                 分页s.forEach((it,i)=>{
                     d.push({
                         title: pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title,
-                        url: $("#noLoading#").lazyRule((pageurl,i) => {
-                            if(getMyVar(pageurl)!=i){
-                                putMyVar(pageurl, i);
+                        url: $("#noLoading#").lazyRule((pageurl,nowid,newid) => {
+                            if(nowid != newid){
+                                putMyVar(pageurl, newid);
                                 refreshPage(false);
                             }
                             return 'hiker://empty'
-                        }, "SrcJu_"+surl+"_page", i),
+                        }, "SrcJu_"+surl+"_page", pageid, i),
                         col_type: 'scroll_button',
                         extra: {
                             cls: "loadlist"
