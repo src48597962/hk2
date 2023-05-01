@@ -1,6 +1,6 @@
 let yidata = {
     "作者": "",//接口作者
-    "页码": {"分类":1, "排行":0, "更新":0},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
+    "页码": {"分类":1, "排行":0, "更新":1},//页码元素可不传，如果传1则会传fypage，用getParam('page')获取
     "主页": function () {
         let d = [];
         MY_URL = 公共.host;
@@ -95,45 +95,17 @@ let yidata = {
     },
     "更新": function() {
         let d = [];
-        let update_url = MY_RULE.title + "更新"
-        if (!getMyVar(update_url)) {
-            putMyVar(update_url, request("https://m.taomanhua.com/api/updatelist/?product_id=3&productname=smh&platformname=wap"))
-        }
-        let code = JSON.parse(getMyVar(update_url)).data.update
-        let lisr_s = [];
-        let update_date = MY_RULE.title + "更新日期"
-        let date = getMyVar(update_date, '今天')
+        let list_url = "lastupdate";
+        let code = JSON.parse(request("https://m.ting13.com/api/ajax/toplist?sort=1&type="+list_url+"&page="+page));
         code.forEach((data) => {
-            var title = data.comicUpdateDate_new
-            var url_qz = $("#noLoading#").lazyRule((update_date, title) => {
-                putMyVar(update_date, title)
-                refreshPage(false);
-                return "hiker://empty"
-            }, update_date, title)
-            if (date == title) {
-                setPageTitle(title);
-                title = '““””<b><font color=#FA7298>' + title + '</font></b>';
-                lisr_s = data.info;
-            }
             d.push({
-                title: title,
-                url: url_qz,
-                col_type: "scroll_button"
+                title: data.novel.name,
+                desc: '🎧 ' + data.data.allvisit,
+                url: 公共.host + data.novel.url,
+                img: data.novel.cover,
+                col_type: 'movie_3'
             });
         });
-        lisr_s.forEach((data) => {
-            d.push({//主页源不需要url
-                title: '‘‘’’<b>'+data.comic_name+'</b> <small>\n最新：<font color="#FA7298">'+data.comic_chapter_name+'</font>\n作者：'+data.author_name+'</small>',
-                desc:'‘‘’’<font color="#274c5e">分类：'+data.comic_type.join(" | ")+'\n简介：'+data.comic_feature+'</font>' ,
-                pic_url: data.feature_img + "@Referer=https://m.taomanhua.com/",
-                col_type: "movie_1_vertical_pic",
-                url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
-                extra: {
-                    name : data.comic_name//如果title不等于片名，则可以单独传extra.name
-                }
-            });
-
-        })
         return d;
     },
     "排行": function() {
