@@ -159,7 +159,8 @@ let yidata = {
                 col_type: "scroll_button"
             });
         });
-        pdfa(code, '.list-ul&&li').forEach(data=>{
+        pdfa(code, 'body&&.list-mt&&ul&&li').forEach((data) => {
+            log(data);
             d.push({
                 title: pdfh(data, 'figcaption&&a&&Text'),
                 desc: '🎧 ' + pdfh(data, '.playCountText&&Text'),
