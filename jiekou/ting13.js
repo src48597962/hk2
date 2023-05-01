@@ -208,19 +208,7 @@ let erdata = {
         }
     },
     "解析": function(url) {
-        showLoading('√解析中，请稍候');
         return 'webRule://' + url + '@' + $.toString(() => {
-            if (typeof (request) == 'undefined' || !request) {
-                eval(fba.getInternalJs());
-            };
-            if (window.c == null) {
-                window.c = 0;
-            };
-            window.c++;
-            if (window.c * 250 >= 15 * 1000) {
-                fba.hideLoading();
-                return "toast://解析超时";
-            }
             //fba.log(fy_bridge_app.getUrls());
             var urls = _getUrls();
             var exclude = /m3u8\.tv/;
