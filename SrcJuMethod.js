@@ -79,6 +79,7 @@ function banner(start, arr, data, cfg){
         var item = data[i];
         try {
             log($.require('config').method);
+            log($.require('config').version);
             require($.require('config').method);
             updateItem('bar', toerji(item));
         } catch (e) {
