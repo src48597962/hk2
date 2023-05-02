@@ -39,14 +39,14 @@ let yidata = {
             }else{
                 var codes = getMyVar(class_Name)
             }
-            var 分类项 = pdfa(codes, '.module&&.pd-module-box&&dl&dd').map((data) => {
+            var 分类项 = pdfa(codes, '.module&&.pd-module-box&&dl&&dd').map((data) => {
                 var 项数据 = {};
                 项数据.title = pdfh(data, 'a&&Text')
                 项数据.bs = pd(data, 'a&&href')
                 项数据.sz = 项数据.bs == 类别名 ? true : false;
                 return 项数据;
             })
-
+            
             function List_of_options(数据源, 赋值名) {
                 d.push({
                     col_type: 'blank_block'
