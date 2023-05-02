@@ -29,6 +29,8 @@ let yidata = {
         var 当前页 = getParam('page') || "1";
         var 类别 = MY_RULE.title + "类别";
         var 类别名 = getMyVar(类别, 公共.host+"/yousheng/xuanhuan/lastupdate.html");
+        var 排序 = MY_RULE.title + "排序"
+        var 排序名 = getMyVar(排序, "lastupdate");
         var class_Name = MY_RULE.title + "分类";
         if (当前页 == 1) {
             if (!getMyVar(class_Name)) {
@@ -57,7 +59,7 @@ let yidata = {
                 });
                 数据源.forEach((data) => {
                     var title = data.title;
-                    if (data.sz) {
+                    if (data.sz||getMyVar(排序, "lastupdate")==data.bs) {
                         title = '““””<b><font color=#FA7298>' + title + '</font></b>';
                     }
                     var url_qz = $("#noLoading#").lazyRule((list_name, Url) => {
@@ -74,14 +76,14 @@ let yidata = {
             }
             List_of_options(分类项1, 类别);
             List_of_options(分类项2, 类别);
-
-            //<div class="option fr"><a href="/yousheng/xuanhuan/postdate.html">新书</a><a href="/yousheng/xuanhuan/lastupdate.html" class="on">最新</a><a href="/yousheng/xuanhuan/allvisit.html">人气</a></div>
+            let 排序项 = [{title:"新书",bs:"postdate"},{title:"最新",bs:"lastupdate"},{title:"人气",bs:"allvisit"}]
+            List_of_options(排序项, 排序);
         }
-        eval(pdfh(fetch(类别名),'body&&script&&Html'))
+        eval(pdfh(fetch(类别名.match(/http(s)?:\/\/.*\//)[0]+排序名+'.html'),'body&&script&&Html'))
         let json = JSON.parse(request(公共.host+'/api/ajax/list', { body: "token="+_API_KEYS+"&time="+_API_TI+"&sort="+__API_SORT+"&key="+__API_KEY+"&order="+__API_ORDER+"&page="+page, method: 'POST'})).list;
         json.forEach((data) => {
             d.push({
-                title: data.novel.name+'\n'+data.novel.lastname,
+                title: data.novel.name+'\n““””<small>'+data.novel.lastname+'</small>',
                 desc: data.novel.intro,
                 pic_url: data.novel.cover + "@Referer=",
                 col_type: "movie_1_vertical_pic",
