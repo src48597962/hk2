@@ -558,62 +558,41 @@ function erji() {
                     col_type: "blank_block"
                 });
                 let 分页s = details.page
-                let 分页数组 = [];
+                let 分页链接 = [];
                 let 分页名 = [];
                 分页s.forEach((it,i)=>{
-                    分页数组.push({
-                        title: pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title,
-                        url: $("#noLoading#").lazyRule((pageurl,nowid,newid) => {
+                    分页链接.push($("#noLoading#").lazyRule((pageurl,nowid,newid) => {
                             if(nowid != newid){
                                 putMyVar(pageurl, newid);
                                 refreshPage(false);
                             }
                             return 'hiker://empty'
                         }, "SrcJu_"+surl+"_page", pageid, i)
-                    })
-                    分页名.push(pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title)
+                    )
+                    分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+it.title:it.title)
                 })
                 d.push({
-                    title: "首页",
-                    url: pageid==0?"toast://已经是首页了":分页数组[0].url,
-                    col_type: 'text_5',
+                    title: pageid==0?"首页":"上页",
+                    url: pageid==0?"hiker://empty":分页链接[pageid-1],
+                    col_type: 'text_4',
                     extra: {
                         cls: "loadlist"
                     }
                 })
                 d.push({
-                    title: "上页",
-                    url: pageid-1<0?"toast://已经是首页了":分页数组[pageid-1].url,
-                    col_type: 'text_5',
+                    title: 分页名[pageid],
+                    url: $(分页名, 3).select((分页名,分页链接) => {
+                        return 分页链接[分页名.indexOf(input)];
+                    },分页名,分页链接),
+                    col_type: 'text_2',
                     extra: {
                         cls: "loadlist"
                     }
                 })
                 d.push({
-                    title: "选择",
-                    url: $(分页名, 3).select((分页数组) => {
-                        let 选择分页 = 分页数组.filter(it => {
-                            return it.title==input;
-                        })
-                        return 选择分页.url;
-                    },分页数组),
-                    col_type: 'text_5',
-                    extra: {
-                        cls: "loadlist"
-                    }
-                })
-                d.push({
-                    title: "下页",
-                    url: pageid+1>分页数组.length-1?"toast://已经是尾页了":分页数组[pageid+1].url,
-                    col_type: 'text_5',
-                    extra: {
-                        cls: "loadlist"
-                    }
-                })
-                d.push({
-                    title: "尾页",
-                    url: pageid==分页数组.length-1?"toast://已经是尾页了":分页数组[分页数组.length-1].url,
-                    col_type: 'text_5',
+                    title: pageid==分页名.length-1?"尾页":"下页",
+                    url: pageid==分页名.length-1?"hiker://empty":分页链接[pageid+1],
+                    col_type: 'text_4',
                     extra: {
                         cls: "loadlist"
                     }
