@@ -730,7 +730,7 @@ function erji() {
         setResult(d);
         if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
             showLoading('搜源中,请稍后.');
-            search(name,"erji",false,sgroup);
+            search(name,"erji",false,sgroup,stype);
         }
     }
     clearMyVar('已选择换源列表');
@@ -751,7 +751,7 @@ function sousuo() {
     search(name,'sousuo',false,info.group);
 }
 //搜索接口
-function search(keyword, mode, sdata, group) {
+function search(keyword, mode, sdata, group, type) {
     if(getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
@@ -807,18 +807,19 @@ function search(keyword, mode, sdata, group) {
     let success = 0;
     let results = [];
     let ssdatalist = [];
+    let ssstype = type || runMode;
     if (sdata) {
         ssdatalist.push(sdata);
     }else if (sssname){
         ssdatalist = erdatalist.filter(it=>{
-            return it.name==sssname && it.type==runMode;
+            return it.name==sssname && it.type==ssstype;
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
             if(group=="全全"){
-                return it.type==runMode;
+                return it.type==ssstype;
             }else{
-                return it.type==runMode && (it.group==group||it.group=="全全");
+                return it.type==ssstype && (it.group==group||it.group=="全全");
             }
         });
     }
