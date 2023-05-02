@@ -27,32 +27,26 @@ let yidata = {
     "分类": function () {
         let d = [];
         var 当前页 = getParam('page') || "1";
-        var 类别 = MY_RULE.title + "类别"
+        var 类别 = MY_RULE.title + "类别";
         var 类别名 = getMyVar(类别, "");
         var 排序 = MY_RULE.title + "排序"
         var 排序名 = getMyVar(排序, "click");
-        var class_Name = MY_RULE.title + "分类"
+        var class_Name = MY_RULE.title + "分类";
         if (当前页 == 1) {
             if (!getMyVar(class_Name)) {
-                var codes = request('https://m.taomanhua.com/sort/');
+                var codes = request(公共.host+"/book/");
                 putMyVar(class_Name, codes)
             }else{
                 var codes = getMyVar(class_Name)
             }
-            var 分类项 = pdfa(codes, '.dl-sort-list&&a').map((data) => {
+            var 分类项 = pdfa(codes, '.module&&.pd-module-box&&dl&dd').map((data) => {
                 var 项数据 = {};
-                项数据.title = pdfh(data, 'Text')
-                项数据.bs = pdfh(data, 'a&&href').replace('/sort/', '').replace('.html', '')
+                项数据.title = pdfh(data, 'a&&Text')
+                项数据.bs = pd(data, 'a&&href')
                 项数据.sz = 项数据.bs == 类别名 ? true : false;
                 return 项数据;
             })
-            var 排序项 = pdfa(codes, '#js_orderList&&li').map((data) => {
-                var 项数据 = {};
-                项数据.title = pdfh(data, 'Text')
-                项数据.bs = pdfh(data, 'li&&data-sort')
-                项数据.sz = 项数据.bs == 排序名 ? true : false;
-                return 项数据;
-            })
+
             function List_of_options(数据源, 赋值名) {
                 d.push({
                     col_type: 'blank_block'
@@ -75,8 +69,8 @@ let yidata = {
                 })
             }
             List_of_options(分类项, 类别)
-            List_of_options(排序项, 排序)
         }
+        /*
         var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
         var code = JSON.parse(request(分类post.replace('**', 类别名).replace('@@', 排序名).replace('~~', 当前页))).data.data;
         code.forEach((data) => {
@@ -91,6 +85,7 @@ let yidata = {
                 }
             });
         })
+*/
         return d;
     },
     "更新": function() {
