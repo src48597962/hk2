@@ -297,7 +297,7 @@ function erji() {
             lineid = getMyVar("SrcJu_"+surl+"_line", datasource[2].lineid || '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
-            pageid = getMyVar("SrcJu_"+surl+"_page", datasource[2].pageid || '0');
+            pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", datasource[2].pageid || '0'));
             try{
                 if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
                     let 分页s = details.page;
@@ -558,6 +558,67 @@ function erji() {
                     col_type: "blank_block"
                 });
                 let 分页s = details.page
+                let 分页数组 = [];
+                let 分页名 = [];
+                分页s.forEach((it,i)=>{
+                    分页数组.push({
+                        title: pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title,
+                        url: $("#noLoading#").lazyRule((pageurl,nowid,newid) => {
+                            if(nowid != newid){
+                                putMyVar(pageurl, newid);
+                                refreshPage(false);
+                            }
+                            return 'hiker://empty'
+                        }, "SrcJu_"+surl+"_page", pageid, i)
+                    })
+                    分页名.push(pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title)
+                })
+                d.push({
+                    title: 首页,
+                    url: 分页数组[0].url,
+                    col_type: 'text_5',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                d.push({
+                    title: 上页,
+                    url: pageid-1<0?"toast://已经是首页了":分页数组[pageid-1].url,
+                    col_type: 'text_5',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                d.push({
+                    title: 选择,
+                    url: $(分页名, 3).select(() => {
+                        let 选择分页 = 分页数组.filter(it => {
+                            return it.title==input;
+                        })
+                        return 选择分页.url;
+                    },分页数组),
+                    col_type: 'text_5',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                d.push({
+                    title: 下页,
+                    url: pageid+1>分页数组.length?"toast://已经是尾页了":分页数组[pageid+1].url,
+                    col_type: 'text_5',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                d.push({
+                    title: 尾页,
+                    url: 分页数组[分页数组.length].url,
+                    col_type: 'text_5',
+                    extra: {
+                        cls: "loadlist"
+                    }
+                })
+                /*
                 分页s.forEach((it,i)=>{
                     d.push({
                         title: pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title,
@@ -574,6 +635,7 @@ function erji() {
                         }
                     })
                 })
+                */
             }
             
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
