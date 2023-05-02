@@ -195,7 +195,7 @@ function erji() {
     clearMyVar('SrcJudescload');
     let name = MY_PARAMS.name;
     let isload;//是否正确加载
-    let sauthor = "未知";
+    let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
     let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
     let d = [];
@@ -263,7 +263,7 @@ function erji() {
             
             标识 = stype + "_" + sname;
             MY_URL = surl;
-            sauthor = parse["作者"] || sauthor;
+            sauthor = parse["作者"];
             let detailsmark;
             if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息') && !getMyVar("调试模式")){
                 let detailsdata = fetch(detailsfile);
@@ -664,7 +664,7 @@ function erji() {
             putMyVar("listloading","2");
         }
         d.push({
-            title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + ", 作者：" + sauthor+"</font></small>",
+            title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + (sauthor?", 作者：" + sauthor:"") + "</font></small>",
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
@@ -674,7 +674,7 @@ function erji() {
         });
         setResult(d);
         if(!getMyVar(sname+"_"+name)){
-            toast('当前数据源：' + sname + ', 作者：' + sauthor);
+            toast('当前数据源：' + sname + (sauthor?", 作者：" + sauthor:""));
         }
         putMyVar(sname+"_"+name, "1");
         //二级源浏览记录保存
