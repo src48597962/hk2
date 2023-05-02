@@ -297,7 +297,7 @@ function erji() {
             lineid = getMyVar("SrcJu_"+surl+"_line", datasource[2].lineid || '0');
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
-            pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", datasource[2].pageid.toString() || '0'));
+            pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", (datasource[2].pageid || 0).toString()));
             try{
                 if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
                     let 分页s = details.page;
