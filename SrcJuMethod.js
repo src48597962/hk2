@@ -62,6 +62,7 @@ function banner(start, arr, data, cfg){
     }
     let obj = {
         data: data,
+        method: config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js'
     };
     registerTask(id, time, $.toString((obj) => {
         var data = obj.data;
@@ -78,7 +79,7 @@ function banner(start, arr, data, cfg){
         }
         var item = data[i];
         try {
-            require($.require('config?rule=' + MY_RULE.title).method);
+            require(obj.method);
             updateItem('bar', toerji(item));
         } catch (e) {
             log(e.message)
