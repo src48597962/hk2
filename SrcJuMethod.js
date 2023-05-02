@@ -78,7 +78,7 @@ function banner(start, arr, data, cfg){
         }
         var item = data[i];
         try {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+            require($.require('config?rule=' + MY_RULE.title).method);
             updateItem('bar', toerji(item));
         } catch (e) {
             log(e.message)
