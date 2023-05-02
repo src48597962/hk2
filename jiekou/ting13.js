@@ -10,11 +10,11 @@ let yidata = {
             let url = pd(it,'a&&href');
             let title = pdfh(it,'img&&alt');
             let img = pdfh(it,'img&&data-original');
-            return toerji({
+            return {
                 title: title,
                 img: img,
                 url: url
-            })
+            }
         })
         banner(true, d, blist,{col_type:'card_pic_1',desc:'0',time:5000})
         var Label_set = pdfa(html, 'body&&.list')
