@@ -5,6 +5,19 @@ let yidata = {
         let d = [];
         MY_URL = 公共.host;
         let html = request(MY_URL);
+
+        let blist = pdfa(html, '.focusBox&&ul&&li').map(it=>{
+            let url = pd(it,'a&&href');
+            let title = pdfh(it,'img&&alt');
+            let img = pdfh(it,'img&&data-original');
+            return toerji({
+                title: title,
+                img: img,
+                url: url
+            })
+        })
+        let banner = $.require('jiekou').属性("","公共","banner");
+        banner(true, d, blist,{col_type:'card_pic_1',desc:'0',time:5000})
         var Label_set = pdfa(html, 'body&&.list')
         Label_set.forEach((data) => {
             d.push({
