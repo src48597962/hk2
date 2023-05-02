@@ -1,6 +1,6 @@
 //修正按钮元素
-function toerji(item) {
-    let info = storage0.getMyVar('一级源接口信息');
+function toerji(item,info) {
+    info = info || storage0.getMyVar('一级源接口信息');
     let extra = item.extra || {};
     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
     extra.img = extra.img || item.pic_url || item.img;
@@ -62,7 +62,8 @@ function banner(start, arr, data, cfg){
     }
     let obj = {
         data: data,
-        method: config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js'
+        method: config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js',
+        info: storage0.getMyVar('一级源接口信息')
     };
     registerTask(id, time, $.toString((obj) => {
         var data = obj.data;
@@ -80,7 +81,7 @@ function banner(start, arr, data, cfg){
         var item = data[i];
         try {
             require(obj.method);
-            updateItem('bar', toerji(item));
+            updateItem('bar', toerji(item,obj.info));
         } catch (e) {
             log(e.message)
             unRegisterTask('juyue')
