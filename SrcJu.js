@@ -572,7 +572,7 @@ function erji() {
                     分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+it.title:it.title)
                 })
                 d.push({
-                    title: pageid==0?"首页":"上页",
+                    title: pageid==0?"↪️首页":"⏮️上页",
                     url: pageid==0?"hiker://empty":分页链接[pageid-1],
                     col_type: 'text_4',
                     extra: {
@@ -581,7 +581,7 @@ function erji() {
                 })
                 d.push({
                     title: 分页名[pageid],
-                    url: $(分页名, 3).select((分页名,分页链接) => {
+                    url: $(分页名, 2).select((分页名,分页链接) => {
                         return 分页链接[分页名.indexOf(input)];
                     },分页名,分页链接),
                     col_type: 'text_2',
@@ -590,7 +590,7 @@ function erji() {
                     }
                 })
                 d.push({
-                    title: pageid==分页名.length-1?"尾页":"下页",
+                    title: pageid==分页名.length-1?"尾页↩️":"下页⏭️",
                     url: pageid==分页名.length-1?"hiker://empty":分页链接[pageid+1],
                     col_type: 'text_4',
                     extra: {
