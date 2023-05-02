@@ -294,7 +294,7 @@ function erji() {
                 }
             })
             detailload = 1;
-            lineid = getMyVar("SrcJu_"+surl+"_line", datasource[2].lineid || '0');
+            lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", (datasource[2].lineid || 0).toString()));
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", (datasource[2].pageid || 0).toString()));
