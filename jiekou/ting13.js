@@ -223,6 +223,7 @@ let erdata = {
         }
     },
     "解析": function(url) {
+        showLoading('√解析中，请稍候...');
         return 'webRule://' + url + '@' + $.toString(() => {
             //fba.log(fy_bridge_app.getUrls());
             var urls = _getUrls();
