@@ -39,7 +39,8 @@ let yidata = {
             }else{
                 var codes = getMyVar(class_Name)
             }
-            var 分类项 = pdfa(codes, '.module&&.pd-module-box&&dl&&dd').map((data) => {
+            log(codes)
+            var 分类项 = pdfa(codes, '.module&&.pd-module-box&&dl').map((data) => {
                 var 项数据 = {};
                 项数据.title = pdfh(data, 'a&&Text')
                 项数据.bs = pd(data, 'a&&href')
