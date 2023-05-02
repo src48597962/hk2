@@ -574,7 +574,7 @@ function erji() {
                     分页名.push(pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title)
                 })
                 d.push({
-                    title: 首页,
+                    title: "首页",
                     url: 分页数组[0].url,
                     col_type: 'text_5',
                     extra: {
@@ -582,7 +582,7 @@ function erji() {
                     }
                 })
                 d.push({
-                    title: 上页,
+                    title: "上页",
                     url: pageid-1<0?"toast://已经是首页了":分页数组[pageid-1].url,
                     col_type: 'text_5',
                     extra: {
@@ -590,7 +590,7 @@ function erji() {
                     }
                 })
                 d.push({
-                    title: 选择,
+                    title: "选择",
                     url: $(分页名, 3).select(() => {
                         let 选择分页 = 分页数组.filter(it => {
                             return it.title==input;
@@ -603,7 +603,7 @@ function erji() {
                     }
                 })
                 d.push({
-                    title: 下页,
+                    title: "下页",
                     url: pageid+1>分页数组.length?"toast://已经是尾页了":分页数组[pageid+1].url,
                     col_type: 'text_5',
                     extra: {
@@ -611,7 +611,7 @@ function erji() {
                     }
                 })
                 d.push({
-                    title: 尾页,
+                    title: "尾页",
                     url: 分页数组[分页数组.length].url,
                     col_type: 'text_5',
                     extra: {
