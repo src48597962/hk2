@@ -39,15 +39,20 @@ let yidata = {
             }else{
                 var codes = getMyVar(class_Name)
             }
-            log(codes)
-            var 分类项 = pdfa(codes, '.module&&.pd-module-box&&dl&&dd').map((data) => {
+            var 分类项1 = pdfa(codes, '.module&&.pd-module-box&&dl&&dd').map((data) => {
                 var 项数据 = {};
                 项数据.title = pdfh(data, 'a&&Text')
-                项数据.bs = pd(data, 'a&&href')
+                项数据.bs = 公共.host+pdfh(data, 'a&&href')
                 项数据.sz = 项数据.bs == 类别名 ? true : false;
                 return 项数据;
             })
-            
+            var 分类项2 = pdfa(codes, '.module&&.pd-module-box,1&&dl&&dd').map((data) => {
+                var 项数据 = {};
+                项数据.title = pdfh(data, 'a&&Text')
+                项数据.bs = 公共.host+pdfh(data, 'a&&href')
+                项数据.sz = 项数据.bs == 类别名 ? true : false;
+                return 项数据;
+            })
             function List_of_options(数据源, 赋值名) {
                 d.push({
                     col_type: 'blank_block'
@@ -69,7 +74,8 @@ let yidata = {
                     });
                 })
             }
-            List_of_options(分类项, 类别)
+            List_of_options(分类项1, 类别);
+            List_of_options(分类项2, 类别);
         }
         /*
         var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
