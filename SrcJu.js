@@ -604,7 +604,7 @@ function erji() {
                 })
                 d.push({
                     title: "下页",
-                    url: pageid+1>分页数组.length?"toast://已经是尾页了":分页数组[pageid+1].url,
+                    url: pageid+1>分页数组.length-1?"toast://已经是尾页了":分页数组[pageid+1].url,
                     col_type: 'text_5',
                     extra: {
                         cls: "loadlist"
@@ -612,7 +612,7 @@ function erji() {
                 })
                 d.push({
                     title: "尾页",
-                    url: 分页数组[分页数组.length].url,
+                    url: 分页数组[分页数组.length-1].url,
                     col_type: 'text_5',
                     extra: {
                         cls: "loadlist"
