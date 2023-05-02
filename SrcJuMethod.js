@@ -32,3 +32,57 @@ function cacheData(jkdata){
         writeFile(cachefile,JSON.stringify(jkdata));
     }
 }
+//来自阿尔法大佬的主页幻灯片
+function banner(start, arr, data, cfg){
+    let id = 'juyue';
+    let rnum = Math.floor(Math.random() * data.length);
+    let item = data[rnum];
+    putMyVar('rnum', rnum);
+    let time = 5000;
+    let col_type='pic_1_card';
+    let desc='';
+    if (cfg != undefined) {
+        time = cfg.time ? cfg.time : time;
+        col_type=cfg.col_type?cfg.col_type:col_type;
+        desc=cfg.desc?cfg.desc:desc;
+    }
+    arr.push({
+        col_type: col_type,
+        img: item.img,
+        desc:desc,
+        title: item.title,
+        url: item.url,
+        extra: {
+            id: 'bar',
+        }
+    })
+    if (start == false || getMyVar('benstart', 'true') == 'false') {
+        unRegisterTask(id)
+        return
+    }
+    let obj = {
+        data: data,
+    };
+    registerTask(id, time, $.toString((obj) => {
+        var data = obj.data;
+        var rum = getMyVar('rnum');
+        var i = Number(getMyVar('banneri', '0'));
+        if (rum != '') {
+            i = Number(rum) + 1
+            clearMyVar('rnum')
+        } else {
+            i = i + 1;
+        }
+        if (i > data.length - 1) {
+            i = 0
+        }
+        var item = data[i];
+        try {
+            updateItem('bar', toerji(item))
+        } catch (e) {
+            log(e.message)
+            unRegisterTask('juyue')
+        }
+        putMyVar('banneri', i);
+    }, obj))
+}
