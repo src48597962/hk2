@@ -28,9 +28,7 @@ let yidata = {
         let d = [];
         var 当前页 = getParam('page') || "1";
         var 类别 = MY_RULE.title + "类别";
-        var 类别名 = getMyVar(类别, "");
-        var 排序 = MY_RULE.title + "排序"
-        var 排序名 = getMyVar(排序, "click");
+        var 类别名 = getMyVar(类别, 公共.host+"/yousheng/xuanhuan/lastupdate.html");
         var class_Name = MY_RULE.title + "分类";
         if (当前页 == 1) {
             if (!getMyVar(class_Name)) {
@@ -77,6 +75,18 @@ let yidata = {
             List_of_options(分类项1, 类别);
             List_of_options(分类项2, 类别);
         }
+        eval(pdfh(fetch(类别名),'body&&script&&Html'))
+        let json = JSON.parse(request(公共.host+'/api/ajax/list', { body: "token="+_API_KEYS+"&time="+_API_TI+"&sort="+__API_SORT+"&key="+__API_KEY+"&order="+__API_ORDER+"&page="+page, method: 'POST'})).list;
+        json.forEach((data) => {
+            d.push({
+                title: data.novel.name,
+                desc: data.novel.lastname,
+                pic_url: data.novel.cover + "@Referer=",
+                col_type: "movie_3_marquee",
+                url: 公共.host+data.novel.url
+            });
+        })
+
         /*
         var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
         var code = JSON.parse(request(分类post.replace('**', 类别名).replace('@@', 排序名).replace('~~', 当前页))).data.data;
