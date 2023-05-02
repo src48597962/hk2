@@ -16,7 +16,7 @@ let yidata = {
                 url: url
             })
         })
-        let banner = $.require('jiekou').属性("","公共","banner");
+        let banner = $.require('jiekou').属性("漫画_360漫画","公共","banner");
         banner(true, d, blist,{col_type:'card_pic_1',desc:'0',time:5000})
         var Label_set = pdfa(html, 'body&&.list')
         Label_set.forEach((data) => {
