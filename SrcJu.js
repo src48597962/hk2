@@ -800,6 +800,7 @@ function search(keyword, mode, sdata, group, type) {
             if (i == 1) { one = k }
         }
         if (i > 20) { delete searchMark[one]; }
+        hideLoading();
         return "hiker://empty";
     }
 
