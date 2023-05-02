@@ -78,7 +78,8 @@ function banner(start, arr, data, cfg){
         }
         var item = data[i];
         try {
-            updateItem('bar', toerji(item))
+            require($.require('config').method);
+            updateItem('bar', toerji(item));
         } catch (e) {
             log(e.message)
             unRegisterTask('juyue')
