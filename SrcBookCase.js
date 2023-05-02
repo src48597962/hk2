@@ -66,6 +66,7 @@ function bookCase() {
     Julist.forEach(it => {
         try{
             let params = JSON.parse(it.params);
+            log(params)
             let stype = JSON.parse(params.params).stype;
             if(getMyVar("SrcJuBookType")==stype || getMyVar("SrcJuBookType","全部")=="全部"){
                 let name = JSON.parse(params.params).name;
@@ -88,6 +89,7 @@ function bookCase() {
                         pageTitle: name,
                         name: name,
                         img: it.picUrl,
+                        sname: sname,
                         stype: stype,
                         lineVisible: false,
                         cls: "caselist"
