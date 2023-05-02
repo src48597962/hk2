@@ -74,16 +74,21 @@ let yidata = {
             }
             List_of_options(分类项1, 类别);
             List_of_options(分类项2, 类别);
+
+            //<div class="option fr"><a href="/yousheng/xuanhuan/postdate.html">新书</a><a href="/yousheng/xuanhuan/lastupdate.html" class="on">最新</a><a href="/yousheng/xuanhuan/allvisit.html">人气</a></div>
         }
         eval(pdfh(fetch(类别名),'body&&script&&Html'))
         let json = JSON.parse(request(公共.host+'/api/ajax/list', { body: "token="+_API_KEYS+"&time="+_API_TI+"&sort="+__API_SORT+"&key="+__API_KEY+"&order="+__API_ORDER+"&page="+page, method: 'POST'})).list;
         json.forEach((data) => {
             d.push({
-                title: data.novel.name,
-                desc: data.novel.lastname,
+                title: data.novel.name+'\n'+data.novel.lastname,
+                desc: data.novel.intro,
                 pic_url: data.novel.cover + "@Referer=",
-                col_type: "movie_3_marquee",
-                url: 公共.host+data.novel.url
+                col_type: "movie_1_vertical_pic",
+                url: 公共.host+data.novel.url,
+                extra: {
+                    name: data.novel.name
+                }
             });
         })
 
