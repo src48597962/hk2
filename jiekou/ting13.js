@@ -76,10 +76,11 @@ let yidata = {
             }
             List_of_options(分类项1, 类别);
             List_of_options(分类项2, 类别);
-            let 排序项 = [{title:"新书",bs:"postdate"},{title:"最新",bs:"lastupdate"},{title:"人气",bs:"allvisit"}]
+            let 排序项 = [{title:"新书",bs:"postdate",id:"2"},{title:"最新",bs:"lastupdate",id:"1"},{title:"人气",bs:"allvisit",id:"3"}]
             List_of_options(排序项, 排序);
+            var 排序index = 排序项.filter(d => d.bs==排序名)[0].id;
         }
-        eval(pdfh(fetch(类别名.match(/http(s)?:\/\/.*\//)[0]+排序名+'.html'),'body&&script&&Html'))
+        eval(pdfh(fetch(/html/.test(类别名)?类别名.match(/http(s)?:\/\/.*\//)[0]+排序名+'.html':类别名+"/"+排序index+"/1"),'body&&script&&Html'))
         let json = JSON.parse(request(公共.host+'/api/ajax/list', { body: "token="+_API_KEYS+"&time="+_API_TI+"&sort="+__API_SORT+"&key="+__API_KEY+"&order="+__API_ORDER+"&page="+page, method: 'POST'})).list;
         json.forEach((data) => {
             d.push({
@@ -93,23 +94,6 @@ let yidata = {
                 }
             });
         })
-
-        /*
-        var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
-        var code = JSON.parse(request(分类post.replace('**', 类别名).replace('@@', 排序名).replace('~~', 当前页))).data.data;
-        code.forEach((data) => {
-            d.push({
-                title: data.comic_name,
-                desc: data.last_chapter_name,
-                pic_url: data.cover_img + "@Referer=",
-                col_type: "movie_3_marquee",
-                url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
-                extra: {
-                    name: data.comic_name//如果title不等于片名，则可以单独传extra.name
-                }
-            });
-        })
-*/
         return d;
     },
     "更新": function() {
