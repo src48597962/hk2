@@ -752,6 +752,18 @@ function sousuo() {
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
+    if(mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
+        putMyVar("SrcJu_停止搜索线程", "1");
+        let waittime = 10;
+        for (let i = 0; i < waittime; i++) {
+            if(getMyVar("SrcJu_停止搜索线程","0")=="0"){
+                updateItem("sousuoloading", { title: '搜索中...' });
+                break;
+            }
+            updateItem("sousuoloading", { title: '等待上次线程结束，'+(waittime-i-1)+'s' });
+            java.lang.Thread.sleep(1000);
+        }
+    }
     if(getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
@@ -918,7 +930,9 @@ function search(keyword, mode, sdata, group, type) {
     if (list.length > 0) {
         be(list, {
             func: function (obj, id, error, taskResult) {
-                if(taskResult.success==1){
+                if(getMyVar("SrcJu_停止搜索线程")=="1"){
+                    return "break";
+                }else if(taskResult.success==1){
                     let data = taskResult.result;
                     if(data.length>0){
                         success++;
@@ -966,6 +980,7 @@ function search(keyword, mode, sdata, group, type) {
         }
     }
     hideLoading();
+    clearMyVar("SrcJu_停止搜索线程");
 }
 
 //取本地足迹记录
