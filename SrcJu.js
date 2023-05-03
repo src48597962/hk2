@@ -752,7 +752,7 @@ function sousuo() {
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
-    if(mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
+    if(MY_PAGE==1 && mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
         putMyVar("SrcJu_停止搜索线程", "1");
         let waittime = 10;
         for (let i = 0; i < waittime; i++) {
