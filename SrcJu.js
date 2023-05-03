@@ -752,16 +752,18 @@ function sousuo() {
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
-    if(MY_PAGE==1 && mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
-        putMyVar("SrcJu_停止搜索线程", "1");
-        let waittime = 10;
-        for (let i = 0; i < waittime; i++) {
-            if(getMyVar("SrcJu_停止搜索线程","0")=="0"){
-                updateItem("sousuoloading", { title: '搜索中...' });
-                break;
+    if(mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
+        if(MY_PAGE==1){
+            putMyVar("SrcJu_停止搜索线程", "1");
+            let waittime = 10;
+            for (let i = 0; i < waittime; i++) {
+                if(getMyVar("SrcJu_停止搜索线程","0")=="0"){
+                    updateItem("sousuoloading", { title: '搜索中...' });
+                    break;
+                }
+                updateItem("sousuoloading", { title: '等待上次线程结束，'+(waittime-i-1)+'s' });
+                java.lang.Thread.sleep(1000);
             }
-            updateItem("sousuoloading", { title: '等待上次线程结束，'+(waittime-i-1)+'s' });
-            java.lang.Thread.sleep(1000);
         }
     }
     if(getMyVar('SrcJuSearching')=="1"){
