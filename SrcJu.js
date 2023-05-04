@@ -278,6 +278,7 @@ function erji() {
             }
             //方便换源时二级代码中使用MY_PARAMS
             MY_PARAMS = erjiextra;
+            name = MY_PARAMS.name;
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
             let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
