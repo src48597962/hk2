@@ -326,7 +326,8 @@ function erji() {
                 线路s = ["线路"];
             }
             let 列表 = 列表s[lineid];
-            
+            log(lineid);
+            log(列表);
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
