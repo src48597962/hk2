@@ -315,19 +315,19 @@ function erji() {
                 log('√'+sname+'分页选集处理失败>'+e.message);
             }
             try{
-                if(lineid > 线路s.length){
-                    lineid = 0;
-                }
                 if(线路s.length != 列表s.length){
                     log('√'+sname+'接口返回的线路和列表不相等');
                 }
             }catch(e){
-                log('√'+sname+">线路或列表返回数据有误"+e.message);
+                log('√'+sname+">线路或列表返回数据有误>"+e.message);
                 线路s = ["线路"];
+                列表s = [[]];
+            }
+            if(lineid > 线路s.length-1){
+                lineid = 0;
             }
             let 列表 = 列表s[lineid];
-            log(lineid);
-            log(列表);
+
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
