@@ -543,12 +543,14 @@ function erji() {
             if(线路s.length>1){
                 d.push({
                     title: `““””<b><span style="color: #AABBFF">`+线路s[lineid]+`<small>⚡</small></span></b>`,
-                    url: $(线路s,2,"选择线路").select((线路s,surl) => {
+                    url: $(线路s,2,"选择线路").select((线路s,surl,lineid) => {
                         let index = 线路s.indexOf(input);
-                        putMyVar("SrcJu_"+surl+"_line", index);
-                        refreshPage(false);
+                        if(lineid != index){
+                            putMyVar("SrcJu_"+surl+"_line", index);
+                            refreshPage(false);
+                        }
                         return 'hiker://empty'
-                    }, 线路s, surl),
+                    }, 线路s, surl, lineid),
                     col_type: 'scroll_button',
                     extra: {
                         cls: "loadlist"
