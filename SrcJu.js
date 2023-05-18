@@ -71,13 +71,14 @@ function yiji() {
         adminbtn.unshift("管理");
         d.push({
             title: "设置",
-            url: $(adminbtn, 1).select((runModes) => {
+            url: $(adminbtn, 1).select(() => {
                 if(input=="管理"){
                     return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         SRCSet();
                     })
                 }else if(input=="模式"){
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return $(runModes,1,"切换模式").select((cfgfile,Juconfig) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
@@ -123,7 +124,7 @@ function yiji() {
                         return 'toast://'+runMode+' 主页源已设置为：' + input;
                     }, input, sourcename, cfgfile, Juconfig)
                 }
-            },runModes),
+            }),
             pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
             col_type: 'icon_5',
             extra: {
