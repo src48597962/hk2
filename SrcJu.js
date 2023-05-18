@@ -67,15 +67,23 @@ function yiji() {
             downloadicon();
         }
         let adminbtn = runModes;
+        adminbtn.unshift("模式");
         adminbtn.unshift("管理");
         d.push({
             title: "设置",
-            url: $(adminbtn, 1).select(() => {
+            url: $(adminbtn, 1).select((runModes) => {
                 if(input=="管理"){
                     return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         SRCSet();
                     })
+                }else if(input=="模式"){
+                    return $(runModes,1,"切换模式").select((cfgfile,Juconfig) => {
+                        Juconfig["runMode"] = input;
+                        writeFile(cfgfile, JSON.stringify(Juconfig));
+                        refreshPage(false);
+                        return 'toast://运行模式已切换为：' + input;
+                    }, cfgfile, Juconfig)
                 }else{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     let sourcenames = [];
@@ -87,7 +95,7 @@ function yiji() {
                             sourcenames.push(it.name);
                         }
                     })
-                    return $(sourcenames,2,"请选择主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+                    return $(sourcenames,2,"请"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
                         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
                         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
                             return 'toast://'+runMode+' 主页源：' + input;
@@ -115,7 +123,7 @@ function yiji() {
                         return 'toast://'+runMode+' 主页源已设置为：' + input;
                     }, input, sourcename, cfgfile, Juconfig)
                 }
-            }),
+            },runModes),
             pic_url: "https://lanmeiguojiang.com/tubiao/more/129.png",
             col_type: 'icon_5',
             extra: {
