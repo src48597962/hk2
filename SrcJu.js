@@ -449,7 +449,7 @@ function erji() {
             })
             d.push({
                 title: "切换书源",
-                url: $("#noLoading#").lazyRule((name,sgroup) => {
+                url: $("#noLoading#").lazyRule((name,sgroup,stype) => {
                     updateItem("listloading2", { 
                         extra: {
                             id: "listloading",
@@ -464,13 +464,13 @@ function erji() {
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
-                        search(name,"erji",false,sgroup);
+                        search(name,"erji",false,sgroup,stype);
                         hideLoading();
                         return  "hiker://empty";
                     }else{
                         return "toast://上一个搜索线程还未结束，稍等...";
                     }
-                }, name,sgroup),
+                }, name,sgroup,stype),
                 pic_url: 'https://lanmeiguojiang.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
