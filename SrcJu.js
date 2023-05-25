@@ -96,7 +96,7 @@ function yiji() {
                             sourcenames.push(it.name);
                         }
                     })
-                    return $(sourcenames,2,"请"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+                    return $(sourcenames,2,"选择"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
                         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
                         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
                             return 'toast://'+runMode+' 主页源：' + input;
