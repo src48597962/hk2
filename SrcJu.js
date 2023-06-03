@@ -703,7 +703,7 @@ function erji() {
             writeFile(detailsfile, $.stringify(details));
         }
         //切换源时更新收藏数据，以及分享时附带接口
-        if (typeof (setPageParams) != "undefined") {
+        if (typeof (setPageParams) != "undefined" && MY_PARAMS.name==erjiextra.name && MY_PARAMS.stype==erjiextra.stype && ((MY_PARAMS.sourcedata && MY_PARAMS.surl!=erjiextra.surl) || !MY_PARAMS.sourcedata)) {
             delete sourcedata2['parse']
             erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
