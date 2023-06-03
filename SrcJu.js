@@ -705,9 +705,9 @@ function erji() {
         log(oldMY_PARAMS.name)
         log(erjiextra.name)
         log(pic)
-        log(oldMY_PARAMS.pic)
-        log(erjiextra.pic)
-        if(oldMY_PARAMS.name==erjiextra.name && pic && oldMY_PARAMS.pic!=erjiextra.pic){
+        log(oldMY_PARAMS.img)
+        log(erjiextra.img)
+        if(oldMY_PARAMS.name==erjiextra.name && pic && oldMY_PARAMS.img!=erjiextra.img){
             log('1');
             setPagePicUrl(pic);
         }
