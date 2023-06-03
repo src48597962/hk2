@@ -708,6 +708,9 @@ function erji() {
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined" && oldMY_PARAMS.name==erjiextra.name && oldMY_PARAMS.stype==erjiextra.stype) {
             log('11')
+            log(oldMY_PARAMS.surl)
+            log(erjiextra.surl)
+            log($.type(oldMY_PARAMS.sourcedata))
             if ((oldMY_PARAMS.sourcedata && oldMY_PARAMS.surl!=erjiextra.surl) || !oldMY_PARAMS.sourcedata) {
                 log('22')
                 delete sourcedata2['parse']
