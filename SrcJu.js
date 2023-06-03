@@ -221,6 +221,8 @@ function erji() {
     let lineid;
     let pageid;
     let detailload;
+    let oldMY_PARAMS = MY_PARAMS;
+    let pic;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
             sname = datasource[i].sname || "";
@@ -290,7 +292,7 @@ function erji() {
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
             name = details.name || MY_PARAMS.name;
-            let pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
+            pic = details.img || MY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             d.push({
                 title: details.detail1 || "",
@@ -662,9 +664,6 @@ function erji() {
             
             if(列表.length>0 || getMyVar('jiekouedit')){
                 isload = 1;
-                if(pic){
-                    setPagePicUrl(pic);//更换收藏封面
-                }
             }else if(列表.length==0){
                 toast("选集列表为空，请更换其他源");
             }
@@ -703,10 +702,13 @@ function erji() {
             writeFile(detailsfile, $.stringify(details));
         }
         //切换源时更新收藏数据，以及分享时附带接口
-        if (typeof (setPageParams) != "undefined" && MY_PARAMS.name==erjiextra.name && MY_PARAMS.stype==erjiextra.stype && ((MY_PARAMS.sourcedata && MY_PARAMS.surl!=erjiextra.surl) || !MY_PARAMS.sourcedata)) {
+        if (typeof (setPageParams) != "undefined" && oldMY_PARAMS.name==erjiextra.name && oldMY_PARAMS.stype==erjiextra.stype && ((oldMY_PARAMS.sourcedata && oldMY_PARAMS.surl!=erjiextra.surl) || !oldMY_PARAMS.sourcedata)) {
             delete sourcedata2['parse']
             erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
+            if(pic && oldMY_PARAMS.pic!=erjiextra.pic){
+                setPagePicUrl(pic);//更换收藏封面
+            }
         }
         //收藏更新最新章节
         if (parse['最新']) {
@@ -718,7 +720,7 @@ function erji() {
         putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
     } else {
         if(!detailload){
-            let pic = MY_PARAMS.img || "";
+            pic = MY_PARAMS.img || "";
             pic = pic&&pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             d.push({
                 title: "\n搜索接口源结果如下",
