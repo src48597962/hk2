@@ -701,14 +701,15 @@ function erji() {
             details.pageid = pageid;
             writeFile(detailsfile, $.stringify(details));
         }
+        //更换收藏封面
+        if(oldMY_PARAMS.name==erjiextra.name && pic && oldMY_PARAMS.pic!=erjiextra.pic){
+            setPagePicUrl(pic);
+        }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined" && oldMY_PARAMS.name==erjiextra.name && oldMY_PARAMS.stype==erjiextra.stype && ((oldMY_PARAMS.sourcedata && oldMY_PARAMS.surl!=erjiextra.surl) || !oldMY_PARAMS.sourcedata)) {
             delete sourcedata2['parse']
             erjiextra.sourcedata = sourcedata2;
             setPageParams(erjiextra);
-            if(pic && oldMY_PARAMS.pic!=erjiextra.pic){
-                setPagePicUrl(pic);//更换收藏封面
-            }
         }
         //收藏更新最新章节
         if (parse['最新']) {
