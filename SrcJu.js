@@ -702,7 +702,13 @@ function erji() {
             writeFile(detailsfile, $.stringify(details));
         }
         //更换收藏封面
+        log(oldMY_PARAMS.name)
+        log(erjiextra.name)
+        log(pic)
+        log(oldMY_PARAMS.pic)
+        log(erjiextra.pic)
         if(oldMY_PARAMS.name==erjiextra.name && pic && oldMY_PARAMS.pic!=erjiextra.pic){
+            log('1');
             setPagePicUrl(pic);
         }
         //切换源时更新收藏数据，以及分享时附带接口
