@@ -62,7 +62,7 @@ function bookCase() {
             col_type: 'scroll_button'
         })
     })
-
+    log(Julist);
     Julist.forEach(it => {
         try{
             let params = JSON.parse(it.params);
