@@ -702,20 +702,18 @@ function erji() {
             writeFile(detailsfile, $.stringify(details));
         }
         //更换收藏封面
-        log(oldMY_PARAMS.name)
-        log(erjiextra.name)
-        log(pic)
-        log(oldMY_PARAMS.img)
-        log(erjiextra.img)
         if(oldMY_PARAMS.name==erjiextra.name && pic && oldMY_PARAMS.img!=erjiextra.img){
-            log('1');
             setPagePicUrl(pic);
         }
         //切换源时更新收藏数据，以及分享时附带接口
-        if (typeof (setPageParams) != "undefined" && oldMY_PARAMS.name==erjiextra.name && oldMY_PARAMS.stype==erjiextra.stype && ((oldMY_PARAMS.sourcedata && oldMY_PARAMS.surl!=erjiextra.surl) || !oldMY_PARAMS.sourcedata)) {
-            delete sourcedata2['parse']
-            erjiextra.sourcedata = sourcedata2;
-            setPageParams(erjiextra);
+        if (typeof (setPageParams) != "undefined" && oldMY_PARAMS.name==erjiextra.name && oldMY_PARAMS.stype==erjiextra.stype) {
+            log('11')
+            if ((oldMY_PARAMS.sourcedata && oldMY_PARAMS.surl!=erjiextra.surl) || !oldMY_PARAMS.sourcedata) {
+                log('22')
+                delete sourcedata2['parse']
+                erjiextra.sourcedata = sourcedata2;
+                setPageParams(erjiextra);
+            }
         }
         //收藏更新最新章节
         if (parse['最新']) {
