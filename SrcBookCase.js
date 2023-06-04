@@ -68,7 +68,7 @@ function bookCase() {
             let params = JSON.parse(it.params);
             let stype = JSON.parse(params.params).stype;
             if(getMyVar("SrcJuBookType")==stype || getMyVar("SrcJuBookType","全部")=="全部"){
-                let name = it.mTitle//JSON.parse(params.params).name;
+                let name = it.mTitle.indexOf(JSON.parse(params.params).name)>-1?JSON.parse(params.params).name:it.mTitle;
                 let sname = JSON.parse(params.params).sname;
                 let surl = JSON.parse(params.params).surl;
                 let extraData = it.extraData?JSON.parse(it.extraData):{};
@@ -92,6 +92,7 @@ function bookCase() {
                         sname: sname,
                         surl: surl,
                         stype: stype,
+                        sourcedata: JSON.parse(params.params).sourcedata,
                         lineVisible: false,
                         cls: "caselist"
                     }
