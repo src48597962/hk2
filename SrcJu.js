@@ -691,6 +691,10 @@ function erji() {
             toast('当前数据源：' + sname + (sauthor?", 作者：" + sauthor:""));
         }
         putMyVar(sname+"_"+name, "1");
+        //更换收藏封面
+        if(erjiextra.img && oldMY_PARAMS.img!=erjiextra.img){
+            setPagePicUrl(erjiextra.img);
+        }
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype, lineid: lineid, pageid: pageid };
         setMark(erjidata);
@@ -701,23 +705,6 @@ function erji() {
             details.pageid = pageid;
             writeFile(detailsfile, $.stringify(details));
         }
-        //更换收藏封面
-        if(oldMY_PARAMS.name==erjiextra.name && pic && oldMY_PARAMS.img!=erjiextra.img){
-            setPagePicUrl(pic);
-        }
-        //切换源时更新收藏数据，以及分享时附带接口
-        if (typeof (setPageParams) != "undefined" && oldMY_PARAMS.name==erjiextra.name && oldMY_PARAMS.stype==erjiextra.stype) {
-            log('11')
-            log(oldMY_PARAMS.surl)
-            log(erjiextra.surl)
-            log($.type(oldMY_PARAMS.sourcedata))
-            if ((oldMY_PARAMS.sourcedata && oldMY_PARAMS.surl!=erjiextra.surl) || !oldMY_PARAMS.sourcedata) {
-                log('22')
-                delete sourcedata2['parse']
-                erjiextra.sourcedata = sourcedata2;
-                setPageParams(erjiextra);
-            }
-        }
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((surl, 最新, 公共) => {
@@ -725,7 +712,20 @@ function erji() {
                 最新2(surl,公共);
             }, surl, parse['最新'], 公共))
         }
-        putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次必需在线取同名数据
+        //切换源时更新收藏数据，以及分享时附带接口
+        if (typeof (setPageParams) != "undefined") {
+            log('11')
+            log(oldMY_PARAMS.surl)
+            log(erjiextra.surl)
+            log($.type(oldMY_PARAMS.sourcedata))
+            if (oldMY_PARAMS.surl!=erjiextra.surl || !oldMY_PARAMS.sourcedata) {
+                log('22')
+                delete sourcedata2['parse']
+                erjiextra.sourcedata = sourcedata2;
+                setPageParams(erjiextra);
+            }
+        }
+        putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次在线取
     } else {
         if(!detailload){
             pic = MY_PARAMS.img || "";
