@@ -221,6 +221,7 @@ function erji() {
     let lineid;
     let pageid;
     let detailload;
+    log($.type(MY_PARAMS.sourcedata))
     let oldMY_PARAMS = MY_PARAMS;
     let pic;
     for(let i=0; i<datasource.length; i++){
