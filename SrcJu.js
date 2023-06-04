@@ -221,7 +221,6 @@ function erji() {
     let lineid;
     let pageid;
     let detailload;
-    log($.type(MY_PARAMS.sourcedata))
     let oldMY_PARAMS = MY_PARAMS;
     let pic;
     for(let i=0; i<datasource.length; i++){
@@ -715,12 +714,7 @@ function erji() {
         }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined") {
-            log('11')
-            log(oldMY_PARAMS.surl)
-            log(erjiextra.surl)
-            log($.type(oldMY_PARAMS.sourcedata))
-            if (oldMY_PARAMS.surl!=erjiextra.surl || !oldMY_PARAMS.sourcedata) {
-                log('22')
+            if ((surl && oldMY_PARAMS.surl!=surl) || !oldMY_PARAMS.sourcedata) {
                 delete sourcedata2['parse']
                 erjiextra.sourcedata = sourcedata2;
                 setPageParams(erjiextra);
