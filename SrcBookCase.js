@@ -26,7 +26,7 @@ function bookCase() {
     d.push({
         title: ' 本地下载',
         url: getMyVar("SrcJuBookType","全部")=="全部"?"hiker://page/Main.view?rule=本地资源管理":"hiker://page/Bookrack.view?rule=本地资源管理&ruleName="+MY_RULE.title+"&type="+(getMyVar("SrcJuBookType")=="漫画"?"comic":"novel"),
-        img: "https://lanmeiguojiang.com/tubiao/messy/70.svg",
+        img: "https://hikerfans.com/tubiao/messy/70.svg",
         col_type: "icon_2"
     });
     d.push({
@@ -41,7 +41,7 @@ function bookCase() {
             refreshPage(false);
             return 'hiker://empty';
         }, cfgfile, Juconfig),
-        img: "https://lanmeiguojiang.com/tubiao/messy/85.svg",
+        img: "https://hikerfans.com/tubiao/messy/85.svg",
         col_type: "icon_2"
     });
     for (let i = 0; i < 8; i++) {
