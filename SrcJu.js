@@ -125,7 +125,7 @@ function yiji() {
                     }, input, sourcename, cfgfile, Juconfig)
                 }
             }),
-            pic_url: "http://124.221.241.174:86/tubiao/more/129.png",
+            pic_url: "https://hikerfans.com/tubiao/more/129.png",
             col_type: 'icon_5',
             extra: {
                 newWindow: true,
@@ -135,19 +135,19 @@ function yiji() {
         d.push({
             title: "排行",
             url: rulePage('排行',页码["排行"]),
-            pic_url: "http://124.221.241.174:86/tubiao/more/229.png",
+            pic_url: "https://hikerfans.com/tubiao/more/229.png",
             col_type: 'icon_5'
         })
         d.push({
             title: "分类",
             url: rulePage('分类',页码["分类"]),
-            pic_url: "http://124.221.241.174:86/tubiao/more/287.png",
+            pic_url: "https://hikerfans.com/tubiao/more/287.png",
             col_type: 'icon_5'
         })
         d.push({
             title: "更新",
             url: rulePage('更新',页码["更新"]),
-            pic_url: "http://124.221.241.174:86/tubiao/more/288.png",
+            pic_url: "https://hikerfans.com/tubiao/more/288.png",
             col_type: 'icon_5'
         })
         d.push({
@@ -156,7 +156,7 @@ function yiji() {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
                 bookCase();
             }),
-            pic_url: "http://124.221.241.174:86/tubiao/more/286.png",
+            pic_url: "https://hikerfans.com/tubiao/more/286.png",
             col_type: 'icon_5',
             extra: {
                 longClick: [{
@@ -393,7 +393,7 @@ function erji() {
                             title: `<font color="#098AC1">详情简介 </font><small><font color="#f47983"> ></font></small>`,
                             col_type: "avatar",
                             url: "hiker://empty",
-                            pic_url: "http://124.221.241.174:86/tubiao/ke/91.png",
+                            pic_url: "https://hikerfans.com/tubiao/ke/91.png",
                             extra: {
                                 cls: "SrcJudescload"
                             }
@@ -407,7 +407,7 @@ function erji() {
                     }
                     return "hiker://empty";
                 }, details.desc||""),
-                pic_url: "http://124.221.241.174:86/tubiao/messy/32.svg",
+                pic_url: "https://hikerfans.com/tubiao/messy/32.svg",
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
@@ -419,7 +419,7 @@ function erji() {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
                     bookCase();
                 }),
-                pic_url: 'http://124.221.241.174:86/tubiao/messy/70.svg',
+                pic_url: 'https://hikerfans.com/tubiao/messy/70.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist",
@@ -473,7 +473,7 @@ function erji() {
                         return "toast://上一个搜索线程还未结束，稍等...";
                     }
                 }, name,sgroup,stype),
-                pic_url: 'http://124.221.241.174:86/tubiao/messy/20.svg',
+                pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist"
@@ -1048,7 +1048,7 @@ function setMark(data) {
 function downloadicon() {
     try {
         if (!fileExist('hiker://files/cache/src/管理.svg')) {
-            downloadFile('http://124.221.241.174:86/tubiao/messy/13.svg', 'hiker://files/cache/src/管理.svg');
+            downloadFile('https://hikerfans.com/tubiao/messy/13.svg', 'hiker://files/cache/src/管理.svg');
         }
         if (!fileExist('hiker://files/cache/src/更新.webp')) {
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/更新.webp", 'hiker://files/cache/src/更新.webp');
@@ -1060,7 +1060,7 @@ function downloadicon() {
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/排行.webp", 'hiker://files/cache/src/排行.webp');
         }
         if (!fileExist('hiker://files/cache/src/收藏.svg')) {
-            downloadFile('http://124.221.241.174:86/tubiao/messy/165.svg', 'hiker://files/cache/src/收藏.svg');
+            downloadFile('https://hikerfans.com/tubiao/messy/165.svg', 'hiker://files/cache/src/收藏.svg');
         }
     } catch (e) { }
 }
