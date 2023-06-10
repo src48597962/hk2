@@ -42,7 +42,7 @@ function SRCSet() {
             refreshPage(false);
             return 'toast://'+runMode+' 主页源已设置为：' + input;
         }, runMode, sourcename, cfgfile, Juconfig),
-        img: "https://lanmeiguojiang.com/tubiao/messy/13.svg",
+        img: "https://hikerfans.com/tubiao/messy/13.svg",
         col_type: "icon_2"
     });
 
@@ -54,7 +54,7 @@ function SRCSet() {
             refreshPage(false);
             return 'toast://运行模式已设置为：' + input;
         }, cfgfile, Juconfig),
-        img: "https://lanmeiguojiang.com/tubiao/messy/12.svg",
+        img: "https://hikerfans.com/tubiao/messy/12.svg",
         col_type: "icon_2"
     });
     d.push({
@@ -68,7 +68,7 @@ function SRCSet() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             jiekouapi(sourcefile);
         }, sourcefile),
-        img: "https://lanmeiguojiang.com/tubiao/more/25.png",
+        img: "https://hikerfans.com/tubiao/more/25.png",
         col_type: "icon_4",
         extra: {
             longClick: [{
@@ -126,7 +126,7 @@ function SRCSet() {
                 },sourcefile)
             }
         }),
-        img: "https://lanmeiguojiang.com/tubiao/more/290.png",
+        img: "https://hikerfans.com/tubiao/more/290.png",
         col_type: "icon_4"
     });
     d.push({
@@ -135,7 +135,7 @@ function SRCSet() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             JYimport(input)
         }),
-        img: "https://lanmeiguojiang.com/tubiao/more/43.png",
+        img: "https://hikerfans.com/tubiao/more/43.png",
         col_type: "icon_4",
         extra: {
             longClick: [{
@@ -177,7 +177,7 @@ function SRCSet() {
                 }
             },sharelist)
         }),
-        img: "https://lanmeiguojiang.com/tubiao/more/3.png",
+        img: "https://hikerfans.com/tubiao/more/3.png",
         col_type: "icon_4"
     });
     d.push({
@@ -294,7 +294,7 @@ function SRCSet() {
                     }
                 }, sourcefile, item),
                 desc: (item.group?"["+item.group+"] ":"") + item.type,
-                img: "https://lanmeiguojiang.com/tubiao/ke/31.png",
+                img: "https://hikerfans.com/tubiao/ke/31.png",
                 col_type: "avatar",
                 extra: {
                     id: item.type+"_"+item.name
