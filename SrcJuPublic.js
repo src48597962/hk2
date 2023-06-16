@@ -105,7 +105,7 @@ function getYiData(type,od) {
         d = d.concat(data);
     }else{
         d.push({
-            title: "请先配置一个主页源",
+            title: "请先配置一个主页源\n设置-选择漫画/小说/听书-选择源",
             url: "hiker://empty",
             col_type: "text_center_1",
         })
