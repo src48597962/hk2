@@ -190,7 +190,7 @@ function SRCSet() {
     }
     let typebtn = runModes;
     typebtn.unshift("全部");
-    typebtn.push("失效");
+    //typebtn.push("失效");
     typebtn.forEach(it =>{
         d.push({
             title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
