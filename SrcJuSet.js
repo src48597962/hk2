@@ -190,6 +190,7 @@ function SRCSet() {
     }
     let typebtn = runModes;
     typebtn.unshift("全部");
+    typebtn.push("失效");
     typebtn.forEach(it =>{
         d.push({
             title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -224,7 +225,7 @@ function SRCSet() {
         jkdatalist = datalist;
     }
     jkdatalist.forEach(item => {
-        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
+        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type || (getMyVar("SrcJuJiekouType")=="失效" && item.group=="失效")){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择"], 2).select((sourcefile, data) => {
