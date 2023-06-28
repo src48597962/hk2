@@ -710,7 +710,7 @@ function erji() {
             setLastChapterRule('js:' + $.toString((sname,surl, 最新, 公共) => {
                 eval("let 最新2 = " + 最新);
                 try{
-                    let zx = 最新2(surl,公共);
+                    let zx = 最新2(surl,公共) || "";
                     setResult(zx?(sname+"|"+zx):"");
                 }catch(e){
                     最新2(surl,公共);
