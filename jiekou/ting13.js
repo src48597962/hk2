@@ -240,7 +240,7 @@ let erdata = {
         })
     },
     "最新": function(url) {
-        setResult("最新：" + pdfh(request(url, {timeout:8000}), 'body&&em&&Text'));
+        return pdfh(request(url, {timeout:8000}), 'body&&em&&Text');
     }
 }
 
