@@ -251,7 +251,7 @@ let erdata = {
         return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
     },
     "最新": function(url) {//收藏获取最新章节，surl为详情页链接
-        setResult(pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text'));
+        return pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text');
     }
 }
 
