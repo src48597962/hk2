@@ -711,7 +711,7 @@ function erji() {
                 eval("let 最新2 = " + 最新);
                 try{
                     let zx = 最新2(surl,公共);
-                    setResult(sname+'|'+zx);
+                    setResult(zx?(sname+"|"+zx):"");
                 }catch(e){
                     最新2(surl,公共);
                 }
