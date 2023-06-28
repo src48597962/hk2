@@ -707,10 +707,15 @@ function erji() {
         }
         //收藏更新最新章节
         if (parse['最新']) {
-            setLastChapterRule('js:' + $.toString((surl, 最新, 公共) => {
+            setLastChapterRule('js:' + $.toString((sname,surl, 最新, 公共) => {
                 eval("let 最新2 = " + 最新);
-                最新2(surl,公共);
-            }, surl, parse['最新'], 公共))
+                try{
+                    let zx = 最新2(surl,公共);
+                    setResult(sname+'|'+zx);
+                }catch(e){
+                    最新2(surl,公共);
+                }
+            }, sname, surl, parse['最新'], 公共))
         }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined") {
