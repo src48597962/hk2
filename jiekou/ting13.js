@@ -5,7 +5,6 @@ let yidata = {
         let d = [];
         MY_URL = 公共.host;
         let html = request(MY_URL);
-        require($.require('config').method);
         let blist = pdfa(html, '.focusBox&&ul&&li').map(it=>{
             let url = pd(it,'a&&href');
             let title = pdfh(it,'img&&alt');
@@ -16,6 +15,7 @@ let yidata = {
                 url: url
             }
         })
+        require($.require('config').method);
         banner(true, d, blist,{col_type:'card_pic_1',desc:'0',time:5000})
         var Label_set = pdfa(html, 'body&&.list')
         Label_set.forEach((data) => {
