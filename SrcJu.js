@@ -66,20 +66,20 @@ function yiji() {
             Version();
             downloadicon();
         }
-        let adminbtn = runModes;
-        adminbtn.unshift("模式");
-        adminbtn.unshift("管理");
+        let adminbtn = runModes2;
+        adminbtn.unshift("切换类型");
+        adminbtn.unshift("接口管理");
         d.push({
             title: "设置",
-            url: $(adminbtn, 1).select(() => {
-                if(input=="管理"){
+            url: $(adminbtn, 2).select(() => {
+                if(input=="接口管理"){
                     return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         SRCSet();
                     })
-                }else if(input=="模式"){
+                }else if(input=="切换类型"){
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return $(runModes,1,"切换模式").select((cfgfile,Juconfig) => {
+                    return $(runModes2,1,"切换模式").select((cfgfile,Juconfig) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
