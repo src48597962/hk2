@@ -66,8 +66,8 @@ function yiji() {
             Version();
             downloadicon();
         }
-        let adminbtn = runModes2;
-        adminbtn.unshift("切换类型");
+        let adminbtn = runModes;
+        adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
         d.push({
             title: "设置",
@@ -77,9 +77,9 @@ function yiji() {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         SRCSet();
                     })
-                }else if(input=="切换类型"){
+                }else if(input=="快速切换"){
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return $(runModes2,1,"切换模式").select((cfgfile,Juconfig) => {
+                    return $(runModes,1,"运行模式").select((cfgfile,Juconfig) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
