@@ -108,7 +108,7 @@ function getYiData(type,od) {
                         return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
                     })
                 }];
-                extra.chapterList = [{title:"下载图集", url:item.url.split("@")[0]}],
+                extra.chapterList = [{title:"正文", url:item.url.split("@")[0]}],
                 extra.defaultView = "1";
                 extra.info = {
                     "bookName": extra.name,
