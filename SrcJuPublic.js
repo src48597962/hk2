@@ -115,7 +115,7 @@ function getYiData(type,od) {
                     "bookTopPic": extra.img,
                     "parseCode": $.toString((url) => {
                         url;
-                    },item.url.split("JS:")[1]),
+                    },item.url.split("js:")[1]),
                     "ruleName": MY_RULE.title,
                     "type": "comic"
                 }
