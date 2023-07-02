@@ -113,9 +113,7 @@ function getYiData(type,od) {
                 extra.info = {
                     "bookName": extra.name,
                     "bookTopPic": extra.img,
-                    "parseCode": $.toString((url) => {
-                        url;
-                    },item.url.split("js:")[1]),
+                    "parseCode": item.url.split("js:")[1],
                     "ruleName": MY_RULE.title,
                     "type": "comic"
                 }
