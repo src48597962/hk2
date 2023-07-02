@@ -21,12 +21,7 @@ if(sourcedata != ""){
     var datalist = [];
 }
 datalist.reverse();
-let runModes2 = [];//实际接口有的类型
-datalist.forEach(it=>{
-    if(runModes2.indexOf(it.type)==-1){
-        runModes2.push(it.type);
-    }
-})
+
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
