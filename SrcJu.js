@@ -916,7 +916,7 @@ function search(keyword, mode, sdata, group, type) {
                         extra.pageTitle = extra.pageTitle || extra.name;
                         extra.surl = item.url && !/js:|select:|\(|\)|=>|@|toast:/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
                         item.extra = extra;
-                        item.url = /sousuo/.test(objmode) ? $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                        item.url = /sousuo/.test(objmode) ? /js:|select:|\(|\)|=>|toast:/.test(item.url)?item.url:$("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                             require(config.依赖);
                             erji();
                         }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
