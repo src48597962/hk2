@@ -469,7 +469,7 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '保存接口',
         col_type: 'text_2',
-        url: $().lazyRule((sourcefile) => {
+        url: $().lazyRule((sourcefile,oldtype) => {
             if (!getMyVar('jiekouname')) {
                 return "toast://名称不能为空";
             }
@@ -531,6 +531,7 @@ function jiekouapi(sourcefile, data) {
                 if (index > -1 && getMyVar('jiekouedit') != "1") {
                     return "toast://已存在-" + name;
                 } else {
+                    index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==oldtype||!d.type))[0]);
                     if (getMyVar('jiekouedit') == "1" && index > -1) {
                         datalist.splice(index, 1);
                     }
@@ -543,7 +544,7 @@ function jiekouapi(sourcefile, data) {
             } catch (e) {
                 return "toast://接口数据异常，请确认对象格式";
             }
-        }, sourcefile)
+        }, sourcefile,data?data.type:"")
     });
     setResult(d);
 }
