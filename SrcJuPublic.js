@@ -101,6 +101,23 @@ function getYiData(type,od) {
                 require(config.依赖);
                 erji();
             }):item.url
+            if(extra.stype=="图集" && /js:|select:|\(|\)|=>|@|toast:/.test(item.url)){
+                extra.longClick = [{
+                    title: "下载本地📥",
+                    js: $.toString(() => {
+                        return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
+                    })
+                }];
+                extra.chapterList = {title:"图集", url:item.url.split("@")[0]},
+                extra.defaultView = "1";
+                extra.info = {
+                    "bookName": extra.name,
+                    "bookTopPic": extra.img,
+                    "parseCode": toString(item.url.split("JS:")[1]),
+                    "ruleName": MY_RULE.title,
+                    "type": "comic"
+                }
+            }
         })
         d = d.concat(data);
     }else{
