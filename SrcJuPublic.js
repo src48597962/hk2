@@ -101,7 +101,7 @@ function getYiData(type,od) {
                 require(config.依赖);
                 erji();
             }):item.url
-            if(extra.stype=="图集" && /js:|select:|\(|\)|=>|@|toast:/.test(item.url)){
+            if(extra.stype=="图集" && /js:|select:|\(|\)|=>|toast:/.test(item.url)){
                 extra.longClick = [{
                     title: "下载本地📥",
                     js: $.toString(() => {
@@ -113,7 +113,7 @@ function getYiData(type,od) {
                 extra.info = {
                     "bookName": extra.name,
                     "bookTopPic": extra.img,
-                    "parseCode": JSON.stringify(item.url.split("JS:")[1]),
+                    "parseCode": Strint(item.url.split("JS:")[1]),
                     "ruleName": MY_RULE.title,
                     "type": "comic"
                 }
