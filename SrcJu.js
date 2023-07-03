@@ -147,40 +147,49 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
+        let sousuopage = $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+            let d = [];
+            d.push({
+                title: "🔍",
+                url: $.toString(() => {
+                    let info = storage0.getMyVar('一级源接口信息') || {};
+                    require(config.依赖);
+                    search(input,'sousuo',false,info.group);
+                }),
+                desc: "搜你想看的...",
+                col_type: "input",
+                extra: {
+                    titleVisible: true
+                }
+            });
+            d.push({
+                title: "",
+                url: "hiker://empty",
+                extra: {
+                    id: "sousuoloading"
+                }
+            });
+            setResult(d);
+        })
         if(parse["分类"]){
             d.push({
                 title: "分类",
                 url: rulePage('分类',页码["分类"]),
                 pic_url: "https://hikerfans.com/tubiao/more/287.png",
-                col_type: 'icon_5'
+                col_type: 'icon_5',
+                extra: {
+                    longClick: [{
+                        title: "🔍搜索",
+                        js: $.toString((sousuopage) => {
+                            return sousuopage;
+                        },sousuopage)
+                    }]
+                }
             })
         }else{
             d.push({
                 title: "搜索",
-                url: MY_NAME=="海阔视界"?"hiker://search":$("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-                    let d = [];
-                    d.push({
-                        title: "🔍",
-                        url: $.toString(() => {
-                            let info = storage0.getMyVar('一级源接口信息') || {};
-                            require(config.依赖);
-                            search(input,'sousuo',false,info.group);
-                        }),
-                        desc: "搜你想看的...",
-                        col_type: "input",
-                        extra: {
-                            titleVisible: true
-                        }
-                    });
-                    d.push({
-                        title: "",
-                        url: "hiker://empty",
-                        extra: {
-                            id: "sousuoloading"
-                        }
-                    });
-                    setResult(d);
-                }),
+                url: MY_NAME=="海阔视界"?"hiker://search":sousuopage,
                 pic_url: "https://hikerfans.com/tubiao/more/101.png",
                 col_type: 'icon_5'
             })
