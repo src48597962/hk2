@@ -154,7 +154,6 @@ function yiji() {
             }));
          
             let d = [];
-            /*
             d.push({
                 title: "🔍",
                 url: $.toString(() => {
@@ -180,16 +179,14 @@ function yiji() {
                     id: "sousuoloading"
                 }
             });
-            */
             setResult(d);
-            /*
+
             let name = getMyVar('sousuoname','');
             if(name){
                 require(config.依赖);
                 let info = storage0.getMyVar('一级源接口信息') || {};
                 search(name,"sousuo2",false,info.group);
             }
-            */
         })
         if(parse["分类"]){
             d.push({
