@@ -1069,13 +1069,13 @@ function search(keyword, mode, sdata, group, type) {
             return results;
         }else{
             let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
-            updateItem(mode=="sousuo"?"sousuoloading":"listloading", { title: sousuosm });
+            updateItem(mode=="sousuo"||mode=="sousuo2" ? "sousuoloading" : "listloading", { title: sousuosm });
         }
     } else {
         clearMyVar('SrcJuSearching');
         if(page==1){
             toast("无接口");
-            if(mode=="sousuo"){
+            if(mode=="sousuo"||mode=="sousuo2"){
                 updateItem("sousuoloading", { title: "无接口" });
             }
         }
