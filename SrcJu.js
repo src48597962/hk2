@@ -878,14 +878,14 @@ function search(keyword, mode, sdata, group, type) {
         }
     }
     let page = 1;
-    if(mode=="sousuo" || mode=="sousuo2"){//视界搜索和新搜索页面
+    if(mode=="sousuo"){
         if(MY_PAGE==1){
             clearMyVar('MY_PGAE');
         }else{
             page = parseInt(getMyVar('MY_PGAE','1'))+1;
             putMyVar('MY_PGAE',page);
         }
-    }else if(mode=="sousuotest"){
+    }else if(mode=="sousuotest" || mode=="sousuo2"){
         page = MY_PAGE;
     }
     if(page==1){
@@ -994,9 +994,9 @@ function search(keyword, mode, sdata, group, type) {
                         extra.stype = objdata.type;
                         extra.sname = objdata.name;
                         extra.pageTitle = extra.pageTitle || extra.name;
-                        extra.surl = item.url && !/js:|select:|\(|\)|=>|@|toast:/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
+                        extra.surl = item.url && !/js:|select:|\(|\)|=>|hiker:\/\/page|@|toast:/.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
                         item.extra = extra;
-                        item.url = /sousuo/.test(objmode) ? /js:|select:|\(|\)|=>|toast:/.test(item.url)?item.url:$("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                        item.url = /sousuo/.test(objmode) ? /js:|select:|\(|\)|=>|hiker:\/\/page|toast:/.test(item.url)?item.url:$("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                             require(config.依赖);
                             erji();
                         }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
@@ -1012,8 +1012,8 @@ function search(keyword, mode, sdata, group, type) {
                         }, extra);
                         item.title = objmode=="erji"?objdata.name:item.title;
                         //item.content = item.content || item.desc;
-                        item.desc = objmode=="sousuo"  ? MY_RULE.title + ' · ' + objdata.name + ' · ' +item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
-                        item.col_type = objmode=="sousuo"  ? "video" : objmode=="sousuotest" ? "movie_1_vertical_pic" : "avatar";
+                        item.desc = objmode=="sousuo"  ? MY_RULE.title + ' · ' + objdata.name + ' · ' +item.desc :(objmode=="sousuotest"||objmode=="sousuo2")?(item.content || item.desc): (extra.sdesc || item.desc);
+                        item.col_type = objmode=="sousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuo2") ? "movie_1_vertical_pic" : "avatar";
                         resultdata.push(item);
                     }
                 })
@@ -1049,6 +1049,8 @@ function search(keyword, mode, sdata, group, type) {
                             }
                             hideLoading();
                         }else if(mode=="sousuo"){
+                            addItemBefore("sousuoloading", data);
+                        }else if(mode=="sousuo2"){
                             addItemBefore("sousuoloading", data);
                         }else if(mode=="sousuotest"){
                             results = data;
