@@ -148,6 +148,7 @@ function yiji() {
             })
         }
         let sousuopage = $("hiker://empty##fypage#noRecordHistory##noHistory#").rule(() => {
+            log(MY_PAGE);
             let d = [];
             d.push({
                 title: "🔍",
