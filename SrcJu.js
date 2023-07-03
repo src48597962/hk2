@@ -132,7 +132,7 @@ function yiji() {
                 windowId: MY_RULE.title + "管理"
             }
         })
-        if(parse["排行"]){
+        if(parse&&parse["排行"]){
             d.push({
                 title: "排行",
                 url: rulePage('排行',页码["排行"]),
@@ -192,7 +192,7 @@ function yiji() {
                 search(name,"sousuo2",false,info.group);
             }
         })
-        if(parse["分类"]){
+        if(parse&&parse["分类"]){
             d.push({
                 title: "分类",
                 url: rulePage('分类',页码["分类"]),
@@ -215,7 +215,7 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        if(parse["更新"]){
+        if(parse&&parse["更新"]){
             d.push({
                 title: "更新",
                 url: rulePage('更新',页码["更新"]),
