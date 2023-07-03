@@ -101,6 +101,7 @@ function getYiData(type,od) {
                 require(config.依赖);
                 erji();
             }):item.url
+            /*
             if(extra.stype=="图集" && /js:|select:|\(|\)|=>|toast:/.test(item.url)){
                 extra.longClick = [{
                     title: "下载本地📥",
@@ -118,6 +119,7 @@ function getYiData(type,od) {
                     "type": "comic"
                 }
             }
+            */
         })
         d = d.concat(data);
     }else{
