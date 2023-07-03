@@ -147,12 +147,11 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        let sousuopage = $("hiker://empty##fypage#noRecordHistory##noHistory#").rule(() => {
-            log(MY_PAGE);
+        let sousuopage = $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
             let d = [];
             d.push({
                 title: "🔍",
-                url: $.toString(() => {
+                url: "hiker://empty##fypage#noRecordHistory##noHistory#"+$.toString(() => {
                     let info = storage0.getMyVar('一级源接口信息') || {};
                     require(config.依赖);
                     search(input,'sousuo',false,info.group);
