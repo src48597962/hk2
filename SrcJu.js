@@ -166,18 +166,21 @@ function yiji() {
                     titleVisible: true
                 }
             });
+            /*
             d.push({
                 col_type: 'line',
                 extra: {
                     id: "sousuoline"
                 }
             });
+            */
             d.push({
                 title: "",
                 col_type: 'text_center_1',
                 url: "hiker://empty",
                 extra: {
-                    id: "sousuoloading"
+                    id: "sousuoloading",
+                    lineVisible: false
                 }
             });
             setResult(d);
@@ -1010,6 +1013,7 @@ function search(keyword, mode, sdata, group, type) {
                         }, extra);
                         item.title = objmode=="erji"?objdata.name:item.title;
                         //item.content = item.content || item.desc;
+                        item.desc = item.desc || "";
                         item.desc = objmode=="sousuo"||objmode=="sousuo2"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
                         item.col_type = objmode=="sousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuo2") ? "movie_1_vertical_pic" : "avatar";
                         resultdata.push(item);
