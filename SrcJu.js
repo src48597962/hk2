@@ -132,24 +132,75 @@ function yiji() {
                 windowId: MY_RULE.title + "管理"
             }
         })
-        d.push({
-            title: "排行",
-            url: rulePage('排行',页码["排行"]),
-            pic_url: "https://hikerfans.com/tubiao/more/229.png",
-            col_type: 'icon_5'
-        })
-        d.push({
-            title: "分类",
-            url: rulePage('分类',页码["分类"]),
-            pic_url: "https://hikerfans.com/tubiao/more/287.png",
-            col_type: 'icon_5'
-        })
-        d.push({
-            title: "更新",
-            url: rulePage('更新',页码["更新"]),
-            pic_url: "https://hikerfans.com/tubiao/more/288.png",
-            col_type: 'icon_5'
-        })
+        if(parse["排行"]){
+            d.push({
+                title: "排行",
+                url: rulePage('排行',页码["排行"]),
+                pic_url: "https://hikerfans.com/tubiao/more/229.png",
+                col_type: 'icon_5'
+            })
+        }else{
+            d.push({
+                title: "收藏",
+                url: "hiker://collection?rule="+MY_RULE.title,
+                pic_url: "https://hikerfans.com/tubiao/more/109.png",
+                col_type: 'icon_5'
+            })
+        }
+        if(parse["分类"]){
+            d.push({
+                title: "分类",
+                url: rulePage('分类',页码["分类"]),
+                pic_url: "https://hikerfans.com/tubiao/more/287.png",
+                col_type: 'icon_5'
+            })
+        }else{
+            d.push({
+                title: "搜索",
+                url: MY_NAME=="海阔视界"?"hiker://search":$("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                    let d = [];
+                    d.push({
+                        title: "🔍",
+                        url: $.toString(() => {
+                            let info = storage0.getMyVar('一级源接口信息') || {};
+                            require(config.依赖);
+                            search(input,'sousuo',false,info.group);
+                        }),
+                        desc: "搜你想看的...",
+                        col_type: "input",
+                        extra: {
+                            titleVisible: true
+                        }
+                    });
+                    d.push({
+                        title: "",
+                        url: "hiker://empty",
+                        extra: {
+                            id: "sousuoloading"
+                        }
+                    });
+                    setResult(d);
+                }),
+                pic_url: "https://hikerfans.com/tubiao/more/101.png",
+                col_type: 'icon_5'
+            })
+        }
+        if(parse["更新"]){
+            d.push({
+                title: "更新",
+                url: rulePage('更新',页码["更新"]),
+                pic_url: "https://hikerfans.com/tubiao/more/288.png",
+                col_type: 'icon_5'
+            })
+        }else{
+            d.push({
+                title: "历史",
+                url: "hiker://history?rule="+MY_RULE.title,
+                pic_url: "https://hikerfans.com/tubiao/more/213.png",
+                col_type: 'icon_5'
+            })
+        }
+        
         d.push({
             title: Juconfig["btnmenu5"] || "书架",
             url: Juconfig["btnmenu5"] == "历史" ? "hiker://history?rule="+MY_RULE.title : Juconfig["btnmenu5"] == "收藏" ? "hiker://collection?rule="+MY_RULE.title : $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
