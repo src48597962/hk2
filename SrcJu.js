@@ -149,12 +149,12 @@ function yiji() {
         }
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
             addListener("onClose", $.toString(() => {
-                clearMyVar('SrcJuSousuoTest');
                 clearMyVar('sousuoname');
+                putMyVar("SrcJu_停止搜索线程", "1");
             }));
-            putMyVar('SrcJuSousuoTest','1');
-            
+         
             let d = [];
+            /*
             d.push({
                 title: "🔍",
                 url: $.toString(() => {
@@ -167,23 +167,29 @@ function yiji() {
                     titleVisible: true
                 }
             });
+            d.push({
+                col_type: 'line',
+                extra: {
+                    id: "sousuoline"
+                }
+            });
+            d.push({
+                title: "",
+                url: "hiker://empty",
+                extra: {
+                    id: "sousuoloading"
+                }
+            });
+            */
+            setResult(d);
+            /*
             let name = getMyVar('sousuoname','');
             if(name){
                 require(config.依赖);
                 let info = storage0.getMyVar('一级源接口信息') || {};
-                let data = search(name,"sousuotest",false,info.group);
-                log(data.length);
-                d = d.concat(data);
-                d.push({
-                    title: "搜索第"+MY_PAGE+"页结束",
-                    url: "hiker://empty",
-                    col_type: 'text_center_1',
-                    extra: {
-                        lineVisible: false
-                    }
-                });
+                search(name,"sousuo2",false,info.group);
             }
-            setResult(d);
+            */
         })
         if(parse["分类"]){
             d.push({
@@ -872,7 +878,7 @@ function search(keyword, mode, sdata, group, type) {
         }
     }
     let page = 1;
-    if(mode=="sousuo"){
+    if(mode=="sousuo" || mode=="sousuo2"){//视界搜索和新搜索页面
         if(MY_PAGE==1){
             clearMyVar('MY_PGAE');
         }else{
