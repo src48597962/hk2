@@ -174,6 +174,7 @@ function yiji() {
             });
             d.push({
                 title: "",
+                col_type: 'text_center_1',
                 url: "hiker://empty",
                 extra: {
                     id: "sousuoloading"
@@ -1068,7 +1069,7 @@ function search(keyword, mode, sdata, group, type) {
         if(mode=="sousuotest"){
             return results;
         }else{
-            let sousuosm = mode=="sousuo" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
+            let sousuosm = mode=="sousuo"||mode=="sousuo2" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
             updateItem(mode=="sousuo"||mode=="sousuo2" ? "sousuoloading" : "listloading", { title: sousuosm });
         }
     } else {
