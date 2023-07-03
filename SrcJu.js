@@ -147,7 +147,7 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        let sousuopage = $("hiker://empty#noRecordHistory##noHistory#?page=fypage").rule(() => {
+        let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
             let d = [];
             d.push({
                 title: "🔍",
