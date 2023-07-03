@@ -168,7 +168,7 @@ function yiji() {
                 }
             });
             let name = getMyVar('sousuoname','');
-            if(!name){
+            if(name){
                 require(config.依赖);
                 let info = storage0.getMyVar('一级源接口信息') || {};
                 d = d.concat(search(name,"sousuotest",false,info.group));
