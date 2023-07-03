@@ -147,14 +147,19 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        let sousuopage = $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+        let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
+            addListener("onClose", $.toString(() => {
+                clearMyVar('SrcJuSousuoTest');
+                clearMyVar('sousuoname');
+            }));
+            putMyVar('SrcJuSousuoTest','1');
+            
             let d = [];
             d.push({
                 title: "🔍",
-                url: "hiker://empty##fypage#noRecordHistory##noHistory#"+$.toString(() => {
-                    let info = storage0.getMyVar('一级源接口信息') || {};
-                    require(config.依赖);
-                    search(input,'sousuo',false,info.group);
+                url: $.toString(() => {
+                    putMyVar('sousuoname',input);
+                    refreshPage(true);
                 }),
                 desc: "搜你想看的...",
                 col_type: "input",
@@ -162,13 +167,20 @@ function yiji() {
                     titleVisible: true
                 }
             });
-            d.push({
-                title: "",
-                url: "hiker://empty",
-                extra: {
-                    id: "sousuoloading"
-                }
-            });
+            let name = getMyVar('sousuoname','');
+            if(!name){
+                require(config.依赖);
+                let info = storage0.getMyVar('一级源接口信息') || {};
+                d = d.concat(search(name,"sousuotest",false,info.group));
+                d.push({
+                    title: "搜索第"+MY_PAGE+"页结束",
+                    url: "hiker://empty",
+                    col_type: 'text_center_1',
+                    extra: {
+                        lineVisible: false
+                    }
+                });
+            }
             setResult(d);
         })
         if(parse["分类"]){
