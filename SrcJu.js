@@ -171,7 +171,9 @@ function yiji() {
             if(name){
                 require(config.依赖);
                 let info = storage0.getMyVar('一级源接口信息') || {};
-                d = d.concat(search(name,"sousuotest",false,info.group));
+                let data = search(name,"sousuotest",false,info.group);
+                log(data.length);
+                d = d.concat(data);
                 d.push({
                     title: "搜索第"+MY_PAGE+"页结束",
                     url: "hiker://empty",
