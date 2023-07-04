@@ -152,6 +152,10 @@ function yiji() {
                 clearMyVar('sousuoname');
                 putMyVar("SrcJu_停止搜索线程", "1");
             }));
+            addListener('onRefresh', $.toString(() => {
+                clearMyVar('sousuoname');
+                putMyVar("SrcJu_停止搜索线程", "1");
+            }));
          
             let d = [];
             d.push({
@@ -163,6 +167,7 @@ function yiji() {
                 desc: "搜你想看的...",
                 col_type: "input",
                 extra: {
+                    defaultValue: getMyVar('sousuoname',''),
                     titleVisible: true
                 }
             });
