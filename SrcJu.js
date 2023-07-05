@@ -879,7 +879,7 @@ function sousuo() {
                     data.push({
                         "title": it.name,
                         "search_url": "hiker://empty##fypage",
-                        "searchFind": `js: require(config.依赖); search('`+name+`  `+it.name+`','sousuo');`
+                        "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
                     });
                 })
                 return JSON.stringify(data)
@@ -904,8 +904,8 @@ function search(keyword, mode, sdata, group, type) {
             }
         }
     }
-    /*
-    if(getMyVar('SrcJuSearching')=="1"){
+    
+    if(mode!="jusousuo" && getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
             return [];
@@ -913,7 +913,7 @@ function search(keyword, mode, sdata, group, type) {
             return "hiker://empty";
         }
     }
-    */
+
     let page = 1;
     if(mode=="sousuo"){
         if(MY_PAGE==1){
@@ -922,7 +922,7 @@ function search(keyword, mode, sdata, group, type) {
             page = parseInt(getMyVar('MY_PGAE','1'))+1;
             putMyVar('MY_PGAE',page);
         }
-    }else if(mode=="sousuotest" || mode=="sousuo2"){
+    }else if(mode=="sousuotest" || mode=="sousuo2" || mode=="jusousuo"){
         page = MY_PAGE;
     }
     if(page==1){
@@ -1050,8 +1050,8 @@ function search(keyword, mode, sdata, group, type) {
                         item.title = objmode=="erji"?objdata.name:item.title;
                         //item.content = item.content || item.desc;
                         item.desc = item.desc || "";
-                        item.desc = objmode=="sousuo"||objmode=="sousuo2"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
-                        item.col_type = objmode=="sousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuo2") ? "movie_1_vertical_pic" : "avatar";
+                        item.desc = objmode=="sousuo"||objmode=="sousuo2"||objmode=="jusousuo"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
+                        item.col_type = objmode=="sousuo"||objmode=="jusousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuo2") ? "movie_1_vertical_pic" : "avatar";
                         resultdata.push(item);
                     }
                 })
@@ -1090,7 +1090,7 @@ function search(keyword, mode, sdata, group, type) {
                             addItemBefore("sousuoloading", data);
                         }else if(mode=="sousuo2"){
                             addItemBefore("sousuoloading", data);
-                        }else if(mode=="sousuotest"){
+                        }else if(mode=="sousuotest"||mode=="jusousuo"){
                             results = data;
                         }
                     }else{
@@ -1106,7 +1106,7 @@ function search(keyword, mode, sdata, group, type) {
             storage0.putMyVar('searchMark', searchMark);
         }
         clearMyVar('SrcJuSearching');
-        if(mode=="sousuotest"){
+        if(mode=="sousuotest"||mode=="jusousuo"){
             return results;
         }else{
             let sousuosm = mode=="sousuo"||mode=="sousuo2" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
