@@ -204,7 +204,7 @@ function yiji() {
                     return sousuopage;
                 },sousuopage)
             },{
-                title: "模式："+(getItem('searchmode')=="jusousuo"?"程序聚合":"规则聚合"),
+                title: "聚搜："+(getItem('searchmode')=="jusousuo"?"程序":"规则"),
                 js: $.toString(() => {
                     return $().lazyRule(() => {
                         if(getItem('searchmode')=="jusousuo"){
