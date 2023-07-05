@@ -181,6 +181,7 @@ function yiji() {
             });
             */
             let typebtn = runModes;
+            typebtn.push("影视");
             typebtn.forEach(it =>{
                 d.push({
                     title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -197,16 +198,21 @@ function yiji() {
                 col_type: 'text_center_1',
                 url: "hiker://empty",
                 extra: {
-                    id: "sousuoloading"+getMyVar('sousuoPageType',''),
+                    id: getMyVar('sousuoPageType')=="影视"?"loading":"sousuoloading"+getMyVar('sousuoPageType',''),
                     lineVisible: false
                 }
             });
             setResult(d);
             let name = getMyVar('sousuoname','');
             if(name){
-                let info = storage0.getMyVar('一级源接口信息') || {};
-                let type = getMyVar("sousuoPageType",info.type);
-                search(name,"sousuopage",false,info.group,type);
+                if(getMyVar('sousuoPageType')=="影视"){
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('master','Ju') + 'SrcJyXunmi.js');
+                    xunmi(name);
+                }else{
+                    let info = storage0.getMyVar('一级源接口信息') || {};
+                    let type = getMyVar("sousuoPageType",info.type);
+                    search(name,"sousuopage",false,info.group,type);
+                }
             }
         })
         let sousuoextra = {
