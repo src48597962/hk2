@@ -194,30 +194,45 @@ function yiji() {
             if(name){
                 require(config.依赖);
                 let info = storage0.getMyVar('一级源接口信息') || {};
-                search(name,"sousuo2",false,info.group);
+                search(name,"sousuopage",false,info.group);
             }
         })
+        let sousuoextra = {
+            longClick: [{
+                title: "🔍搜索",
+                js: $.toString((sousuopage) => {
+                    return sousuopage;
+                },sousuopage)
+            },{
+                title: "模式："+(getItem('searchmode')=="jusousuo"?"程序聚合":"规则聚合"),
+                js: $.toString(() => {
+                    return $().lazyRule(() => {
+                        if(getItem('searchmode')=="jusousuo"){
+                            clearItem('searchmode');
+                        }else{
+                            setItem('searchmode',"jusousuo");
+                        }
+                        refreshPage(false);
+                        return "toast://已切换";
+                    })
+                })
+            }]
+        }
         if(parse&&parse["分类"]){
             d.push({
                 title: "分类",
                 url: rulePage('分类',页码["分类"]),
                 pic_url: "https://hikerfans.com/tubiao/more/287.png",
                 col_type: 'icon_5',
-                extra: {
-                    longClick: [{
-                        title: "🔍搜索",
-                        js: $.toString((sousuopage) => {
-                            return sousuopage;
-                        },sousuopage)
-                    }]
-                }
+                extra: sousuoextra
             })
         }else{
             d.push({
                 title: "搜索",
                 url: MY_NAME=="海阔视界"?"hiker://search":sousuopage,
                 pic_url: "https://hikerfans.com/tubiao/more/101.png",
-                col_type: 'icon_5'
+                col_type: 'icon_5',
+                extra: sousuoextra
             })
         }
         if(parse&&parse["更新"]){
@@ -847,49 +862,50 @@ function erji() {
 //搜索页面
 function sousuo() {
     let name = MY_URL.split('##')[1];
-    /*
-    let d = [];
-    d.push({
-        title: "搜索中...",
-        url: "hiker://empty",
-        extra: {
-            id: "sousuoloading"
-        }
-    });
-    setResult(d);
-    let info = storage0.getMyVar('一级源接口信息') || {};
-    search(name,'sousuo',false,info.group);
-    */
-    setResult([{
-        title: "视界聚搜",
-        url: "hiker://search?s=" + name,
-        extra: {
-            rules: $.toString((name) => {
-                let info = storage0.getMyVar('一级源接口信息') || {};
-                require(config.依赖);
-                let ssdatalist = erdatalist.filter(it=>{
-                    if(info.group=="全全"){
-                        return it.type==info.type;
-                    }else{
-                        return it.type==info.type && (it.group==info.group||it.group=="全全");
-                    }
-                });
-                let data = [];
-                ssdatalist.forEach(it=>{
-                    data.push({
-                        "title": it.name,
-                        "search_url": "hiker://empty##fypage",
-                        "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
+    if(getItem('searchmode')!="jusousuo"){
+        let d = [];
+        d.push({
+            title: "搜索中...",
+            url: "hiker://empty",
+            extra: {
+                id: "sousuoloading"
+            }
+        });
+        setResult(d);
+        let info = storage0.getMyVar('一级源接口信息') || {};
+        search(name,'sousuo',false,info.group);
+    }else{
+        setResult([{
+            title: "视界聚搜",
+            url: "hiker://search?s=" + name,
+            extra: {
+                rules: $.toString((name) => {
+                    let info = storage0.getMyVar('一级源接口信息') || {};
+                    require(config.依赖);
+                    let ssdatalist = erdatalist.filter(it=>{
+                        if(info.group=="全全"){
+                            return it.type==info.type;
+                        }else{
+                            return it.type==info.type && (it.group==info.group||it.group=="全全");
+                        }
                     });
-                })
-                return JSON.stringify(data)
-            },name)
-        }
-    }])
+                    let data = [];
+                    ssdatalist.forEach(it=>{
+                        data.push({
+                            "title": it.name,
+                            "search_url": "hiker://empty##fypage",
+                            "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
+                        });
+                    })
+                    return JSON.stringify(data)
+                },name)
+            }
+        }])
+    }
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
-    //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuo2(嗅觉新搜索页)、jusousuo(视界聚合)
+    //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
     if(mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
@@ -922,7 +938,7 @@ function search(keyword, mode, sdata, group, type) {
             page = parseInt(getMyVar('MY_PGAE','1'))+1;
             putMyVar('MY_PGAE',page);
         }
-    }else if(mode=="sousuotest" || mode=="sousuo2" || mode=="jusousuo"){
+    }else if(mode=="sousuotest" || mode=="sousuopage" || mode=="jusousuo"){
         page = MY_PAGE;
     }
     if(page==1){
@@ -1050,8 +1066,8 @@ function search(keyword, mode, sdata, group, type) {
                         item.title = objmode=="erji"?objdata.name:item.title;
                         //item.content = item.content || item.desc;
                         item.desc = item.desc || "";
-                        item.desc = objmode=="sousuo"||objmode=="sousuo2"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
-                        item.col_type = objmode=="sousuo"||objmode=="jusousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuo2") ? "movie_1_vertical_pic" : "avatar";
+                        item.desc = objmode=="sousuo"||objmode=="sousuopage"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
+                        item.col_type = objmode=="sousuo"||objmode=="jusousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuopage") ? "movie_1_vertical_pic" : "avatar";
                         resultdata.push(item);
                     }
                 })
@@ -1088,7 +1104,7 @@ function search(keyword, mode, sdata, group, type) {
                             hideLoading();
                         }else if(mode=="sousuo"){
                             addItemBefore("sousuoloading", data);
-                        }else if(mode=="sousuo2"){
+                        }else if(mode=="sousuopage"){
                             addItemBefore("sousuoloading", data);
                         }else if(mode=="sousuotest"||mode=="jusousuo"){
                             results = data;
@@ -1109,18 +1125,18 @@ function search(keyword, mode, sdata, group, type) {
         if(mode=="sousuotest"||mode=="jusousuo"){
             return results;
         }else{
-            let sousuosm = mode=="sousuo"||mode=="sousuo2" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
-            updateItem(mode=="sousuo"||mode=="sousuo2" ? "sousuoloading" : "listloading", { title: sousuosm });
+            let sousuosm = mode=="sousuo"||mode=="sousuopage" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
+            updateItem(mode=="sousuo"||mode=="sousuopage" ? "sousuoloading" : "listloading", { title: sousuosm });
         }
     } else {
         clearMyVar('SrcJuSearching');
         if(page==1){
             toast("无接口");
-            if(mode=="sousuo"||mode=="sousuo2"){
+            if(mode=="sousuo"||mode=="sousuopage"){
                 updateItem("sousuoloading", { title: "无接口" });
             }
         }
-        if(mode=="sousuotest"){
+        if(mode=="sousuotest"||mode=="jusousuo"){
             return [];
         }
     }
