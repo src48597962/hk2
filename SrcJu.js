@@ -260,7 +260,7 @@ function yiji() {
             }
         })
         d.push({
-            col_type: 'line'
+            col_type: 'line_blank'
         })
         putMyVar(runMode+"_"+sourcename, "1");
     }
@@ -846,6 +846,7 @@ function erji() {
 }
 //搜索页面
 function sousuo() {
+    
     let name = MY_URL.split('##')[1];
     let d = [];
     d.push({
@@ -858,6 +859,24 @@ function sousuo() {
     setResult(d);
     let info = storage0.getMyVar('一级源接口信息') || {};
     search(name,'sousuo',false,info.group);
+    /*
+    setResult([{
+        title: "点我开始轻合集•视界聚搜",
+        url: "hiker://search?s=" + getParam("keyword"),
+        extra: {
+            rules: $.toString(() => {
+                const QING_TITLE = getMyVar('myCollection'),
+                    typeShow = getMyVar('typeShow', 'find:')
+                let rules = $.require('hiker://page/dataLoad?rule=' + QING_TITLE)()
+                if (typeShow.startsWith('find:')) {
+                    let filterKey = typeShow.slice(5)
+                    if (filterKey) rules = rules.filter((v) => v.title.includes(filterKey))
+                } else rules = rules.filter((v) => v.type == typeShow)
+                return JSON.stringify(rules)
+            })
+        }
+    }])
+    */
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
