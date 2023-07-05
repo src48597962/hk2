@@ -904,6 +904,7 @@ function search(keyword, mode, sdata, group, type) {
             }
         }
     }
+    /*
     if(getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
@@ -912,6 +913,7 @@ function search(keyword, mode, sdata, group, type) {
             return "hiker://empty";
         }
     }
+    */
     let page = 1;
     if(mode=="sousuo"){
         if(MY_PAGE==1){
