@@ -918,16 +918,17 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
     //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
-    if(mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
+    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',''):"listloading";
+    if((mode=="sousuo"||mode=="sousuopage") && getMyVar('SrcJuSearching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
             let waittime = 10;
             for (let i = 0; i < waittime; i++) {
                 if(getMyVar("SrcJu_停止搜索线程","0")=="0"){
-                    updateItem("sousuoloading", { title: '搜索中...' });
+                    updateItem(updateItemid, { title: '搜索中...' });
                     break;
                 }
-                updateItem("sousuoloading", { title: '等待上次线程结束，'+(waittime-i-1)+'s' });
+                updateItem(updateItemid, { title: '等待上次线程结束，'+(waittime-i-1)+'s' });
                 java.lang.Thread.sleep(1000);
             }
         }
@@ -1115,9 +1116,9 @@ function search(keyword, mode, sdata, group, type) {
                             }
                             hideLoading();
                         }else if(mode=="sousuo"){
-                            addItemBefore("sousuoloading", data);
+                            addItemBefore(updateItemid, data);
                         }else if(mode=="sousuopage"){
-                            addItemBefore("sousuoloading"+getMyVar('sousuoPageType',''), data);
+                            addItemBefore(updateItemid, data);
                         }else if(mode=="sousuotest"||mode=="jusousuo"){
                             results = data;
                         }
@@ -1138,7 +1139,7 @@ function search(keyword, mode, sdata, group, type) {
             return results;
         }else{
             let sousuosm = mode=="sousuo"||mode=="sousuopage" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
-            updateItem(mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',''):"listloading", { title: sousuosm });
+            updateItem(updateItemid, { title: sousuosm });
         }
     } else {
         clearMyVar('SrcJuSearching');
