@@ -150,13 +150,14 @@ function yiji() {
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
             addListener("onClose", $.toString(() => {
                 clearMyVar('sousuoname');
+                clearMyVar('sousuoJiekouType');
                 putMyVar("SrcJu_停止搜索线程", "1");
             }));
             addListener('onRefresh', $.toString(() => {
                 clearMyVar('sousuoname');
                 putMyVar("SrcJu_停止搜索线程", "1");
             }));
-         
+            require(config.依赖);
             let d = [];
             d.push({
                 title: "🔍",
@@ -179,6 +180,18 @@ function yiji() {
                 }
             });
             */
+            let typebtn = runModes;
+            typebtn.forEach(it =>{
+                d.push({
+                    title: getMyVar("sousuoJiekouType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    url: $('#noLoading#').lazyRule((it) => {
+                        putMyVar("sousuoJiekouType",it);
+                        refreshPage(false);
+                        return "hiker://empty";
+                    },it),
+                    col_type: 'scroll_button'
+                })
+            })
             d.push({
                 title: "",
                 col_type: 'text_center_1',
@@ -189,12 +202,11 @@ function yiji() {
                 }
             });
             setResult(d);
-
             let name = getMyVar('sousuoname','');
             if(name){
-                require(config.依赖);
                 let info = storage0.getMyVar('一级源接口信息') || {};
-                search(name,"sousuopage",false,info.group);
+                let type = getMyVar("sousuoJiekouType",info.type);
+                search(name,"sousuopage",false,info.group,type);
             }
         })
         let sousuoextra = {
