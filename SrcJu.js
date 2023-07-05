@@ -934,7 +934,7 @@ function search(keyword, mode, sdata, group, type) {
         }
     }
     
-    if(mode!="jusousuo" && getMyVar('SrcJuSearching')=="1"){
+    if(mode!="jusousuo" && mode!="sousuopage" && getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
             return [];
