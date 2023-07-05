@@ -150,7 +150,7 @@ function yiji() {
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
             addListener("onClose", $.toString(() => {
                 clearMyVar('sousuoname');
-                clearMyVar('sousuoJiekouType');
+                clearMyVar('sousuoPageType');
                 putMyVar("SrcJu_停止搜索线程", "1");
             }));
             addListener('onRefresh', $.toString(() => {
@@ -183,9 +183,9 @@ function yiji() {
             let typebtn = runModes;
             typebtn.forEach(it =>{
                 d.push({
-                    title: getMyVar("sousuoJiekouType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                     url: $('#noLoading#').lazyRule((it) => {
-                        putMyVar("sousuoJiekouType",it);
+                        putMyVar("sousuoPageType",it);
                         refreshPage(false);
                         return "hiker://empty";
                     },it),
@@ -197,7 +197,7 @@ function yiji() {
                 col_type: 'text_center_1',
                 url: "hiker://empty",
                 extra: {
-                    id: "sousuoloading",
+                    id: "sousuoloading"+getMyVar('sousuoPageType',''),
                     lineVisible: false
                 }
             });
@@ -205,7 +205,7 @@ function yiji() {
             let name = getMyVar('sousuoname','');
             if(name){
                 let info = storage0.getMyVar('一级源接口信息') || {};
-                let type = getMyVar("sousuoJiekouType",info.type);
+                let type = getMyVar("sousuoPageType",info.type);
                 search(name,"sousuopage",false,info.group,type);
             }
         })
@@ -1117,7 +1117,7 @@ function search(keyword, mode, sdata, group, type) {
                         }else if(mode=="sousuo"){
                             addItemBefore("sousuoloading", data);
                         }else if(mode=="sousuopage"){
-                            addItemBefore("sousuoloading", data);
+                            addItemBefore("sousuoloading"+getMyVar('sousuoPageType',''), data);
                         }else if(mode=="sousuotest"||mode=="jusousuo"){
                             results = data;
                         }
@@ -1138,7 +1138,7 @@ function search(keyword, mode, sdata, group, type) {
             return results;
         }else{
             let sousuosm = mode=="sousuo"||mode=="sousuopage" ? success + "/" + list.length + "，第"+page+"页搜索完成" : "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，搜索完成</small>";
-            updateItem(mode=="sousuo"||mode=="sousuopage" ? "sousuoloading" : "listloading", { title: sousuosm });
+            updateItem(mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',''):"listloading", { title: sousuosm });
         }
     } else {
         clearMyVar('SrcJuSearching');
