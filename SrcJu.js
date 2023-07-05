@@ -879,7 +879,7 @@ function sousuo() {
                     data.push({
                         "title": it.name,
                         "search_url": "hiker://empty##fypage",
-                        "searchFind": $.toString((sname,name) => {
+                        "searchFind": "@lazyRule=.js:"+$.toString((sname,name) => {
                             require(config.依赖);
                             search(name+'  '+sname,'sousuo');
                         },it.name,name)//`js: require(config.依赖);search(`+name+`  `+it.name+`,'sousuo');`
