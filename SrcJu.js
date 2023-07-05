@@ -206,7 +206,7 @@ function yiji() {
             let name = getMyVar('sousuoname','');
             if(name){
                 if(getMyVar('sousuoPageType')=="影视"){
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('master','Ju') + 'SrcJyXunmi.js');
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
                     xunmi(name);
                 }else{
                     let info = storage0.getMyVar('一级源接口信息') || {};
