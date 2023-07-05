@@ -260,7 +260,7 @@ function yiji() {
             }
         })
         d.push({
-            col_type: 'line_blank'
+            col_type: 'blank_block'
         })
         putMyVar(runMode+"_"+sourcename, "1");
     }
