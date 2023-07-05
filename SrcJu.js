@@ -846,8 +846,8 @@ function erji() {
 }
 //搜索页面
 function sousuo() {
-    
     let name = MY_URL.split('##')[1];
+    /*
     let d = [];
     d.push({
         title: "搜索中...",
@@ -859,24 +859,34 @@ function sousuo() {
     setResult(d);
     let info = storage0.getMyVar('一级源接口信息') || {};
     search(name,'sousuo',false,info.group);
-    /*
+    */
     setResult([{
-        title: "点我开始轻合集•视界聚搜",
-        url: "hiker://search?s=" + getParam("keyword"),
+        title: "视界聚搜",
+        url: "hiker://search?s=" + name,
         extra: {
-            rules: $.toString(() => {
-                const QING_TITLE = getMyVar('myCollection'),
-                    typeShow = getMyVar('typeShow', 'find:')
-                let rules = $.require('hiker://page/dataLoad?rule=' + QING_TITLE)()
-                if (typeShow.startsWith('find:')) {
-                    let filterKey = typeShow.slice(5)
-                    if (filterKey) rules = rules.filter((v) => v.title.includes(filterKey))
-                } else rules = rules.filter((v) => v.type == typeShow)
-                return JSON.stringify(rules)
-            })
+            rules: $.toString((name) => {
+                let info = storage0.getMyVar('一级源接口信息') || {};
+                require(config.依赖);
+                let ssdatalist = erdatalist.filter(it=>{
+                    if(info.group=="全全"){
+                        return it.type==info.type;
+                    }else{
+                        return it.type==info.type && (it.group==info.group||it.group=="全全");
+                    }
+                });
+                let data = [];
+                ssdatalist.forEach(it=>{
+                    data.push({
+                        "title": it.name,
+                        "search_url": "hiker://empty##fypage",
+                        "searchFind": "js: require(config.依赖);search("+name+"  "+it.name+",'sousuo');"
+                    });
+                })
+                return JSON.stringify(data)
+            },name)
         }
     }])
-    */
+    
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
