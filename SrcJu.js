@@ -879,17 +879,17 @@ function sousuo() {
                     data.push({
                         "title": it.name,
                         "search_url": "hiker://empty##fypage",
-                        "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
+                        "searchFind": `js: require(config.依赖); let d = search('`+name+`','jusousuo',`+it+`); setResult(d);`
                     });
                 })
                 return JSON.stringify(data)
             },name)
         }
     }])
-    
 }
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
+    //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuo2(嗅觉新搜索页)、jusousuo(视界聚合)
     if(mode=="sousuo" && getMyVar('SrcJuSearching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
@@ -1050,7 +1050,7 @@ function search(keyword, mode, sdata, group, type) {
                         item.title = objmode=="erji"?objdata.name:item.title;
                         //item.content = item.content || item.desc;
                         item.desc = item.desc || "";
-                        item.desc = objmode=="sousuo"||objmode=="sousuo2"||objmode=="jusousuo"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
+                        item.desc = objmode=="sousuo"||objmode=="sousuo2"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.sdesc || item.desc);
                         item.col_type = objmode=="sousuo"||objmode=="jusousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuo2") ? "movie_1_vertical_pic" : "avatar";
                         resultdata.push(item);
                     }
