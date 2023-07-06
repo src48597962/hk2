@@ -1150,10 +1150,8 @@ function search(keyword, mode, sdata, group, type) {
         }
     });
     if (list.length > 0) {
-        log("合计源："+list.length);
         be(list, {
             func: function (obj, id, error, taskResult) {
-                log("搜源："+id);
                 if(getMyVar("SrcJu_停止搜索线程")=="1"){
                     return "break";
                 }else if(taskResult.success==1){
