@@ -149,6 +149,7 @@ function yiji() {
         }
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
             addListener("onClose", $.toString(() => {
+                initConfig({依赖: getMyVar('SrcJuCfg')});
                 clearMyVar('SrcJuCfg');
                 clearMyVar('sousuoname');
                 clearMyVar('sousuoPageType');
@@ -194,7 +195,7 @@ function yiji() {
                         refreshPage(false);
                         return "hiker://empty";
                     },it),
-                    col_type: 'scroll_button'
+                    col_type: 'text_5'
                 })
             })
             d.push({
