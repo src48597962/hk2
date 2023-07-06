@@ -153,11 +153,10 @@ function yiji() {
                 clearMyVar('SrcJuCfg');
                 clearMyVar('sousuoname');
                 clearMyVar('sousuoPageType');
-                putMyVar("SrcJu_停止搜索线程", "1");
+                clearMyVar('sousuoPageMark');
             }));
             addListener('onRefresh', $.toString(() => {
                 clearMyVar('sousuoname');
-                putMyVar("SrcJu_停止搜索线程", "1");
             }));
             if(!getMyVar('SrcJuCfg')){
                 putMyVar('SrcJuCfg',config.依赖);
@@ -194,6 +193,7 @@ function yiji() {
                     title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                     url: $('#noLoading#').lazyRule((it) => {
                         putMyVar("sousuoPageType",it);
+                        initConfig({依赖: getMyVar('SrcJuCfg')});
                         refreshPage(false);
                         return "hiker://empty";
                     },it),
@@ -224,6 +224,7 @@ function yiji() {
                     title: item,
                     url: $().lazyRule((input) => {
                         putMyVar('sousuoname',input);
+                        initConfig({依赖: getMyVar('SrcJuCfg')});
                         refreshPage(true);
                         return "hiker://empty";
                     },item),
@@ -252,7 +253,6 @@ function yiji() {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
                     xunmi(name);
                 }else{
-                    initConfig({依赖: getMyVar('SrcJuCfg')});
                     let info = storage0.getMyVar('一级源接口信息') || {};
                     let type = getMyVar("sousuoPageType",info.type);
                     search(name,"sousuopage",false,info.group,type);
@@ -1008,13 +1008,14 @@ function search(keyword, mode, sdata, group, type) {
     if(page==1){
         clearMyVar('nosousuolist');
     }
+    let ssstype = type || runMode;
     let name = keyword.split('  ')[0];
     let sssname;
     if(keyword.indexOf('  ')>-1){
         sssname = keyword.split('  ')[1] || sourcename;
     }
     
-    let searchMark = storage0.getMyVar('searchMark') || {};
+    let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
     if(mode=="erji" && searchMark[name]){
         addItemBefore("listloading", searchMark[name]);
         updateItem("listloading", {
@@ -1037,12 +1038,18 @@ function search(keyword, mode, sdata, group, type) {
         hideLoading();
         return "hiker://empty";
     }
-
+    let sousuoPageMark = storage0.getMyVar('sousuoPageMark') || {name:name};//搜索页类型第1页缓存
+    if(sousuoPageMark.name != name){
+        sousuoPageMark = {name:name};
+    }
+    if(mode=="sousuopage" && page==1 && sousuoPageMark[ssstype]){
+        addItemBefore(updateItemid, sousuoPageMark[ssstype]);
+        return "hiker://empty";
+    }
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
     let ssdatalist = [];
-    let ssstype = type || runMode;
     if (sdata) {
         ssdatalist.push(sdata);
     }else if (sssname){
@@ -1170,6 +1177,10 @@ function search(keyword, mode, sdata, group, type) {
                             addItemBefore(updateItemid, data);
                         }else if(mode=="sousuopage"){
                             addItemBefore(updateItemid, data);
+                            if(page==1){
+                                sousuoPageMark[ssstype] = sousuoPageMark[ssstype] || [];
+                                sousuoPageMark[ssstype] = sousuoPageMark[ssstype].concat(data);
+                            }
                         }else if(mode=="sousuotest"||mode=="jusousuo"){
                             results = data;
                         }
@@ -1184,6 +1195,8 @@ function search(keyword, mode, sdata, group, type) {
         });
         if (mode=="erji") {
             storage0.putMyVar('searchMark', searchMark);
+        }else if (mode=="sousuopage") {
+            storage0.putMyVar('sousuoPageMark', sousuoPageMark);
         }
         clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"||mode=="jusousuo"){
