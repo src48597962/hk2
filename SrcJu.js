@@ -176,14 +176,37 @@ function yiji() {
                     titleVisible: true
                 }
             });
-            /*
-            d.push({
-                col_type: 'line',
-                extra: {
-                    id: "sousuoline"
-                }
-            });
-            */
+            let recordlist = storage0.getItem('searchrecord') || [];
+            if(recordlist.length>0){
+                d.push({
+                    title: '🗑清空',
+                    url: $('#noLoading#').lazyRule(() => {
+                        clearItem('searchrecord');
+                        deleteItemByCls('searchrecord');
+                        return "toast://已清空";
+                    }),
+                    col_type: 'flex_button'//scroll_button
+                });
+            }else{
+                d.push({
+                    title: '↻无记录',
+                    url: "hiker://empty",
+                    col_type: 'flex_button'
+                });
+            }
+            recordlist.forEach(item=>{
+                d.push({
+                    title: item,
+                    url: $.toString((input) => {
+                        putMyVar('sousuoname',input);
+                        refreshPage(true);
+                    },item),
+                    col_type: 'flex_button',
+                    extra: {
+                        cls: 'searchrecord'
+                    }
+                });
+            })
             require(getMyVar('SrcJuCfg'));
             let typebtn = runModes;
             typebtn.push("影视");
@@ -210,6 +233,7 @@ function yiji() {
             setResult(d);
             let name = getMyVar('sousuoname','');
             if(name){
+                deleteItemByCls('searchrecord');
                 if(getMyVar('sousuoPageType')=="影视"){
                     initConfig({依赖: getMyVar('SrcJuCfg').replace('Ju','master')});
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
@@ -223,6 +247,7 @@ function yiji() {
             }
         })
         let sousuoextra = {
+            pageTitle: "搜索",
             longClick: [{
                 title: "🔍搜索",
                 js: $.toString((sousuopage) => {
