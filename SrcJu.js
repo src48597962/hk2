@@ -149,6 +149,7 @@ function yiji() {
         }
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
             addListener("onClose", $.toString(() => {
+                clearMyVar('SrcJuCfg');
                 clearMyVar('sousuoname');
                 clearMyVar('sousuoPageType');
                 putMyVar("SrcJu_停止搜索线程", "1");
@@ -157,7 +158,9 @@ function yiji() {
                 clearMyVar('sousuoname');
                 putMyVar("SrcJu_停止搜索线程", "1");
             }));
-            require(config.依赖);
+            if(!getMyVar('SrcJuCfg')){
+                putMyVar('SrcJuCfg',config.依赖);
+            }
             let d = [];
             d.push({
                 title: "🔍",
@@ -180,6 +183,7 @@ function yiji() {
                 }
             });
             */
+            require(getMyVar('SrcJuCfg'));
             let typebtn = runModes;
             typebtn.push("影视");
             typebtn.forEach(it =>{
@@ -206,9 +210,11 @@ function yiji() {
             let name = getMyVar('sousuoname','');
             if(name){
                 if(getMyVar('sousuoPageType')=="影视"){
+                    initConfig({依赖: getMyVar('SrcJuCfg').replace('Ju','master')});
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
                     xunmi(name);
                 }else{
+                    initConfig({依赖: getMyVar('SrcJuCfg')});
                     let info = storage0.getMyVar('一级源接口信息') || {};
                     let type = getMyVar("sousuoPageType",info.type);
                     search(name,"sousuopage",false,info.group,type);
