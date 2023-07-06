@@ -153,7 +153,6 @@ function yiji() {
                 clearMyVar('SrcJuCfg');
                 clearMyVar('sousuoname');
                 clearMyVar('sousuoPageType');
-                clearMyVar('sousuoPageMark');
             }));
             addListener('onRefresh', $.toString(() => {
                 clearMyVar('sousuoname');
@@ -1038,14 +1037,7 @@ function search(keyword, mode, sdata, group, type) {
         hideLoading();
         return "hiker://empty";
     }
-    let sousuoPageMark = storage0.getMyVar('sousuoPageMark') || {name:name};//搜索页类型第1页缓存
-    if(sousuoPageMark.name != name){
-        sousuoPageMark = {name:name};
-    }
-    if(mode=="sousuopage" && page==1 && sousuoPageMark[ssstype]){
-        addItemBefore(updateItemid, sousuoPageMark[ssstype]);
-        return "hiker://empty";
-    }
+
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
@@ -1177,10 +1169,6 @@ function search(keyword, mode, sdata, group, type) {
                             addItemBefore(updateItemid, data);
                         }else if(mode=="sousuopage"){
                             addItemBefore(updateItemid, data);
-                            if(page==1){
-                                sousuoPageMark[ssstype] = sousuoPageMark[ssstype] || [];
-                                sousuoPageMark[ssstype] = sousuoPageMark[ssstype].concat(data);
-                            }
                         }else if(mode=="sousuotest"||mode=="jusousuo"){
                             results = data;
                         }
@@ -1195,8 +1183,6 @@ function search(keyword, mode, sdata, group, type) {
         });
         if (mode=="erji") {
             storage0.putMyVar('searchMark', searchMark);
-        }else if (mode=="sousuopage") {
-            storage0.putMyVar('sousuoPageMark', sousuoPageMark);
         }
         clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"||mode=="jusousuo"){
