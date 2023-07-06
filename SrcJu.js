@@ -222,7 +222,7 @@ function yiji() {
             recordlist.forEach(item=>{
                 d.push({
                     title: item,
-                    url: $.toString((input) => {
+                    url: $().lazyRule((input) => {
                         putMyVar('sousuoname',input);
                         refreshPage(true);
                     },item),
