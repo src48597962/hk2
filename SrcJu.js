@@ -225,6 +225,7 @@ function yiji() {
                     url: $().lazyRule((input) => {
                         putMyVar('sousuoname',input);
                         refreshPage(true);
+                        return "hiker://empty";
                     },item),
                     col_type: 'flex_button',
                     extra: {
