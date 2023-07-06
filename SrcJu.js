@@ -167,6 +167,15 @@ function yiji() {
                 title: "🔍",
                 url: $.toString(() => {
                     putMyVar('sousuoname',input);
+                    let recordlist = storage0.getItem('searchrecord') || [];
+                    if(recordlist.indexOf(input)>-1){
+                        recordlist = recordlist.filter((item) => item !== input);
+                    }
+                    recordlist.unshift(input);
+                    if(recordlist.length>20){
+                        recordlist.splice(recordlist.length-1,1);
+                    }
+                    storage0.setItem('searchrecord', recordlist);
                     refreshPage(true);
                 }),
                 desc: "搜你想看的...",
@@ -176,6 +185,22 @@ function yiji() {
                     titleVisible: true
                 }
             });
+
+            require(getMyVar('SrcJuCfg'));
+            let typebtn = runModes;
+            typebtn.push("影视");
+            typebtn.forEach(it =>{
+                d.push({
+                    title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    url: $('#noLoading#').lazyRule((it) => {
+                        putMyVar("sousuoPageType",it);
+                        refreshPage(false);
+                        return "hiker://empty";
+                    },it),
+                    col_type: 'text_5'
+                })
+            })
+
             let recordlist = storage0.getItem('searchrecord') || [];
             if(recordlist.length>0){
                 d.push({
@@ -207,20 +232,7 @@ function yiji() {
                     }
                 });
             })
-            require(getMyVar('SrcJuCfg'));
-            let typebtn = runModes;
-            typebtn.push("影视");
-            typebtn.forEach(it =>{
-                d.push({
-                    title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: $('#noLoading#').lazyRule((it) => {
-                        putMyVar("sousuoPageType",it);
-                        refreshPage(false);
-                        return "hiker://empty";
-                    },it),
-                    col_type: 'text_5'
-                })
-            })
+
             d.push({
                 title: "",
                 col_type: 'text_center_1',
@@ -957,7 +969,7 @@ function sousuo() {
 function search(keyword, mode, sdata, group, type) {
     //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
     let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',''):"listloading";
-    if((mode=="sousuo"||mode=="sousuopage") && getMyVar('SrcJuSearching')=="1"){
+    if((mode=="sousuo") && getMyVar('SrcJuSearching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
             let waittime = 10;
