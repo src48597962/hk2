@@ -292,7 +292,7 @@ function yiji() {
         }else{
             d.push({
                 title: "搜索",
-                url: MY_NAME=="海阔视界"?"hiker://search":sousuopage,
+                url: sousuopage,
                 pic_url: "https://hikerfans.com/tubiao/more/101.png",
                 col_type: 'icon_5',
                 extra: sousuoextra
