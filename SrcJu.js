@@ -522,7 +522,7 @@ function erji() {
             let lazy;
             let itype;
             let 解析 = parse['解析'];
-            if (stype=="小说") {
+            if (stype=="小说" || details.rule==1) {
                 lazy = $("#readTheme##autoPage#").rule((解析,公共,参数) => {
                     let url = MY_PARAMS.url || "";
                     eval("let 解析2 = " + 解析);
