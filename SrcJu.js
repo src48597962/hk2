@@ -155,6 +155,7 @@ function yiji() {
                 clearMyVar('sousuoPageType');
             }));
             addListener('onRefresh', $.toString(() => {
+                initConfig({依赖: getMyVar('SrcJuCfg')});
                 clearMyVar('sousuoname');
             }));
             if(!getMyVar('SrcJuCfg')){
