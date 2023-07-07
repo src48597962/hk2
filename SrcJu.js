@@ -210,13 +210,19 @@ function yiji() {
                         deleteItemByCls('searchrecord');
                         return "toast://已清空";
                     }),
-                    col_type: 'flex_button'//scroll_button
+                    col_type: 'flex_button',//scroll_button
+                    extra: {
+                        cls: 'searchrecord'
+                    }
                 });
             }else{
                 d.push({
                     title: '↻无记录',
                     url: "hiker://empty",
-                    col_type: 'flex_button'
+                    col_type: 'flex_button',
+                    extra: {
+                        cls: 'searchrecord'
+                    }
                 });
             }
             recordlist.forEach(item=>{
