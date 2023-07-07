@@ -147,7 +147,7 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        let sousuopage = $("hiker://empty#noRecordHistory##noHistory###fypage").rule(() => {
+        let sousuopage = $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
             addListener("onClose", $.toString(() => {
                 initConfig({依赖: getMyVar('SrcJuCfg')});
                 clearMyVar('SrcJuCfg');
