@@ -161,109 +161,8 @@ function yiji() {
             if(!getMyVar('SrcJuCfg')){
                 putMyVar('SrcJuCfg',config.依赖);
             }
-            let d = [];
-            d.push({
-                title: "🔍",
-                url: $.toString(() => {
-                    putMyVar('sousuoname',input);
-                    let recordlist = storage0.getItem('searchrecord') || [];
-                    if(recordlist.indexOf(input)>-1){
-                        recordlist = recordlist.filter((item) => item !== input);
-                    }
-                    recordlist.unshift(input);
-                    if(recordlist.length>20){
-                        recordlist.splice(recordlist.length-1,1);
-                    }
-                    storage0.setItem('searchrecord', recordlist);
-                    refreshPage(true);
-                }),
-                desc: "搜你想看的...",
-                col_type: "input",
-                extra: {
-                    defaultValue: getMyVar('sousuoname',''),
-                    titleVisible: true
-                }
-            });
-
             require(getMyVar('SrcJuCfg'));
-            let typebtn = runModes;
-            typebtn.push("影视");
-            typebtn.forEach(it =>{
-                d.push({
-                    title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: $('#noLoading#').lazyRule((it) => {
-                        putMyVar("sousuoPageType",it);
-                        initConfig({依赖: getMyVar('SrcJuCfg')});
-                        refreshPage(false);
-                        return "hiker://empty";
-                    },it),
-                    col_type: 'text_5'
-                })
-            })
-
-            let recordlist = storage0.getItem('searchrecord') || [];
-            if(recordlist.length>0){
-                d.push({
-                    title: '🗑清空',
-                    url: $('#noLoading#').lazyRule(() => {
-                        clearItem('searchrecord');
-                        deleteItemByCls('searchrecord');
-                        return "toast://已清空";
-                    }),
-                    col_type: 'flex_button',//scroll_button
-                    extra: {
-                        cls: 'searchrecord'
-                    }
-                });
-            }else{
-                d.push({
-                    title: '↻无记录',
-                    url: "hiker://empty",
-                    col_type: 'flex_button',
-                    extra: {
-                        cls: 'searchrecord'
-                    }
-                });
-            }
-            recordlist.forEach(item=>{
-                d.push({
-                    title: item,
-                    url: $().lazyRule((input) => {
-                        putMyVar('sousuoname',input);
-                        initConfig({依赖: getMyVar('SrcJuCfg')});
-                        refreshPage(true);
-                        return "hiker://empty";
-                    },item),
-                    col_type: 'flex_button',
-                    extra: {
-                        cls: 'searchrecord'
-                    }
-                });
-            })
-
-            d.push({
-                title: "",
-                col_type: 'text_center_1',
-                url: "hiker://empty",
-                extra: {
-                    id: getMyVar('sousuoPageType')=="影视"?"loading":"sousuoloading"+getMyVar('sousuoPageType',''),
-                    lineVisible: false
-                }
-            });
-            setResult(d);
-            let name = getMyVar('sousuoname','');
-            if(name){
-                deleteItemByCls('searchrecord');
-                if(getMyVar('sousuoPageType')=="影视"){
-                    initConfig({依赖: getMyVar('SrcJuCfg').replace('Ju','master')});
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
-                    xunmi(name);
-                }else{
-                    let info = storage0.getMyVar('一级源接口信息') || {};
-                    let type = getMyVar("sousuoPageType",info.type);
-                    search(name,"sousuopage",false,info.group,type);
-                }
-            }
+            newsousuopage();
         })
         let sousuoextra = {
             pageTitle: "搜索",
@@ -1305,5 +1204,110 @@ function Version() {
         putMyVar('SrcJu-VersionCheck', '1');
     } else {
         putMyVar('SrcJu-Version', '-V' + nowVersion);
+    }
+}
+//新搜索页
+function newsousuopage() {
+    let d = [];
+    d.push({
+        title: "🔍",
+        url: $.toString(() => {
+            putMyVar('sousuoname',input);
+            let recordlist = storage0.getItem('searchrecord') || [];
+            if(recordlist.indexOf(input)>-1){
+                recordlist = recordlist.filter((item) => item !== input);
+            }
+            recordlist.unshift(input);
+            if(recordlist.length>20){
+                recordlist.splice(recordlist.length-1,1);
+            }
+            storage0.setItem('searchrecord', recordlist);
+            refreshPage(true);
+        }),
+        desc: "搜你想看的...",
+        col_type: "input",
+        extra: {
+            defaultValue: getMyVar('sousuoname',''),
+            titleVisible: true
+        }
+    });
+
+    let typebtn = runModes;
+    typebtn.push("影视");
+    typebtn.forEach(it =>{
+        d.push({
+            title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+            url: $('#noLoading#').lazyRule((it) => {
+                putMyVar("sousuoPageType",it);
+                initConfig({依赖: getMyVar('SrcJuCfg')});
+                refreshPage(false);
+                return "hiker://empty";
+            },it),
+            col_type: 'text_5'
+        })
+    })
+
+    let recordlist = storage0.getItem('searchrecord') || [];
+    if(recordlist.length>0){
+        d.push({
+            title: '🗑清空',
+            url: $('#noLoading#').lazyRule(() => {
+                clearItem('searchrecord');
+                deleteItemByCls('searchrecord');
+                return "toast://已清空";
+            }),
+            col_type: 'flex_button',//scroll_button
+            extra: {
+                cls: 'searchrecord'
+            }
+        });
+    }else{
+        d.push({
+            title: '↻无记录',
+            url: "hiker://empty",
+            col_type: 'flex_button',
+            extra: {
+                cls: 'searchrecord'
+            }
+        });
+    }
+    recordlist.forEach(item=>{
+        d.push({
+            title: item,
+            url: $().lazyRule((input) => {
+                putMyVar('sousuoname',input);
+                initConfig({依赖: getMyVar('SrcJuCfg')});
+                refreshPage(true);
+                return "hiker://empty";
+            },item),
+            col_type: 'flex_button',
+            extra: {
+                cls: 'searchrecord'
+            }
+        });
+    })
+
+    d.push({
+        title: "",
+        col_type: 'text_center_1',
+        url: "hiker://empty",
+        extra: {
+            id: getMyVar('sousuoPageType')=="影视"?"loading":"sousuoloading"+getMyVar('sousuoPageType',''),
+            lineVisible: false
+        }
+    });
+    setResult(d);
+    let name = getMyVar('sousuoname','');
+    if(name){
+        deleteItemByCls('searchrecord');
+        if(getMyVar('sousuoPageType')=="影视"){
+            initConfig({依赖: getMyVar('SrcJuCfg').replace('Ju','master')});
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
+            xunmi(name);
+        }else{
+            let info = storage0.getMyVar('一级源接口信息') || {};
+            let type = getMyVar("sousuoPageType",info.type);
+            search(name,"sousuopage",false,info.group,type);
+        }
     }
 }
