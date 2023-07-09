@@ -878,9 +878,8 @@ function erji() {
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((sname,surl, 最新, 公共) => {
-                log($.type(最新));
-                log(最新.toString().replace('setResult','return'));
-                eval("let 最新2 = " + 最新);
+                let 最新str = 最新.toString().replace('setResult','return');
+                eval("let 最新2 = " + 最新str);
                 try{
                     let zx = 最新2(surl,公共) || "";
                     setResult(sname + " | " + (zx||""));
