@@ -69,6 +69,7 @@ function yiji() {
         let adminbtn = runModes;
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
+        log(runModes)
         d.push({
             title: "设置",
             url: $(adminbtn, 2).select(() => {
