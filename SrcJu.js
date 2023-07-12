@@ -66,7 +66,9 @@ function yiji() {
             Version();
             downloadicon();
         }
+        log(runModes);
         let rightbtn = runModes;
+        log(rightbtn);
         let adminbtn = runModes;
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
