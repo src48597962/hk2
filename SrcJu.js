@@ -1256,7 +1256,7 @@ function newsousuopage() {
             },it),
             col_type: 'text_5'
         }
-        if(i>4){
+        if(i==4){
             obj.extra.longClick = [{
                 title:"聚影",
                 js: $.toString(()=>{
