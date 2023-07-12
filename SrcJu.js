@@ -66,10 +66,10 @@ function yiji() {
             Version();
             downloadicon();
         }
+        let rightbtn = runModes;
         let adminbtn = runModes;
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
-        log(runModes)
         d.push({
             title: "设置",
             url: $(adminbtn, 2).select(() => {
@@ -131,7 +131,7 @@ function yiji() {
             extra: {
                 newWindow: true,
                 windowId: MY_RULE.title + "管理",
-                longClick: runModes.map(it=>{
+                longClick: rightbtn.map(it=>{
                     return {
                         title: it,
                         js: $.toString((cfgfile,Juconfig,input)=>{
