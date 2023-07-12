@@ -67,10 +67,8 @@ function yiji() {
             downloadicon();
         }
         let adminbtn = runModes;
-        log(runModes);
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
-        log(runModes);
         d.push({
             title: "设置",
             url: $(adminbtn, 2).select(() => {
@@ -132,15 +130,17 @@ function yiji() {
             extra: {
                 newWindow: true,
                 windowId: MY_RULE.title + "管理",
-                longClick: rightbtn.map(it=>{
-                    return {
-                        title: it,
-                        js: $.toString((cfgfile,Juconfig,input)=>{
-                            Juconfig["runMode"] = input;
-                            writeFile(cfgfile, JSON.stringify(Juconfig));
-                            refreshPage(false);
-                            return 'toast://运行模式已切换为：' + input;
-                        }, cfgfile, Juconfig,it)
+                longClick: runModes.map((it,i)=>{
+                    if(i>1){
+                        return {
+                            title: it,
+                            js: $.toString((cfgfile,Juconfig,input)=>{
+                                Juconfig["runMode"] = input;
+                                writeFile(cfgfile, JSON.stringify(Juconfig));
+                                refreshPage(false);
+                                return 'toast://运行模式已切换为：' + input;
+                            }, cfgfile, Juconfig,it)
+                        }
                     }
                 })
             }
