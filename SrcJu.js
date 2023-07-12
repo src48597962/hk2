@@ -1224,17 +1224,19 @@ function newsousuopage() {
     d.push({
         title: "🔍",
         url: $.toString(() => {
-            putMyVar('sousuoname',input);
-            let recordlist = storage0.getItem('searchrecord') || [];
-            if(recordlist.indexOf(input)>-1){
-                recordlist = recordlist.filter((item) => item !== input);
+            if(input){
+                putMyVar('sousuoname',input);
+                let recordlist = storage0.getItem('searchrecord') || [];
+                if(recordlist.indexOf(input)>-1){
+                    recordlist = recordlist.filter((item) => item !== input);
+                }
+                recordlist.unshift(input);
+                if(recordlist.length>20){
+                    recordlist.splice(recordlist.length-1,1);
+                }
+                storage0.setItem('searchrecord', recordlist);
+                refreshPage(true);
             }
-            recordlist.unshift(input);
-            if(recordlist.length>20){
-                recordlist.splice(recordlist.length-1,1);
-            }
-            storage0.setItem('searchrecord', recordlist);
-            refreshPage(true);
         }),
         desc: "搜你想看的...",
         col_type: "input",
@@ -1259,7 +1261,7 @@ function newsousuopage() {
         if(i==4){
             obj.extra = {};
             obj["extra"].longClick = [{
-                title:"聚影",
+                title:"🔍聚影搜索",
                 js: $.toString(()=>{
                     putMyVar("sousuoPageType","聚影");
                     initConfig({依赖: getMyVar('SrcJuCfg')});
