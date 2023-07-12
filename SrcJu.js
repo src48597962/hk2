@@ -79,7 +79,7 @@ function yiji() {
                     })
                 }else if(input=="快速切换"){
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return $(runModes,1,"运行模式").select((cfgfile,Juconfig) => {
+                    return $(runModes,2,"运行模式").select((cfgfile,Juconfig) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
@@ -129,7 +129,18 @@ function yiji() {
             col_type: 'icon_5',
             extra: {
                 newWindow: true,
-                windowId: MY_RULE.title + "管理"
+                windowId: MY_RULE.title + "管理",
+                longClick: runModes.map(it=>{
+                    return {
+                        title: it,
+                        js: $.toString((cfgfile,Juconfig,input)=>{
+                            Juconfig["runMode"] = input;
+                            writeFile(cfgfile, JSON.stringify(Juconfig));
+                            refreshPage(false);
+                            return 'toast://运行模式已切换为：' + input;
+                        }, cfgfile, Juconfig,it)
+                    }
+                })
             }
         })
         if(parse&&parse["排行"]){
