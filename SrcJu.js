@@ -1267,6 +1267,7 @@ function newsousuopage() {
                 })
             }];
         }
+        d.push(obj);
     })
 
     let recordlist = storage0.getItem('searchrecord') || [];
