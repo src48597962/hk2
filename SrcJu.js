@@ -11,7 +11,7 @@ try{
     }
 }
 require(publicfile);
-const rightbtn = runModes;
+
 //一级
 function yiji() {
     let sourcedata = yidatalist.filter(it => {
@@ -67,9 +67,10 @@ function yiji() {
             downloadicon();
         }
         let adminbtn = runModes;
+        log(runModes);
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
-        log(rightbtn);
+        log(runModes);
         d.push({
             title: "设置",
             url: $(adminbtn, 2).select(() => {
