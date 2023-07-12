@@ -1245,9 +1245,8 @@ function newsousuopage() {
     });
 
     let typebtn = runModes;
-    typebtn.push("影视");
-    typebtn.forEach(it =>{
-        d.push({
+    typebtn.forEach((it,i) =>{
+        let obj = {
             title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
                 putMyVar("sousuoPageType",it);
@@ -1256,7 +1255,18 @@ function newsousuopage() {
                 return "hiker://empty";
             },it),
             col_type: 'text_5'
-        })
+        }
+        if(i>4){
+            obj.extra.longClick = [{
+                title:"聚影",
+                js: $.toString(()=>{
+                    putMyVar("sousuoPageType","聚影");
+                    initConfig({依赖: getMyVar('SrcJuCfg')});
+                    refreshPage(false);
+                    return "hiker://empty";
+                })
+            }];
+        }
     })
 
     let recordlist = storage0.getItem('searchrecord') || [];
@@ -1304,7 +1314,7 @@ function newsousuopage() {
         col_type: 'text_center_1',
         url: "hiker://empty",
         extra: {
-            id: getMyVar('sousuoPageType')=="影视"?"loading":"sousuoloading"+getMyVar('sousuoPageType',''),
+            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType',''),
             lineVisible: false
         }
     });
@@ -1312,7 +1322,7 @@ function newsousuopage() {
     let name = getMyVar('sousuoname','');
     if(name){
         deleteItemByCls('searchrecord');
-        if(getMyVar('sousuoPageType')=="影视"){
+        if(getMyVar('sousuoPageType')=="聚影"){
             initConfig({依赖: getMyVar('SrcJuCfg').replace('Ju','master')});
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
             xunmi(name);
