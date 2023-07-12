@@ -1257,7 +1257,8 @@ function newsousuopage() {
             col_type: 'text_5'
         }
         if(i==4){
-            obj.extra.longClick = [{
+            obj.extra = {};
+            obj["extra"].longClick = [{
                 title:"聚影",
                 js: $.toString(()=>{
                     putMyVar("sousuoPageType","聚影");
