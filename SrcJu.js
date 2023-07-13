@@ -520,44 +520,53 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            d.push({
-                title: "书架/下载",
-                url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
-                    bookCase();
-                }),
-                pic_url: 'https://hikerfans.com/tubiao/messy/70.svg',
-                col_type: 'icon_small_3',
-                extra: {
-                    cls: "loadlist",
-                    inheritTitle: false,
-                    longClick: [{
-                        title: "下载本地📥",
-                        js: $.toString((itype) => {
-                            if(itype){
-                                return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
-                            }else{
-                                return "toast://不支持下载的类型"
-                            }
-                        },itype)
-                    }],
-                    chapterList: 列表,
-                    "defaultView": "1",
-                    "info": {
-                        "bookName": name,
-                        "bookTopPic": pic,
-                        "parseCode": download,
-                        "ruleName": MY_RULE.title,
-                        "type": itype,
-                        "decode": 公共["imgdec"]?$.type(公共["imgdec"])=="function"?$.toString((imgdec)=>{
-                            let imgDecrypt = imgdec;
-                            return imgDecrypt();
-                        },公共["imgdec"]):公共["imgdec"]:""
+            if(stype=="影视"){
+                d.push({
+                    title: "聚影搜索",
+                    url: "hiker://search?rule=聚影√&s=" + name,
+                    pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
+                    col_type: 'icon_small_3'
+                })
+            }else{
+                d.push({
+                    title: "书架/下载",
+                    url: $("hiker://empty###noRecordHistory##noHistory#").rule(() => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
+                        bookCase();
+                    }),
+                    pic_url: 'https://hikerfans.com/tubiao/messy/70.svg',
+                    col_type: 'icon_small_3',
+                    extra: {
+                        cls: "loadlist",
+                        inheritTitle: false,
+                        longClick: [{
+                            title: "下载本地📥",
+                            js: $.toString((itype) => {
+                                if(itype){
+                                    return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
+                                }else{
+                                    return "toast://不支持下载的类型"
+                                }
+                            },itype)
+                        }],
+                        chapterList: 列表,
+                        "defaultView": "1",
+                        "info": {
+                            "bookName": name,
+                            "bookTopPic": pic,
+                            "parseCode": download,
+                            "ruleName": MY_RULE.title,
+                            "type": itype,
+                            "decode": 公共["imgdec"]?$.type(公共["imgdec"])=="function"?$.toString((imgdec)=>{
+                                let imgDecrypt = imgdec;
+                                return imgDecrypt();
+                            },公共["imgdec"]):公共["imgdec"]:""
+                        }
                     }
-                }
-            })
+                })
+            }
             d.push({
-                title: "切换书源",
+                title: "切换站源",
                 url: $("#noLoading#").lazyRule((name,sgroup,stype) => {
                     updateItem("listloading2", { 
                         extra: {
