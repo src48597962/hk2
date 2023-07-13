@@ -257,13 +257,13 @@ function yiji() {
         })
         runModes.forEach((it) =>{
             d.push({
-                title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                url: $('#noLoading#').lazyRule((it) => {
-                    putMyVar("sousuoPageType",it);
-                    initConfig({依赖: getMyVar('SrcJuCfg')});
+                title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                url: $('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
+                    Juconfig["runMode"] = input;
+                    writeFile(cfgfile, JSON.stringify(Juconfig));
                     refreshPage(false);
-                    return "hiker://empty";
-                },it),
+                    return 'toast://运行模式已切换为：' + input;
+                }, cfgfile, Juconfig ,it),
                 col_type: 'scroll_button'
             });
         })
