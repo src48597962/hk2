@@ -192,15 +192,35 @@ function SRCSet() {
     typebtn.unshift("全部");
     //typebtn.push("失效");
     typebtn.forEach(it =>{
-        d.push({
-            title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+        let typename = it;
+        if(it != "全部" && getItem(it+'stoptype')=="1"){
+            typename = typename+"(停)";
+        }
+        let obj = {
+            title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
             url: $('#noLoading#').lazyRule((it) => {
                 putMyVar("SrcJuJiekouType",it);
                 refreshPage(false);
                 return "hiker://empty";
             },it),
             col_type: 'scroll_button'
-        })
+        }
+        if(it != "全部"){
+            obj.extra = {};
+            obj["extra"].longClick = [{
+                title: (getItem(it+'stoptype')=="1"?"停用":"启用")+it,
+                js: $.toString((it) => {
+                    if(getItem(it+'stoptype')=="1"){
+                        clearItem(it+'stoptype');
+                    }else{
+                        setItem(it+'stoptype','1');
+                    }
+                    refreshPage(false);
+                    return "hiker://empty";
+                },it)
+            }]
+        }
+        d.push(obj);
     })
     d.push({
         title: "🔍",
