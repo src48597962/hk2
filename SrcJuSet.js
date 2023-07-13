@@ -193,9 +193,11 @@ function SRCSet() {
     //typebtn.push("失效");
     typebtn.forEach(it =>{
         let typename = it;
+        /*
         if(it != "全部" && getItem(it+'stoptype')=="1"){
             typename = typename+"(关)";
         }
+        */
         let obj = {
             title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
             url: $('#noLoading#').lazyRule((it) => {
@@ -205,6 +207,7 @@ function SRCSet() {
             },it),
             col_type: 'scroll_button'
         }
+        /*
         if(it != "全部"){
             obj.extra = {};
             obj["extra"].longClick = [{
@@ -220,6 +223,7 @@ function SRCSet() {
                 },it)
             }]
         }
+        */
         d.push(obj);
     })
     d.push({
