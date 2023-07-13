@@ -446,6 +446,11 @@ function erji() {
                 lineid = 0;
             }
             let 列表 = 列表s[lineid] || [];
+            try{
+                列表s[3]=["a","b"];
+                log(列表s[3])
+            }catch(e){}
+            
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
