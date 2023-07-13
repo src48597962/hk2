@@ -127,7 +127,7 @@ function yiji() {
                 }
             }),
             pic_url: "https://hikerfans.com/tubiao/more/129.png",
-            col_type: 'icon_5',
+            col_type: 'text_5',//icon_5
             extra: {
                 newWindow: true,
                 windowId: MY_RULE.title + "管理",
@@ -149,14 +149,14 @@ function yiji() {
                 title: "排行",
                 url: rulePage('排行',页码["排行"]),
                 pic_url: "https://hikerfans.com/tubiao/more/229.png",
-                col_type: 'icon_5'
+                col_type: 'text_5'
             })
         }else{
             d.push({
                 title: "收藏",
                 url: "hiker://collection?rule="+MY_RULE.title,
                 pic_url: "https://hikerfans.com/tubiao/more/109.png",
-                col_type: 'icon_5'
+                col_type: 'text_5'
             })
         }
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
@@ -202,7 +202,7 @@ function yiji() {
                 title: "分类",
                 url: rulePage('分类',页码["分类"]),
                 pic_url: "https://hikerfans.com/tubiao/more/287.png",
-                col_type: 'icon_5',
+                col_type: 'text_5',
                 extra: sousuoextra
             })
         }else{
@@ -210,7 +210,7 @@ function yiji() {
                 title: "搜索",
                 url: sousuopage,
                 pic_url: "https://hikerfans.com/tubiao/more/101.png",
-                col_type: 'icon_5',
+                col_type: 'text_5',
                 extra: sousuoextra
             })
         }
@@ -219,14 +219,14 @@ function yiji() {
                 title: "更新",
                 url: rulePage('更新',页码["更新"]),
                 pic_url: "https://hikerfans.com/tubiao/more/288.png",
-                col_type: 'icon_5'
+                col_type: 'text_5'
             })
         }else{
             d.push({
                 title: "历史",
                 url: "hiker://history?rule="+MY_RULE.title,
                 pic_url: "https://hikerfans.com/tubiao/more/213.png",
-                col_type: 'icon_5'
+                col_type: 'text_5'
             })
         }
         
@@ -237,7 +237,7 @@ function yiji() {
                 bookCase();
             }),
             pic_url: "https://hikerfans.com/tubiao/more/286.png",
-            col_type: 'icon_5',
+            col_type: 'text_5',
             extra: {
                 longClick: [{
                     title: "切换按钮",
