@@ -565,6 +565,7 @@ function erji() {
                     }
                 })
             }
+            log("aaaaa");
             d.push({
                 title: "切换站源",
                 url: $("#noLoading#").lazyRule((name,sgroup,stype) => {
@@ -667,7 +668,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            log("aaaaa");
+            
             if(线路s.length>1){
                 线路s.forEach((it,i)=>{
                     d.push({
