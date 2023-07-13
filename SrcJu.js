@@ -140,7 +140,18 @@ function yiji() {
                             return 'toast://运行模式已切换为：' + input;
                         }, cfgfile, Juconfig,it)
                     }
-                })
+                }).concat([{
+                    title:getItem('runtypebtn')?"关界面按钮":"开界面按钮",
+                    js: $.toString(()=>{
+                            if(getItem('runtypebtn')){
+                                clearItem('runtypebtn');
+                            }else{
+                                setItem('runtypebtn',1);
+                            }
+                            refreshPage(false);
+                            return  "hiker://empty";
+                        })
+                }])
             }
         })
         if(parse&&parse["排行"]){
@@ -255,18 +266,23 @@ function yiji() {
         d.push({
             col_type: 'blank_block'
         })
-        runModes.forEach((it) =>{
+        if(getItem('runtypebtn')){
+            runModes.forEach((it) =>{
+                d.push({
+                    title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    url: $('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
+                        Juconfig["runMode"] = input;
+                        writeFile(cfgfile, JSON.stringify(Juconfig));
+                        refreshPage(false);
+                        return 'toast://运行模式已切换为：' + input;
+                    }, cfgfile, Juconfig ,it),
+                    col_type: 'scroll_button'
+                });
+            })
             d.push({
-                title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                url: $('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
-                    Juconfig["runMode"] = input;
-                    writeFile(cfgfile, JSON.stringify(Juconfig));
-                    refreshPage(false);
-                    return 'toast://运行模式已切换为：' + input;
-                }, cfgfile, Juconfig ,it),
-                col_type: 'scroll_button'
-            });
-        })
+                col_type: 'blank_block'
+            })
+        }
         putMyVar(runMode+"_"+sourcename, "1");
     }
     try{
