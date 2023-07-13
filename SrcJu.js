@@ -441,13 +441,8 @@ function erji() {
                 线路s = ["线路"];
                 列表s = [[]];
             }
-            if(lineid > 线路s.length-1){
-                lineid = 0;
-            }
-            let 列表 = 列表s[lineid];
-            log("aaaaa");
-            log(列表s);
-            log(lineid);
+
+            let 列表 = 列表s[lineid] || [];
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
@@ -464,7 +459,7 @@ function erji() {
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
-            log("bbbbb");
+
             let lazy;
             let itype;
             let 解析 = parse['解析'];
