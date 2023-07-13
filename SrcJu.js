@@ -177,7 +177,6 @@ function yiji() {
             newsousuopage();
         })
         let sousuoextra = {
-            pageTitle: "搜索",
             longClick: [{
                 title: "🔍搜索",
                 js: $.toString((sousuopage) => {
