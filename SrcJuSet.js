@@ -194,7 +194,7 @@ function SRCSet() {
     typebtn.forEach(it =>{
         let typename = it;
         if(it != "全部" && getItem(it+'stoptype')=="1"){
-            typename = typename+"(停)";
+            typename = typename+"(关)";
         }
         let obj = {
             title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
@@ -208,7 +208,7 @@ function SRCSet() {
         if(it != "全部"){
             obj.extra = {};
             obj["extra"].longClick = [{
-                title: (getItem(it+'stoptype')=="1"?"停用":"启用")+it,
+                title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
                 js: $.toString((it) => {
                     if(getItem(it+'stoptype')=="1"){
                         clearItem(it+'stoptype');
