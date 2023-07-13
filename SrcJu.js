@@ -141,12 +141,12 @@ function yiji() {
                         }, cfgfile, Juconfig,it)
                     }
                 }).concat([{
-                    title:getItem('runtypebtn')?"关界面按钮":"开界面按钮",
+                    title:getItem('runtypebtn')=="1"?"关界面按钮":"开界面按钮",
                     js: $.toString(()=>{
-                            if(getItem('runtypebtn')){
+                            if(getItem('runtypebtn')=="1"){
                                 clearItem('runtypebtn');
                             }else{
-                                setItem('runtypebtn',1);
+                                setItem('runtypebtn','1');
                             }
                             refreshPage(false);
                             return  "hiker://empty";
@@ -266,7 +266,7 @@ function yiji() {
         d.push({
             col_type: 'blank_block'
         })
-        if(getItem('runtypebtn')){
+        if(getItem('runtypebtn')=="1"){
             runModes.forEach((it) =>{
                 d.push({
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
