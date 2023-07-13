@@ -641,34 +641,32 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            if(stype!="影视"){
-                d.push({
-                    title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
-                    url: $(["text_1","text_2","text_3","flex_button","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
-                        let 列表 = findItemsByCls('playlist') || [];
-                        if(列表.length==0){
-                            return 'toast://未获取到列表'
-                        }
-                        deleteItemByCls('playlist');
-                        let list_col_type = input;
-                        列表.forEach(item => {
-                            item.col_type = list_col_type.replace("_left","");
-                            if(list_col_type.indexOf("_left")>-1){
-                                item.extra.textAlign = 'left';
-                            }else{
-                                delete item.extra.textAlign;
-                            }
-                        })
-                        addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
-                        setItem('SrcJuList_col_type', input);
-                        return 'hiker://empty'
-                    }),
-                    col_type: 'scroll_button',
-                    extra: {
-                        cls: "loadlist"
+            d.push({
+                title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
+                url: $(["text_1","text_2","text_3","text_4","flex_button","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
+                    let 列表 = findItemsByCls('playlist') || [];
+                    if(列表.length==0){
+                        return 'toast://未获取到列表'
                     }
-                })
-            }
+                    deleteItemByCls('playlist');
+                    let list_col_type = input;
+                    列表.forEach(item => {
+                        item.col_type = list_col_type.replace("_left","");
+                        if(list_col_type.indexOf("_left")>-1){
+                            item.extra.textAlign = 'left';
+                        }else{
+                            delete item.extra.textAlign;
+                        }
+                    })
+                    addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
+                    setItem('SrcJuList_col_type', input);
+                    return 'hiker://empty'
+                }),
+                col_type: 'scroll_button',
+                extra: {
+                    cls: "loadlist"
+                }
+            })
             if(线路s.length>1){
                 线路s.forEach((it,i)=>{
                     d.push({
@@ -794,7 +792,7 @@ function erji() {
                 d.push({
                     title: 列表[i].title.trim(),
                     url: "hiker://empty##" + 列表[i].url + lazy,
-                    col_type: stype!="影视"?list_col_type.replace("_left",""):列表[i].title.trim().length>=10?"text_2":"text_4",
+                    col_type: list_col_type.replace("_left",""),
                     extra: extra
                 });
             }
