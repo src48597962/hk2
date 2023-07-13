@@ -1068,7 +1068,7 @@ function search(keyword, mode, sdata, group, type) {
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 function ocr(codeurl) {
                     let img = convertBase64Image(codeurl).replace('data:image/jpeg;base64,','');
-                    let code = request('https://api.nn.ci/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"text/html"}});
+                    let code = request('https://api.xhofe.top/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"text/html"}});
                     log('识别验证码：'+code);
                     return code;
                 }
