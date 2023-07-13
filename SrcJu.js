@@ -441,16 +441,21 @@ function erji() {
                 线路s = ["线路"];
                 列表s = [[]];
             }
+            try{
+                列表s[10]=["a","b"];
+                log(列表s)
+            }catch(e){}
+            if(details.listparse){
+                let 线路选集 = details.listparse(lineid,线路s[lineid]) || [];
+                if(线路选集.length>0){
+                    列表s[lineid] = 线路选集;
+                }
+            }
             if(lineid > 列表s.length-1){
                 toast('选择的列表不存在，将显示第1线路选集');
                 lineid = 0;
             }
             let 列表 = 列表s[lineid] || [];
-            try{
-                列表s[3]=["a","b"];
-                log(列表s[3])
-            }catch(e){}
-            
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
