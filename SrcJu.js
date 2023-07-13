@@ -441,10 +441,6 @@ function erji() {
                 线路s = ["线路"];
                 列表s = [[]];
             }
-            try{
-                列表s[10]=["a","b"];
-                log(列表s)
-            }catch(e){}
             if(details.listparse){
                 let 线路选集 = details.listparse(lineid,线路s[lineid]) || [];
                 if(线路选集.length>0){
