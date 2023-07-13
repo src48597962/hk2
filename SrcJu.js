@@ -674,7 +674,7 @@ function erji() {
                         url: $("#noLoading#").lazyRule((surl,lineid) => {
                             let index = getMyVar("SrcJu_"+surl+"_line","0");
                             if(lineid != index){
-                                putMyVar("SrcJu_"+surl+"_line", index);
+                                putMyVar("SrcJu_"+surl+"_line", lineid);
                                 refreshPage(false);
                             }
                             return 'hiker://empty'
