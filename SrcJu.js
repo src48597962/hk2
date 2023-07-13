@@ -66,7 +66,18 @@ function yiji() {
             Version();
             downloadicon();
         }
-        
+        runModes.forEach((it) =>{
+            d.push({
+                title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                url: $('#noLoading#').lazyRule((it) => {
+                    putMyVar("sousuoPageType",it);
+                    initConfig({依赖: getMyVar('SrcJuCfg')});
+                    refreshPage(false);
+                    return "hiker://empty";
+                },it),
+                col_type: 'text_5'
+            });
+        })
         let adminbtn = Object.assign([],runModes);
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
@@ -127,7 +138,7 @@ function yiji() {
                 }
             }),
             pic_url: "https://hikerfans.com/tubiao/more/129.png",
-            col_type: 'text_5',//icon_5
+            col_type: 'scroll_button',//icon_5
             extra: {
                 newWindow: true,
                 windowId: MY_RULE.title + "管理",
@@ -149,14 +160,14 @@ function yiji() {
                 title: "排行",
                 url: rulePage('排行',页码["排行"]),
                 pic_url: "https://hikerfans.com/tubiao/more/229.png",
-                col_type: 'text_5'
+                col_type: 'scroll_button'
             })
         }else{
             d.push({
                 title: "收藏",
                 url: "hiker://collection?rule="+MY_RULE.title,
                 pic_url: "https://hikerfans.com/tubiao/more/109.png",
-                col_type: 'text_5'
+                col_type: 'scroll_button'
             })
         }
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
@@ -202,7 +213,7 @@ function yiji() {
                 title: "分类",
                 url: rulePage('分类',页码["分类"]),
                 pic_url: "https://hikerfans.com/tubiao/more/287.png",
-                col_type: 'text_5',
+                col_type: 'scroll_button',
                 extra: sousuoextra
             })
         }else{
@@ -210,7 +221,7 @@ function yiji() {
                 title: "搜索",
                 url: sousuopage,
                 pic_url: "https://hikerfans.com/tubiao/more/101.png",
-                col_type: 'text_5',
+                col_type: 'scroll_button',
                 extra: sousuoextra
             })
         }
@@ -219,14 +230,14 @@ function yiji() {
                 title: "更新",
                 url: rulePage('更新',页码["更新"]),
                 pic_url: "https://hikerfans.com/tubiao/more/288.png",
-                col_type: 'text_5'
+                col_type: 'scroll_button'
             })
         }else{
             d.push({
                 title: "历史",
                 url: "hiker://history?rule="+MY_RULE.title,
                 pic_url: "https://hikerfans.com/tubiao/more/213.png",
-                col_type: 'text_5'
+                col_type: 'scroll_button'
             })
         }
         
@@ -237,7 +248,7 @@ function yiji() {
                 bookCase();
             }),
             pic_url: "https://hikerfans.com/tubiao/more/286.png",
-            col_type: 'text_5',
+            col_type: 'scroll_button',
             extra: {
                 longClick: [{
                     title: "切换按钮",
