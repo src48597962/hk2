@@ -773,17 +773,16 @@ function erji() {
             
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             for(let i=0; i<列表.length; i++) {
-                let extra = {
-                    id: name + "_选集_" + i,
-                    url: 列表[i].url,
-                    cls: "loadlist playlist"
-                }
+                let extra = details.extra || {};
+                extra.id = name + "_选集_" + i;
+                extra.url = 列表[i].url;
+                extra.cls = "loadlist playlist";
                 if(stype=="听书"||stype=="影视"){
                     extra.jsLoadingInject = true;
                     let blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com', '51.la'];
-                    if(details.blockRules && $.type(details.blockRules)=="array"){
+                    if(extra.blockRules && $.type(extra.blockRules)=="array"){
                         try{
-                            blockRules = blockRules.concat(details.blockRules);
+                            blockRules = blockRules.concat(extra.blockRules);
                         }catch(e){}
                     }
                     extra.blockRules = blockRules;
