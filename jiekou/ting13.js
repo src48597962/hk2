@@ -219,7 +219,9 @@ let erdata = {
                 })
                 return 选集;
             },
-            "blockRules": ['.css']
+            "extra":{
+                "blockRules": ['.css']
+            }
         }
     },
     "解析": function(url) {
