@@ -668,6 +668,24 @@ function erji() {
                 }
             })
             if(线路s.length>1){
+                线路s.forEach(it=>{
+                    d.push({
+                        title: getMyVar("SrcJu_"+surl+"_line")==lineid?`““””<b><span style="color: #AABBFF">`+it+`</span></b>`:it,
+                        url: $("#noLoading#").lazyRule((surl,lineid) => {
+                            let index = getMyVar("SrcJu_"+surl+"_line","0");
+                            if(lineid != index){
+                                putMyVar("SrcJu_"+surl+"_line", index);
+                                refreshPage(false);
+                            }
+                            return 'hiker://empty'
+                        }, surl, lineid),
+                        col_type: 'scroll_button',
+                        extra: {
+                            cls: "loadlist"
+                        }
+                    })
+                })
+                /*
                 d.push({
                     title: `““””<b><span style="color: #AABBFF">`+线路s[lineid]+`<small>⚡</small></span></b>`,
                     url: $(线路s,2,"选择线路").select((线路s,surl,lineid) => {
@@ -683,6 +701,7 @@ function erji() {
                         cls: "loadlist"
                     }
                 })
+                */
             }
             if(details.page && details.pageparse){
                 let 分页s = details.page
