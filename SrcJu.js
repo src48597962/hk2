@@ -434,7 +434,7 @@ function erji() {
             }
             try{
                 if(线路s.length != 列表s.length){
-                    log('√'+sname+'接口返回的线路和列表不相等');
+                    log('√'+sname+'>源接口返回的线路数'+线路s.length+'和列表数'+列表s.length+'不相等');
                 }
             }catch(e){
                 log('√'+sname+">线路或列表返回数据有误>"+e.message);
