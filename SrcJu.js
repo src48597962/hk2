@@ -445,7 +445,7 @@ function erji() {
                 lineid = 0;
             }
             let 列表 = 列表s[lineid];
-
+            log("aaaaa");
             if(列表.length>0){
                 try{
                     let i1 = parseInt(列表.length / 5);
