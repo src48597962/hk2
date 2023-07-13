@@ -670,7 +670,7 @@ function erji() {
             if(线路s.length>1){
                 线路s.forEach((it,i)=>{
                     d.push({
-                        title: getMyVar("SrcJu_"+surl+"_line")==i?`““””<b><span style="color: #AABBFF">`+it+`</span></b>`:it,
+                        title: getMyVar("SrcJu_"+surl+"_line")==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
                         url: $("#noLoading#").lazyRule((surl,lineid) => {
                             let index = getMyVar("SrcJu_"+surl+"_line","0");
                             if(lineid != index){
