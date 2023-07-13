@@ -442,7 +442,7 @@ function erji() {
                 列表s = [[]];
             }
             if(lineid > 列表s.length-1){
-                toast('选择的列表不存在，切回第1线路');
+                toast('选择的列表不存在，将显示第1线路选集');
                 lineid = 0;
             }
             let 列表 = 列表s[lineid] || [];
