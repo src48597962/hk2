@@ -298,6 +298,7 @@ function yiji() {
 //二级+源搜索
 function erji() {
     addListener("onClose", $.toString(() => {
+        clearMyVar('erjidetails');
         clearMyVar('erjiextra');
         clearMyVar('SrcJudescload');
         clearMyVar('已选择换源列表');
@@ -313,6 +314,7 @@ function erji() {
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
+    let erjidetails = storage0.getMyVar('erjidetails') || {};//二级海报等详情临时保存
     let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
     let d = [];
     let parse;
@@ -391,6 +393,7 @@ function erji() {
                         if(detailsjson.sname==sname && detailsjson.surl==surl){
                             detailsmark = detailsjson;//本地缓存接口+链接对得上则取本地，用于切换排序和样式时加快
                         }
+
                     }catch(e){ }
                 }
             }
@@ -401,9 +404,12 @@ function erji() {
             name = details.name || oldMY_PARAMS.name;
             pic = details.img || oldMY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
+            erjidetails.detail1 = details.detail1 || erjidetails.detail1;
+            erjidetails.detail1 =  details.detail2 || erjidetails.detail2;
+            erjidetails.desc = details.desc || erjidetails.desc;
             d.push({
-                title: details.detail1 || oldMY_PARAMS.detail1 || "",
-                desc: details.detail2 || oldMY_PARAMS.detail2 || "",
+                title: erjidetails.detail1 || "",
+                desc: erjidetails.detail2 || "",
                 pic_url: pic,
                 url: surl,
                 col_type: 'movie_1_vertical_pic_blur',
@@ -519,7 +525,7 @@ function erji() {
                         }]);
                     }
                     return "hiker://empty";
-                }, details.desc||""),
+                }, erjidetails.desc||""),
                 pic_url: "https://hikerfans.com/tubiao/messy/32.svg",
                 col_type: 'icon_small_3',
                 extra: {
