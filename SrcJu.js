@@ -404,9 +404,11 @@ function erji() {
             name = details.name || oldMY_PARAMS.name;
             pic = details.img || oldMY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
+            log(erjidetails);
             erjidetails.detail1 = details.detail1 || erjidetails.detail1;
             erjidetails.detail1 =  details.detail2 || erjidetails.detail2;
             erjidetails.desc = details.desc || erjidetails.desc;
+            log(erjidetails);
             d.push({
                 title: erjidetails.detail1 || "",
                 desc: erjidetails.detail2 || "",
@@ -537,7 +539,10 @@ function erji() {
                     title: "聚影搜索",
                     url: "hiker://search?rule=聚影√&s=" + name,
                     pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
-                    col_type: 'icon_small_3'
+                    col_type: 'icon_small_3',
+                    extra: {
+                        cls: "loadlist"
+                    }
                 })
             }else{
                 d.push({
