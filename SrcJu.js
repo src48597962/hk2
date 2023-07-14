@@ -404,11 +404,9 @@ function erji() {
             name = details.name || oldMY_PARAMS.name;
             pic = details.img || oldMY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
-            log(erjidetails);
             erjidetails.detail1 = details.detail1 || erjidetails.detail1;
-            erjidetails.detail1 =  details.detail2 || erjidetails.detail2;
+            erjidetails.detail2 =  details.detail2 || erjidetails.detail2;
             erjidetails.desc = details.desc || erjidetails.desc;
-            log(erjidetails);
             d.push({
                 title: erjidetails.detail1 || "",
                 desc: erjidetails.detail2 || "",
@@ -641,6 +639,7 @@ function erji() {
                         });
                     };
                     列表.reverse();
+                    /*
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     列表.forEach(item => {
                         item.col_type = list_col_type.replace("_left","");
@@ -650,6 +649,7 @@ function erji() {
                             delete item.extra.textAlign;
                         }
                     })
+                    */
                     addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
                 }, sname),
