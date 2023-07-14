@@ -809,6 +809,7 @@ function erji() {
                     title: 列表[i].title.trim(),
                     url: "hiker://empty##" + 列表[i].url + lazy,
                     desc: 列表[i].desc,
+                    img: 列表[i].img,
                     col_type: 列表[i].col_type || list_col_type.replace("_left",""),
                     extra: extra
                 });
