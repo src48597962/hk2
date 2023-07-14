@@ -639,7 +639,6 @@ function erji() {
                         });
                     };
                     列表.reverse();
-                    /*
                     let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     列表.forEach(item => {
                         item.col_type = list_col_type.replace("_left","");
@@ -649,7 +648,6 @@ function erji() {
                             delete item.extra.textAlign;
                         }
                     })
-                    */
                     addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
                 }, sname),
@@ -810,7 +808,8 @@ function erji() {
                 d.push({
                     title: 列表[i].title.trim(),
                     url: "hiker://empty##" + 列表[i].url + lazy,
-                    col_type: list_col_type.replace("_left",""),
+                    desc: 列表[i].desc,
+                    col_type: 列表[i].col_type || list_col_type.replace("_left",""),
                     extra: extra
                 });
             }
