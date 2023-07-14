@@ -398,12 +398,12 @@ function erji() {
             MY_PARAMS = erjiextra;
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
-            name = MY_PARAMS.name || details.name;
-            pic = MY_PARAMS.img || details.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
+            name = details.name || oldMY_PARAMS.name;
+            pic = details.img || oldMY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             d.push({
-                title: details.detail1 || "",
-                desc: details.detail2 || "",
+                title: details.detail1 || oldMY_PARAMS.detail1 || "",
+                desc: details.detail2 || oldMY_PARAMS.detail2 || "",
                 pic_url: pic,
                 url: surl,
                 col_type: 'movie_1_vertical_pic_blur',
