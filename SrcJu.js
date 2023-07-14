@@ -843,6 +843,8 @@ function erji() {
         if(erjiextra.img && oldMY_PARAMS.img!=erjiextra.img){
             setPagePicUrl(erjiextra.img);
         }
+        //二级详情简介临时信息
+        storage0.setMyVar('erjidetails',erjidetails);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype, lineid: lineid, pageid: pageid };
         setMark(erjidata);
