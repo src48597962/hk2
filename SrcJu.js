@@ -623,6 +623,7 @@ function erji() {
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((sname) => {
                     let 列表 = findItemsByCls('playlist') || [];
+                    log(列表);
                     if(列表.length==0){
                         return 'toast://未获取到列表'
                     }
