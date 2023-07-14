@@ -623,7 +623,6 @@ function erji() {
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((sname) => {
                     let 列表 = findItemsByCls('playlist') || [];
-                    log(列表);
                     if(列表.length==0){
                         return 'toast://未获取到列表'
                     }
@@ -640,14 +639,8 @@ function erji() {
                         });
                     };
                     列表.reverse();
-                    let list_col_type = getItem('SrcJuList_col_type', 'text_2');
                     列表.forEach(item => {
-                        item.col_type = list_col_type.replace("_left","");
-                        if(list_col_type.indexOf("_left")>-1){
-                            item.extra.textAlign = 'left';
-                        }else{
-                            delete item.extra.textAlign;
-                        }
+                        item.col_type = item.type;
                     })
                     addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
                     return 'toast://切换排序成功'
