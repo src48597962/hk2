@@ -404,6 +404,7 @@ function erji() {
             name = details.name || oldMY_PARAMS.name;
             pic = details.img || oldMY_PARAMS.img || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
+            erjiextra.img = details.img || pic;
             erjidetails.detail1 = details.detail1 || erjidetails.detail1;
             erjidetails.detail2 =  details.detail2 || erjidetails.detail2;
             erjidetails.desc = details.desc || erjidetails.desc;
