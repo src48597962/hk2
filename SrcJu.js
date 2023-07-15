@@ -873,6 +873,7 @@ function erji() {
         if (typeof (setPageParams) != "undefined") {
             if ((surl && oldMY_PARAMS.surl!=surl) || !oldMY_PARAMS.sourcedata) {
                 delete sourcedata2['parse']
+                erjiextra.name = erjiextra.name || name;
                 erjiextra.sourcedata = sourcedata2;
                 setPageParams(erjiextra);
             }
