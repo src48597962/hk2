@@ -6,8 +6,8 @@ function 聚阅(vipUrl) {
         if(!getMyVar('SrcJuCfg')){
             putMyVar('SrcJuCfg',config.依赖);
         }
-        initConfig({依赖: getMyVar('SrcJuCfg').replace('/Ju/','/master/')});
-        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJyAliDisk.js');
+        //initConfig({依赖: getMyVar('SrcJuCfg').replace('/Ju/','/master/')});
+        require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliDisk.js');
         aliShareUrl(vipUrl)
     }
 }
