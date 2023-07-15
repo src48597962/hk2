@@ -310,11 +310,12 @@ function erji() {
         }
     }));
     clearMyVar('SrcJudescload');
-    let name = MY_PARAMS.name;
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
     let erjidetails = storage0.getMyVar('erjidetails') || {};//二级海报等详情临时保存
+    erjidetails.name = MY_PARAMS.name || erjidetails.name;
+    let name = erjidetails.name;
     let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
     let d = [];
     let parse;
@@ -401,7 +402,6 @@ function erji() {
             MY_PARAMS = erjiextra;
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
-            name = details.name || oldMY_PARAMS.name;
             pic = details.img || oldMY_PARAMS.img;// || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             erjiextra.img = pic;
