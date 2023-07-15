@@ -980,7 +980,30 @@ function search(keyword, mode, sdata, group, type) {
             }
         }
     }
-    
+    let name = keyword.split('  ')[0];
+    let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
+    if(mode=="erji" && searchMark[name]){
+        addItemBefore("listloading", searchMark[name]);
+        updateItem("listloading", {
+            title: "‘‘’’<small>当前搜索为缓存</small>",
+            url: $("确定删除“"+name+"”搜索缓存吗？").confirm((name)=>{
+                let searchMark = storage0.getMyVar('searchMark') || {};
+                delete searchMark[name];
+                storage0.putMyVar('searchMark', searchMark);
+                refreshPage(true);
+                return "toast://已清除";
+            },name)
+        });
+        let i = 0;
+        let one = "";
+        for (var k in searchMark) {
+            i++;
+            if (i == 1) { one = k }
+        }
+        if (i > 20) { delete searchMark[one]; }
+        hideLoading();
+        return "hiker://empty";
+    }
     if(mode!="jusousuo" && mode!="sousuopage" && getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
@@ -1005,34 +1028,9 @@ function search(keyword, mode, sdata, group, type) {
         clearMyVar('nosousuolist');
     }
     let ssstype = type || runMode;
-    let name = keyword.split('  ')[0];
     let sssname;
     if(keyword.indexOf('  ')>-1){
         sssname = keyword.split('  ')[1] || sourcename;
-    }
-    
-    let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
-    if(mode=="erji" && searchMark[name]){
-        addItemBefore("listloading", searchMark[name]);
-        updateItem("listloading", {
-            title: "‘‘’’<small>当前搜索为缓存</small>",
-            url: $("确定删除“"+name+"”搜索缓存吗？").confirm((name)=>{
-                let searchMark = storage0.getMyVar('searchMark') || {};
-                delete searchMark[name];
-                storage0.putMyVar('searchMark', searchMark);
-                refreshPage(true);
-                return "toast://已清除";
-            },name)
-        });
-        let i = 0;
-        let one = "";
-        for (var k in searchMark) {
-            i++;
-            if (i == 1) { one = k }
-        }
-        if (i > 20) { delete searchMark[one]; }
-        hideLoading();
-        return "hiker://empty";
     }
 
     putMyVar('SrcJuSearching','1');
