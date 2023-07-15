@@ -1,21 +1,6 @@
 function 聚阅(vipUrl) {
     if (vipUrl.indexOf("https://www.aliyundrive.com") > -1) {
-        addListener("onClose", $.toString(() => {
-            initConfig({依赖: getMyVar('SrcJuCfg')});
-        }));
-        if(!getMyVar('SrcJuCfg')){
-            putMyVar('SrcJuCfg',config.依赖);
-        }
-        //initConfig({依赖: getMyVar('SrcJuCfg').replace('/Ju/','/master/')});
-        require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliDisk.js');
-        aliShareUrl(vipUrl)
-    }
-}
-
-function aliparse(input){
-    require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliPublic.js');
-    function aliShareUrl(input) {
-        let li = input.split('\n');
+        let li = vipUrl.split('\n');
         let share_id;
         let folder_id;
         let share_pwd
@@ -32,7 +17,6 @@ function aliparse(input){
         })
         aliShare(share_id, folder_id, share_pwd);
     }
-    aliShareUrl(input);
 }
 
 function aliShare(share_id, folder_id, share_pwd) {
