@@ -130,6 +130,7 @@ function aliShare(share_id, folder_id, share_pwd) {
             toast('列表为空');
         }
     }catch(e){
+        log(e.message);
         d.push({
             title: '来晚啦，该分享已失效',
             url: 'hiker://empty##',
