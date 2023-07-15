@@ -29,7 +29,7 @@ function aliparse(input){
 
 function aliShare(share_id, folder_id, share_pwd) {
     let d = [];
-    //setPageTitle(typeof(MY_PARAMS)!="undefined" && MY_PARAMS.dirname ? MY_PARAMS.dirname : '云盘共享文件 | 聚影√');
+    setPageTitle(typeof(MY_PARAMS)!="undefined" && MY_PARAMS.dirname ? MY_PARAMS.dirname : '云盘共享文件 | 聚阅√');
     share_pwd = share_pwd || "";
     try{
         let sharetoken = JSON.parse(request('https://api.aliyundrive.com/v2/share_link/get_share_token', { headers: headers, body: { "share_pwd": share_pwd, "share_id": share_id }, method: 'POST', timeout: 15000 })).share_token;
@@ -67,7 +67,7 @@ function aliShare(share_id, folder_id, share_pwd) {
                     title: item.name,
                     img: "hiker://files/cache/src/文件夹.svg",//#noRecordHistory##noHistory#
                     url: $("hiker://empty##https://www.aliyundrive.com/s/"+item.share_id+(item.file_id?"/folder/"+item.file_id:"")).rule((share_id, folder_id, share_pwd) => {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliDisk.js');
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcParseS.js');
                         aliShare(share_id, folder_id, share_pwd);
                     }, item.share_id, item.file_id, share_pwd),
                     col_type: 'avatar',
