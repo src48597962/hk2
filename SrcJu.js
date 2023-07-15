@@ -604,7 +604,14 @@ function erji() {
                         hideLoading();
                         return  "hiker://empty";
                     }else{
-                        return "toast://上一个搜索线程还未结束，稍等...";
+                        clearMyVar('已选择换源列表');
+                        require(config.依赖);
+                        deleteItemByCls('loadlist');
+                        showLoading('搜源中,请稍后.');
+                        search(name,"erji",false,sgroup,stype);
+                        hideLoading();
+                        return  "hiker://empty";
+                        //return "toast://上一个搜索线程还未结束，稍等...";
                     }
                 }, name,sgroup,stype),
                 pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
