@@ -1155,8 +1155,10 @@ function search(keyword, mode, sdata, group, type) {
                     if(data.length>0){
                         success++;
                         if(mode=="erji"){
+                            let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
                             searchMark[name] = searchMark[name] || [];
                             searchMark[name] = searchMark[name].concat(data);
+                            storage0.putMyVar('searchMark', searchMark);
                             if(!getMyVar('已选择换源列表')){
                                 addItemBefore("listloading", data);
                             }
@@ -1177,9 +1179,11 @@ function search(keyword, mode, sdata, group, type) {
             param: {
             }
         });
+        /*
         if (mode=="erji") {
             storage0.putMyVar('searchMark', searchMark);
         }
+        */
         clearMyVar('SrcJuSearching');
         if(mode=="sousuotest"||mode=="jusousuo"){
             return results;
