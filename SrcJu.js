@@ -985,7 +985,7 @@ function search(keyword, mode, sdata, group, type) {
     if(mode=="erji" && searchMark[name]){
         addItemBefore("listloading", searchMark[name]);
         updateItem("listloading", {
-            title: "‘‘’’<small>当前搜索为缓存</small>",
+            title: getMyVar('SrcJuSearching')=="1"?"‘‘’’<small>搜索中</small>":"‘‘’’<small>当前搜索为缓存</small>",
             url: $("确定删除“"+name+"”搜索缓存吗？").confirm((name)=>{
                 let searchMark = storage0.getMyVar('searchMark') || {};
                 delete searchMark[name];
