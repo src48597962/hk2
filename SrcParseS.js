@@ -1,6 +1,14 @@
 function 聚阅(vipUrl) {
     if (vipUrl.indexOf("https://www.aliyundrive.com") > -1) {
-        aliparse(vipUrl);
+        addListener("onClose", $.toString(() => {
+            initConfig({依赖: getMyVar('SrcJuCfg')});
+        }));
+        if(!getMyVar('SrcJuCfg')){
+            putMyVar('SrcJuCfg',config.依赖);
+        }
+        initConfig({依赖: getMyVar('SrcJuCfg').replace('/Ju/','/master/')});
+        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJyAliDisk.js');
+        aliShareUrl(vipUrl)
     }
 }
 
@@ -28,6 +36,7 @@ function aliparse(input){
 }
 
 function aliShare(share_id, folder_id, share_pwd) {
+    require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliPublic.js');
     let d = [];
     setPageTitle(typeof(MY_PARAMS)!="undefined" && MY_PARAMS.dirname ? MY_PARAMS.dirname : '云盘共享文件 | 聚阅√');
     share_pwd = share_pwd || "";
