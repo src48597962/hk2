@@ -49,6 +49,7 @@ function yiji() {
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
+        clearItem('searchmode');//临时先去掉视界聚合代理搜索
         if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
             if(programversion<10){
@@ -88,44 +89,6 @@ function yiji() {
                 }else{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return selectsource(input);
-                    /*
-                    let sourcenames = [];
-                    yidatalist.forEach(it=>{
-                        if(it.type==input && sourcenames.indexOf(it.name)==-1){
-                            if(Juconfig[runMode+'sourcename'] == it.name){
-                                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
-                            }
-                            sourcenames.push(it.name);
-                        }
-                    })
-                    return $(sourcenames,2,"选择"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
-                        input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
-                        if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
-                            return 'toast://'+runMode+' 主页源：' + input;
-                        }
-                        if (typeof (unRegisterTask) != "undefined") {
-                            unRegisterTask("juyue");
-                        }else{
-                            toast("软件版本过低，可能存在异常");
-                        }
-                        clearMyVar(MY_RULE.title + "分类");
-                        clearMyVar(MY_RULE.title + "更新");
-                        clearMyVar(MY_RULE.title + "类别");
-                        clearMyVar(MY_RULE.title + "地区");
-                        clearMyVar(MY_RULE.title + "进度");
-                        clearMyVar(MY_RULE.title + "排序");
-                        clearMyVar("排名");
-                        clearMyVar("分类");
-                        clearMyVar("更新");
-                        clearMyVar(runMode+"_"+sourcename);
-                        clearMyVar("一级源接口信息");
-                        Juconfig["runMode"] = runMode;
-                        Juconfig[runMode+'sourcename'] = input;
-                        writeFile(cfgfile, JSON.stringify(Juconfig));
-                        refreshPage(false);
-                        return 'toast://'+runMode+' 主页源已设置为：' + input;
-                    }, input, sourcename, cfgfile, Juconfig)
-                    */
                 }
             }),
             pic_url: "https://hikerfans.com/tubiao/more/129.png",
@@ -195,7 +158,9 @@ function yiji() {
                 js: $.toString((sousuopage) => {
                     return sousuopage;
                 },sousuopage)
-            },{
+            }]
+            /*
+            ,{
                 title: "聚搜："+(getItem('searchmode')=="jusousuo"?"程序":"规则"),
                 js: $.toString(() => {
                     return $().lazyRule(() => {
@@ -208,7 +173,8 @@ function yiji() {
                         return "toast://已切换";
                     })
                 })
-            }]
+            }
+            */
         }
         if(parse&&parse["分类"]){
             d.push({
@@ -489,18 +455,18 @@ function erji() {
             if (stype=="小说" || details.rule==1) {
                 lazy = $(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#").rule((解析,参数) => {
                     let url = MY_PARAMS.url || "";
-                    let 公共 = $.require('jiekou?rule='+参数.规则名).公共(参数.标识);
+                    let 公共 = $.require('jiekou').公共(参数.标识);
                     eval("let 解析2 = " + 解析);
                     解析2(url);
-                }, 解析, {"规则名": MY_RULE.title.split("|")[0], "标识": 标识});
+                }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
                 itype = "novel";
             }else{
                 lazy = $("").lazyRule((解析,参数) => {
                     let url = input.split("##")[1];
-                    let 公共 = $.require('jiekou?rule='+参数.规则名).公共(参数.标识);
+                    let 公共 = $.require('jiekou').公共(参数.标识);
                     eval("let 解析2 = " + 解析);
                     return 解析2(url);
-                }, 解析, {"规则名": MY_RULE.title.split("|")[0], "标识": 标识});
+                }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
                 if(stype=="漫画"){
                     itype = "comic";
                 }
@@ -959,7 +925,7 @@ function sousuo() {
                     let data = [];
                     ssdatalist.forEach(it=>{
                         data.push({
-                            "title": MY_RULE.title + "|" + it.name,
+                            "title": it.name,
                             "search_url": "hiker://empty##fypage",
                             "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
                         });
