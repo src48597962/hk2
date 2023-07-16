@@ -489,7 +489,7 @@ function erji() {
             if (stype=="小说" || details.rule==1) {
                 lazy = $(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#").rule((解析,参数) => {
                     let url = MY_PARAMS.url || "";
-                    let 公共 = $.require('jiekou').公共(参数.标识);
+                    let 公共 = $.require('jiekou?rule=聚阅√').公共(参数.标识);
                     eval("let 解析2 = " + 解析);
                     解析2(url);
                 }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
@@ -497,7 +497,7 @@ function erji() {
             }else{
                 lazy = $("").lazyRule((解析,参数) => {
                     let url = input.split("##")[1];
-                    let 公共 = $.require('jiekou').公共(参数.标识);
+                    let 公共 = $.require('jiekou?rule=聚阅√').公共(参数.标识);
                     eval("let 解析2 = " + 解析);
                     return 解析2(url);
                 }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
@@ -817,7 +817,7 @@ function erji() {
                     extra.textAlign = 'left';
                 }
                 d.push({
-                    title: 列表[i].title.trim(),
+                    title: 列表[i].title.trim().replace(/全集.*|国语.*|粤语.*|-/g,'').replace(name,''),
                     url: "hiker://empty##" + 列表[i].url + lazy,
                     desc: 列表[i].desc,
                     img: 列表[i].img,
@@ -1108,7 +1108,7 @@ function search(keyword, mode, sdata, group, type) {
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
-                    extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
+                    extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,"").trim():"");
                     if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
