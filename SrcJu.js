@@ -492,7 +492,7 @@ function erji() {
                     let 公共 = $.require('jiekou?rule='+参数.规则名).公共(参数.标识);
                     eval("let 解析2 = " + 解析);
                     解析2(url);
-                }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
+                }, 解析, {"规则名": MY_RULE.title.split("|")[0], "标识": 标识});
                 itype = "novel";
             }else{
                 lazy = $("").lazyRule((解析,参数) => {
@@ -500,7 +500,7 @@ function erji() {
                     let 公共 = $.require('jiekou?rule='+参数.规则名).公共(参数.标识);
                     eval("let 解析2 = " + 解析);
                     return 解析2(url);
-                }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
+                }, 解析, {"规则名": MY_RULE.title.split("|")[0], "标识": 标识});
                 if(stype=="漫画"){
                     itype = "comic";
                 }
@@ -959,7 +959,7 @@ function sousuo() {
                     let data = [];
                     ssdatalist.forEach(it=>{
                         data.push({
-                            "title": it.name,
+                            "title": MY_RULE.title + "|" + it.name,
                             "search_url": "hiker://empty##fypage",
                             "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
                         });
