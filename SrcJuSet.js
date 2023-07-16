@@ -252,7 +252,7 @@ function SRCSet() {
         if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type || (getMyVar("SrcJuJiekouType")=="失效" && item.group=="失效")){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
-                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择"], 2).select((sourcefile, data) => {
+                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
                         let oneshare = []
@@ -316,6 +316,17 @@ function SRCSet() {
                         }
                         storage0.putMyVar('duoselect',duoselect);
                         return "hiker://empty";
+                    } else if (input == "改名") {
+                        return $(data.name,"输入新名称").input((sourcefile,data)=>{
+                            let sourcedata = fetch(sourcefile);
+                            eval("var datalist=" + sourcedata + ";");
+                            let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                            datalist[index].name = input;
+                            writeFile(sourcefile, JSON.stringify(datalist));
+                            clearMyVar('searchMark');
+                            refreshPage(false);
+                            return 'toast://已重命名';
+                        },sourcefile,data)
                     }
                 }, sourcefile, item),
                 desc: (item.group?"["+item.group+"] ":"") + item.type,
