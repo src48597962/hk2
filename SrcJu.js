@@ -916,7 +916,7 @@ function sousuo() {
                     let info = storage0.getMyVar('一级源接口信息') || {};
                     require(config.依赖);
                     let ssdatalist = erdatalist.filter(it=>{
-                        if(info.group=="全全"){
+                        if(info.group=="全全" || !group){
                             return it.type==info.type;
                         }else{
                             return it.type==info.type && (it.group==info.group||it.group=="全全");
@@ -1019,10 +1019,10 @@ function search(keyword, mode, sdata, group, type) {
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
-            if(group=="全全" || !group){
+            if(group=="全全" || !group){//未分组或当前为全全分组的接口时，搜索所有此类型的接口
                 return it.type==ssstype;
             }else{
-                return it.type==ssstype && (it.group==group||it.group=="全全");
+                return it.type==ssstype && (it.group==group||it.group=="全全");//分组名为真则只搜指定分组和全全
             }
         });
     }
