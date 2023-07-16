@@ -87,6 +87,8 @@ function yiji() {
                     }, cfgfile, Juconfig)
                 }else{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                    return selectsource(input);
+                    /*
                     let sourcenames = [];
                     yidatalist.forEach(it=>{
                         if(it.type==input && sourcenames.indexOf(it.name)==-1){
@@ -123,6 +125,7 @@ function yiji() {
                         refreshPage(false);
                         return 'toast://'+runMode+' 主页源已设置为：' + input;
                     }, input, sourcename, cfgfile, Juconfig)
+                    */
                 }
             }),
             pic_url: "https://hikerfans.com/tubiao/more/129.png",
@@ -270,7 +273,10 @@ function yiji() {
             runModes.forEach((it) =>{
                 d.push({
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: Juconfig["runMode"]==it?:$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
+                    url: Juconfig["runMode"]==it?$('#noLoading#').lazyRule((input) => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                        return selectsource(input);
+                    }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
