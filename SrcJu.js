@@ -413,7 +413,7 @@ function erji() {
                 title: erjidetails.detail1 || "",
                 desc: erjidetails.detail2 || "",
                 pic_url: erjidetails.img,
-                url: surl,
+                url: details.detailurl || surl,
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
                     id: "detailid",
