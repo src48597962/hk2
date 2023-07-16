@@ -270,7 +270,7 @@ function yiji() {
             runModes.forEach((it) =>{
                 d.push({
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: $('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
+                    url: Juconfig["runMode"]==it?:$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
