@@ -31,7 +31,44 @@ let yidatalist = yxdatalist.filter(it=>{
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
-
+function selectsource(input) {
+    let sourcenames = [];
+    yidatalist.forEach(it=>{
+        if(it.type==input && sourcenames.indexOf(it.name)==-1){
+            if(Juconfig[runMode+'sourcename'] == it.name){
+                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
+            }
+            sourcenames.push(it.name);
+        }
+    })
+    return $(sourcenames,2,"选择"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+        input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
+        if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
+            return 'toast://'+runMode+' 主页源：' + input;
+        }
+        if (typeof (unRegisterTask) != "undefined") {
+            unRegisterTask("juyue");
+        }else{
+            toast("软件版本过低，可能存在异常");
+        }
+        clearMyVar(MY_RULE.title + "分类");
+        clearMyVar(MY_RULE.title + "更新");
+        clearMyVar(MY_RULE.title + "类别");
+        clearMyVar(MY_RULE.title + "地区");
+        clearMyVar(MY_RULE.title + "进度");
+        clearMyVar(MY_RULE.title + "排序");
+        clearMyVar("排名");
+        clearMyVar("分类");
+        clearMyVar("更新");
+        clearMyVar(runMode+"_"+sourcename);
+        clearMyVar("一级源接口信息");
+        Juconfig["runMode"] = runMode;
+        Juconfig[runMode+'sourcename'] = input;
+        writeFile(cfgfile, JSON.stringify(Juconfig));
+        refreshPage(false);
+        return 'toast://'+runMode+' 主页源已设置为：' + input;
+    }, input, sourcename, cfgfile, Juconfig)
+}
 function rulePage(type,page) {
     return $("hiker://empty#noRecordHistory##noHistory#" + (page ? "?page=fypage" : "")).rule((type) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
