@@ -1,6 +1,6 @@
 //本代码仅用于个人学习，请勿用于其他作用，下载后请24小时内删除，代码虽然是公开学习的，但请尊重作者，应留下说明
 //聚集型、接口型、平台型空壳小程序，接口分为主页源和搜索源
-log(log.toString());
+log($.require("config").method)
 let publicfile;
 try{
     publicfile = config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js';
