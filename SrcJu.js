@@ -287,7 +287,7 @@ function erji() {
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
     let erjidetails = storage0.getMyVar('erjidetails') || {};//二级海报等详情临时保存
     erjidetails.name = MY_PARAMS.name || erjidetails.name;
-    let name = erjidetails.name;
+    let name = erjidetails.name.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim();
     let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
     let d = [];
     let parse;
@@ -783,7 +783,7 @@ function erji() {
                     extra.textAlign = 'left';
                 }
                 d.push({
-                    title: 列表[i].title.trim().replace(/全集.*|国语.*|粤语.*|-/g,'').replace(name,''),
+                    title: 列表[i].title.trim().replace(/ |-|_/g,'').replace(name,''),
                     url: "hiker://empty##" + 列表[i].url + lazy,
                     desc: 列表[i].desc,
                     img: 列表[i].img,
@@ -1066,6 +1066,7 @@ function search(keyword, mode, sdata, group, type) {
                     headers= headers || {};
                     let img = convertBase64Image(codeurl,headers).replace('data:image/jpeg;base64,','');
                     let code = request('https://api.xhofe.top/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"text/html"}});
+                    code = code.replace(/o/g, '0').replace(/u/g, '0').replace(/I/g, '1').replace(/l/g, '1').replace(/g/g, '9');
                     log('识别验证码：'+code);
                     return code;
                 }
@@ -1074,7 +1075,7 @@ function search(keyword, mode, sdata, group, type) {
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
-                    extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,"").trim():"");
+                    extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
                     if((objmode=="erji" && extra.name==name) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
