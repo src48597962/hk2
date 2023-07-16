@@ -501,7 +501,7 @@ function erji() {
             }
             let download = $.toString((解析,公共,参数) => {
                 eval("let 解析2 = " + 解析);
-                return 解析2(input,公共,参数);
+                return 解析2(input);
             }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
 
             d.push({
