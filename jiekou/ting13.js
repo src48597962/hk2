@@ -205,9 +205,12 @@ let erdata = {
         return {
             "detail1": "‘‘’’<font color=#FA7298>"+detail1+"</font>", 
             "detail2": "‘‘’’<font color=#f8ecc9>"+detail2+"</font>", 
+            //"detailurl"：封面url自己写点击想执行的,
             "desc": 简介,
             "img": 图片,
+            //"line": 线路,
             "list": 选集,
+            //"listparse": function(线路索引,线路名){写列表解析代码，结后返回选集},//传值代表点击线路时动态获取对应选集
             "page": 分页,
             "pageparse": function (input) {
                 let html = request(input, {timeout:8000});
