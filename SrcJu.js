@@ -296,7 +296,7 @@ function erji() {
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
     let erjidetails = storage0.getMyVar('erjidetails') || {};//二级海报等详情临时保存
-    erjidetails.name = MY_PARAMS.name || erjidetails.name;
+    erjidetails.name = erjidetails.name || MY_PARAMS.name;
     let name = erjidetails.name.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim();
     let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
     let d = [];
