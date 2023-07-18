@@ -113,6 +113,11 @@ function yiji() {
                                 clearItem('runtypebtn');
                             }else{
                                 setItem('runtypebtn','1');
+                                return $(["scroll_button","text_5"],1,"样式选择").select(() => {
+                                    setItem('runModes_btntype',input);
+                                    refreshPage(false);
+                                    return "hiker://empty";
+                                })
                             }
                             refreshPage(false);
                             return  "hiker://empty";
@@ -233,6 +238,7 @@ function yiji() {
             }
         })
         if(getItem('runtypebtn')=="1"){
+            let runModes_btntype = getItem('runModes_btntype','scroll_button');
             runModes.forEach((it) =>{
                 d.push({
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -245,14 +251,15 @@ function yiji() {
                         refreshPage(false);
                         return 'toast://运行模式已切换为：' + input;
                     }, cfgfile, Juconfig ,it),
-                    col_type: runModes.length==5?'text_5':'scroll_button'
+                    col_type: runModes_btntype
                 });
             })
-            
-            for (let i = 0; i < 8; i++) {
-                d.push({
-                    col_type: "blank_block"
-                })
+            if(runModes_btntype=="text_5"){
+                for (let i = 0; i < 8; i++) {
+                    d.push({
+                        col_type: "blank_block"
+                    })
+                }
             }
         }
         d.push({
@@ -594,7 +601,22 @@ function erji() {
                 pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
-                    cls: "loadlist"
+                    cls: "loadlist",
+                    longClick: [{
+                        title: "精准匹配："+(getItem('searchMatch','1')=="1"?"是":"否"),
+                        js: $.toString(() => {
+                            let sm;
+                            if(getItem('searchMatch','1')=="1"){
+                                setItem('searchMatch','2');
+                                sm = "取消换源搜索精准匹配名称";
+                            }else{
+                                clearItem('searchMatch');
+                                sm = "换源搜索精准匹配名称";
+                            }
+                            refreshPage(false);
+                            return "toast://"+sm;
+                        })
+                    }]
                 }
             })
             d.push({
@@ -1079,7 +1101,7 @@ function search(keyword, mode, sdata, group, type) {
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
-                    if((objmode=="erji" && extra.name==name) || objmode!="erji"){
+                    if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name==name)||extra.name.indexOf(name)>-1)) || objmode!="erji"){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
                         extra.sname = objdata.name;
