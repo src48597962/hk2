@@ -587,6 +587,8 @@ function erji() {
                         search(name,"erji",false,sgroup,stype);
                         hideLoading();
                         return  "hiker://empty";
+                    }else if(getMyVar('SrcJuSearchMode')=="sousuo"){
+                        return "toast://上一个搜索线程还未结束，稍等...";
                     }else{
                         clearMyVar('已选择换源列表');
                         require(config.依赖);
@@ -595,7 +597,6 @@ function erji() {
                         search(name,"erji",false,sgroup,stype);
                         hideLoading();
                         return  "hiker://empty";
-                        //return "toast://上一个搜索线程还未结束，稍等...";
                     }
                 }, name,sgroup,stype),
                 pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
@@ -1036,7 +1037,7 @@ function search(keyword, mode, sdata, group, type) {
     if(keyword.indexOf('  ')>-1){
         sssname = keyword.split('  ')[1] || sourcename;
     }
-
+    putMyVar('SrcJuSearchMode',mode);
     putMyVar('SrcJuSearching','1');
     let success = 0;
     let results = [];
@@ -1190,6 +1191,7 @@ function search(keyword, mode, sdata, group, type) {
         }
         */
         clearMyVar('SrcJuSearching');
+        clearMyVar('SrcJuSearchMode');
         if(mode=="sousuotest"||mode=="jusousuo"){
             return results;
         }else{
@@ -1198,6 +1200,7 @@ function search(keyword, mode, sdata, group, type) {
         }
     } else {
         clearMyVar('SrcJuSearching');
+        clearMyVar('SrcJuSearchMode');
         if(page==1){
             toast("无接口");
             if(mode=="sousuo"||mode=="sousuopage"){
