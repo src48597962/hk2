@@ -4,6 +4,7 @@ if(Jucfg != ""){
     eval("var Juconfig=" + Jucfg+ ";");
 }else{
     var Juconfig= {};
+    writeFile(cfgfile, JSON.stringify(Juconfig));
 }
 let runModes = ["漫画","小说","听书","图集","影视"];
 let runMode = Juconfig["runMode"] || "漫画";
