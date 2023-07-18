@@ -982,8 +982,8 @@ function search(keyword, mode, sdata, group, type) {
     let name = keyword.split('  ')[0];
     let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
     if(mode=="erji" && searchMark[name]){
-        addItemBefore("listloading", searchMark[name]);
-        updateItem("listloading", {
+        addItemBefore(updateItemid, searchMark[name]);
+        updateItem(updateItemid, {
             title: getMyVar('SrcJuSearching')=="1"?"‘‘’’<small>搜索中</small>":"‘‘’’<small>当前搜索为缓存</small>",
             url: $("确定删除“"+name+"”搜索缓存吗？").confirm((name)=>{
                 let searchMark = storage0.getMyVar('searchMark') || {};
@@ -1002,6 +1002,11 @@ function search(keyword, mode, sdata, group, type) {
         if (i > 20) { delete searchMark[one]; }
         hideLoading();
         return "hiker://empty";
+    }else if(mode=="erji"){
+        updateItem(updateItemid, {
+            title: "搜源中...",
+            url: "hiker://empty",
+        });
     }
     if(mode!="jusousuo" && mode!="sousuopage" && getMyVar('SrcJuSearching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
