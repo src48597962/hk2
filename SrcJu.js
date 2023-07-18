@@ -232,9 +232,6 @@ function yiji() {
                 }]
             }
         })
-        d.push({
-            col_type: 'blank_block'
-        })
         if(getItem('runtypebtn')=="1"){
             runModes.forEach((it) =>{
                 d.push({
@@ -253,8 +250,15 @@ function yiji() {
             })
             d.push({
                 col_type: 'blank_block'
+            },{
+                col_type: 'blank_block'
+            },{
+                col_type: 'blank_block'
             })
         }
+        d.push({
+            col_type: 'blank_block'
+        })
         putMyVar(runMode+"_"+sourcename, "1");
     }
     try{
