@@ -248,7 +248,7 @@ function yiji() {
                         refreshPage(false);
                         return 'toast://运行模式已切换为：' + input;
                     }, cfgfile, Juconfig ,it),
-                    col_type: 'scroll_button'
+                    col_type: runModes.length==5?'text_5':'scroll_button'
                 });
             })
             d.push({
