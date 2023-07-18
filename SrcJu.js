@@ -248,13 +248,12 @@ function yiji() {
                     col_type: runModes.length==5?'text_5':'scroll_button'
                 });
             })
-            d.push({
-                col_type: 'blank_block'
-            },{
-                col_type: 'blank_block'
-            },{
-                col_type: 'blank_block'
-            })
+            
+            for (let i = 0; i < 8; i++) {
+                d.push({
+                    col_type: "blank_block"
+                })
+            }
         }
         d.push({
             col_type: 'blank_block'
