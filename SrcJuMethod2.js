@@ -4,9 +4,12 @@ function readData(fileid,datatype){
     let jkdata = {};
     try{
         let cachefiledata = fetch(cachefile);
+        log(fileid);
         if(cachefiledata){
+            log("1");
             eval("jkdata=" + cachefiledata);
         }else{
+            log("2");
             let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
             let sourcedata = fetch(sourcefile);
             if(sourcedata != ""){
@@ -19,9 +22,11 @@ function readData(fileid,datatype){
                 var datalist = [];
             }
             let jklist = datalist.filter(it=>{
-                return it.type+'_'+it.name == fileid;
+                return (it.type+'_'+it.name) == fileid;
             });
+            log(jklist.length);
             if(jklist.length==1){
+                log("3");
                 jkdata = jklist[0];
                 writeFile(cachefile,JSON.stringify(jkdata));
             }
