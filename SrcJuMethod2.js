@@ -3,9 +3,32 @@ function readData(fileid,datatype){
     let cachefile = `hiker://files/_cache/${fileid}.json`;
     let jkdata = {};
     try{
-        eval("jkdata=" + fetch(cachefile));
+        let cachefiledata = fetch(cachefile);
+        if(cachefiledata){
+            eval("jkdata=" + cachefiledata);
+        }else{
+            let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
+            let sourcedata = fetch(sourcefile);
+            if(sourcedata != ""){
+                try{
+                    eval("var datalist=" + sourcedata+ ";");
+                }catch(e){
+                    var datalist = [];
+                }
+            }else{
+                var datalist = [];
+            }
+            let jklist = datalist.filter(it=>{
+                return it.type+'_'+it.name == fileid;
+            });
+            if(jklist.length==1){
+                jkdata = jklist[0];
+                writeFile(cachefile,JSON.stringify(jkdata));
+            }
+        }
+        
     }catch(e){
-        log("jkdata加载失败>"+fileid+">"+e.message);
+        log("接口数据加载失败>"+fileid+">"+e.message);
     }
 
     try{
