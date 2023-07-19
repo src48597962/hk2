@@ -795,7 +795,7 @@ function erji() {
                 try{
                     extra = Object.assign(extra, details["extra"] || {});
                 }catch(e){}
-                extra.id = extra.id || (name + "_选集_" + i);
+                extra.id = name + "_选集_" + i;
                 extra.url = 列表[i].url;
                 extra.cls = "loadlist playlist";
                 if(stype=="听书"||stype=="影视"){
