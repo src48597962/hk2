@@ -193,6 +193,7 @@ let erdata = {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'a--span--i&&Text')
             选集列表.url = pd(data, 'a&&href');
+            //选集列表.extra = {};
             return 选集列表;
         })
         let 分页 = pdfa(html, '.hd-sel&&option').map((data) => {
@@ -218,6 +219,7 @@ let erdata = {
                     let 选集列表 = {};
                     选集列表.title = pdfh(data, 'a--span--i&&Text')
                     选集列表.url = pd(data, 'a&&href');
+                    //选集列表.extra = {};
                     return 选集列表;
                 })
                 return 选集;
