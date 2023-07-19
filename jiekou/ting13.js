@@ -193,7 +193,7 @@ let erdata = {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'a--span--i&&Text')
             选集列表.url = pd(data, 'a&&href');
-            //选集列表.extra = {};
+            选集列表.extra = {test: 1};
             return 选集列表;
         })
         let 分页 = pdfa(html, '.hd-sel&&option').map((data) => {
