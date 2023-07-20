@@ -270,8 +270,8 @@ function SRCSet() {
                         return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
                             setPageTitle('编辑 | 聚阅接口');
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                            jiekouapi(sourcefile, data);
-                        }, sourcefile, data)
+                            jiekouapi(sourcefile, base64Decode(data));
+                        }, sourcefile, base64Encode(data))
                     } else if (input == "删除") {
                         return $("确定删除："+data.name).confirm((sourcefile,data)=>{
                             let sourcedata = fetch(sourcefile);
@@ -516,7 +516,6 @@ function jiekouapi(sourcefile, data) {
                 let type = getMyVar('jiekoutype','漫画');
                 let group = getMyVar('jiekougroup');
                 let parse = getMyVar('jiekouparse');
-                log(parse);
                 let erparse = getMyVar('jiekouerparse');
                 let public = getMyVar('jiekoupublic');
                 let newapi = {
@@ -572,7 +571,7 @@ function jiekouapi(sourcefile, data) {
                         datalist.splice(index, 1);
                     }
                     datalist.push(newapi);
-                    writeFile(sourcefile, $.stringify(datalist));
+                    writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('searchMark');
                     back(true);
                     return "toast://已保存";
