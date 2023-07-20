@@ -391,16 +391,16 @@ function erji() {
             erjidetails.detail1 = details.detail1 || erjidetails.detail1;
             erjidetails.detail2 =  details.detail2 || erjidetails.detail2;
             erjidetails.desc = details.desc || erjidetails.desc;
+            let detailextra = details.detailextra || {};
+            detailextra.id = "detailid";
+            detailextra.gradient = detailextra.gradient || true;
             d.push({
                 title: erjidetails.detail1 || "",
                 desc: erjidetails.detail2 || "",
                 pic_url: erjidetails.img,
                 url: details.detailurl || surl,
                 col_type: 'movie_1_vertical_pic_blur',
-                extra: {
-                    id: "detailid",
-                    gradient: true
-                }
+                extra: detailextra
             })
             detailload = 1;
             lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", (datasource[2].lineid || 0).toString()));
