@@ -253,6 +253,7 @@ function SRCSet() {
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
+                    data = JSON.parse(base64Decode(data));
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
                         let oneshare = []
@@ -328,7 +329,7 @@ function SRCSet() {
                             return 'toast://已重命名';
                         },sourcefile,data)
                     }
-                }, sourcefile, item),
+                }, sourcefile, base64Encode(JSON.stringify(item))),
                 desc: (item.group?"["+item.group+"] ":"") + item.type,
                 img: "https://hikerfans.com/tubiao/ke/31.png",
                 col_type: "avatar",
