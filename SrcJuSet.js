@@ -516,6 +516,7 @@ function jiekouapi(sourcefile, data) {
                 let type = getMyVar('jiekoutype','漫画');
                 let group = getMyVar('jiekougroup');
                 let parse = getMyVar('jiekouparse');
+                log(parse);
                 let erparse = getMyVar('jiekouerparse');
                 let public = getMyVar('jiekoupublic');
                 let newapi = {
