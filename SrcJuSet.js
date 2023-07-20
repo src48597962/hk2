@@ -270,8 +270,8 @@ function SRCSet() {
                         return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
                             setPageTitle('编辑 | 聚阅接口');
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                            jiekouapi(sourcefile, base64Decode(data));
-                        }, sourcefile, base64Encode(data))
+                            jiekouapi(sourcefile, JSON.parse(base64Decode(data)));
+                        }, sourcefile, base64Encode(JSON.stringify(data)))
                     } else if (input == "删除") {
                         return $("确定删除："+data.name).confirm((sourcefile,data)=>{
                             let sourcedata = fetch(sourcefile);
