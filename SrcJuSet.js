@@ -571,7 +571,7 @@ function jiekouapi(sourcefile, data) {
                         datalist.splice(index, 1);
                     }
                     datalist.push(newapi);
-                    writeFile(sourcefile, JSON.stringify(datalist));
+                    writeFile(sourcefile, $.stringify(datalist));
                     clearMyVar('searchMark');
                     back(true);
                     return "toast://已保存";
