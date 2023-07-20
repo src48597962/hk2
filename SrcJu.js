@@ -385,7 +385,7 @@ function erji() {
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
             pic = details.img || oldMY_PARAMS.img;// || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
-            pic = pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
+            pic = pic&&pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             erjiextra.img = pic;
             erjidetails.img = erjiextra.img || erjidetails.img;
             erjidetails.detail1 = details.detail1 || erjidetails.detail1;
