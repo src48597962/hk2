@@ -945,13 +945,7 @@ function sousuo() {
         });
         setResult(d);
         let info = storage0.getMyVar('一级源接口信息') || {};
-        let type;
-        try{
-            type = name.split('  ')[2];
-        }catch(e){
-            type = '';
-        }
-        search(name,'sousuo',false,info.group,type);
+        search(name,'sousuo',false,info.group);
     }else{
         setResult([{
             title: "视界聚搜",
@@ -1054,7 +1048,12 @@ function search(keyword, mode, sdata, group, type) {
     let ssstype = type || runMode;
     let sssname;
     if(keyword.indexOf('  ')>-1){
-        sssname = keyword.split('  ')[1] || sourcename;
+        let keyword2 = keyword.split('  ')[1];
+        if(runModes.indexOf(keyword2)){
+            ssstype = keyword2;
+        }else{
+            sssname = keyword2 || sourcename;
+        }
     }
     putMyVar('SrcJuSearchMode',mode);
     putMyVar('SrcJuSearching','1');
