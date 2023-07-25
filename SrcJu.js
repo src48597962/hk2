@@ -966,6 +966,12 @@ function sousuo() {
 function search(keyword, mode, sdata, group, type) {
     //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
     let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',''):"listloading";
+    log(keyword);
+    log(mode);
+    log(group);
+    log(type);
+    log(updateItemid);
+
     if((mode=="sousuo") && getMyVar('SrcJuSearching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
@@ -1417,7 +1423,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         col_type: 'text_center_1',
         url: "hiker://empty",
         extra: {
-            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType',searchtype||''),
+            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType', searchtype||''),
             lineVisible: false
         }
     });
@@ -1431,7 +1437,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
             xunmi(name);
         }else{
             let info = storage0.getMyVar('一级源接口信息') || {};
-            let type = getMyVar("sousuoPageType",searchtype||info.type);
+            let type = getMyVar("sousuoPageType", searchtype||info.type);
             search(name,"sousuopage",false,info.group,type);
         }
     }
