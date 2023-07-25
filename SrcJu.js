@@ -141,20 +141,7 @@ function yiji() {
             })
         }
         let sousuopage = $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
-            addListener("onClose", $.toString(() => {
-                initConfig({依赖: getMyVar('SrcJuCfg')});
-                clearMyVar('SrcJuCfg');
-                clearMyVar('sousuoname');
-                clearMyVar('sousuoPageType');
-            }));
-            addListener('onRefresh', $.toString(() => {
-                initConfig({依赖: getMyVar('SrcJuCfg')});
-                clearMyVar('sousuoname');
-            }));
-            if(!getMyVar('SrcJuCfg')){
-                putMyVar('SrcJuCfg',config.依赖);
-            }
-            require(getMyVar('SrcJuCfg'));
+            require(config.依赖);
             newsousuopage();
         })
         let sousuoextra = {
@@ -1326,7 +1313,15 @@ function Version() {
     }
 }
 //新搜索页
-function newsousuopage(keyword,searchtype) {
+function newsousuopage(keyword,searchtype,relyfile) {
+    addListener("onClose", $.toString(() => {
+        clearMyVar('SrcJuCfg');
+        clearMyVar('sousuoname');
+        clearMyVar('sousuoPageType');
+    }));
+    addListener('onRefresh', $.toString(() => {
+        clearMyVar('sousuoname');
+    }));
     let d = [];
     d.push({
         title: "🔍",
@@ -1359,7 +1354,6 @@ function newsousuopage(keyword,searchtype) {
             title: getMyVar("sousuoPageType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
                 putMyVar("sousuoPageType",it);
-                initConfig({依赖: getMyVar('SrcJuCfg')});
                 refreshPage(false);
                 return "hiker://empty";
             },it),
@@ -1371,7 +1365,6 @@ function newsousuopage(keyword,searchtype) {
                 title:"🔍聚影搜索",
                 js: $.toString(()=>{
                     putMyVar("sousuoPageType","聚影");
-                    initConfig({依赖: getMyVar('SrcJuCfg')});
                     refreshPage(false);
                     return "hiker://empty";
                 })
@@ -1409,7 +1402,6 @@ function newsousuopage(keyword,searchtype) {
             title: item,
             url: $().lazyRule((input) => {
                 putMyVar('sousuoname',input);
-                initConfig({依赖: getMyVar('SrcJuCfg')});
                 refreshPage(true);
                 return "hiker://empty";
             },item),
@@ -1434,8 +1426,8 @@ function newsousuopage(keyword,searchtype) {
     if(name){
         deleteItemByCls('searchrecord');
         if(getMyVar('sousuoPageType')=="聚影"){
-            initConfig({依赖: getMyVar('SrcJuCfg').replace('Ju','master')});
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
+            relyfile = relyfile || config.依赖;
+            require(relyfile.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
             xunmi(name);
         }else{
             let info = storage0.getMyVar('一级源接口信息') || {};
