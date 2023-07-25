@@ -1326,7 +1326,7 @@ function Version() {
     }
 }
 //新搜索页
-function newsousuopage() {
+function newsousuopage(keyword,searchtype) {
     let d = [];
     d.push({
         title: "🔍",
@@ -1345,10 +1345,10 @@ function newsousuopage() {
                 refreshPage(true);
             }
         }),
-        desc: "搜你想看的...",
+        desc: "搜你想要的...",
         col_type: "input",
         extra: {
-            defaultValue: getMyVar('sousuoname',''),
+            defaultValue: getMyVar('sousuoname',keyword||''),
             titleVisible: true
         }
     });
@@ -1356,7 +1356,7 @@ function newsousuopage() {
     let typebtn = runModes;
     typebtn.forEach((it,i) =>{
         let obj = {
-            title: getMyVar("sousuoPageType",runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+            title: getMyVar("sousuoPageType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
                 putMyVar("sousuoPageType",it);
                 initConfig({依赖: getMyVar('SrcJuCfg')});
@@ -1425,12 +1425,12 @@ function newsousuopage() {
         col_type: 'text_center_1',
         url: "hiker://empty",
         extra: {
-            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType',''),
+            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType',searchtype||''),
             lineVisible: false
         }
     });
     setResult(d);
-    let name = getMyVar('sousuoname','');
+    let name = getMyVar('sousuoname',keyword||'');
     if(name){
         deleteItemByCls('searchrecord');
         if(getMyVar('sousuoPageType')=="聚影"){
@@ -1439,7 +1439,7 @@ function newsousuopage() {
             xunmi(name);
         }else{
             let info = storage0.getMyVar('一级源接口信息') || {};
-            let type = getMyVar("sousuoPageType",info.type);
+            let type = getMyVar("sousuoPageType",searchtype||info.type);
             search(name,"sousuopage",false,info.group,type);
         }
     }
