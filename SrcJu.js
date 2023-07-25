@@ -1049,7 +1049,7 @@ function search(keyword, mode, sdata, group, type) {
     let sssname;
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1];
-        if(runModes.indexOf(keyword2)){
+        if(runModes.indexOf(keyword2)>-1){
             ssstype = keyword2;
         }else{
             sssname = keyword2 || sourcename;
