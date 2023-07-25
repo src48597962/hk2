@@ -945,7 +945,13 @@ function sousuo() {
         });
         setResult(d);
         let info = storage0.getMyVar('一级源接口信息') || {};
-        search(name,'sousuo',false,info.group);
+        let type;
+        try{
+            type = name.split('  ')[2];
+        }catch(e){
+            type = '';
+        }
+        search(name,'sousuo',false,info.group,type);
     }else{
         setResult([{
             title: "视界聚搜",
