@@ -965,13 +965,7 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
     //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
-    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',''):"listloading";
-    log(keyword);
-    log(mode);
-    log(group);
-    log(type);
-    log(updateItemid);
-
+    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',type||''):"listloading";
     if((mode=="sousuo") && getMyVar('SrcJuSearching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
