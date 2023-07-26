@@ -1315,13 +1315,26 @@ function Version() {
 //新搜索页
 function newsousuopage(keyword,searchtype,relyfile) {
     addListener("onClose", $.toString(() => {
-        clearMyVar('SrcJuCfg');
+        if(getMyVar('SrcJuCfg')){
+            initConfig({
+                依赖: getMyVar('SrcJuCfg')
+            });
+            clearMyVar('SrcJuCfg');
+        }
         clearMyVar('sousuoname');
         clearMyVar('sousuoPageType');
     }));
     addListener('onRefresh', $.toString(() => {
         clearMyVar('sousuoname');
     }));
+    if(!getMyVar('SrcJuCfg') && config.依赖){
+        putMyVar('SrcJuCfg',config.依赖);
+    }
+    if(relyfile){
+        initConfig({
+            依赖: relyfile
+        });
+    }
     let d = [];
     d.push({
         title: "🔍",
