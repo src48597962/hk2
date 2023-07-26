@@ -52,7 +52,7 @@ function yiji() {
         clearItem('searchmode');//临时先去掉视界聚合代理搜索
         if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
-            if(programversion<10){
+            if(programversion<11){
                 confirm({
                     title: "温馨提示",
                     content: "发现小程序新版本",
@@ -1284,13 +1284,18 @@ function downloadicon() {
 
 //版本检测
 function Version() {
-    var nowVersion = getItem('Version', "0.3");//现在版本 
+    var nowVersion = getItem('Version', "0.1");//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime', '0').replace('time', ''));
     if (getMyVar('SrcJu-VersionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
         try {
             eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/', '/master/') + 'SrcTmplVersion.js'))
             if (parseFloat(newVersion.SrcJu) > parseFloat(nowVersion)) {
+                if(parseFloat(newVersion.SrcJu)==2.3){
+                    let requirelist = [{ url: 'https://ghproxy.net/https://raw.githubusercontent.com/', sort: 0 }, { url: 'https://ghproxy.com/https://raw.githubusercontent.com/', sort: 0 }, { url: 'https://cdn.staticaly.com/gh/', sort: 0 }, { url: 'https://github.jevons.vip/https://raw.githubusercontent.com/', sort: 0 }]
+                    let requirefile = "hiker://files/rules/Src/require.json";
+                    writeFile(requirefile, JSON.stringify(requirelist));
+                }
                 confirm({
                     title: '发现新版本，是否更新？',
                     content: nowVersion + '=>' + newVersion.SrcJu + '\n' + newVersion.SrcJudesc[newVersion.SrcJu],
