@@ -1323,6 +1323,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         }
         clearMyVar('sousuoname');
         clearMyVar('sousuoPageType');
+        putMyVar("SrcJu_停止搜索线程", "1");
     }));
     addListener('onRefresh', $.toString(() => {
         clearMyVar('sousuoname');
