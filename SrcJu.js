@@ -1003,9 +1003,9 @@ function search(keyword, mode, sdata, group, type) {
         if (i > 20) { delete searchMark[one]; }
         hideLoading();
         return "hiker://empty";
-    }else if(mode=="erji"){
+    }else{
         updateItem(updateItemid, {
-            title: "搜源中...",
+            title: mode=="erji"?"搜源中...":"搜索中...",
             url: "hiker://empty",
         });
     }
