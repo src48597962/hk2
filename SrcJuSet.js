@@ -19,48 +19,6 @@ function SRCSet() {
     clearMyVar('duoselect');
     setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
     let d = [];
-    /*
-    let sourcenames = yidatalist.map(it=>{
-        return it.name;
-    })
-    
-    d.push({
-        title: sourcename?sourcename:'设置主页源',
-        url: $(sourcenames,2).select((runMode,sourcename,cfgfile,Juconfig) => {
-            clearMyVar(MY_RULE.title + "分类");
-            clearMyVar(MY_RULE.title + "更新");
-            clearMyVar(MY_RULE.title + "类别");
-            clearMyVar(MY_RULE.title + "地区");
-            clearMyVar(MY_RULE.title + "进度");
-            clearMyVar(MY_RULE.title + "排序");
-            clearMyVar("排名");
-            clearMyVar("分类");
-            clearMyVar("更新");
-            clearMyVar(runMode+"_"+sourcename);
-            Juconfig[runMode+'sourcename'] = input;
-            writeFile(cfgfile, JSON.stringify(Juconfig));
-            refreshPage(false);
-            return 'toast://'+runMode+' 主页源已设置为：' + input;
-        }, runMode, sourcename, cfgfile, Juconfig),
-        img: "https://hikerfans.com/tubiao/messy/13.svg",
-        col_type: "icon_2"
-    });
-
-    d.push({
-        title: (runMode||runModes[0]) + "模式",
-        url: $(runModes,2,"切换运行模式").select((cfgfile,Juconfig) => {
-            Juconfig["runMode"] = input;
-            writeFile(cfgfile, JSON.stringify(Juconfig));
-            refreshPage(false);
-            return 'toast://运行模式已设置为：' + input;
-        }, cfgfile, Juconfig),
-        img: "https://hikerfans.com/tubiao/messy/12.svg",
-        col_type: "icon_2"
-    });
-    d.push({
-        col_type: "blank_block"
-    })
-    */
     d.push({
         title: '增加',
         url: $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile) => {
@@ -351,6 +309,7 @@ function jiekouapi(sourcefile, data) {
     addListener("onClose", $.toString(() => {
         clearMyVar('jiekoudata');
         clearMyVar('jiekouname');
+        clearMyVar('jiekouimg');
         clearMyVar('jiekoutype');
         clearMyVar('jiekougroup');
         clearMyVar('jiekouparse');
@@ -362,6 +321,7 @@ function jiekouapi(sourcefile, data) {
         storage0.putMyVar('jiekoudata', data);
         putMyVar('jiekouedit', '1');
         putMyVar('jiekouname', data.name);
+        putMyVar('jiekouimg', data.img||"");
         putMyVar('jiekoutype', data.type||"漫画");
         putMyVar('jiekougroup', data.group||"");
         storage0.putMyVar('jiekouparse', data.parse);
@@ -389,6 +349,18 @@ function jiekouapi(sourcefile, data) {
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
         }),
+    });
+    d.push({
+        title: '接口图标',
+        col_type: 'input',
+        desc:"可留空",
+        extra: {
+            defaultValue: getMyVar('jiekouimg') || "",
+            titleVisible: false,
+            onChange: $.toString(() => {
+                putMyVar('jiekouimg', input);
+            })
+        }
     });
     d.push({
         title: '搜索分组：'+ getMyVar('jiekougroup',''),
@@ -514,6 +486,7 @@ function jiekouapi(sourcefile, data) {
             }
             try {
                 let name = getMyVar('jiekouname');
+                let img = getMyVar('jiekouimg');
                 if (runModes.indexOf(name)>-1) {
                     return "toast://接口名称不能属于类型名";
                 }
@@ -556,6 +529,11 @@ function jiekouapi(sourcefile, data) {
                     }
                     newapi['public'] = public;
                 }
+                if (img) {
+                    newapi['img'] = img;
+                }
+                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
+                log(newapi['updatetime']);
                 let sourcedata = fetch(sourcefile);
                 if (sourcedata != "") {
                     try {
