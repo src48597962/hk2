@@ -1430,7 +1430,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         col_type: 'text_center_1',
         url: "hiker://empty",
         extra: {
-            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType', searchtype||''),
+            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType', searchtype||runMode),
             lineVisible: false
         }
     });
