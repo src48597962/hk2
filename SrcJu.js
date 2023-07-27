@@ -684,7 +684,7 @@ function erji() {
                 }
             })
             
-            if(线路s.length>1){
+            if(线路s.length>0 && 线路s[0] !="线路"){
                 线路s.forEach((it,i)=>{
                     d.push({
                         title: getMyVar("SrcJu_"+surl+"_line")==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
@@ -1112,7 +1112,7 @@ function search(keyword, mode, sdata, group, type) {
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
-                    if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name==name)||extra.name.indexOf(name)>-1)) || objmode!="erji"){
+                    if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name==name)||extra.name.includes(name))) || (objmode!="erji"&&item.title.includes(name))){
                         extra.img = extra.img || item.img || item.pic_url;
                         extra.stype = objdata.type;
                         extra.sname = objdata.name;
