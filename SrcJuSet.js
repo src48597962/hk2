@@ -289,7 +289,7 @@ function SRCSet() {
                     }
                 }, sourcefile, base64Encode(JSON.stringify(item))),
                 desc: (item.group?"["+item.group+"] ":"") + item.type,
-                img: "https://hikerfans.com/tubiao/ke/31.png",
+                img: item.img || "https://hikerfans.com/tubiao/ke/31.png",
                 col_type: "avatar",
                 extra: {
                     id: item.type+"_"+item.name
@@ -353,7 +353,7 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '接口图标',
         col_type: 'input',
-        desc:"可留空",
+        desc:"接口图标可留空",
         extra: {
             defaultValue: getMyVar('jiekouimg') || "",
             titleVisible: false,
@@ -400,7 +400,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 3,
+            height: 2,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekouerparse", input)
@@ -417,7 +417,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 2,
+            height: 1,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("jiekoupublic", input)
@@ -532,7 +532,7 @@ function jiekouapi(sourcefile, data) {
                 if (img) {
                     newapi['img'] = img;
                 }
-                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
+                newapi['updatetime'] = new Date();
                 log(newapi['updatetime']);
                 let sourcedata = fetch(sourcefile);
                 if (sourcedata != "") {
