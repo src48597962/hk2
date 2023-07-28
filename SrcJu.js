@@ -1114,7 +1114,7 @@ function search(keyword, mode, sdata, group, type) {
                     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
                     if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name==name)||extra.name.includes(name))) || objmode!="erji"){
                         let keepurl = new RegExp("js:|select:|(|)|=>|hiker://page|toast:", "i");//定义保留传值的项目url
-                        log(keepurl.toString());
+                        log(keepurl.test('http://www.qq.com/111.html'));
                         if((!keepurl.test(item.url) && item.title.includes(name)) || keepurl.test(item.url)){
                             extra.img = extra.img || item.img || item.pic_url;
                             extra.stype = objdata.type;
