@@ -4,6 +4,7 @@ if(Jucfg != ""){
     eval("var Juconfig=" + Jucfg+ ";");
 }else{
     var Juconfig= {};
+    Juconfig["依赖"] = config.依赖 || "https://gitcode.net/src48597962/hk/-/raw/Ju/SrcJuPublic.js";
     writeFile(cfgfile, JSON.stringify(Juconfig));
 }
 let runModes = ["漫画","小说","听书","图集","影视"];
