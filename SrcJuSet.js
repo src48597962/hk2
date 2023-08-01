@@ -554,6 +554,7 @@ function jiekouapi(sourcefile, data) {
                     datalist.push(newapi);
                     writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('searchMark');
+                    deleteFile('hiker://files/_cache/'+type+'_'+name+'.json');
                     back(true);
                     return "toast://已保存";
                 }
