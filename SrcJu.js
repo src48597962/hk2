@@ -7,7 +7,7 @@ try{
     let cfgfile = "hiker://files/rules/Src/Ju/config.json";
     if (fileExist(cfgfile)) {
         eval("let Juconfig=" + fetch(cfgfile) + ";");
-        publicfile = Juconfig["依赖"]?Juconfig["依赖"].match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js':'https://gitcode.net/src48597962/hk/-/raw/Ju/SrcJuPublic.js';
+        publicfile = Juconfig["依赖"].match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js';
     }
 }
 require(publicfile);
