@@ -368,7 +368,7 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '搜索分组：'+ getMyVar('jiekougroup',''),
         col_type: 'input',
-        desc:"搜索分组可留空,默认搜索此接口则输入全全",
+        desc:"搜索分组可留空,强制搜索输入全全",
         extra: {
             defaultValue: getMyVar('jiekougroup') || "",
             titleVisible: false,
