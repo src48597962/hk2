@@ -545,7 +545,7 @@ function jiekouapi(sourcefile, data) {
                 if (img) {
                     newapi['img'] = img;
                 }
-                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
+                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                 let sourcedata = fetch(sourcefile);
                 if (sourcedata != "") {
                     try {
