@@ -349,6 +349,9 @@ function jiekouapi(sourcefile, data) {
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
         }),
+        extra: {
+            lineVisible: false
+        }
     });
     d.push({
         title: '接口图标',
@@ -425,6 +428,16 @@ function jiekouapi(sourcefile, data) {
             })
         }
     });
+    if(data&&data.updatetime){
+        d.push({
+            title: '更新时间：'+ data.updatetime,
+            col_type: 'text_1',
+            url: 'hiker://empty',
+            extra: {
+                lineVisible: false
+            }
+        });
+    }
     d.push({
         title: '测试搜索',
         col_type: 'text_2',
