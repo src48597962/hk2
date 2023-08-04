@@ -165,7 +165,10 @@ function imageCompress(imgurl,fileid) {
         log(parseInt(size/1080));
         //let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg";
-        compress(f, 8, newpath);
+        let ff = fetch(imgurl, {
+            inputStream: true
+        });
+        compress(ff, 8, newpath);
         //if(r){
         //    return "file://" + newpath;
         //}
