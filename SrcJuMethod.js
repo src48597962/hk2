@@ -164,7 +164,10 @@ function imageCompress(imgurl,fileid) {
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         log(newpath);
         //compress(f, 2, newpath);
-        compress(f, 8, "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg");
+        let f = fetch(imgurl, {
+            inputStream: true
+        });
+        compress(f, 3, "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg");
         //return "file://" + newpath;
         return "file:///storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg";
     }
