@@ -126,10 +126,10 @@ function imageCompress(imgurl,fileid) {
             options2.inPurgeable = true;
             let bitmap2;
             if (topath && typeof path === "object" && path.getClass) {
-                bitmap2 = BitmapFactory.decodeStream(path, null, options);
+                bitmap2 = BitmapFactory.decodeStream(path, null, options2);
                 closeMe(path);
             } else {
-                bitmap2 = BitmapFactory.decodeFile(path, options);
+                bitmap2 = BitmapFactory.decodeFile(path, options2);
                 topath = topath || path;
             }
             let os = new FileOutputStream(topath);
