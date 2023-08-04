@@ -142,8 +142,7 @@ function imageCompress(imgurl,fileid) {
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
         }
-        options.inJustDecodeBounds = false;
-        log(options);
+        //options.inJustDecodeBounds = false;
         return options;
         //getPicInfo(f).outWidth
         //getPicInfo(f).outHeight
@@ -157,7 +156,8 @@ function imageCompress(imgurl,fileid) {
     });
     let ff = f;
     let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
-    compress(f,3,newpath); 
     log(getPicInfo(ff));
+    compress(f,3,newpath); 
+    
     return "file://"+newpath;   
 }
