@@ -95,6 +95,7 @@ function imageCompress(imgurl,fileid) {
         if (!path) {
             return imgurl;
         }
+        let obj = path;
         let tmpfile = "hiker://files/_cache/1.txt";
         if (!fileExist(tmpfile)) {
             writeFile(tmpfile, '');
@@ -125,12 +126,12 @@ function imageCompress(imgurl,fileid) {
             options2.inSampleSize = parseInt(size/720) || 2;
             options2.inPurgeable = true;
             let bitmap2;
-            if (topath && typeof path === "object" && path.getClass) {
-                bitmap2 = BitmapFactory.decodeStream(path, null, options2);
-                closeMe(path);
+            if (topath && typeof obj === "object" && obj.getClass) {
+                bitmap2 = BitmapFactory.decodeStream(obj, null, options2);
+                closeMe(obj);
             } else {
-                bitmap2 = BitmapFactory.decodeFile(path, options2);
-                topath = topath || path;
+                bitmap2 = BitmapFactory.decodeFile(obj, options2);
+                topath = topath || obj;
             }
             let os = new FileOutputStream(topath);
             try {
