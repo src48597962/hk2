@@ -149,6 +149,7 @@ function imageCompress(imgurl,fileid) {
     let f = fetch(imgurl, {
         inputStream: true
     });
+    log(f);
     let size;
     let info = getPicInfo(f);   
     if(info.outWidth>=info.outHeight){
@@ -164,7 +165,7 @@ function imageCompress(imgurl,fileid) {
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         log(newpath);
         //compress(f, 2, newpath);
-        log(f);
+        
         let r = compress(f, 3, newpath);
         log(r);
         return "file://" + newpath;
