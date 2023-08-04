@@ -91,7 +91,7 @@ function banner(start, arr, data, cfg){
 }
 //图片压缩
 function imageCompress(imgurl,fileid) {
-    function compress(path, topath) {
+    function compress(path,inSampleSize,topath) {
         if (!path) {
             return false;
         }
@@ -103,22 +103,16 @@ function imageCompress(imgurl,fileid) {
         const BitmapFactory = android.graphics.BitmapFactory;
         const FileOutputStream = java.io.FileOutputStream;
         let options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
+        options.inSampleSize = inSampleSize||2;
         options.inPurgeable = true;
-        let options2 = new BitmapFactory.Options();
-        options2.inJustDecodeBounds = true;
-        options2.inPurgeable = true;
         let bitmap;
-        let bitmap2;
         if (topath && typeof path === "object" && path.getClass) {
             bitmap = BitmapFactory.decodeStream(path, null, options);
-            bitmap2 = BitmapFactory.decodeStream(path, null, options2);
             closeMe(path);
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
             topath = topath || path;
         }
-        log(options2);
         let os = new FileOutputStream(topath);
         let s = false;
         try {
@@ -131,6 +125,29 @@ function imageCompress(imgurl,fileid) {
         os.close();
         return s;
     }
+    function getPicInfo(path){
+        const BitmapFactory = android.graphics.BitmapFactory;
+        let options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        options.inPurgeable = true;
+        if (!path) {
+            return {
+                outWidth: 0,
+                outHeight: 0
+            };
+        }
+        let bitmap;
+        if (typeof path === "object" && path.getClass) {
+            bitmap = BitmapFactory.decodeStream(path, null, options);
+        } else {
+            bitmap = BitmapFactory.decodeFile(path, options);
+        }
+        options.inJustDecodeBounds = false;
+        log(options);
+        return options;
+        //getPicInfo(f).outWidth
+        //getPicInfo(f).outHeight
+    }
     function getName(path) {
         const File = java.io.File;
         return new File(path).getName() + "";
@@ -138,7 +155,8 @@ function imageCompress(imgurl,fileid) {
     let f = fetch(imgurl, {
         inputStream: true
     });
+    let ff = f;
     let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
-    compress(f, newpath); 
+    compress(f,3,newpath); 
     return "file://"+newpath;   
 }
