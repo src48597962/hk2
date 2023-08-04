@@ -113,6 +113,7 @@ function imageCompress(imgurl,fileid) {
             bitmap = BitmapFactory.decodeFile(path, options);
             topath = topath || path;
         }
+        log(options);
         let os = new FileOutputStream(topath);
         let s = false;
         try {
@@ -130,8 +131,6 @@ function imageCompress(imgurl,fileid) {
         let options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPurgeable = true;
-        log(path);
-        log(options);
         if (!path) {
             return {
                 outWidth: 0,
@@ -144,7 +143,7 @@ function imageCompress(imgurl,fileid) {
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
         }
-        log(options);
+
         return options;
         //getPicInfo(f).outWidth
         //getPicInfo(f).outHeight
