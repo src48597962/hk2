@@ -92,6 +92,10 @@ function banner(start, arr, data, cfg){
 //图片压缩
 function imageCompress(imgurl,fileid) {
     function compress(path, inSampleSize, topath) {
+        let tmpfile = "hiker://files/_cache/1.txt";
+        if (!fileExist(tmpfile)) {
+            writeFile(tmpfile, '');
+        }
         const Bitmap = android.graphics.Bitmap;
         const BitmapFactory = android.graphics.BitmapFactory;
         const FileOutputStream = java.io.FileOutputStream;
@@ -108,10 +112,6 @@ function imageCompress(imgurl,fileid) {
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
             topath = topath || path;
-        }
-        let tmpfile = "hiker://files/_cache/1.txt";
-        if (!fileExist(tmpfile)) {
-            writeFile(tmpfile, '');
         }
         let os = new FileOutputStream(topath);
         let s = false;
@@ -163,12 +163,12 @@ function imageCompress(imgurl,fileid) {
     log(size);
     if(size>1080){
         log(parseInt(size/1080));
-        let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
-        log(newpath);
-        let r = compress(f, 3, newpath);
-        if(r){
-            return "file://" + newpath;
-        }
+        //let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
+        let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg";
+        compress(f, 8, newpath);
+        //if(r){
+        //    return "file://" + newpath;
+        //}
     }
     return imgurl;
 }
