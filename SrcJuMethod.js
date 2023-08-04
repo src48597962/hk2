@@ -150,19 +150,20 @@ function imageCompress(imgurl,fileid) {
         inputStream: true
     });
     let size;
-    let info = getPicInfo(f);
-    log(info);
+    let info = getPicInfo(f);   
     if(info.outWidth>=info.outHeight){
         size = info.outWidth;
     }else{
         size = info.outHeight;
     }
-    
+    log(size);
     if(size<1080){
         return imgurl;
     }else{
+        log(parseInt(size/1080));
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
-        compress(f, parseInt(size/1080), newpath);
+        log(newpath);
+        compress(f, 2, newpath);
         return "file://" + newpath;
     }
 }
