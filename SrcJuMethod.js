@@ -103,10 +103,9 @@ function imageCompress(imgurl,fileid) {
         const BitmapFactory = android.graphics.BitmapFactory;
         const FileOutputStream = java.io.FileOutputStream;
         let options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
+        options.inSampleSize = 3;
         options.inPurgeable = true;
         let bitmap;
-        
         if (topath && typeof path === "object" && path.getClass) {
             bitmap = BitmapFactory.decodeStream(path, null, options);
             closeMe(path);
