@@ -91,7 +91,6 @@ function banner(start, arr, data, cfg){
 }
 //图片压缩
 function imageCompress(imgurl,fileid) {
-    /*
     function compress(path, inSampleSize, topath) {
         const Bitmap = android.graphics.Bitmap;
         const BitmapFactory = android.graphics.BitmapFactory;
@@ -109,6 +108,10 @@ function imageCompress(imgurl,fileid) {
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
             topath = topath || path;
+        }
+        let tmpfile = "hiker://files/_cache/1.txt";
+        if (!fileExist(tmpfile)) {
+            writeFile(tmpfile, '');
         }
         let os = new FileOutputStream(topath);
         let s = false;
@@ -150,7 +153,6 @@ function imageCompress(imgurl,fileid) {
     let f = fetch(imgurl, {
         inputStream: true
     });
-    log(f);
     let size;
     let info = getPicInfo(f);   
     if(info.outWidth>=info.outHeight){
@@ -159,52 +161,14 @@ function imageCompress(imgurl,fileid) {
         size = info.outHeight;
     }
     log(size);
-    if(size<1080){
-        return imgurl;
-    }else{
+    if(size>1080){
         log(parseInt(size/1080));
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         log(newpath);
-        //compress(f, 2, newpath);
-        
         let r = compress(f, 3, newpath);
-        log(r);
-        return "file://" + newpath;
+        if(r){
+            return "file://" + newpath;
+        }
     }
-    */
-    function compress(path, inSampleSize, topath) {
-        const Bitmap = android.graphics.Bitmap;
-        const BitmapFactory = android.graphics.BitmapFactory;
-        const FileOutputStream = java.io.FileOutputStream;
-        let options = new BitmapFactory.Options();
-        options.inSampleSize = inSampleSize || 2;
-        options.inPurgeable = true;
-        let bitmap;
-        if (!path) {
-            return false;
-        }
-        if (topath && typeof path === "object" && path.getClass) {
-            bitmap = BitmapFactory.decodeStream(path, null, options);
-            closeMe(path);
-        } else {
-            bitmap = BitmapFactory.decodeFile(path, options);
-            topath = topath || path;
-        }
-        let os = new FileOutputStream(topath);
-        let s = false;
-        try {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
-            s = true;
-        } catch (e) {
-            log(e.toString());
-        }
-        os.flush();
-        os.close();
-        return s;
-    }
-    let f = fetch(imgurl, {
-        inputStream: true
-    });
-    compress(f, 8, "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg");
-    return "file:///storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg"
+    return imgurl;
 }
