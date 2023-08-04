@@ -94,8 +94,8 @@ function imageCompress(imgurl,fileid) {
     function compress(path, inSampleSize, topath) {
         const Bitmap = android.graphics.Bitmap;
         const BitmapFactory = android.graphics.BitmapFactory;
-        let options = new BitmapFactory.Options();
         const FileOutputStream = java.io.FileOutputStream;
+        let options = new BitmapFactory.Options();
         options.inSampleSize = inSampleSize || 2;
         options.inPurgeable = true;
         let bitmap;
@@ -163,7 +163,9 @@ function imageCompress(imgurl,fileid) {
         log(parseInt(size/1080));
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         log(newpath);
-        compress(f, 2, newpath);
-        return "file://" + newpath;
+        //compress(f, 2, newpath);
+        compress(f, 8, "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg");
+        //return "file://" + newpath;
+        return "file:///storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg";
     }
 }
