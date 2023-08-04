@@ -130,6 +130,8 @@ function imageCompress(imgurl,fileid) {
         let options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPurgeable = true;
+        log(pat);
+        log(options);
         if (!path) {
             return {
                 outWidth: 0,
@@ -142,6 +144,7 @@ function imageCompress(imgurl,fileid) {
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
         }
+        log(options);
         return options;
         //getPicInfo(f).outWidth
         //getPicInfo(f).outHeight
@@ -160,9 +163,9 @@ function imageCompress(imgurl,fileid) {
     }else{
         size = info.outHeight;
     }
-    log(size);
+    //log(size);
     if(size>1080){
-        log(parseInt(size/1080));
+        //log(parseInt(size/1080));
         //let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg";
         let ff = fetch(imgurl, {
