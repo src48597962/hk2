@@ -113,7 +113,6 @@ function imageCompress(imgurl,fileid) {
             bitmap = BitmapFactory.decodeFile(path, options);
             topath = topath || path;
         }
-        log(options);
         let os = new FileOutputStream(topath);
         let s = false;
         try {
@@ -143,7 +142,8 @@ function imageCompress(imgurl,fileid) {
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
         }
-
+        options.inJustDecodeBounds = false;
+        log(options);
         return options;
         //getPicInfo(f).outWidth
         //getPicInfo(f).outHeight
@@ -167,10 +167,12 @@ function imageCompress(imgurl,fileid) {
         //log(parseInt(size/1080));
         //let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
         let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/1.jpg";
+        /*
         let ff = fetch(imgurl, {
             inputStream: true
         });
-        compress(ff, 8, newpath);
+        */
+        compress(f, 8, newpath);
         //if(r){
         //    return "file://" + newpath;
         //}
