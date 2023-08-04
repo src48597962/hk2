@@ -157,8 +157,8 @@ function imageCompress(imgurl,fileid) {
     });
     let ff = f;
     let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
-    log(getPicInfo(ff));
-    compress(f,3,newpath); 
+    log(getPicInfo(f));
+    compress(ff,3,newpath); 
     
     return "file://"+newpath;   
 }
