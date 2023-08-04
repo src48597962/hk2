@@ -130,7 +130,7 @@ function imageCompress(imgurl,fileid) {
         let options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPurgeable = true;
-        log(pat);
+        log(path);
         log(options);
         if (!path) {
             return {
