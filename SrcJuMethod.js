@@ -95,7 +95,7 @@ function imageCompress(imgurl,fileid) {
         if (!path) {
             return imgurl;
         }
-        let obj = path;
+        let obj = Object.assign({},path);
         let tmpfile = "hiker://files/_cache/1.txt";
         if (!fileExist(tmpfile)) {
             writeFile(tmpfile, '');
