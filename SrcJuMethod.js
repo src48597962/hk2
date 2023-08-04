@@ -91,10 +91,10 @@ function banner(start, arr, data, cfg){
 }
 //图片压缩
 function imageCompress(imgurl,fileid) {
-    const Bitmap = android.graphics.Bitmap;
-    const BitmapFactory = android.graphics.BitmapFactory;
-    let options = new BitmapFactory.Options();
     function compress(path, inSampleSize, topath) {
+        const Bitmap = android.graphics.Bitmap;
+        const BitmapFactory = android.graphics.BitmapFactory;
+        let options = new BitmapFactory.Options();
         const FileOutputStream = java.io.FileOutputStream;
         options.inSampleSize = inSampleSize || 2;
         options.inPurgeable = true;
@@ -135,7 +135,6 @@ function imageCompress(imgurl,fileid) {
         let bitmap;
         if (typeof path === "object" && path.getClass) {
             bitmap = BitmapFactory.decodeStream(path, null, options);
-            
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
         }
