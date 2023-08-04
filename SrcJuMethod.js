@@ -144,11 +144,13 @@ function imageCompress(imgurl,fileid) {
     });
     let size;
     let info = getPicInfo(f);
+    log(info);
     if(info.outWidth>=info.outHeight){
         size = info.outWidth;
     }else{
         size = info.outHeight;
     }
+    
     if(size<1080){
         return imgurl;
     }else{
