@@ -89,3 +89,71 @@ function banner(start, arr, data, cfg){
         putMyVar('banneri', i);
     }, obj))
 }
+//图片压缩
+function imageCompress(imgurl,fileid) {
+    const Bitmap = android.graphics.Bitmap;
+    const BitmapFactory = android.graphics.BitmapFactory;
+    let options = new BitmapFactory.Options();
+    function compress(path, inSampleSize, topath) {
+        const FileOutputStream = java.io.FileOutputStream;
+        options.inSampleSize = inSampleSize || 2;
+        options.inPurgeable = true;
+        let bitmap;
+        if (!path) {
+            return false;
+        }
+        if (topath && typeof path === "object" && path.getClass) {
+            bitmap = BitmapFactory.decodeStream(path, null, options);
+            closeMe(path);
+        } else {
+            bitmap = BitmapFactory.decodeFile(path, options);
+            topath = topath || path;
+        }
+        let os = new FileOutputStream(topath);
+        let s = false;
+        try {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+            s = true;
+        } catch (e) {
+            log(e.toString());
+        }
+        os.flush();
+        os.close();
+        return s;
+    }
+    function getPicInfo(path){
+        options.inJustDecodeBounds = true;
+        options.inPurgeable = true;
+        if (!path) {
+            return {
+                outWidth: 0,
+                outHeight: 0
+            };
+        }
+        let bitmap = BitmapFactory.decodeFile(path, options);
+        return options;
+        //getPicInfo(f).outWidth
+        //getPicInfo(f).outHeight
+    }
+    function getName(path) {
+        const File = java.io.File;
+        return new File(path).getName() + "";
+    }
+    let f = fetch(imgurl, {
+        inputStream: true
+    });
+    let size;
+    let info = getPicInfo(f);
+    if(info.outWidth>=info.outHeight){
+        size = info.outWidth;
+    }else{
+        size = info.outHeight;
+    }
+    if(size<1080){
+        return imgurl;
+    }else{
+        let newpath = "/storage/emulated/0/Android/data/com.example.hikerview/files/Documents/_cache/"+(fileid||"")+"_"+getName(imgurl);
+        compress(f, parseInt(size/1080), newpath);
+        return newpath;
+    }
+}
