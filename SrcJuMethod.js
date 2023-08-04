@@ -122,6 +122,8 @@ function imageCompress(imgurl,fileid) {
         return s;
     }
     function getPicInfo(path){
+        const BitmapFactory = android.graphics.BitmapFactory;
+        let options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPurgeable = true;
         if (!path) {
@@ -130,7 +132,13 @@ function imageCompress(imgurl,fileid) {
                 outHeight: 0
             };
         }
-        let bitmap = BitmapFactory.decodeFile(path, options);
+        let bitmap;
+        if (typeof path === "object" && path.getClass) {
+            bitmap = BitmapFactory.decodeStream(path, null, options);
+            
+        } else {
+            bitmap = BitmapFactory.decodeFile(path, options);
+        }
         return options;
         //getPicInfo(f).outWidth
         //getPicInfo(f).outHeight
