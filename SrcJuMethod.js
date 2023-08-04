@@ -139,6 +139,7 @@ function imageCompress(imgurl,fileid) {
         let bitmap;
         if (typeof path === "object" && path.getClass) {
             bitmap = BitmapFactory.decodeStream(path, null, options);
+            closeMe(path);
         } else {
             bitmap = BitmapFactory.decodeFile(path, options);
         }
