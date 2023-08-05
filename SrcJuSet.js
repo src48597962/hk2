@@ -175,11 +175,7 @@ function SRCSet() {
             },it),
             col_type: 'scroll_button'
         }
-
-        if(it != "全部"){
-            obj.extra = {};
-            obj["extra"].longClick = [
-                /*{
+/*{
                 title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
                 js: $.toString((it) => {
                     if(getItem(it+'stoptype')=="1"){
@@ -191,7 +187,9 @@ function SRCSet() {
                     return "hiker://empty";
                 },it)
             }*/
-            {
+        if(it != "全部"){
+            obj.extra = {};
+            obj["extra"].longClick = [{
                 title: '批量选择',
                 js: $.toString((jkdatalist) => {
                     let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
@@ -205,8 +203,7 @@ function SRCSet() {
                     storage0.putMyVar('duoselect',duoselect);
                     return "hiker://empty";
                 },jkdatalist)
-            }
-            ]
+            }]
         }
 
         d.push(obj);
