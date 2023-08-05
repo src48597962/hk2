@@ -146,9 +146,19 @@ function SRCSet() {
             col_type: "blank_block"
         })
     }
+    let jkdatalist;
+    if(getMyVar("seacrhjiekou")){
+        jkdatalist = datalist.filter(it=>{
+            return it.name.indexOf(getMyVar("seacrhjiekou"))>-1 && (getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType")==it.type);
+        })
+    }else{
+        jkdatalist = datalist.filter(it=>{
+            return getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==it.type;
+        })
+    }
+
     let typebtn = runModes;
     typebtn.unshift("全部");
-    //typebtn.push("失效");
     typebtn.forEach(it =>{
         let typename = it;
         /*
@@ -165,10 +175,11 @@ function SRCSet() {
             },it),
             col_type: 'scroll_button'
         }
-        /*
+
         if(it != "全部"){
             obj.extra = {};
-            obj["extra"].longClick = [{
+            obj["extra"].longClick = [
+                /*{
                 title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
                 js: $.toString((it) => {
                     if(getItem(it+'stoptype')=="1"){
@@ -179,9 +190,25 @@ function SRCSet() {
                     refreshPage(false);
                     return "hiker://empty";
                 },it)
-            }]
+            }*/
+            {
+                title: '批量选择',
+                js: $.toString((jkdatalist) => {
+                    let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+                    jkdatalist.forEach(data=>{
+                        let id = data.type+"_"+data.name;
+                        if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
+                            duoselect.push(data);
+                            updateItem(id, {title:'<font color=#3CB371>'+data.name})
+                        }
+                    })
+                    storage0.putMyVar('duoselect',duoselect);
+                    return "hiker://empty";
+                },jkdatalist)
+            }
+            ]
         }
-        */
+
         d.push(obj);
     })
     d.push({
@@ -196,18 +223,9 @@ function SRCSet() {
             titleVisible: true
         }
     });
-    let jkdatalist = [];
-    if(getMyVar("seacrhjiekou")){
-        datalist.forEach(it=>{
-            if(it.name.indexOf(getMyVar("seacrhjiekou"))>-1){
-                jkdatalist.push(it);
-            }
-        })
-    }else{
-        jkdatalist = datalist;
-    }
+    
     jkdatalist.forEach(item => {
-        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type || (getMyVar("SrcJuJiekouType")=="失效" && item.group=="失效")){
+        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
