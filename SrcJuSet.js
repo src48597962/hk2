@@ -149,7 +149,7 @@ function SRCSet() {
     let jkdatalist;
     if(getMyVar("seacrhjiekou")){
         jkdatalist = datalist.filter(it=>{
-            return it.name.indexOf(getMyVar("seacrhjiekou"))>-1 && (getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType")==it.type);
+            return it.name.indexOf(getMyVar("seacrhjiekou"))>-1;
         })
     }else{
         jkdatalist = datalist.filter(it=>{
@@ -189,21 +189,25 @@ function SRCSet() {
             }*/
         if(it != "全部"){
             obj.extra = {};
-            obj["extra"].longClick = [{
-                title: '批量选择',
-                js: $.toString((jkdatalist) => {
-                    let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
-                    jkdatalist.forEach(data=>{
-                        let id = data.type+"_"+data.name;
-                        if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
-                            duoselect.push(data);
-                            updateItem(id, {title:'<font color=#3CB371>'+data.name})
-                        }
-                    })
-                    storage0.putMyVar('duoselect',duoselect);
-                    return "hiker://empty";
-                },jkdatalist)
-            }]
+            let longClick = [];
+            if(getMyVar("SrcJuJiekouType")==it){
+                longClick.push({
+                    title: '批量选择',
+                    js: $.toString((jkdatalist) => {
+                        let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+                        jkdatalist.forEach(data=>{
+                            let id = data.type+"_"+data.name;
+                            if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
+                                duoselect.push(data);
+                                updateItem(id, {title:'<font color=#3CB371>'+data.name})
+                            }
+                        })
+                        storage0.putMyVar('duoselect',duoselect);
+                        return "hiker://empty";
+                    },jkdatalist)
+                })
+            }
+            if(longClick.length>0){obj["extra"].longClick = longClick;}
         }
 
         d.push(obj);
