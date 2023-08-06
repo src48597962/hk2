@@ -89,9 +89,15 @@ function SRCSet() {
     });
     d.push({
         title: '导入',
-        url: $("", "聚阅分享口令").input(() => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-            JYimport(input)
+        url: $(["聚阅口令","文件导入"], 2 , "选择导入方式").select(() => {
+            if(input=="聚阅口令"){
+                return $("", "聚阅分享口令").input(() => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                    JYimport(input)
+                })
+            }else if(input=="文件导入"){
+                return `fileSelect://require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');JYimport(input);`
+            }
         }),
         img: "https://hikerfans.com/tubiao/more/43.png",
         col_type: "icon_4",
@@ -125,9 +131,11 @@ function SRCSet() {
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
                 if(input=='文件分享'){
                     let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
-                    let code = '聚阅接口￥' + sharetxt + '￥共' + sharelist.length + '条('+input+')';
-                    let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.hiker';
-                    writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                    //let code = '聚阅接口￥' + sharetxt + '￥共' + sharelist.length + '条('+input+')';
+                    //let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.hiker';
+                    //writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                    let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.txt';
+                    writeFile(sharefile, sharetxt);
                     if(fileExist(sharefile)){
                         return 'share://'+sharefile;
                     }else{
@@ -612,6 +620,7 @@ function jiekouapi(sourcefile, data) {
 }
 
 function JYimport(input) {
+    log(input);
     try {
         input = input.replace("云口令：","");
         let inputname = input.split('￥')[0];
