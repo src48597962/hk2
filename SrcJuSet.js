@@ -618,14 +618,13 @@ function JYimport(input) {
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
-            let content;
-            log(parseurl);
+            let datalist2;
             if(/^http/.test(parseurl)){
-                content = parsePaste(parseurl);
+                let content = parsePaste(parseurl);
+                datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else{
-                content = parseurl;
+                datalist2 = JSON.parse(parseurl);
             }
-            let datalist2 = JSON.parse(aesDecode('SrcJu', content));
             let num = 0;
             datalist.reverse();
             for (let i = 0; i < datalist2.length; i++) {
