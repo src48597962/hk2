@@ -96,7 +96,10 @@ function SRCSet() {
                     JYimport(input)
                 })
             }else if(input=="文件导入"){
-                return `fileSelect://js:require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');JYimport(input)`
+                return `fileSelect://`+$.toString(()=>{
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                    JYimport(input)
+                })
             }
         }),
         img: "https://hikerfans.com/tubiao/more/43.png",
