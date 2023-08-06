@@ -619,6 +619,7 @@ function JYimport(input) {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
             let content;
+            log(parseurl);
             if(/^http/.test(parseurl)){
                 content = parsePaste(parseurl);
             }else{
