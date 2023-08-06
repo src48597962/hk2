@@ -635,7 +635,11 @@ function JYimport(input) {
                 let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/^\//.test(parseurl)){
-                datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
+                if(parseurl.endsWith('.txt')){
+                    datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
+                }else{
+                    return "toast://请选择聚阅分享txt文件"
+                }
             }else{
                 datalist2 = JSON.parse(parseurl);
             }
@@ -661,6 +665,7 @@ function JYimport(input) {
             return "toast://非法口令";
         }
     } catch (e) {
+        hideLoading();
         log('√口令解析失败>'+e.message);
         return "toast://口令有误";
     }
