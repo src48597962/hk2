@@ -612,6 +612,7 @@ function jiekouapi(sourcefile, data) {
 }
 
 function JYimport(input) {
+    log(11);
     try {
         input = input.replace("云口令：","");
         let inputname = input.split('￥')[0];
