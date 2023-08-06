@@ -98,6 +98,7 @@ function SRCSet() {
             }else if(input=="文件导入"){
                 return `fileSelect://`+$.toString(()=>{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                    input = '聚阅接口￥' + aesEncode('SrcJu', input) + '￥文件导入';
                     JYimport(input)
                 })
             }
@@ -623,7 +624,6 @@ function jiekouapi(sourcefile, data) {
 }
 
 function JYimport(input) {
-    log(input);
     try {
         input = input.replace("云口令：","");
         let inputname = input.split('￥')[0];
@@ -634,6 +634,8 @@ function JYimport(input) {
             if(/^http/.test(parseurl)){
                 let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
+            }else if(/^\//.test(parseurl)){
+                datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
             }else{
                 datalist2 = JSON.parse(parseurl);
             }
