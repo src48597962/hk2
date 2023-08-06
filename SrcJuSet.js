@@ -121,17 +121,30 @@ function SRCSet() {
                 sharelist = yxdatalist;
             }
             let pastes = getPastes();
+            pastes.push('文件分享');
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
-                showLoading('分享上传中，请稍后...');
-                let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
-                hideLoading();
-                if (/^http/.test(pasteurl)) {
-                    let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
-                    copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
-                    refreshPage(false);
-                    return "toast://聚阅分享口令已生成";
-                } else {
-                    return "toast://分享失败，剪粘板或网络异常"+pasteurl;
+                if(input=='文件分享'){
+                    let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
+                    let code = '聚阅接口￥' + sharetxt + '￥共' + sharelist.length + '条('+input+')';
+                    let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.hiker';
+                    writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                    if(fileExist(sharefile)){
+                        return 'share://'+sharefile;
+                    }else{
+                        return 'toast://分享文件生成失败';
+                    }
+                }else{
+                    showLoading('分享上传中，请稍后...');
+                    let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
+                    hideLoading();
+                    if (/^http/.test(pasteurl)) {
+                        let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
+                        copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                        refreshPage(false);
+                        return "toast://聚阅分享口令已生成";
+                    } else {
+                        return "toast://分享失败，剪粘板或网络异常"+pasteurl;
+                    }
                 }
             },sharelist)
         }),
@@ -146,9 +159,19 @@ function SRCSet() {
             col_type: "blank_block"
         })
     }
+    let jkdatalist;
+    if(getMyVar("seacrhjiekou")){
+        jkdatalist = datalist.filter(it=>{
+            return it.name.indexOf(getMyVar("seacrhjiekou"))>-1;
+        })
+    }else{
+        jkdatalist = datalist.filter(it=>{
+            return getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==it.type;
+        })
+    }
+
     let typebtn = runModes;
     typebtn.unshift("全部");
-    //typebtn.push("失效");
     typebtn.forEach(it =>{
         let typename = it;
         /*
@@ -165,10 +188,7 @@ function SRCSet() {
             },it),
             col_type: 'scroll_button'
         }
-        /*
-        if(it != "全部"){
-            obj.extra = {};
-            obj["extra"].longClick = [{
+/*{
                 title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
                 js: $.toString((it) => {
                     if(getItem(it+'stoptype')=="1"){
@@ -179,9 +199,30 @@ function SRCSet() {
                     refreshPage(false);
                     return "hiker://empty";
                 },it)
-            }]
+            }*/
+        if(it != "全部"){
+            obj.extra = {};
+            let longClick = [];
+            if(getMyVar("SrcJuJiekouType")==it){
+                longClick.push({
+                    title: '批量选择',
+                    js: $.toString((jkdatalist) => {
+                        let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+                        jkdatalist.forEach(data=>{
+                            let id = data.type+"_"+data.name;
+                            if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
+                                duoselect.push(data);
+                                updateItem(id, {title:'<font color=#3CB371>'+data.name})
+                            }
+                        })
+                        storage0.putMyVar('duoselect',duoselect);
+                        return "hiker://empty";
+                    },jkdatalist)
+                })
+            }
+            if(longClick.length>0){obj["extra"].longClick = longClick;}
         }
-        */
+
         d.push(obj);
     })
     d.push({
@@ -196,18 +237,9 @@ function SRCSet() {
             titleVisible: true
         }
     });
-    let jkdatalist = [];
-    if(getMyVar("seacrhjiekou")){
-        datalist.forEach(it=>{
-            if(it.name.indexOf(getMyVar("seacrhjiekou"))>-1){
-                jkdatalist.push(it);
-            }
-        })
-    }else{
-        jkdatalist = datalist;
-    }
+    
     jkdatalist.forEach(item => {
-        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type || (getMyVar("SrcJuJiekouType")=="失效" && item.group=="失效")){
+        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
@@ -271,7 +303,7 @@ function SRCSet() {
                                     break;
                                 }
                             }
-                            updateItem(id, {title:data.name})
+                            updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
                         }
                         storage0.putMyVar('duoselect',duoselect);
                         return "hiker://empty";
@@ -349,6 +381,9 @@ function jiekouapi(sourcefile, data) {
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
         }),
+        extra: {
+            lineVisible: false
+        }
     });
     d.push({
         title: '接口图标',
@@ -365,7 +400,7 @@ function jiekouapi(sourcefile, data) {
     d.push({
         title: '搜索分组：'+ getMyVar('jiekougroup',''),
         col_type: 'input',
-        desc:"搜索分组可留空,默认搜索此接口则输入全全",
+        desc:"搜索分组可留空,强制搜索输入全全",
         extra: {
             defaultValue: getMyVar('jiekougroup') || "",
             titleVisible: false,
@@ -425,6 +460,16 @@ function jiekouapi(sourcefile, data) {
             })
         }
     });
+    if(data&&data.updatetime){
+        d.push({
+            title: '更新时间：'+ data.updatetime,
+            col_type: 'text_1',
+            url: 'hiker://empty',
+            extra: {
+                lineVisible: false
+            }
+        });
+    }
     d.push({
         title: '测试搜索',
         col_type: 'text_2',
@@ -532,7 +577,7 @@ function jiekouapi(sourcefile, data) {
                 if (img) {
                     newapi['img'] = img;
                 }
-                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd hh:mm:ss");
+                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                 let sourcedata = fetch(sourcefile);
                 if (sourcedata != "") {
                     try {
@@ -573,7 +618,13 @@ function JYimport(input) {
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
-            let content = parsePaste(parseurl);
+            let content;
+            log(parseurl);
+            if(/^http/.test(parseurl)){
+                content = parsePaste(parseurl);
+            }else{
+                content = parseurl;
+            }
             let datalist2 = JSON.parse(aesDecode('SrcJu', content));
             let num = 0;
             datalist.reverse();
