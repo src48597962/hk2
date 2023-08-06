@@ -612,20 +612,14 @@ function jiekouapi(sourcefile, data) {
 }
 
 function JYimport(input) {
-    log(11);
+    log(input);
     try {
         input = input.replace("云口令：","");
         let inputname = input.split('￥')[0];
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
-            let content;
-            log(parseurl);
-            if(/^http/.test(parseurl)){
-                content = parsePaste(parseurl);
-            }else{
-                content = parseurl;
-            }
+            let content = parsePaste(parseurl);
             let datalist2 = JSON.parse(aesDecode('SrcJu', content));
             let num = 0;
             datalist.reverse();
