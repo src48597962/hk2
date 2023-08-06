@@ -121,17 +121,30 @@ function SRCSet() {
                 sharelist = yxdatalist;
             }
             let pastes = getPastes();
+            pastes.push('文件分享');
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
-                showLoading('分享上传中，请稍后...');
-                let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
-                hideLoading();
-                if (/^http/.test(pasteurl)) {
+                if(input=='文件分享'){
+                    let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
                     let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
-                    copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
-                    refreshPage(false);
-                    return "toast://聚阅分享口令已生成";
-                } else {
-                    return "toast://分享失败，剪粘板或网络异常"+pasteurl;
+                    let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.hiker';
+                    writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                    if(fileExist(sharefile)){
+                        return 'share://'+sharefile;
+                    }else{
+                        return 'toast://分享文件生成失败';
+                    }
+                }else{
+                    showLoading('分享上传中，请稍后...');
+                    let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
+                    hideLoading();
+                    if (/^http/.test(pasteurl)) {
+                        let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
+                        copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                        refreshPage(false);
+                        return "toast://聚阅分享口令已生成";
+                    } else {
+                        return "toast://分享失败，剪粘板或网络异常"+pasteurl;
+                    }
                 }
             },sharelist)
         }),
@@ -290,7 +303,7 @@ function SRCSet() {
                                     break;
                                 }
                             }
-                            updateItem(id, {title:data.name})
+                            updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
                         }
                         storage0.putMyVar('duoselect',duoselect);
                         return "hiker://empty";
