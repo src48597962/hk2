@@ -138,7 +138,7 @@ function SRCSet() {
                     //let code = '聚阅接口￥' + sharetxt + '￥共' + sharelist.length + '条('+input+')';
                     //let sharefile = 'hiker://files/_cache/JYshare_'+$.dateFormat(new Date(),"MMddHHmmss")+'.hiker';
                     //writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
-                    let sharefile = 'hiker://files/_cache/JYshare_'+$.dateFormat(new Date(),"MMddHHmmss")+'.txt';
+                    let sharefile = 'hiker://files/_cache/JYshare_'+sharelist.length+'_'+$.dateFormat(new Date(),"HHmmss")+'.txt';
                     writeFile(sharefile, sharetxt);
                     if(fileExist(sharefile)){
                         return 'share://'+sharefile;
@@ -631,14 +631,16 @@ function JYimport(input) {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
             let datalist2;
+            log(parseurl);
             if(/^http/.test(parseurl)){
+                
                 let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
-            }else if(/^\//.test(parseurl)){
-                if(parseurl.endsWith('.txt')){
+            }else if(/JYshare_/.test(parseurl)){
+                if(parseurl.endsWith('txt')){
                     datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
                 }else{
-                    return "toast://请选择聚阅分享txt文件"
+                    return "toast://请选择聚阅分享的txt文件"
                 }
             }else{
                 datalist2 = JSON.parse(parseurl);
