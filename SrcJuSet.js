@@ -13,11 +13,11 @@ require(publicfile);
 
 function SRCSet() {
     addListener("onClose", $.toString(() => {
-        clearMyVar('duoselect');
-        clearMyVar("seacrhjiekou");
+        clearMyVar('SrcJu_duoselect');
+        clearMyVar("SrcJu_seacrhjiekou");
     }));
     clearMyVar('duoselect');
-    setPageTitle("♥管理"+getMyVar('SrcJu-Version', ''));
+    setPageTitle("♥管理"+getMyVar('SrcJu_Version', ''));
     let d = [];
     d.push({
         title: '增加',
@@ -30,13 +30,13 @@ function SRCSet() {
         col_type: "icon_4",
         extra: {
             longClick: [{
-                title: getMyVar("调试模式")?'退出调试':'调试模式',
+                title: getMyVar("SrcJu_调试模式")?'退出调试':'调试模式',
                 js: $.toString(() => {
                     return $().lazyRule(() => {
-                        if(getMyVar("调试模式")){
-                            clearMyVar("调试模式");
+                        if(getMyVar("SrcJu_调试模式")){
+                            clearMyVar("SrcJu_调试模式");
                         }else{
-                            putMyVar("调试模式", "1");
+                            putMyVar("SrcJu_调试模式", "1");
                         }
                         return "toast://已设置"
                     })
@@ -77,7 +77,7 @@ function SRCSet() {
                     return $("确定想好了吗，清空后无法恢复！").confirm((sourcefile)=>{
                         let datalist = [];
                         writeFile(sourcefile, JSON.stringify(datalist));
-                        clearMyVar('searchMark');
+                        clearMyVar('SrcJu_searchMark');
                         refreshPage(false);
                         return 'toast://已清空';
                     },sourcefile)
@@ -123,7 +123,7 @@ function SRCSet() {
         title: '分享',
         url: yxdatalist.length == 0 ? "toast://有效聚阅接口为0，无法分享" : $().b64().lazyRule(() => {
             let sharelist;
-            let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+            let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
             if(duoselect.length>0){
                 sharelist = duoselect;
             }else{
@@ -172,13 +172,13 @@ function SRCSet() {
         })
     }
     let jkdatalist;
-    if(getMyVar("seacrhjiekou")){
+    if(getMyVar("SrcJu_seacrhjiekou")){
         jkdatalist = datalist.filter(it=>{
-            return it.name.indexOf(getMyVar("seacrhjiekou"))>-1;
+            return it.name.indexOf(getMyVar("SrcJu_seacrhjiekou"))>-1;
         })
     }else{
         jkdatalist = datalist.filter(it=>{
-            return getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==it.type;
+            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
         })
     }
 
@@ -192,9 +192,9 @@ function SRCSet() {
         }
         */
         let obj = {
-            title: getMyVar("SrcJuJiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
+            title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
             url: $('#noLoading#').lazyRule((it) => {
-                putMyVar("SrcJuJiekouType",it);
+                putMyVar("SrcJu_jiekouType",it);
                 refreshPage(false);
                 return "hiker://empty";
             },it),
@@ -215,11 +215,11 @@ function SRCSet() {
         if(it != "全部"){
             obj.extra = {};
             let longClick = [];
-            if(getMyVar("SrcJuJiekouType")==it){
+            if(getMyVar("SrcJu_jiekouType")==it){
                 longClick.push({
                     title: '批量选择',
                     js: $.toString((jkdatalist) => {
-                        let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+                        let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                         jkdatalist.forEach(data=>{
                             let id = data.type+"_"+data.name;
                             if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
@@ -227,7 +227,7 @@ function SRCSet() {
                                 updateItem(id, {title:'<font color=#3CB371>'+data.name})
                             }
                         })
-                        storage0.putMyVar('duoselect',duoselect);
+                        storage0.putMyVar('SrcJu_duoselect',duoselect);
                         return "hiker://empty";
                     },jkdatalist)
                 })
@@ -240,7 +240,7 @@ function SRCSet() {
     d.push({
         title: "🔍",
         url: $.toString(() => {
-            putMyVar("seacrhjiekou",input);
+            putMyVar("SrcJu_seacrhjiekou",input);
             refreshPage(false);
         }),
         desc: "搜你想要的...",
@@ -251,7 +251,7 @@ function SRCSet() {
     });
     
     jkdatalist.forEach(item => {
-        if(getMyVar("SrcJuJiekouType","全部")=="全部" || getMyVar("SrcJuJiekouType","全部")==item.type){
+        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
@@ -282,7 +282,7 @@ function SRCSet() {
                             let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
                             datalist.splice(index, 1);
                             writeFile(sourcefile, JSON.stringify(datalist));
-                            clearMyVar('searchMark');
+                            clearMyVar('SrcJu_searchMark');
                             refreshPage(false);
                             return 'toast://已删除';
                         },sourcefile,data)
@@ -299,12 +299,12 @@ function SRCSet() {
                             sm = data.name + "已启用";
                         }
                         writeFile(sourcefile, JSON.stringify(datalist));
-                        clearMyVar('searchMark');
+                        clearMyVar('SrcJu_searchMark');
                         refreshPage(false);
                         return 'toast://' + sm;
                     } else if (input=="选择") {
                         let id = data.type+"_"+data.name;
-                        let duoselect = storage0.getMyVar('duoselect')?storage0.getMyVar('duoselect'):[];
+                        let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                         if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
                             duoselect.push(data);
                             updateItem(id, {title:'<font color=#3CB371>'+data.name})
@@ -317,7 +317,7 @@ function SRCSet() {
                             }
                             updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
                         }
-                        storage0.putMyVar('duoselect',duoselect);
+                        storage0.putMyVar('SrcJu_duoselect',duoselect);
                         return "hiker://empty";
                     } else if (input == "改名") {
                         return $(data.name,"输入新名称").input((sourcefile,data)=>{
@@ -326,7 +326,7 @@ function SRCSet() {
                             let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
                             datalist[index].name = input;
                             writeFile(sourcefile, JSON.stringify(datalist));
-                            clearMyVar('searchMark');
+                            clearMyVar('SrcJu_searchMark');
                             refreshPage(false);
                             return 'toast://已重命名';
                         },sourcefile,data)
@@ -351,26 +351,26 @@ function SRCSet() {
 
 function jiekouapi(sourcefile, data) {
     addListener("onClose", $.toString(() => {
-        clearMyVar('jiekoudata');
-        clearMyVar('jiekouname');
-        clearMyVar('jiekouimg');
-        clearMyVar('jiekoutype');
-        clearMyVar('jiekougroup');
-        clearMyVar('jiekouparse');
-        clearMyVar('jiekouerparse');
-        clearMyVar('jiekoupublic');
-        clearMyVar('jiekouedit');
+        clearMyVar('SrcJu_jiekoudata');
+        clearMyVar('SrcJu_jiekouname');
+        clearMyVar('SrcJu_jiekouimg');
+        clearMyVar('SrcJu_jiekoutype');
+        clearMyVar('SrcJu_jiekougroup');
+        clearMyVar('SrcJu_jiekouparse');
+        clearMyVar('SrcJu_jiekouerparse');
+        clearMyVar('SrcJu_jiekoupublic');
+        clearMyVar('SrcJu_jiekouedit');
     }));
-    if (data&&getMyVar('jiekouedit')!="1") {
-        storage0.putMyVar('jiekoudata', data);
-        putMyVar('jiekouedit', '1');
-        putMyVar('jiekouname', data.name);
-        putMyVar('jiekouimg', data.img||"");
-        putMyVar('jiekoutype', data.type||"漫画");
-        putMyVar('jiekougroup', data.group||"");
-        storage0.putMyVar('jiekouparse', data.parse);
-        storage0.putMyVar('jiekouerparse', data.erparse ? data.erparse : "");
-        storage0.putMyVar('jiekoupublic', data.public ? data.public : "");
+    if (data&&getMyVar('SrcJu_jiekouedit')!="1") {
+        storage0.putMyVar('SrcJu_jiekoudata', data);
+        putMyVar('SrcJu_jiekouedit', '1');
+        putMyVar('SrcJu_jiekouname', data.name);
+        putMyVar('SrcJu_jiekouimg', data.img||"");
+        putMyVar('SrcJu_jiekoutype', data.type||"漫画");
+        putMyVar('SrcJu_jiekougroup', data.group||"");
+        storage0.putMyVar('SrcJu_jiekouparse', data.parse);
+        storage0.putMyVar('SrcJu_jiekouerparse', data.erparse ? data.erparse : "");
+        storage0.putMyVar('SrcJu_jiekoupublic', data.public ? data.public : "");
     }
     let d = [];
     d.push({
@@ -378,18 +378,18 @@ function jiekouapi(sourcefile, data) {
         col_type: 'input',
         desc: "接口名称",
         extra: {
-            defaultValue: getMyVar('jiekouname') || "",
+            defaultValue: getMyVar('SrcJu_jiekouname') || "",
             titleVisible: false,
             onChange: $.toString(() => {
-                putMyVar('jiekouname', input);
+                putMyVar('SrcJu_jiekouname', input);
             })
         }
     });
     d.push({
-        title: '接口类型：'+ getMyVar('jiekoutype','漫画'),
+        title: '接口类型：'+ getMyVar('SrcJu_jiekoutype','漫画'),
         col_type: 'text_1',
         url: $(runModes,2,"接口类型").select(() => {
-            putMyVar('jiekoutype',input);
+            putMyVar('SrcJu_jiekoutype',input);
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
         }),
@@ -402,22 +402,22 @@ function jiekouapi(sourcefile, data) {
         col_type: 'input',
         desc:"接口图标可留空",
         extra: {
-            defaultValue: getMyVar('jiekouimg') || "",
+            defaultValue: getMyVar('SrcJu_jiekouimg') || "",
             titleVisible: false,
             onChange: $.toString(() => {
-                putMyVar('jiekouimg', input);
+                putMyVar('SrcJu_jiekouimg', input);
             })
         }
     });
     d.push({
-        title: '搜索分组：'+ getMyVar('jiekougroup',''),
+        title: '搜索分组：'+ getMyVar('SrcJu_jiekougroup',''),
         col_type: 'input',
         desc:"搜索分组可留空,强制搜索输入全全",
         extra: {
-            defaultValue: getMyVar('jiekougroup') || "",
+            defaultValue: getMyVar('SrcJu_jiekougroup') || "",
             titleVisible: false,
             onChange: $.toString(() => {
-                putMyVar('jiekougroup', input);
+                putMyVar('SrcJu_jiekougroup', input);
             })
         }
     });
@@ -426,14 +426,14 @@ function jiekouapi(sourcefile, data) {
         col_type: 'input',
         desc: "一级主页数据源, 可以留空",
         extra: {
-            defaultValue: storage0.getMyVar('jiekouparse') || "",
+            defaultValue: storage0.getMyVar('SrcJu_jiekouparse') || "",
             titleVisible: false,
             type: "textarea",
             highlight: true,
             height: 3,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
-                    storage0.putMyVar("jiekouparse", input)
+                    storage0.putMyVar("SrcJu_jiekouparse", input)
                 }
             })
         }
@@ -443,14 +443,14 @@ function jiekouapi(sourcefile, data) {
         col_type: 'input',
         desc: "二级搜索数据源, 可以留空",
         extra: {
-            defaultValue: storage0.getMyVar('jiekouerparse') || "",
+            defaultValue: storage0.getMyVar('SrcJu_jiekouerparse') || "",
             titleVisible: false,
             type: "textarea",
             highlight: true,
             height: 2,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
-                    storage0.putMyVar("jiekouerparse", input)
+                    storage0.putMyVar("SrcJu_jiekouerparse", input)
                 }
             })
         }
@@ -460,14 +460,14 @@ function jiekouapi(sourcefile, data) {
         col_type: 'input',
         desc: "公共变量, {}对象",
         extra: {
-            defaultValue: storage0.getMyVar('jiekoupublic') || "",
+            defaultValue: storage0.getMyVar('SrcJu_jiekoupublic') || "",
             titleVisible: false,
             type: "textarea",
             highlight: true,
             height: 1,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
-                    storage0.putMyVar("jiekoupublic", input)
+                    storage0.putMyVar("SrcJu_jiekoupublic", input)
                 }
             })
         }
@@ -487,10 +487,10 @@ function jiekouapi(sourcefile, data) {
         col_type: 'text_2',
         url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
             setItem("searchtestkey",input);
-            let name = getMyVar('jiekouname');
-            let type = getMyVar('jiekoutype','漫画');
-            let erparse = getMyVar('jiekouerparse');
-            let public = getMyVar('jiekoupublic');
+            let name = getMyVar('SrcJu_jiekouname');
+            let type = getMyVar('SrcJu_jiekoutype','漫画');
+            let erparse = getMyVar('SrcJu_jiekouerparse');
+            let public = getMyVar('SrcJu_jiekoupublic');
             if(!name || !erparse){
                 return "toast://名称或搜索源接口不能为空";
             }
@@ -510,9 +510,9 @@ function jiekouapi(sourcefile, data) {
             if(source){
                 return $("hiker://empty#noRecordHistory##noHistory###fypage").rule((name,sdata) => {
                     addListener("onClose", $.toString(() => {
-                        clearMyVar('SrcJuSousuoTest');
+                        clearMyVar('SrcJu_sousuoTest');
                     }));
-                    putMyVar('SrcJuSousuoTest','1');
+                    putMyVar('SrcJu_sousuoTest','1');
                     let d = [];
                     require(config.依赖);
                     d = search(name,"sousuotest",sdata);
@@ -535,23 +535,23 @@ function jiekouapi(sourcefile, data) {
         title: '保存接口',
         col_type: 'text_2',
         url: $().lazyRule((sourcefile,oldtype,runModes) => {
-            if (!getMyVar('jiekouname')) {
+            if (!getMyVar('SrcJu_jiekouname')) {
                 return "toast://名称不能为空";
             }
-            if (!getMyVar('jiekouparse') && !getMyVar('jiekouerparse')) {
+            if (!getMyVar('SrcJu_jiekouparse') && !getMyVar('SrcJu_jiekouerparse')) {
                 return "toast://主页源数据和搜索源数据不能同时为空";
             }
             try {
-                let name = getMyVar('jiekouname');
-                let img = getMyVar('jiekouimg');
+                let name = getMyVar('SrcJu_jiekouname');
+                let img = getMyVar('SrcJu_jiekouimg');
                 if (runModes.indexOf(name)>-1) {
                     return "toast://接口名称不能属于类型名";
                 }
-                let type = getMyVar('jiekoutype','漫画');
-                let group = getMyVar('jiekougroup');
-                let parse = getMyVar('jiekouparse');
-                let erparse = getMyVar('jiekouerparse');
-                let public = getMyVar('jiekoupublic');
+                let type = getMyVar('SrcJu_jiekoutype','漫画');
+                let group = getMyVar('SrcJu_jiekougroup');
+                let parse = getMyVar('SrcJu_jiekouparse');
+                let erparse = getMyVar('SrcJu_jiekouerparse');
+                let public = getMyVar('SrcJu_jiekoupublic');
                 let newapi = {
                     name: name,
                     type: type
@@ -601,16 +601,16 @@ function jiekouapi(sourcefile, data) {
                     var datalist = [];
                 }
                 let index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==type||!d.type))[0]);
-                if (index > -1 && getMyVar('jiekouedit') != "1") {
+                if (index > -1 && getMyVar('SrcJu_jiekouedit') != "1") {
                     return "toast://已存在-" + name;
                 } else {
                     index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==oldtype||!d.type))[0]);
-                    if (getMyVar('jiekouedit') == "1" && index > -1) {
+                    if (getMyVar('SrcJu_jiekouedit') == "1" && index > -1) {
                         datalist.splice(index, 1);
                     }
                     datalist.push(newapi);
                     writeFile(sourcefile, JSON.stringify(datalist));
-                    clearMyVar('searchMark');
+                    clearMyVar('SrcJu_searchMark');
                     deleteFile('hiker://files/_cache/'+type+'_'+name+'.json');
                     back(true);
                     return "toast://已保存";
@@ -661,7 +661,7 @@ function JYimport(input) {
                 }
             }
             writeFile(sourcefile, JSON.stringify(datalist));
-            clearMyVar('searchMark');
+            clearMyVar('SrcJu_searchMark');
             hideLoading();
             refreshPage(false);
             return "toast://合计" + datalist2.length + "个，导入" + num + "个";
