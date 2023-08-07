@@ -136,9 +136,9 @@ function SRCSet() {
                 if(input=='文件分享'){
                     let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
                     //let code = '聚阅接口￥' + sharetxt + '￥共' + sharelist.length + '条('+input+')';
-                    //let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.hiker';
+                    //let sharefile = 'hiker://files/_cache/JYshare_'+$.dateFormat(new Date(),"MMddHHmmss")+'.hiker';
                     //writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
-                    let sharefile = 'hiker://files/_cache/share_'+$.dateFormat(new Date(),"yyyyMMddHHmmss")+'.txt';
+                    let sharefile = 'hiker://files/_cache/JYshare_'+$.dateFormat(new Date(),"MMddHHmmss")+'.txt';
                     writeFile(sharefile, sharetxt);
                     if(fileExist(sharefile)){
                         return 'share://'+sharefile;
@@ -649,9 +649,11 @@ function JYimport(input) {
                 if (Juconfig['ImportType']!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                     let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
                     datalist.splice(index, 1);
+                    datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                     datalist.push(datalist2[i]);
                     num = num + 1;
                 }else if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
+                    datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                     datalist.push(datalist2[i]);
                     num = num + 1;
                 }
