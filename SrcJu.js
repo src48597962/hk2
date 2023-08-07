@@ -38,7 +38,7 @@ function yiji() {
             }
             页码 = parse["页码"];
             提示 = "当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : "");
-            if(!getMyVar(runMode+"_"+sourcename)){
+            if(!getMyVar("SrcJu_"+runMode+"_"+sourcename)){
                 toast(提示);
             }
         }
@@ -50,7 +50,7 @@ function yiji() {
     let d = [];
     if(MY_PAGE==1){
         clearItem('searchmode');//临时先去掉视界聚合代理搜索
-        if(getMyVar('SrcJu-VersionCheck', '0') == '0'){
+        if(getMyVar('SrcJu_versionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
             if(programversion<11){
                 confirm({
@@ -252,7 +252,7 @@ function yiji() {
         d.push({
             col_type: 'blank_block'
         })
-        putMyVar(runMode+"_"+sourcename, "1");
+        putMyVar("SrcJu_"+runMode+"_"+sourcename, "1");
     }
     try{
         getYiData('主页', d);
@@ -574,9 +574,9 @@ function erji() {
                         } 
                     });
                     putMyVar("listloading","1");//做为排序和样式动态处理插入列表时查找id判断
-                    if(getMyVar('SrcJuSousuoTest')){
+                    if(getMyVar('SrcJu_sousuoTest')){
                         return "toast://编辑测试模式下不允许换源.";
-                    }else if(!getMyVar('SrcJuSearching')){
+                    }else if(!getMyVar('SrcJu_searching')){
                         clearMyVar('已选择换源列表');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
@@ -584,7 +584,7 @@ function erji() {
                         search(name,"erji",false,sgroup,stype);
                         hideLoading();
                         return  "hiker://empty";
-                    }else if(getMyVar('SrcJuSearchMode')=="sousuo"){
+                    }else if(getMyVar('SrcJu_searchMode')=="sousuo"){
                         return "toast://上一个搜索线程还未结束，稍等...";
                     }else{
                         clearMyVar('已选择换源列表');
@@ -911,7 +911,7 @@ function erji() {
             }
         });
         setResult(d);
-        if(!getMyVar('SrcJuSousuoTest') && !getMyVar("调试模式")){
+        if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("调试模式")){
             showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup,stype);
         }
@@ -965,8 +965,8 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
     //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
-    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('sousuoPageType',type||''):"listloading";
-    if((mode=="sousuo") && getMyVar('SrcJuSearching')=="1"){
+    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('SrcJu_sousuoType',type||''):"listloading";
+    if((mode=="sousuo") && getMyVar('SrcJu_searching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
             let waittime = 10;
@@ -981,15 +981,15 @@ function search(keyword, mode, sdata, group, type) {
         }
     }
     let name = keyword.split('  ')[0];
-    let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
+    let searchMark = storage0.getMyVar('SrcJu_searchMark') || {};//二级换源缓存
     if(mode=="erji" && searchMark[name]){
         addItemBefore(updateItemid, searchMark[name]);
         updateItem(updateItemid, {
-            title: getMyVar('SrcJuSearching')=="1"?"‘‘’’<small>搜索中</small>":"‘‘’’<small>当前搜索为缓存</small>",
+            title: getMyVar('SrcJu_searching')=="1"?"‘‘’’<small>搜索中</small>":"‘‘’’<small>当前搜索为缓存</small>",
             url: $("确定删除“"+name+"”搜索缓存吗？").confirm((name)=>{
-                let searchMark = storage0.getMyVar('searchMark') || {};
+                let searchMark = storage0.getMyVar('SrcJu_searchMark') || {};
                 delete searchMark[name];
-                storage0.putMyVar('searchMark', searchMark);
+                storage0.putMyVar('SrcJu_searchMark', searchMark);
                 refreshPage(true);
                 return "toast://已清除";
             },name)
@@ -1009,7 +1009,7 @@ function search(keyword, mode, sdata, group, type) {
             url: "hiker://empty",
         });
     }
-    if(mode!="jusousuo" && mode!="sousuopage" && getMyVar('SrcJuSearching')=="1"){
+    if(mode!="jusousuo" && mode!="sousuopage" && getMyVar('SrcJu_searching')=="1"){
         toast("上次搜索线程还未结束，等等再来");
         if(mode=="sousuotest"){
             return [];
@@ -1042,8 +1042,8 @@ function search(keyword, mode, sdata, group, type) {
             sssname = keyword2 || sourcename;
         }
     }
-    putMyVar('SrcJuSearchMode',mode);
-    putMyVar('SrcJuSearching','1');
+    putMyVar('SrcJu_searchMode',mode);
+    putMyVar('SrcJu_searching','1');
     let success = 0;
     let results = [];
     let ssdatalist = [];
@@ -1169,10 +1169,10 @@ function search(keyword, mode, sdata, group, type) {
                     if(data.length>0){
                         success++;
                         if(mode=="erji"){
-                            let searchMark = storage0.getMyVar('searchMark') || {};//二级换源缓存
+                            let searchMark = storage0.getMyVar('SrcJu_searchMark') || {};//二级换源缓存
                             searchMark[name] = searchMark[name] || [];
                             searchMark[name] = searchMark[name].concat(data);
-                            storage0.putMyVar('searchMark', searchMark);
+                            storage0.putMyVar('SrcJu_searchMark', searchMark);
                             if(!getMyVar('已选择换源列表')){
                                 addItemBefore("listloading", data);
                             }
@@ -1198,8 +1198,8 @@ function search(keyword, mode, sdata, group, type) {
             storage0.putMyVar('searchMark', searchMark);
         }
         */
-        clearMyVar('SrcJuSearching');
-        clearMyVar('SrcJuSearchMode');
+        clearMyVar('SrcJu_searching');
+        clearMyVar('SrcJu_searchMode');
         if(mode=="sousuotest"||mode=="jusousuo"){
             return results;
         }else{
@@ -1207,8 +1207,8 @@ function search(keyword, mode, sdata, group, type) {
             updateItem(updateItemid, { title: sousuosm });
         }
     } else {
-        clearMyVar('SrcJuSearching');
-        clearMyVar('SrcJuSearchMode');
+        clearMyVar('SrcJu_searching');
+        clearMyVar('SrcJu_searchMode');
         if(page==1){
             toast("无接口");
             if(mode=="sousuo"||mode=="sousuopage"){
@@ -1290,7 +1290,7 @@ function Version() {
     var nowVersion = getItem('Version', "0.1");//现在版本 
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime', '0').replace('time', ''));
-    if (getMyVar('SrcJu-VersionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
+    if (getMyVar('SrcJu_versionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
         try {
             eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/', '/master/') + 'SrcTmplVersion.js'))
             if (parseFloat(newVersion.SrcJu) > parseFloat(nowVersion)) {
@@ -1308,31 +1308,31 @@ function Version() {
                 })
                 log('√检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
             }
-            putMyVar('SrcJu-Version', '-V' + newVersion.SrcJu);
+            putMyVar('SrcJu_Version', '-V' + newVersion.SrcJu);
         } catch (e) { }
-        putMyVar('SrcJu-VersionCheck', '1');
+        putMyVar('SrcJu_versionCheck', '1');
     } else {
-        putMyVar('SrcJu-Version', '-V' + nowVersion);
+        putMyVar('SrcJu_Version', '-V' + nowVersion);
     }
 }
 //新搜索页
 function newsousuopage(keyword,searchtype,relyfile) {
     addListener("onClose", $.toString(() => {
-        if(getMyVar('SrcJuCfg')){
+        if(getMyVar('SrcJu_rely')){
             initConfig({
-                依赖: getMyVar('SrcJuCfg')
+                依赖: getMyVar('SrcJu_rely')
             });
-            clearMyVar('SrcJuCfg');
+            clearMyVar('SrcJu_rely');
         }
-        clearMyVar('sousuoname');
-        clearMyVar('sousuoPageType');
+        clearMyVar('SrcJu_sousuoName');
+        clearMyVar('SrcJu_sousuoType');
         putMyVar("SrcJu_停止搜索线程", "1");
     }));
     addListener('onRefresh', $.toString(() => {
-        clearMyVar('sousuoname');
+        clearMyVar('SrcJu_sousuoName');
     }));
-    if(!getMyVar('SrcJuCfg') && config.依赖){
-        putMyVar('SrcJuCfg',config.依赖);
+    if(!getMyVar('SrcJu_rely') && config.依赖){
+        putMyVar('SrcJu_rely',config.依赖);
     }
     if(relyfile){
         initConfig({
@@ -1344,7 +1344,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         title: "🔍",
         url: $.toString(() => {
             if(input){
-                putMyVar('sousuoname',input);
+                putMyVar('SrcJu_sousuoName',input);
                 let recordlist = storage0.getItem('searchrecord') || [];
                 if(recordlist.indexOf(input)>-1){
                     recordlist = recordlist.filter((item) => item !== input);
@@ -1360,7 +1360,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         desc: "搜你想要的...",
         col_type: "input",
         extra: {
-            defaultValue: getMyVar('sousuoname',keyword||''),
+            defaultValue: getMyVar('SrcJu_sousuoName',keyword||''),
             titleVisible: true
         }
     });
@@ -1368,9 +1368,9 @@ function newsousuopage(keyword,searchtype,relyfile) {
     let typebtn = runModes;
     typebtn.forEach((it,i) =>{
         let obj = {
-            title: getMyVar("sousuoPageType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+            title: getMyVar("SrcJu_sousuoType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
-                putMyVar("sousuoPageType",it);
+                putMyVar("SrcJu_sousuoType",it);
                 refreshPage(false);
                 return "hiker://empty";
             },it),
@@ -1381,7 +1381,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
             obj["extra"].longClick = [{
                 title:"🔍聚影搜索",
                 js: $.toString(()=>{
-                    putMyVar("sousuoPageType","聚影");
+                    putMyVar("SrcJu_sousuoType","聚影");
                     refreshPage(false);
                     return "hiker://empty";
                 })
@@ -1418,7 +1418,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         d.push({
             title: item,
             url: $().lazyRule((input) => {
-                putMyVar('sousuoname',input);
+                putMyVar('SrcJu_sousuoName',input);
                 refreshPage(true);
                 return "hiker://empty";
             },item),
@@ -1434,21 +1434,21 @@ function newsousuopage(keyword,searchtype,relyfile) {
         col_type: 'text_center_1',
         url: "hiker://empty",
         extra: {
-            id: getMyVar('sousuoPageType')=="聚影"?"loading":"sousuoloading"+getMyVar('sousuoPageType', searchtype||runMode),
+            id: getMyVar('SrcJu_sousuoType')=="聚影"?"loading":"sousuoloading"+getMyVar('SrcJu_sousuoType', searchtype||runMode),
             lineVisible: false
         }
     });
     setResult(d);
-    let name = getMyVar('sousuoname',keyword||'');
+    let name = getMyVar('SrcJu_sousuoName',keyword||'');
     if(name){
         deleteItemByCls('searchrecord');
-        if(getMyVar('sousuoPageType')=="聚影"){
+        if(getMyVar('SrcJu_sousuoType')=="聚影"){
             relyfile = relyfile || config.依赖;
             require(relyfile.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
             xunmi(name);
         }else{
             let info = storage0.getMyVar('一级源接口信息') || {};
-            let type = getMyVar("sousuoPageType", searchtype||info.type);
+            let type = getMyVar("SrcJu_sousuoType", searchtype||info.type);
             search(name,"sousuopage",false,info.group,type);
         }
     }
