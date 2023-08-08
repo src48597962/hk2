@@ -20,7 +20,7 @@ let yidata = {
     "主页": function () {
         //log(公共);
         let d = [];
-        MY_URL = "https://m.taomanhua.com";
+        MY_URL = "https://m.kanman.com";
         let html = request(MY_URL);
         var Label_set = pdfa(html, '#js_content&&.mult.sow')
         Label_set.forEach((data) => {
@@ -53,7 +53,7 @@ let yidata = {
         var class_Name = MY_RULE.title + "分类"
         if (当前页 == 1) {
             if (!getMyVar(class_Name)) {
-                var codes = request('https://m.taomanhua.com/sort/');
+                var codes = request('https://m.kanman.com/sort/');
                 putMyVar(class_Name, codes)
             }else{
                 var codes = getMyVar(class_Name)
@@ -96,7 +96,7 @@ let yidata = {
             List_of_options(分类项, 类别)
             List_of_options(排序项, 排序)
         }
-        var 分类post = 'https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
+        var 分类post = 'https://m.kanman.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=@@&search_key=&comic_sort=**&size=30&page=~~'
         var code = JSON.parse(request(分类post.replace('**', 类别名).replace('@@', 排序名).replace('~~', 当前页))).data.data;
         code.forEach((data) => {
             d.push({
@@ -104,7 +104,7 @@ let yidata = {
                 desc: data.last_chapter_name,
                 pic_url: data.cover_img + "@Referer=",
                 col_type: "movie_3_marquee",
-                url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
+                url: 'https://m.kanman.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
                 extra: {
                     name: data.comic_name//如果title不等于片名，则可以单独传extra.name
                 }
@@ -116,7 +116,7 @@ let yidata = {
         let d = [];
         let update_url = MY_RULE.title + "更新"
         if (!getMyVar(update_url)) {
-            putMyVar(update_url, request("https://m.taomanhua.com/api/updatelist/?product_id=3&productname=smh&platformname=wap"))
+            putMyVar(update_url, request("https://m.kanman.com/api/updatelist/?product_id=3&productname=smh&platformname=wap"))
         }
         let code = JSON.parse(getMyVar(update_url)).data.update
         let lisr_s = [];
@@ -144,9 +144,9 @@ let yidata = {
             d.push({//主页源不需要url
                 title: '‘‘’’<b>'+data.comic_name+'</b> <small>\n最新：<font color="#FA7298">'+data.comic_chapter_name+'</font>\n作者：'+data.author_name+'</small>',
                 desc:'‘‘’’<font color="#274c5e">分类：'+data.comic_type.join(" | ")+'\n简介：'+data.comic_feature+'</font>' ,
-                pic_url: data.feature_img + "@Referer=https://m.taomanhua.com/",
+                pic_url: data.feature_img + "@Referer=https://m.kanman.com/",
                 col_type: "movie_1_vertical_pic",
-                url: 'https://m.taomanhua.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
+                url: 'https://m.kanman.com/'+data.comic_newid,//如果只有主页源，这里就可以不用传url
                 extra: {
                     name : data.comic_name//如果title不等于片名，则可以单独传extra.name
                 }
@@ -158,9 +158,9 @@ let yidata = {
     "排行": function() {
         let d = [];
         let list_name = MY_RULE.title + "排行榜"
-        let list_url = getMyVar(list_name, 'https://m.taomanhua.com/top/dianji.html');
+        let list_url = getMyVar(list_name, 'https://m.kanman.com/top/all.html');
         let code = request(list_url);
-        let url_wzqz = 'https://m.taomanhua.com';
+        let url_wzqz = 'https://m.kanman.com';
         MY_URL=url_wzqz;
         let list_class = pdfa(code, '#J_rankOptionMenu&&li')
         list_class.forEach((data) => {
@@ -183,9 +183,9 @@ let yidata = {
         pdfa(code, 'li.comic-rank-top&&.comic-item').forEach((data, id) => {
             d.push({//主页源不需要url
                 title: pdfh(data, 'a&&title').split(',')[0],
-                url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
+                url: 'https://m.kanman.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 desc: '：第' + (id + 1) + '名',
-                pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.taomanhua.com/",
+                pic_url: 'https:'+pdfh(data, '.comic-cover&&data-src').replace('-300x400.jpg', '') + "@Referer=https://m.kanman.com/",
                 col_type: "movie_3_marquee"
             });
         })
@@ -193,7 +193,7 @@ let yidata = {
             d.push({//主页源不需要url
                 title: '‘‘’’<b>' + pdfh(data, 'h3&&Text') + '</b> <small>&nbsp;&nbsp;&nbsp;&nbsp;排名：<font color="#FA7298"><b> ' + pdfh(data, '.order&&Text') + '  名</b></font>&nbsp;&nbsp;&nbsp;&nbsp;作者：' + pdfh(data, '.comic-author&&Text') + '</small>',
                 desc: '‘‘’’<font color="#004e66">动态：' + pdfh(data, '.clearfix&&.statistics&&Text') + '&nbsp;&nbsp;&nbsp;&nbsp;分类：' + pdfa(data, '.sort-list&&a').map(datas => pdfh(datas, 'Text')).join(" | ") + '</font>',
-                url: 'https://m.taomanhua.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
+                url: 'https://m.kanman.com'+pdfh(data, 'a&&href'),//如果只有主页源，这里就可以不用传url
                 col_type: 'text_1',
                 extra: {
                     name: pdfh(data, 'h3&&Text')//如果title不等于片名，则可以单独传extra.name
@@ -208,7 +208,7 @@ let erdata = {
     "作者": "嗨又是我",//接口作者
     "搜索": function (name,page) {//聚合搜索换源列表数据，搜索关键字为name,页码为page
         let d = [];
-        let ssurl = "https://m.taomanhua.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page="+page+"&size=30";
+        let ssurl = "https://m.kanman.com/api/getsortlist/?product_id=3&productname=smh&platformname=wap&orderby=click&search_key=" + name + "&page="+page+"&size=30";
         let code = JSON.parse(request(ssurl)).data.data
         code.forEach(item => {
             if (item.comic_name.includes(name)) {
@@ -216,7 +216,7 @@ let erdata = {
                     title: item.comic_name,//名称
                     desc: item.last_chapter_name,//更新状态或最新章节
                     pic_url: item.cover_img + "@Referer=",//网站图标
-                    url: "https://m.taomanhua.com/" + item.comic_newid,//原站二级链接,因为在多线程中MY_URL会变，所以不要用pd取
+                    url: "https://m.kanman.com/" + item.comic_newid,//原站二级链接,因为在多线程中MY_URL会变，所以不要用pd取
                 });
             }
         });
@@ -235,7 +235,7 @@ let erdata = {
         let 选集 = pdfa(html, '#js_chapters&&li').map((data) => {
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'Text')
-            选集列表.url = "https://m.taomanhua.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
+            选集列表.url = "https://m.kanman.com/api/getchapterinfov2?product_id=1&productname=kmh&platformname=wap&isWebp=1&quality=high&comic_id="+dataid+"&chapter_newid="+pdfh(data, 'a&&href').replace('.html', '').split('/')[2];
             return 选集列表;//列表数组含title和url就行
         })
         return { //如果有多线路，则传line: 线路数组, 则list应为多线路合并后的数组[线路1选集列表，线路2选集列表]
@@ -248,7 +248,7 @@ let erdata = {
     },
     "解析": function(url) {//url为播放链接必传，小说的解析按第1个d.title写标题，第2个d.title写下载，确保小说可下载
         let code = JSON.parse(request(url, {timeout:8000})).data.current_chapter.chapter_img_list;
-        return "pics://" + code.join("@Referer=https://m.taomanhua.com/&&") + '@Referer=https://m.taomanhua.com/';
+        return "pics://" + code.join("@Referer=https://m.kanman.com/&&") + '@Referer=https://m.kanman.com/';
     },
     "最新": function(url) {//收藏获取最新章节，surl为详情页链接
         return pdfh(request(url, {timeout:8000}), '#js_chapter-reverse&&.last-chapter&&Text');
@@ -256,5 +256,5 @@ let erdata = {
 }
 
 let ggdata = {
-    host: "https://m.taomanhua.com"
+    host: "https://m.kanman.com"
 }
