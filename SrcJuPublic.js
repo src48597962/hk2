@@ -55,13 +55,14 @@ function selectsource(input) {
         }
         try{
             let listMyVar = listMyVarKeys();
+            log(listMyVar);
             listMyVar.forEach(it=>{
                 if(!/^SrcJu_/.test(it)){
                     clearMyVar(it);
                 }
             })
         }catch(e){
-            log(e.message);
+            log('清MyVar失败>'+e.message);
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
             clearMyVar(MY_RULE.title + "类别");
