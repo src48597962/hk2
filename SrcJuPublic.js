@@ -55,9 +55,9 @@ function selectsource(input) {
         }
         try{
             let listMyVar = listMyVarKeys();
-            log(listMyVar);
             listMyVar.forEach(it=>{
-                if(!/^SrcJu_/.test(it)){
+                if(!/^SrcJu_|initConfig/.test(it)){
+                    log(it);
                     clearMyVar(it);
                 }
             })
