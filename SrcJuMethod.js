@@ -6,17 +6,17 @@ function toerji(item,info) {
     extra.img = extra.img || item.pic_url || item.img;
     extra.stype = info.type;
     extra.pageTitle = extra.pageTitle || extra.name;
-    if(item.url && !/js:|select:|\(|\)|=>|@|toast:/.test(item.url)){
+    if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url)){
         extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
         extra.sname = info.name;
+        item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+            require(config.依赖);
+            erji();
+        })
     }
     if((item.col_type!="scroll_button") || item.extra){
         item.extra = extra;
     }
-    item.url = (extra.surl||!item.url)?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-        require(config.依赖);
-        erji();
-    }):item.url
     return item;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
