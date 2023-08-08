@@ -25,7 +25,7 @@ function bookCase() {
     let d = [];
     d.push({
         title: ' 本地下载',
-        url: getMyVar("SrcJuBookType","全部")=="全部"?"hiker://page/Main.view?rule=本地资源管理":"hiker://page/Bookrack.view?rule=本地资源管理&ruleName="+MY_RULE.title+"&type="+(getMyVar("SrcJuBookType")=="漫画"?"comic":"novel"),
+        url: getMyVar("SrcJu_bookCaseType","全部")=="全部"?"hiker://page/Main.view?rule=本地资源管理":"hiker://page/Bookrack.view?rule=本地资源管理&ruleName="+MY_RULE.title+"&type="+(getMyVar("SrcJu_bookCaseType")=="漫画"?"comic":"novel"),
         img: "https://hikerfans.com/tubiao/messy/70.svg",
         col_type: "icon_2"
     });
@@ -53,9 +53,9 @@ function bookCase() {
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         d.push({
-            title: getMyVar("SrcJuBookType","全部")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+            title: getMyVar("SrcJu_bookCaseType","全部")==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
-                putMyVar("SrcJuBookType",it);
+                putMyVar("SrcJu_bookCaseType",it);
                 refreshPage(false);
                 return "hiker://empty";
             },it),
@@ -67,7 +67,7 @@ function bookCase() {
         try{
             let params = JSON.parse(it.params);
             let stype = JSON.parse(params.params).stype;
-            if(getMyVar("SrcJuBookType")==stype || getMyVar("SrcJuBookType","全部")=="全部"){
+            if(getMyVar("SrcJu_bookCaseType")==stype || getMyVar("SrcJu_bookCaseType","全部")=="全部"){
                 let name = it.mTitle.indexOf(JSON.parse(params.params).name)>-1?JSON.parse(params.params).name:it.mTitle;
                 let sname = JSON.parse(params.params).sname;
                 let surl = JSON.parse(params.params).surl;
@@ -82,7 +82,7 @@ function bookCase() {
                     url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
-                        putMyVar('SrcBookCase','1');
+                        putMyVar('从书架进二级','1');
                     }),
                     col_type: col,
                     extra: {
