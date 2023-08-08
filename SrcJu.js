@@ -38,7 +38,7 @@ function yiji() {
             }
             页码 = parse["页码"];
             提示 = "当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : "");
-            if(!getMyVar("SrcJu_"+runMode+"_"+sourcename)){
+            if(!getMyVar(runMode+"_"+sourcename)){
                 toast(提示);
             }
         }
@@ -252,7 +252,7 @@ function yiji() {
         d.push({
             col_type: 'blank_block'
         })
-        putMyVar("SrcJu_"+runMode+"_"+sourcename, "1");
+        putMyVar(runMode+"_"+sourcename, "1");
     }
     try{
         getYiData('主页', d);
@@ -267,25 +267,23 @@ function yiji() {
 //二级+源搜索
 function erji() {
     addListener("onClose", $.toString(() => {
-        clearMyVar('erjidetails');
-        clearMyVar('erjiextra');
-        clearMyVar('SrcJudescload');
-        clearMyVar('已选择换源列表');
+        clearMyVar('二级详情临时对象');
+        clearMyVar('二级附加临时对象');
+        clearMyVar('二级简介打开标识');
+        clearMyVar('换源变更列表id');
         clearMyVar('二级源接口信息');
-        clearMyVar("listloading");
-        if(getMyVar('SrcBookCase')){
-            clearMyVar('SrcBookCase');
+        if(getMyVar('从书架进二级')){
+            clearMyVar('从书架进二级');
             refreshPage(false);
         }
     }));
-    clearMyVar('SrcJudescload');
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
-    let erjidetails = storage0.getMyVar('erjidetails') || {};//二级海报等详情临时保存
+    let erjidetails = storage0.getMyVar('二级详情临时对象') || {};//二级海报等详情临时保存
     erjidetails.name = erjidetails.name || MY_PARAMS.name;
     let name = erjidetails.name.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim();
-    let myerjiextra = storage0.getMyVar('erjiextra') || {};//二级换源时临时extra数据
+    let myerjiextra = storage0.getMyVar('二级附加临时对象') || {};//二级换源时临时extra数据
     let d = [];
     let parse;
     let 公共;
@@ -486,11 +484,11 @@ function erji() {
             d.push({
                 title: "详情简介",
                 url: $("#noLoading#").lazyRule((desc) => {
-                    if(getMyVar('SrcJudescload')=="1"){
-                        clearMyVar('SrcJudescload');
+                    if(getMyVar('二级简介打开标识')=="1"){
+                        clearMyVar('二级简介打开标识');
                         deleteItemByCls("SrcJudescload");
                     }else{
-                        putMyVar('SrcJudescload',"1");
+                        putMyVar('二级简介打开标识',"1");
                         addItemAfter('detailid', [{
                             title: `<font color="#098AC1">详情简介 </font><small><font color="#f47983"> ></font></small>`,
                             col_type: "avatar",
@@ -573,11 +571,10 @@ function erji() {
                             lineVisible: false
                         } 
                     });
-                    putMyVar("listloading","1");//做为排序和样式动态处理插入列表时查找id判断
                     if(getMyVar('SrcJu_sousuoTest')){
                         return "toast://编辑测试模式下不允许换源.";
                     }else if(!getMyVar('SrcJu_searching')){
-                        clearMyVar('已选择换源列表');
+                        clearMyVar('换源变更列表id');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
@@ -587,7 +584,7 @@ function erji() {
                     }else if(getMyVar('SrcJu_searchMode')=="sousuo"){
                         return "toast://上一个搜索线程还未结束，稍等...";
                     }else{
-                        clearMyVar('已选择换源列表');
+                        clearMyVar('换源变更列表id');
                         require(config.依赖);
                         deleteItemByCls('loadlist');
                         showLoading('搜源中,请稍后.');
@@ -648,7 +645,7 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = item.type;
                     })
-                    addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
+                    addItemBefore(getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);//排序和样式动态处理插入列表时查找id
                     return 'toast://切换排序成功'
                 }, sname),
                 col_type: 'scroll_button',
@@ -674,7 +671,7 @@ function erji() {
                             delete item.extra.textAlign;
                         }
                     })
-                    addItemBefore(getMyVar("listloading","1")=="1"?"listloading":"listloading2", 列表);
+                    addItemBefore(getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }),
@@ -830,15 +827,12 @@ function erji() {
     }
 
     if (isload) {
-        if(getMyVar('已选择换源列表')){
-            putMyVar("listloading","2");
-        }
         d.push({
             title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + (sauthor?", 作者：" + sauthor:"") + "</font></small>",
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
-                id: getMyVar('已选择换源列表')?"listloading2":"listloading",
+                id: getMyVar('换源变更列表id')?"listloading2":"listloading",
                 lineVisible: false
             }
         });
@@ -852,7 +846,7 @@ function erji() {
             setPagePicUrl(erjiextra.img);
         }
         //二级详情简介临时信息
-        storage0.putMyVar('erjidetails',erjidetails);
+        storage0.putMyVar('二级详情临时对象',erjidetails);
         //二级源浏览记录保存
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype, lineid: lineid, pageid: pageid };
         setMark(erjidata);
@@ -916,7 +910,7 @@ function erji() {
             search(name,"erji",false,sgroup,stype);
         }
     }
-    clearMyVar('已选择换源列表');
+    clearMyVar('换源变更列表id');
 }
 //搜索页面
 function sousuo() {
@@ -1125,12 +1119,12 @@ function search(keyword, mode, sdata, group, type) {
                                 require(config.依赖);
                                 erji();
                             }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
-                                if(getMyVar('已选择换源列表')){
+                                if(getMyVar('换源变更列表id')){
                                     return "toast://请勿重复点击，稍等...";
                                 }else{
-                                    putMyVar('已选择换源列表','1');
+                                    putMyVar('换源变更列表id','1');
                                     clearMyVar(extra.sname+"_"+extra.name);
-                                    storage0.putMyVar('erjiextra', extra);
+                                    storage0.putMyVar('二级附加临时对象', extra);
                                     refreshPage(false);
                                     return "toast://已切换源：" + extra.sname;
                                 }
@@ -1173,7 +1167,7 @@ function search(keyword, mode, sdata, group, type) {
                             searchMark[name] = searchMark[name] || [];
                             searchMark[name] = searchMark[name].concat(data);
                             storage0.putMyVar('SrcJu_searchMark', searchMark);
-                            if(!getMyVar('已选择换源列表')){
+                            if(!getMyVar('换源变更列表id')){
                                 addItemBefore("listloading", data);
                             }
                             hideLoading();
