@@ -53,17 +53,27 @@ function selectsource(input) {
         }else{
             toast("软件版本过低，可能存在异常");
         }
-        clearMyVar(MY_RULE.title + "分类");
-        clearMyVar(MY_RULE.title + "更新");
-        clearMyVar(MY_RULE.title + "类别");
-        clearMyVar(MY_RULE.title + "地区");
-        clearMyVar(MY_RULE.title + "进度");
-        clearMyVar(MY_RULE.title + "排序");
-        clearMyVar("排名");
-        clearMyVar("分类");
-        clearMyVar("更新");
-        clearMyVar(runMode+"_"+sourcename);
-        clearMyVar("一级源接口信息");
+        try{
+            let listMyVar = listMyVarKeys();
+            listMyVar.fetch(it=>{
+                if(!/^SrcJu_/.test(it)){
+                    log(it);
+                    clearMyVar(it);
+                }
+            })
+        }catch(e){
+            clearMyVar(MY_RULE.title + "分类");
+            clearMyVar(MY_RULE.title + "更新");
+            clearMyVar(MY_RULE.title + "类别");
+            clearMyVar(MY_RULE.title + "地区");
+            clearMyVar(MY_RULE.title + "进度");
+            clearMyVar(MY_RULE.title + "排序");
+            clearMyVar("排名");
+            clearMyVar("分类");
+            clearMyVar("更新");
+            clearMyVar(runMode+"_"+sourcename);
+            clearMyVar("一级源接口信息");
+        }
         Juconfig["runMode"] = runMode;
         Juconfig[runMode+'sourcename'] = input;
         writeFile(cfgfile, JSON.stringify(Juconfig));
