@@ -353,7 +353,7 @@ function erji() {
             MY_URL = surl;
             sauthor = parse["作者"];
             let detailsmark;
-            if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息') && !getMyVar("调试模式")){
+            if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息') && !getMyVar("SrcJu_调试模式")){
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
                     try{
@@ -699,23 +699,6 @@ function erji() {
                         }
                     })
                 })
-                /*
-                d.push({
-                    title: `““””<b><span style="color: #AABBFF">`+线路s[lineid]+`<small>⚡</small></span></b>`,
-                    url: $(线路s,2,"选择线路").select((线路s,surl,lineid) => {
-                        let index = 线路s.indexOf(input);
-                        if(lineid != index){
-                            putMyVar("SrcJu_"+surl+"_line", index);
-                            refreshPage(false);
-                        }
-                        return 'hiker://empty'
-                    }, 线路s, surl, lineid),
-                    col_type: 'scroll_button',
-                    extra: {
-                        cls: "loadlist"
-                    }
-                })
-                */
             }
             if(details.page && details.pageparse){
                 let 分页s = details.page
@@ -763,24 +746,6 @@ function erji() {
                         }
                     })
                 }
-                /*
-                分页s.forEach((it,i)=>{
-                    d.push({
-                        title: pageid==i?'““””<b><span style="color: #87CEFA">'+it.title:it.title,
-                        url: $("#noLoading#").lazyRule((pageurl,nowid,newid) => {
-                            if(nowid != newid){
-                                putMyVar(pageurl, newid);
-                                refreshPage(false);
-                            }
-                            return 'hiker://empty'
-                        }, "SrcJu_"+surl+"_page", pageid, i),
-                        col_type: 'scroll_button',
-                        extra: {
-                            cls: "loadlist"
-                        }
-                    })
-                })
-                */
             }
 
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
@@ -815,7 +780,7 @@ function erji() {
                 });
             }
             
-            if(列表.length>0 || getMyVar('jiekouedit')){
+            if(列表.length>0 || getMyVar('SrcJu_sousuoTest')){
                 isload = 1;
             }else if(列表.length==0){
                 toast("选集列表为空，请更换其他源");
@@ -851,7 +816,7 @@ function erji() {
         let erjidata = { name: name, sname: sname, surl: surl, stype: stype, lineid: lineid, pageid: pageid };
         setMark(erjidata);
         //当前二级详情数据保存
-        if(!getMyVar("调试模式")){
+        if(!getMyVar("SrcJu_调试模式")){
             details.sname = sname;
             details.surl = surl;
             details.pageid = pageid;
@@ -905,7 +870,7 @@ function erji() {
             }
         });
         setResult(d);
-        if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("调试模式")){
+        if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式")){
             showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup,stype);
         }
