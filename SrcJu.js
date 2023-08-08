@@ -573,16 +573,8 @@ function erji() {
                     });
                     if(getMyVar('SrcJu_sousuoTest')){
                         return "toast://编辑测试模式下不允许换源.";
-                    }else if(!getMyVar('SrcJu_searching')){
-                        clearMyVar('换源变更列表id');
-                        require(config.依赖);
-                        deleteItemByCls('loadlist');
-                        showLoading('搜源中,请稍后.');
-                        search(name,"erji",false,sgroup,stype);
-                        hideLoading();
-                        return  "hiker://empty";
                     }else if(getMyVar('SrcJu_searchMode')=="sousuo"){
-                        return "toast://上一个搜索线程还未结束，稍等...";
+                        return "toast://搜索线程还未结束，稍等...";
                     }else{
                         clearMyVar('换源变更列表id');
                         require(config.依赖);
