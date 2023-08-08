@@ -54,11 +54,9 @@ function selectsource(input) {
             toast("软件版本过低，可能存在异常");
         }
         try{
-            log(listMyVarKeys());
             let listMyVar = listMyVarKeys();
-            listMyVar.fetch(it=>{
+            listMyVar.forEach(it=>{
                 if(!/^SrcJu_/.test(it)){
-                    log(it);
                     clearMyVar(it);
                 }
             })
