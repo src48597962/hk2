@@ -132,26 +132,31 @@ function getYiData(type,od) {
                 url: "hiker://empty",
                 col_type: "text_center_1",
             })
+        }else if(data.length>0){
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+            let info = {type: sourcedata[0].type, name: sourcedata[0].name};
+            data.forEach(item => {
+                /*
+                let extra = item.extra || {};
+                extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
+                extra.img = extra.img || item.pic_url || item.img;
+                extra.stype = sourcedata[0].type;
+                extra.pageTitle = extra.pageTitle || extra.name;
+                if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url)){
+                    extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
+                    extra.sname = sourcename;
+                    item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                        require(config.依赖);
+                        erji();
+                    })
+                }
+                if((item.col_type!="scroll_button") || item.extra){
+                    item.extra = extra;
+                }
+                */
+                item = toerji(item,info);
+            })
         }
-
-        data.forEach(item => {
-            let extra = item.extra || {};
-            extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
-            extra.img = extra.img || item.pic_url || item.img;
-            extra.stype = sourcedata[0].type;
-            extra.pageTitle = extra.pageTitle || extra.name;
-            if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url)){
-                extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
-                extra.sname = sourcename;
-                item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                    require(config.依赖);
-                    erji();
-                })
-            }
-            if((item.col_type!="scroll_button") || item.extra){
-                item.extra = extra;
-            }
-        })
         d = d.concat(data);
     }else{
         d.push({
