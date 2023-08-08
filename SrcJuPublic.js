@@ -54,6 +54,7 @@ function selectsource(input) {
             toast("软件版本过低，可能存在异常");
         }
         try{
+            log(listMyVarKeys());
             let listMyVar = listMyVarKeys();
             listMyVar.fetch(it=>{
                 if(!/^SrcJu_/.test(it)){
@@ -62,6 +63,7 @@ function selectsource(input) {
                 }
             })
         }catch(e){
+            log(e.message);
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
             clearMyVar(MY_RULE.title + "类别");
