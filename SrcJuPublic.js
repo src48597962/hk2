@@ -133,6 +133,7 @@ function getYiData(type,od) {
                 col_type: "text_center_1",
             })
         }
+
         data.forEach(item => {
             let extra = item.extra || {};
             extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
@@ -142,33 +143,14 @@ function getYiData(type,od) {
             if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url)){
                 extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
                 extra.sname = sourcename;
+                item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+                    require(config.依赖);
+                    erji();
+                })
             }
             if((item.col_type!="scroll_button") || item.extra){
                 item.extra = extra;
             }
-            item.url = (extra.surl||!item.url)?$('hiker://empty#immersiveTheme##autoCache#').rule(() => {
-                require(config.依赖);
-                erji();
-            }):item.url
-            /*
-            if(extra.stype=="图集" && /js:|select:|\(|\)|=>|toast:/.test(item.url)){
-                extra.longClick = [{
-                    title: "下载本地📥",
-                    js: $.toString(() => {
-                        return "hiker://page/download.view#noRecordHistory##noRefresh##noHistory#?rule=本地资源管理"
-                    })
-                }];
-                extra.chapterList = [{title:"正文", url:item.url.split("@")[0]}],
-                extra.defaultView = "1";
-                extra.info = {
-                    "bookName": extra.name,
-                    "bookTopPic": extra.img,
-                    "parseCode": item.url.split("js:")[1],
-                    "ruleName": MY_RULE.title,
-                    "type": "comic"
-                }
-            }
-            */
         })
         d = d.concat(data);
     }else{
