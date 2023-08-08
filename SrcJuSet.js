@@ -14,9 +14,9 @@ require(publicfile);
 function SRCSet() {
     addListener("onClose", $.toString(() => {
         clearMyVar('SrcJu_duoselect');
-        clearMyVar("SrcJu_seacrhjiekou");
+        clearMyVar("SrcJu_seacrhJiekou");
     }));
-    clearMyVar('duoselect');
+    clearMyVar('SrcJu_duoselect');
     setPageTitle("♥管理"+getMyVar('SrcJu_Version', ''));
     let d = [];
     d.push({
@@ -172,9 +172,9 @@ function SRCSet() {
         })
     }
     let jkdatalist;
-    if(getMyVar("SrcJu_seacrhjiekou")){
+    if(getMyVar("SrcJu_seacrhJiekou")){
         jkdatalist = datalist.filter(it=>{
-            return it.name.indexOf(getMyVar("SrcJu_seacrhjiekou"))>-1;
+            return it.name.indexOf(getMyVar("SrcJu_seacrhJiekou"))>-1;
         })
     }else{
         jkdatalist = datalist.filter(it=>{
@@ -240,7 +240,7 @@ function SRCSet() {
     d.push({
         title: "🔍",
         url: $.toString(() => {
-            putMyVar("SrcJu_seacrhjiekou",input);
+            putMyVar("SrcJu_seacrhJiekou",input);
             refreshPage(false);
         }),
         desc: "搜你想要的...",
