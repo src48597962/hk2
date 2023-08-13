@@ -800,8 +800,9 @@ function erji() {
         putMyVar(sname+"_"+name, "1");
         //更换收藏封面
         log(erjidetails.img);
+        log(erjiextra.img);
         log(oldMY_PARAMS.img);
-        if(erjidetails.img && oldMY_PARAMS.img!=erjidetails.img){
+        if(erjidetails.img && oldMY_PARAMS.img!=erjiextra.img){
             log("1");
             setPagePicUrl(erjidetails.img);
         }
