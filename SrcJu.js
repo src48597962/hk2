@@ -299,7 +299,6 @@ function erji() {
     let pageid;
     let detailload;
     let oldMY_PARAMS = Object.assign({}, MY_PARAMS);
-    log(oldMY_PARAMS);
     let pic;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
@@ -800,12 +799,7 @@ function erji() {
         }
         putMyVar(sname+"_"+name, "1");
         //更换收藏封面
-        log(oldMY_PARAMS);
-        //log(erjidetails.img);
-        //log(erjiextra.img);
-        //log(oldMY_PARAMS.img);
-        if(erjidetails.img && oldMY_PARAMS.img!=erjiextra.img){
-            log("1");
+        if(erjidetails.img && oldMY_PARAMS.img!=erjidetails.img){
             setPagePicUrl(erjidetails.img);
         }
         //二级详情简介临时信息
