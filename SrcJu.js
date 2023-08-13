@@ -298,7 +298,7 @@ function erji() {
     let lineid;
     let pageid;
     let detailload;
-    let oldMY_PARAMS = MY_PARAMS;
+    let oldMY_PARAMS = Object.assign({}, MY_PARAMS);
     log(oldMY_PARAMS);
     let pic;
     for(let i=0; i<datasource.length; i++){
