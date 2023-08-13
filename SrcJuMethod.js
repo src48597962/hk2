@@ -6,7 +6,7 @@ function toerji(item,info) {
     extra.img = extra.img || item.pic_url || item.img;
     extra.stype = info.type;
     extra.pageTitle = extra.pageTitle || extra.name;
-    if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url)){
+    if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url) && item.url!='hiker://empty'){
         extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
         extra.sname = info.name;
         item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
