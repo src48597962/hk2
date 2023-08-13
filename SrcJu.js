@@ -299,6 +299,7 @@ function erji() {
     let pageid;
     let detailload;
     let oldMY_PARAMS = MY_PARAMS;
+    log(oldMY_PARAMS);
     let pic;
     for(let i=0; i<datasource.length; i++){
         if(datasource[i]){
@@ -799,9 +800,10 @@ function erji() {
         }
         putMyVar(sname+"_"+name, "1");
         //更换收藏封面
-        log(erjidetails.img);
-        log(erjiextra.img);
-        log(oldMY_PARAMS.img);
+        log(oldMY_PARAMS);
+        //log(erjidetails.img);
+        //log(erjiextra.img);
+        //log(oldMY_PARAMS.img);
         if(erjidetails.img && oldMY_PARAMS.img!=erjiextra.img){
             log("1");
             setPagePicUrl(erjidetails.img);
