@@ -799,8 +799,8 @@ function erji() {
         }
         putMyVar(sname+"_"+name, "1");
         //更换收藏封面
-        if(erjiextra.img && oldMY_PARAMS.img!=erjiextra.img){
-            setPagePicUrl(erjiextra.img);
+        if(erjidetails.img && oldMY_PARAMS.img!=erjidetails.img){
+            setPagePicUrl(erjidetails.img);
         }
         //二级详情简介临时信息
         storage0.putMyVar('二级详情临时对象',erjidetails);
