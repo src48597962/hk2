@@ -132,6 +132,7 @@ function SRCSet() {
             }
             let pastes = getPastes();
             pastes.push('文件分享');
+            pastes.push('云口令文件');
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
                 if(input=='文件分享'){
                     let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
@@ -144,6 +145,16 @@ function SRCSet() {
                         return 'share://'+sharefile;
                     }else{
                         return 'toast://分享文件生成失败';
+                    }
+                }else if(input=='云口令文件'){
+                    let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
+                    let code = '聚阅接口￥' + sharetxt + '￥云口令文件';
+                    let sharefile = 'hiker://files/_cache/JYimport_'+sharelist.length+'_'+$.dateFormat(new Date(),"HHmmss")+'.txt';
+                    writeFile(sharefile, '云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                    if(fileExist(sharefile)){
+                        return 'share://'+sharefile;
+                    }else{
+                        return 'toast://云口令文件生成失败';
                     }
                 }else{
                     showLoading('分享上传中，请稍后...');
@@ -631,9 +642,7 @@ function JYimport(input) {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
             let datalist2;
-            log(parseurl);
             if(/^http/.test(parseurl)){
-                
                 let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
