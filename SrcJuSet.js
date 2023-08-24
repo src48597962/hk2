@@ -149,7 +149,7 @@ function SRCSet() {
                 }else if(input=='云口令文件'){
                     let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
                     let code = '聚阅接口￥' + sharetxt + '￥云口令文件';
-                    let sharefile = 'hiker://files/_cache/JYimport_'+sharelist.length+'_'+$.dateFormat(new Date(),"HHmmss")+'.txt';
+                    let sharefile = 'hiker://files/_cache/JYimport_'+sharelist.length+'_'+$.dateFormat(new Date(),"HHmmss")+'.hiker';
                     writeFile(sharefile, '云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                     if(fileExist(sharefile)){
                         return 'share://'+sharefile;
