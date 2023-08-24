@@ -97,9 +97,17 @@ function SRCSet() {
                 })
             }else if(input=="文件导入"){
                 return `fileSelect://`+$.toString(()=>{
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                    input = '聚阅接口￥' + aesEncode('SrcJu', input) + '￥文件导入';
-                    JYimport(input)
+                    if(/JYshare_/.test(input) && input.endsWith('txt')){
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        input = '聚阅接口￥' + aesEncode('SrcJu', input) + '￥文件导入';
+                        JYimport(input);
+                    }else if(/JYimport_/.test(input) && input.endsWith('hiker')){
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        let content = fetch('file://'+input);
+                        JYimport(content);
+                    }else{
+                        return "toast://请选择正确的聚阅接口分享文件"
+                    }
                 })
             }
         }),
@@ -646,11 +654,7 @@ function JYimport(input) {
                 let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
-                if(parseurl.endsWith('txt')){
-                    datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
-                }else{
-                    return "toast://请选择聚阅分享的txt文件"
-                }
+                datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
             }else{
                 datalist2 = JSON.parse(parseurl);
             }
