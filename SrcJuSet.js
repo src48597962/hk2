@@ -190,7 +190,30 @@ function SRCSet() {
                                     }else{
                                         let additem = {
                                             title: taskResult.id,
-                                            url: "",
+                                            url: $(["删除", "禁用"], 2).select((id) => {
+                                                let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
+                                                if (input == "删除") {
+                                                    return $("确定删除："+id).confirm((sourcefile,id)=>{
+                                                        let sourcedata = fetch(sourcefile);
+                                                        eval("var datalist=" + sourcedata + ";");
+                                                        let index = datalist.indexOf(datalist.filter(d => d.type+"_"+d.name == id)[0]);
+                                                        datalist.splice(index, 1);
+                                                        writeFile(sourcefile, JSON.stringify(datalist));
+                                                        clearMyVar('SrcJu_searchMark');
+                                                        deleteItem(id);
+                                                        return 'toast://已删除';
+                                                    },sourcefile,id)
+                                                } else if (input == "禁用") {
+                                                    let sourcedata = fetch(sourcefile);
+                                                    eval("var datalist=" + sourcedata + ";");
+                                                    let index = datalist.indexOf(datalist.filter(d => d.type+"_"+d.name == id)[0]);
+                                                    datalist[index].stop = 1;
+                                                    writeFile(sourcefile, JSON.stringify(datalist));
+                                                    clearMyVar('SrcJu_searchMark');
+                                                    deleteItem(id);
+                                                    return 'toast://' + id + "已禁用";
+                                                }
+                                            }, taskResult.id),
                                             col_type: "text_1",
                                             extra: {
                                                 id: taskResult.id
