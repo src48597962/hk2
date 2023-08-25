@@ -47,7 +47,7 @@ function SRCSet() {
     });
     d.push({
         title: '操作',
-        url: $(["批量选择","接口更新","清空接口"], 2).select(() => {
+        url: $(["批量选择","批量测试","接口更新","清空接口"], 2).select(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             if(input=="接口更新"){
                 showLoading("更新中...");
@@ -94,6 +94,11 @@ function SRCSet() {
                 }
                 refreshPage(false);
                 return "toast://"+sm;
+            }else if(input=="批量测试"){
+                return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                    require(config.依赖);
+                    newsousuopage();
+                });
             }
         }),
         img: "https://hikerfans.com/tubiao/more/290.png",
@@ -159,9 +164,6 @@ function SRCSet() {
             return $(pastes, 2 , "选择剪贴板").select((sharelist) => {
                 if(input=='文件分享'){
                     let sharetxt = aesEncode('SrcJu', JSON.stringify(sharelist));
-                    //let code = '聚阅接口￥' + sharetxt + '￥共' + sharelist.length + '条('+input+')';
-                    //let sharefile = 'hiker://files/_cache/JYshare_'+$.dateFormat(new Date(),"MMddHHmmss")+'.hiker';
-                    //writeFile(sharefile,'云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                     let sharefile = 'hiker://files/_cache/JYshare_'+sharelist.length+'_'+$.dateFormat(new Date(),"HHmmss")+'.txt';
                     writeFile(sharefile, sharetxt);
                     if(fileExist(sharefile)){
@@ -227,48 +229,36 @@ function SRCSet() {
         */
         let obj = {
             title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
-            url: getMyVar("SrcJu_jiekouType","全部")==it&&getMyVar("SrcJu_jiekouType")=="全部"?"hiker://empty":getMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it?$('#noLoading#').lazyRule((jkdatalist) => {
-                    jkdatalist = JSON.parse(base64Decode(jkdatalist));
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                    duoselect(jkdatalist);
-                    return "toast://已反选";
-                },base64Encode(JSON.stringify(jkdatalist))):$('#noLoading#').lazyRule((it) => {
-                putMyVar("SrcJu_jiekouType",it);
-                refreshPage(false);
+            url: getMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it&&it!="全部"?$('#noLoading#').lazyRule((jkdatalist) => {
+                jkdatalist = JSON.parse(base64Decode(jkdatalist));
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                duoselect(jkdatalist);
+                return "toast://已反选";
+            },base64Encode(JSON.stringify(jkdatalist))):$('#noLoading#').lazyRule((it) => {
+                if(getMyVar("SrcJu_jiekouType")!=it){
+                    putMyVar("SrcJu_jiekouType",it);
+                    refreshPage(false);
+                }
                 return "hiker://empty";
             },it),
             col_type: 'scroll_button'
         }
-            /*{
-                title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
-                js: $.toString((it) => {
-                    if(getItem(it+'stoptype')=="1"){
-                        clearItem(it+'stoptype');
-                    }else{
-                        setItem(it+'stoptype','1');
-                    }
-                    refreshPage(false);
-                    return "hiker://empty";
-                },it)
-            }
+        /*
         if(it != "全部"){
             obj.extra = {};
             let longClick = [];
             if(getMyVar("SrcJu_jiekouType")==it){
                 longClick.push({
-                    title: '批量选择',
-                    js: $.toString((jkdatalist) => {
-                        let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
-                        jkdatalist.forEach(data=>{
-                            let id = data.type+"_"+data.name;
-                            if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
-                                duoselect.push(data);
-                                updateItem(id, {title:'<font color=#3CB371>'+data.name})
-                            }
-                        })
-                        storage0.putMyVar('SrcJu_duoselect',duoselect);
+                    title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
+                    js: $.toString((it) => {
+                        if(getItem(it+'stoptype')=="1"){
+                            clearItem(it+'stoptype');
+                        }else{
+                            setItem(it+'stoptype','1');
+                        }
+                        refreshPage(false);
                         return "hiker://empty";
-                    },jkdatalist)
+                    },it)
                 })
             }
             if(longClick.length>0){obj["extra"].longClick = longClick;}
@@ -373,7 +363,7 @@ function SRCSet() {
         }
     })
     d.push({
-        title: "‘‘’’<small><font color=#f20c00>当前接口数：" + jkdatalist.length + "，有效数："+yxdatalist.length+"</font></small>",
+        title: "‘‘’’<small><font color=#f20c00>当前接口数：" + jkdatalist.length + "，总有效数："+yxdatalist.length+"</font></small>",
         url: 'hiker://empty',
         col_type: 'text_center_1'
     });
