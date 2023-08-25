@@ -182,7 +182,7 @@ function SRCSet() {
                             }
                         });
                         if (list.length > 0) {
-                            updateItem("testsousuoloading", { title: "‘‘’’<small>批量测试搜索中.</small>" });
+                            updateItem("testsousuoloading", { title: "‘‘’’<small>("+list.length+")批量测试搜索中.</small>" });
                             be(list, {
                                 func: function (obj, id, error, taskResult) {
                                     if(getMyVar("停止搜索线程")=="1"){
@@ -229,6 +229,7 @@ function SRCSet() {
                                             additem.desc = taskResult.message;
                                             faillist.push(additem);
                                         }
+                                        updateItem("testsousuoloading", { title: "‘‘’’<small>批量测试搜索中.还有"+(list.length-success-faillist.length)+"</small>" });
                                     }
                                 },
                                 param: {
