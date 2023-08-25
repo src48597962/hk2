@@ -15,6 +15,7 @@ function SRCSet() {
     addListener("onClose", $.toString(() => {
         clearMyVar('SrcJu_duoselect');
         clearMyVar("SrcJu_seacrhJiekou");
+        clearMyVar('SrcJu_批量选择模式','1');
     }));
     clearMyVar('SrcJu_duoselect');
     setPageTitle("♥管理"+getMyVar('SrcJu_Version', ''));
@@ -46,7 +47,7 @@ function SRCSet() {
     });
     d.push({
         title: '操作',
-        url: $(["接口更新","清空接口"], 2).select(() => {
+        url: $(["批量选择","接口更新","清空接口"], 2).select(() => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
             if(input=="接口更新"){
                 showLoading("更新中...");
@@ -82,6 +83,9 @@ function SRCSet() {
                         return 'toast://已清空';
                     },sourcefile)
                 },sourcefile)
+            }else if(input=="批量选择"){
+                putMyVar('SrcJu_批量选择模式','1');
+                return "toast://进入批量选择模式";
             }
         }),
         img: "https://hikerfans.com/tubiao/more/290.png",
@@ -136,8 +140,11 @@ function SRCSet() {
                 sharelist = duoselect;
             }else{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                sharelist = yxdatalist;
+                sharelist = yxdatalist.filter(it=>{
+                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
+                })
             }
+            sharelist.reverse();//从显示排序回到实际排序
             let pastes = getPastes();
             pastes.push('文件分享');
             pastes.push('云口令文件');
@@ -219,7 +226,7 @@ function SRCSet() {
             },it),
             col_type: 'scroll_button'
         }
-/*{
+            /*{
                 title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
                 js: $.toString((it) => {
                     if(getItem(it+'stoptype')=="1"){
@@ -230,7 +237,7 @@ function SRCSet() {
                     refreshPage(false);
                     return "hiker://empty";
                 },it)
-            }*/
+            }
         if(it != "全部"){
             obj.extra = {};
             let longClick = [];
@@ -253,7 +260,7 @@ function SRCSet() {
             }
             if(longClick.length>0){obj["extra"].longClick = longClick;}
         }
-
+        */
         d.push(obj);
     })
     d.push({
@@ -273,7 +280,25 @@ function SRCSet() {
         if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==item.type){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
-                url: $(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
+                url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
+                    data = JSON.parse(base64Decode(data));
+                    let id = data.type+"_"+data.name;
+                    let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
+                    if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
+                        duoselect.push(data);
+                        updateItem(id, {title:'<font color=#3CB371>'+data.name})
+                    }else{
+                        for(var i = 0; i < duoselect.length; i++) {
+                            if(duoselect[i].type+"_"+duoselect[i].name == id) {
+                                duoselect.splice(i, 1);
+                                break;
+                            }
+                        }
+                        updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
+                    }
+                    storage0.putMyVar('SrcJu_duoselect',duoselect);
+                    return "hiker://empty";
+                },base64Encode(JSON.stringify(item))):$(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
                     data = JSON.parse(base64Decode(data));
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
@@ -659,7 +684,7 @@ function JYimport(input) {
                 datalist2 = JSON.parse(parseurl);
             }
             let num = 0;
-            datalist.reverse();
+            //datalist.reverse();
             for (let i = 0; i < datalist2.length; i++) {
                 if (Juconfig['ImportType']!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                     let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
