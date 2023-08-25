@@ -169,6 +169,7 @@ function SRCSet() {
                                 }
                                 return {success:0, message:'未找到搜索代码', id:标识};
                             } catch (e) {
+                                log(标识+'>'+e.message);
                                 return {success:0, message:e.message, id:标识};
                             }
                         }
@@ -214,6 +215,7 @@ function SRCSet() {
                         } else {
                             updateItem("testsousuoloading", { title: "无接口" });
                         }
+                        clearMyVar("SrcJu_停止搜索线程");
                     }, input);
                 });
             }
