@@ -122,6 +122,7 @@ function SRCSet() {
                                 return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
                             })
                         }
+                        let page = 1;
                         let success = 0;
                         let faillist = [];
                         let task = function (obj) {
