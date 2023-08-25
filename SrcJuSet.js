@@ -169,7 +169,7 @@ function SRCSet() {
                                 }
                                 return {success:0, message:'未找到搜索代码', id:标识};
                             } catch (e) {
-                                log(标识+'>'+e.message);
+                                //log(标识+'>'+e.message);
                                 return {success:0, message:e.message, id:标识};
                             }
                         }
@@ -181,7 +181,7 @@ function SRCSet() {
                             }
                         });
                         if (list.length > 0) {
-                            updateItem("testsousuoloading", { title: "批量测试搜索中." });
+                            updateItem("testsousuoloading", { title: "‘‘’’<small>批量测试搜索中.</small>" });
                             be(list, {
                                 func: function (obj, id, error, taskResult) {
                                     if(getMyVar("SrcJu_停止搜索线程")=="1"){
@@ -197,11 +197,11 @@ function SRCSet() {
                                         }
                                         if (taskResult.success==1) {
                                             success++;
-                                            additem.title = "‘‘’’"+additem.title;
+                                            additem.title = "‘‘’’<font color=#f13b66a>"+additem.title;
                                             additem.desc = "成功搜索到条目数："+taskResult.result;
                                             addItemBefore("testsousuoloading", additem);
                                         }else{
-                                            additem.title = "““””"+additem.title;
+                                            additem.title = "““"+additem.title+"””";
                                             additem.desc = taskResult.message;
                                             faillist.push(additem);
                                         }
@@ -213,7 +213,7 @@ function SRCSet() {
                             addItemBefore("testsousuoloading", faillist);
                             updateItem("testsousuoloading", { title: "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，测试搜索完成</small>" });
                         } else {
-                            updateItem("testsousuoloading", { title: "无接口" });
+                            updateItem("testsousuoloading", { title: "‘‘’’<small>无接口</small>" });
                         }
                         clearMyVar("SrcJu_停止搜索线程");
                     }, input);
