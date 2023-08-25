@@ -229,7 +229,6 @@ function SRCSet() {
                                             additem.desc = taskResult.message;
                                             faillist.push(additem);
                                         }
-                                        updateItem("testsousuoloading", { title: "‘‘’’<small>批量测试搜索中.还有"+(list.length-success-faillist.length)+"</small>" });
                                     }
                                 },
                                 param: {
