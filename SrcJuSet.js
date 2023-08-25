@@ -99,8 +99,9 @@ function SRCSet() {
                     setItem("searchtestkey",input);
                     return $("hiker://empty#noRecordHistory##noHistory#").rule((name) => {
                         addListener("onClose", $.toString(() => {
-                            putMyVar("SrcJu_停止搜索线程", "1");
+                            putMyVar("停止搜索线程", "1");
                         }));
+                        clearMyVar("停止搜索线程");
                         let d = [];
                         d.push({
                             title: "",
@@ -184,7 +185,7 @@ function SRCSet() {
                             updateItem("testsousuoloading", { title: "‘‘’’<small>批量测试搜索中.</small>" });
                             be(list, {
                                 func: function (obj, id, error, taskResult) {
-                                    if(getMyVar("SrcJu_停止搜索线程")=="1"){
+                                    if(getMyVar("停止搜索线程")=="1"){
                                         return "break";
                                     }else{
                                         let additem = {
@@ -215,7 +216,6 @@ function SRCSet() {
                         } else {
                             updateItem("testsousuoloading", { title: "‘‘’’<small>无接口</small>" });
                         }
-                        clearMyVar("SrcJu_停止搜索线程");
                     }, input);
                 });
             }
