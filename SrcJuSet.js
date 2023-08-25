@@ -229,15 +229,8 @@ function SRCSet() {
             title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
             url: getMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it?$('#noLoading#').lazyRule((jkdatalist) => {
                     jkdatalist = JSON.parse(base64Decode(jkdatalist));
-                    let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
-                    jkdatalist.forEach(data=>{
-                        let id = data.type+"_"+data.name;
-                        if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
-                            duoselect.push(data);
-                            updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
-                        }
-                    })
-                    storage0.putMyVar('SrcJu_duoselect',duoselect);
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                    duoselect(jkdatalist);
                     return "hiker://empty";
                 },base64Encode(JSON.stringify(jkdatalist))):$('#noLoading#').lazyRule((it) => {
                 putMyVar("SrcJu_jiekouType",it);
