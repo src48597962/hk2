@@ -95,9 +95,125 @@ function SRCSet() {
                 refreshPage(false);
                 return "toast://"+sm;
             }else if(input=="批量测试"){
-                return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-                    require(config.依赖);
-                    newsousuopage();
+                return $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
+                    setItem("searchtestkey",input);
+                    return $("hiker://empty#noRecordHistory##noHistory#").rule((name) => {
+                        addListener("onClose", $.toString(() => {
+                            putMyVar("SrcJu_停止搜索线程", "1");
+                        }));
+                        let d = [];
+                        d.push({
+                            title: "",
+                            col_type: 'text_center_1',
+                            url: "hiker://empty",
+                            extra: {
+                                id: "testsousuoloading",
+                                lineVisible: false
+                            }
+                        });
+                        setResult(d);
+                        let ssdatalist;
+                        let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
+                        if(duoselect.length>0){
+                            ssdatalist = duoselect;
+                        }else{
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                            ssdatalist = yxdatalist.filter(it=>{
+                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
+                            })
+                        }
+                        let success = 0;
+                        let faillist = [];
+                        let task = function (obj) {
+                            let objdata = obj.data;
+                            let name = obj.name;
+                            let 标识 = objdata.type + "_" + objdata.name;
+                            try {
+                                let parse;
+                                let 公共;
+                                eval("let source = " + objdata.erparse);
+                                if (source.ext && /^http/.test(source.ext)) {
+                                    requireCache(source.ext, 48);
+                                    parse = erdata;
+                                } else {
+                                    parse = source;
+                                }
+                                if(parse){
+                                    eval("let gonggong = " + objdata.public);
+                                    if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
+                                        requireCache(gonggong.ext, 48);
+                                        gonggong = ggdata;
+                                    }
+                                    公共 = gonggong || parse['公共'] || {};
+                                    let ssdata = [];
+                                    eval("let 搜索 = " + parse['搜索'])
+                                    let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
+                                    function ocr(codeurl,headers) {
+                                        headers= headers || {};
+                                        let img = convertBase64Image(codeurl,headers).replace('data:image/jpeg;base64,','');
+                                        let code = request('https://api.xhofe.top/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"text/html"}});
+                                        code = code.replace(/o/g, '0').replace(/u/g, '0').replace(/I/g, '1').replace(/l/g, '1').replace(/g/g, '9');
+                                        //log('识别验证码：'+code);
+                                        return code;
+                                    }
+                                    ssdata = 搜索(name,page,公共,参数) || [];
+                                    //log('√'+objdata.name+">搜索结果>"+ssdata.length);
+                                    let resultdata = [];
+                                    ssdata.forEach(item => {
+                                        if(item.title.includes(name)){
+                                            resultdata.push(item);
+                                        }
+                                    })
+                                    return {result:resultdata.length, success:1, id:标识};
+                                }
+                                return {success:0, message:'未找到搜索代码', id:标识};
+                            } catch (e) {
+                                return {success:0, message:e.message, id:标识};
+                            }
+                        }
+                        let list = ssdatalist.map((item) => {
+                            return {
+                                func: task,
+                                param: {"data":item,"name":name},
+                                id: item.type+"_"+item.name
+                            }
+                        });
+                        if (list.length > 0) {
+                            updateItem("testsousuoloading", { title: "批量测试搜索中." });
+                            be(list, {
+                                func: function (obj, id, error, taskResult) {
+                                    if(getMyVar("SrcJu_停止搜索线程")=="1"){
+                                        return "break";
+                                    }else{
+                                        let additem = {
+                                            title: taskResult.id,
+                                            url: "",
+                                            col_type: "text_1",
+                                            extra: {
+                                                id: taskResult.id
+                                            }
+                                        }
+                                        if (taskResult.success==1) {
+                                            success++;
+                                            additem.title = "‘‘’’"+additem.title;
+                                            additem.desc = "成功搜索到条目数："+taskResult.result;
+                                            addItemBefore("testsousuoloading", additem);
+                                        }else{
+                                            additem.title = "““””"+additem.title;
+                                            additem.desc = taskResult.message;
+                                            faillist.push(additem);
+                                        }
+                                    }
+                                },
+                                param: {
+                                }
+                            });
+                            addItemBefore("testsousuoloading", faillist);
+                            updateItem("testsousuoloading", { title: "‘‘’’<small><font color=#f13b66a>" + success + "</font>/" + list.length + "，测试搜索完成</small>" });
+                        } else {
+                            updateItem("testsousuoloading", { title: "无接口" });
+                        }
+                    }, input);
                 });
             }
         }),
