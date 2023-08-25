@@ -302,6 +302,7 @@ function SRCSet() {
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
                     data = JSON.parse(base64Decode(data));
+                    /*
                     let id = data.type+"_"+data.name;
                     let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                     if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
@@ -317,6 +318,9 @@ function SRCSet() {
                         updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
                     }
                     storage0.putMyVar('SrcJu_duoselect',duoselect);
+                    */
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                    duoselect(data);
                     return "hiker://empty";
                 },base64Encode(JSON.stringify(item))):$(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
                     data = JSON.parse(base64Decode(data));
@@ -367,6 +371,7 @@ function SRCSet() {
                         refreshPage(false);
                         return 'toast://' + sm;
                     } else if (input=="选择") {
+                        /*
                         let id = data.type+"_"+data.name;
                         let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                         if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
@@ -382,6 +387,9 @@ function SRCSet() {
                             updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
                         }
                         storage0.putMyVar('SrcJu_duoselect',duoselect);
+                        */
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                        duoselect(data);
                         return "hiker://empty";
                     } else if (input == "改名") {
                         return $(data.name,"输入新名称").input((sourcefile,data)=>{
