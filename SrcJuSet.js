@@ -302,23 +302,6 @@ function SRCSet() {
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
                     data = JSON.parse(base64Decode(data));
-                    /*
-                    let id = data.type+"_"+data.name;
-                    let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
-                    if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
-                        duoselect.push(data);
-                        updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
-                    }else{
-                        for(var i = 0; i < duoselect.length; i++) {
-                            if(duoselect[i].type+"_"+duoselect[i].name == id) {
-                                duoselect.splice(i, 1);
-                                break;
-                            }
-                        }
-                        updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
-                    }
-                    storage0.putMyVar('SrcJu_duoselect',duoselect);
-                    */
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                     duoselect(data);
                     return "hiker://empty";
@@ -371,23 +354,6 @@ function SRCSet() {
                         refreshPage(false);
                         return 'toast://' + sm;
                     } else if (input=="选择") {
-                        /*
-                        let id = data.type+"_"+data.name;
-                        let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
-                        if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
-                            duoselect.push(data);
-                            updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
-                        }else{
-                            for(var i = 0; i < duoselect.length; i++) {
-                                if(duoselect[i].type+"_"+duoselect[i].name == id) {
-                                    duoselect.splice(i, 1);
-                                    break;
-                                }
-                            }
-                            updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
-                        }
-                        storage0.putMyVar('SrcJu_duoselect',duoselect);
-                        */
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                         duoselect(data);
                         return "hiker://empty";
