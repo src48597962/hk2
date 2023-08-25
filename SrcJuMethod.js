@@ -57,6 +57,7 @@ function duoselect(datas){
         }
     })
     storage0.putMyVar('SrcJu_duoselect',duoselect);
+    toast("当前已选择："+duoselect.length);
 }
 //来自阿尔法大佬的主页幻灯片
 function banner(start, arr, data, cfg){
