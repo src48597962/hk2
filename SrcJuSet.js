@@ -84,8 +84,16 @@ function SRCSet() {
                     },sourcefile)
                 },sourcefile)
             }else if(input=="批量选择"){
-                putMyVar('SrcJu_批量选择模式','1');
-                return "toast://进入批量选择模式";
+                let sm;
+                if(getMyVar('SrcJu_批量选择模式')){
+                    clearMyVar('SrcJu_批量选择模式');
+                    sm = "退出批量选择模式";
+                }else{
+                    putMyVar('SrcJu_批量选择模式','1');
+                    sm = "进入批量选择模式";
+                }
+                refreshPage(false);
+                return "toast://"+sm;
             }
         }),
         img: "https://hikerfans.com/tubiao/more/290.png",
@@ -219,7 +227,19 @@ function SRCSet() {
         */
         let obj = {
             title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
-            url: $('#noLoading#').lazyRule((it) => {
+            url: getMyVar("SrcJu_jiekouType")=="全部"?"hiker://empty":getMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it?$('#noLoading#').lazyRule((jkdatalist) => {
+                    jkdatalist = JSON.parse(base64Decode(jkdatalist));
+                    let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
+                    jkdatalist.forEach(data=>{
+                        let id = data.type+"_"+data.name;
+                        if(!duoselect.some(item => item.name == data.name && item.type==data.type) && !data.stop){
+                            duoselect.push(data);
+                            updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
+                        }
+                    })
+                    storage0.putMyVar('SrcJu_duoselect',duoselect);
+                    return "hiker://empty";
+                },base64Encode(JSON.stringify(jkdatalist))):$('#noLoading#').lazyRule((it) => {
                 putMyVar("SrcJu_jiekouType",it);
                 refreshPage(false);
                 return "hiker://empty";
@@ -286,7 +306,7 @@ function SRCSet() {
                     let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                     if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
                         duoselect.push(data);
-                        updateItem(id, {title:'<font color=#3CB371>'+data.name})
+                        updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
                     }else{
                         for(var i = 0; i < duoselect.length; i++) {
                             if(duoselect[i].type+"_"+duoselect[i].name == id) {
@@ -351,7 +371,7 @@ function SRCSet() {
                         let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                         if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
                             duoselect.push(data);
-                            updateItem(id, {title:'<font color=#3CB371>'+data.name})
+                            updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
                         }else{
                             for(var i = 0; i < duoselect.length; i++) {
                                 if(duoselect[i].type+"_"+duoselect[i].name == id) {
