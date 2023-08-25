@@ -227,7 +227,7 @@ function SRCSet() {
         */
         let obj = {
             title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
-            url: getMyVar("SrcJu_jiekouType","全部")==it&&getMyVar("SrcJu_jiekouType")=="全部"?"hiker://empty":itgetMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it?$('#noLoading#').lazyRule((jkdatalist) => {
+            url: getMyVar("SrcJu_jiekouType","全部")==it&&getMyVar("SrcJu_jiekouType")=="全部"?"hiker://empty":getMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it?$('#noLoading#').lazyRule((jkdatalist) => {
                     jkdatalist = JSON.parse(base64Decode(jkdatalist));
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                     duoselect(jkdatalist);
