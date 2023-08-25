@@ -32,6 +32,24 @@ function cacheData(jkdata){
         writeFile(cachefile,JSON.stringify(jkdata));
     }
 }
+//多选方法
+function duoselect(data){
+    let id = data.type+"_"+data.name;
+    let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
+    if(!duoselect.some(item => item.name == data.name && item.type==data.type)){
+        duoselect.push(data);
+        updateItem(id, {title:'<font color=#3CB371>'+data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "")})
+    }else{
+        for(var i = 0; i < duoselect.length; i++) {
+            if(duoselect[i].type+"_"+duoselect[i].name == id) {
+                duoselect.splice(i, 1);
+                break;
+            }
+        }
+        updateItem(id, {title:(data.stop?`<font color=#f20c00>`:"") + data.name + (data.parse ? " [主页源]" : "") + (data.erparse ? " [搜索源]" : "") + (data.stop?`</font>`:"")})
+    }
+    storage0.putMyVar('SrcJu_duoselect',duoselect);
+}
 //来自阿尔法大佬的主页幻灯片
 function banner(start, arr, data, cfg){
     let id = 'juyue';
