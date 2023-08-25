@@ -32,7 +32,7 @@ function cacheData(jkdata){
         writeFile(cachefile,JSON.stringify(jkdata));
     }
 }
-//多选方法
+//接口管理多选方法
 function duoselect(data){
     let id = data.type+"_"+data.name;
     let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
