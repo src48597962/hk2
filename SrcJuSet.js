@@ -15,7 +15,11 @@ function SRCSet() {
     addListener("onClose", $.toString(() => {
         clearMyVar('SrcJu_duoselect');
         clearMyVar("SrcJu_seacrhJiekou");
-        clearMyVar('SrcJu_批量选择模式','1');
+        clearMyVar('SrcJu_批量选择模式');
+    }));
+    addListener('onRefresh', $.toString(() => {
+        clearMyVar('SrcJu_seacrhJiekou');
+        clearMyVar('SrcJu_批量选择模式');
     }));
     clearMyVar('SrcJu_duoselect');
     setPageTitle("♥管理"+getMyVar('SrcJu_Version', ''));
@@ -371,12 +375,7 @@ function SRCSet() {
         */
         let obj = {
             title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
-            url: getMyVar('SrcJu_批量选择模式')&&getMyVar("SrcJu_jiekouType","全部")==it&&it!="全部"?$('#noLoading#').lazyRule((jkdatalist) => {
-                jkdatalist = JSON.parse(base64Decode(jkdatalist));
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                duoselect(jkdatalist);
-                return "toast://已反选";
-            },base64Encode(JSON.stringify(jkdatalist))):$('#noLoading#').lazyRule((it) => {
+            url: $('#noLoading#').lazyRule((it) => {
                 if(getMyVar("SrcJu_jiekouType")!=it){
                     putMyVar("SrcJu_jiekouType",it);
                     refreshPage(false);
@@ -417,10 +416,53 @@ function SRCSet() {
         desc: "搜你想要的...",
         col_type: "input",
         extra: {
+            defaultValue: getMyVar('SrcJu_seacrhJiekou',''),
             titleVisible: true
         }
     });
-    
+    if(getMyVar('SrcJu_批量选择模式')){
+        d.push({
+            title: "反向选择",
+            url: $('#noLoading#').lazyRule((jkdatalist) => {
+                jkdatalist = JSON.parse(base64Decode(jkdatalist));
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                duoselect(jkdatalist);
+                return "toast://已反选";
+            },base64Encode(JSON.stringify(jkdatalist))),
+            col_type: 'scroll_button'
+        })
+        d.push({
+            title: "删除所选",
+            url: $('#noLoading#').lazyRule((sourcefile) => {
+                let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
+                if(duoselect.length==0){
+                    return "toast://未选择";
+                }
+                return $("确定要删除选择的"+duoselect.length+"个接口？").confirm((sourcefile,duoselect)=>{
+                    let sourcedata = fetch(sourcefile);
+                    eval("var datalist=" + sourcedata + ";");
+                    datalist.forEach((data,index)=>{
+                        let id = data.type+"_"+data.name;
+                        if(duoselect.some(item => item.name == data.name && item.type==data.type)){
+                            for(var i = 0; i < duoselect.length; i++) {
+                                if(duoselect[i].type+"_"+duoselect[i].name == id) {
+                                    duoselect.splice(i, 1);
+                                    break;
+                                }
+                            }
+                            deleteItem(id);
+                            datalist.splice(index, 1);
+                        }
+                    })
+                    writeFile(sourcefile, JSON.stringify(datalist));
+                    clearMyVar('SrcJu_searchMark');
+                    refreshPage(false);
+                    return 'toast://已删除选择';
+                },sourcefile,duoselect)
+            },sourcefile),
+            col_type: 'scroll_button'
+        })
+    }
     jkdatalist.forEach(item => {
         if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==item.type){
             d.push({
@@ -803,7 +845,7 @@ function JYimport(input) {
                 datalist2 = JSON.parse(parseurl);
             }
             let num = 0;
-            //datalist.reverse();
+            datalist.reverse();
             for (let i = 0; i < datalist2.length; i++) {
                 if (Juconfig['ImportType']!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                     let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
