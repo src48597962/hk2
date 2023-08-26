@@ -452,6 +452,7 @@ function SRCSet() {
                             }
                             deleteItem(id);
                             datalist.splice(index, 1);
+                            index--;
                         }
                     })
                     writeFile(sourcefile, JSON.stringify(datalist));
