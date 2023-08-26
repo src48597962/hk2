@@ -441,22 +441,17 @@ function SRCSet() {
                 return $("确定要删除选择的"+duoselect.length+"个接口？").confirm((sourcefile,duoselect)=>{
                     let sourcedata = fetch(sourcefile);
                     eval("var datalist=" + sourcedata + ";");
-                    datalist.forEach((data,index)=>{
-                        let id = data.type+"_"+data.name;
-                        if(duoselect.some(item => item.name == data.name && item.type==data.type)){
-                            for(var i = 0; i < duoselect.length; i++) {
-                                if(duoselect[i].type+"_"+duoselect[i].name == id) {
-                                    duoselect.splice(i, 1);
-                                    break;
-                                }
-                            }
+                    for(let i = 0; i < datalist.length; i++) {
+                        let id = datalist[i].type+"_"+datalist[i].name;
+                        if(duoselect.some(item => item.name == datalist[i].name && item.type==datalist[i].type)){
                             deleteItem(id);
-                            datalist.splice(index, 1);
-                            index--;
+                            datalist.splice(i, 1);
+                            i--;
                         }
-                    })
+                    }
                     writeFile(sourcefile, JSON.stringify(datalist));
                     clearMyVar('SrcJu_searchMark');
+                    clearMyVar('SrcJu_duoselect');
                     refreshPage(false);
                     return 'toast://已删除选择';
                 },sourcefile,duoselect)
