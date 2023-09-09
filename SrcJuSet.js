@@ -550,7 +550,7 @@ function SRCSet() {
     setResult(d);
 }
 
-function jiekouapi(sourcefile, data) {
+function jiekouapi(sourcefile, data, look) {
     addListener("onClose", $.toString(() => {
         clearMyVar('SrcJu_jiekoudata');
         clearMyVar('SrcJu_jiekouname');
@@ -648,7 +648,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 2,
+            height: 3,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("SrcJu_jiekouerparse", input)
@@ -665,7 +665,7 @@ function jiekouapi(sourcefile, data) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 1,
+            height: 2,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("SrcJu_jiekoupublic", input)
@@ -683,144 +683,146 @@ function jiekouapi(sourcefile, data) {
             }
         });
     }
-    d.push({
-        title: '测试搜索',
-        col_type: 'text_2',
-        url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
-            setItem("searchtestkey",input);
-            let name = getMyVar('SrcJu_jiekouname');
-            let type = getMyVar('SrcJu_jiekoutype','漫画');
-            let erparse = getMyVar('SrcJu_jiekouerparse');
-            let public = getMyVar('SrcJu_jiekoupublic');
-            if(!name || !erparse){
-                return "toast://名称或搜索源接口不能为空";
-            }
-            try{
-                var source = {
-                    name: name,
-                    type: type,
-                    erparse: erparse
-                }
-                if(public){
-                    source.public = public;
-                }
-            }catch(e){
-                log('√源接口异常>'+e.message);
-                return "toast://搜索源接口有异常，看日志"
-            }
-            if(source){
-                return $("hiker://empty#noRecordHistory##noHistory###fypage").rule((name,sdata) => {
-                    addListener("onClose", $.toString(() => {
-                        clearMyVar('SrcJu_sousuoTest');
-                    }));
-                    putMyVar('SrcJu_sousuoTest','1');
-                    let d = [];
-                    require(config.依赖);
-                    d = search(name,"sousuotest",sdata);
-                    d.push({
-                        title: "测试搜索第"+MY_PAGE+"页结束",
-                        url: "hiker://empty",
-                        col_type: 'text_center_1',
-                        extra: {
-                            lineVisible: false
-                        }
-                    });
-                    setResult(d);
-                },input,source)
-            }else{
-                return "toast://确认搜索源接口数据？"
-            }
-        })
-    })
-    d.push({
-        title: '保存接口',
-        col_type: 'text_2',
-        url: $().lazyRule((sourcefile,oldtype,runModes) => {
-            if (!getMyVar('SrcJu_jiekouname')) {
-                return "toast://名称不能为空";
-            }
-            if (!getMyVar('SrcJu_jiekouparse') && !getMyVar('SrcJu_jiekouerparse')) {
-                return "toast://主页源数据和搜索源数据不能同时为空";
-            }
-            try {
+    if(!look){
+        d.push({
+            title: '测试搜索',
+            col_type: 'text_2',
+            url: $(getItem('searchtestkey', '斗罗大陆'),"输入测试搜索关键字").input(()=>{
+                setItem("searchtestkey",input);
                 let name = getMyVar('SrcJu_jiekouname');
-                let img = getMyVar('SrcJu_jiekouimg');
-                if (runModes.indexOf(name)>-1) {
-                    return "toast://接口名称不能属于类型名";
-                }
                 let type = getMyVar('SrcJu_jiekoutype','漫画');
-                let group = getMyVar('SrcJu_jiekougroup');
-                let parse = getMyVar('SrcJu_jiekouparse');
                 let erparse = getMyVar('SrcJu_jiekouerparse');
                 let public = getMyVar('SrcJu_jiekoupublic');
-                let newapi = {
-                    name: name,
-                    type: type
+                if(!name || !erparse){
+                    return "toast://名称或搜索源接口不能为空";
                 }
-                if(group){
-                    newapi['group'] = group;
-                }
-                if (parse) {
-                    try{
-                        eval("let yparse = " + parse);
-                    }catch(e){
-                        log('√一级主页源代码异常>'+e.message);
-                        return "toast://一级主页源有错误，看日志"
+                try{
+                    var source = {
+                        name: name,
+                        type: type,
+                        erparse: erparse
                     }
-                    newapi['parse'] = parse;
-                }
-                if (erparse) {
-                    try{
-                        eval("let eparse = " + erparse);
-                    }catch(e){
-                        log('√二级搜索源代码异常>'+e.message);
-                        return "toast://二级搜索源有错误，看日志"
+                    if(public){
+                        source.public = public;
                     }
-                    newapi['erparse'] = erparse;
+                }catch(e){
+                    log('√源接口异常>'+e.message);
+                    return "toast://搜索源接口有异常，看日志"
                 }
-                if (public) {
-                    try{
-                        eval("let gparse = " + public);
-                    }catch(e){
-                        log('√公共代码异常>'+e.message);
-                        return "toast://公共代码有错误，看日志"
+                if(source){
+                    return $("hiker://empty#noRecordHistory##noHistory###fypage").rule((name,sdata) => {
+                        addListener("onClose", $.toString(() => {
+                            clearMyVar('SrcJu_sousuoTest');
+                        }));
+                        putMyVar('SrcJu_sousuoTest','1');
+                        let d = [];
+                        require(config.依赖);
+                        d = search(name,"sousuotest",sdata);
+                        d.push({
+                            title: "测试搜索第"+MY_PAGE+"页结束",
+                            url: "hiker://empty",
+                            col_type: 'text_center_1',
+                            extra: {
+                                lineVisible: false
+                            }
+                        });
+                        setResult(d);
+                    },input,source)
+                }else{
+                    return "toast://确认搜索源接口数据？"
+                }
+            })
+        })
+        d.push({
+            title: '保存接口',
+            col_type: 'text_2',
+            url: $().lazyRule((sourcefile,oldtype,runModes) => {
+                if (!getMyVar('SrcJu_jiekouname')) {
+                    return "toast://名称不能为空";
+                }
+                if (!getMyVar('SrcJu_jiekouparse') && !getMyVar('SrcJu_jiekouerparse')) {
+                    return "toast://主页源数据和搜索源数据不能同时为空";
+                }
+                try {
+                    let name = getMyVar('SrcJu_jiekouname');
+                    let img = getMyVar('SrcJu_jiekouimg');
+                    if (runModes.indexOf(name)>-1) {
+                        return "toast://接口名称不能属于类型名";
                     }
-                    newapi['public'] = public;
-                }
-                if (img) {
-                    newapi['img'] = img;
-                }
-                newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
-                let sourcedata = fetch(sourcefile);
-                if (sourcedata != "") {
-                    try {
-                        eval("var datalist=" + sourcedata + ";");
-                    } catch (e) {
+                    let type = getMyVar('SrcJu_jiekoutype','漫画');
+                    let group = getMyVar('SrcJu_jiekougroup');
+                    let parse = getMyVar('SrcJu_jiekouparse');
+                    let erparse = getMyVar('SrcJu_jiekouerparse');
+                    let public = getMyVar('SrcJu_jiekoupublic');
+                    let newapi = {
+                        name: name,
+                        type: type
+                    }
+                    if(group){
+                        newapi['group'] = group;
+                    }
+                    if (parse) {
+                        try{
+                            eval("let yparse = " + parse);
+                        }catch(e){
+                            log('√一级主页源代码异常>'+e.message);
+                            return "toast://一级主页源有错误，看日志"
+                        }
+                        newapi['parse'] = parse;
+                    }
+                    if (erparse) {
+                        try{
+                            eval("let eparse = " + erparse);
+                        }catch(e){
+                            log('√二级搜索源代码异常>'+e.message);
+                            return "toast://二级搜索源有错误，看日志"
+                        }
+                        newapi['erparse'] = erparse;
+                    }
+                    if (public) {
+                        try{
+                            eval("let gparse = " + public);
+                        }catch(e){
+                            log('√公共代码异常>'+e.message);
+                            return "toast://公共代码有错误，看日志"
+                        }
+                        newapi['public'] = public;
+                    }
+                    if (img) {
+                        newapi['img'] = img;
+                    }
+                    newapi['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                    let sourcedata = fetch(sourcefile);
+                    if (sourcedata != "") {
+                        try {
+                            eval("var datalist=" + sourcedata + ";");
+                        } catch (e) {
+                            var datalist = [];
+                        }
+                    } else {
                         var datalist = [];
                     }
-                } else {
-                    var datalist = [];
-                }
-                let index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==type||!d.type))[0]);
-                if (index > -1 && getMyVar('SrcJu_jiekouedit') != "1") {
-                    return "toast://已存在-" + name;
-                } else {
-                    index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==oldtype||!d.type))[0]);
-                    if (getMyVar('SrcJu_jiekouedit') == "1" && index > -1) {
-                        datalist.splice(index, 1);
+                    let index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==type||!d.type))[0]);
+                    if (index > -1 && getMyVar('SrcJu_jiekouedit') != "1") {
+                        return "toast://已存在-" + name;
+                    } else {
+                        index = datalist.indexOf(datalist.filter(d => d.name==name && (d.type==oldtype||!d.type))[0]);
+                        if (getMyVar('SrcJu_jiekouedit') == "1" && index > -1) {
+                            datalist.splice(index, 1);
+                        }
+                        datalist.push(newapi);
+                        writeFile(sourcefile, JSON.stringify(datalist));
+                        clearMyVar('SrcJu_searchMark');
+                        deleteFile('hiker://files/_cache/'+type+'_'+name+'.json');
+                        back(true);
+                        return "toast://已保存";
                     }
-                    datalist.push(newapi);
-                    writeFile(sourcefile, JSON.stringify(datalist));
-                    clearMyVar('SrcJu_searchMark');
-                    deleteFile('hiker://files/_cache/'+type+'_'+name+'.json');
-                    back(true);
-                    return "toast://已保存";
+                } catch (e) {
+                    return "toast://接口数据异常，请确认对象格式";
                 }
-            } catch (e) {
-                return "toast://接口数据异常，请确认对象格式";
-            }
-        }, sourcefile,data?data.type:"",runModes)
-    });
+            }, sourcefile,data?data.type:"",runModes)
+        });
+    }
     setResult(d);
 }
 
@@ -884,19 +886,20 @@ function JYimport(input) {
                     datalist3.forEach(item=>{
                         d.push({
                             title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
-                            url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
+                            url: $(["查看导入", "查看本地", "覆盖导入", "改名导入"], 2).select((sourcefile, data) => {
                                 data = JSON.parse(base64Decode(data));
-                                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                                duoselect(data);
-                                return "hiker://empty";
-                            },base64Encode(JSON.stringify(item))):$(["编辑", "删除", "改名"], 2).select((sourcefile, data) => {
-                                data = JSON.parse(base64Decode(data));
-                                if (input == "编辑") {
-                                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
-                                        setPageTitle('编辑 | 聚阅接口');
+                                if (input == "查看本地") {
+                                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, dataid) => {
                                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                                        jiekouapi(sourcefile, JSON.parse(base64Decode(data)));
-                                    }, sourcefile, base64Encode(JSON.stringify(data)))
+                                        let data = datalist.filter(d => d.name == dataid.name && d.type==dataid.type)[0];
+                                        jiekouapi(sourcefile, data, 1);
+                                    }, sourcefile, {type:item.type, name:item.name})
+                                }else if (input == "查看导入") {
+                                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
+                                        //setPageTitle('查看导入 | 聚阅接口');
+                                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                                        jiekouapi(sourcefile, data, 1);
+                                    }, sourcefile, data)
                                 } else if (input == "删除") {
                                     return $("确定删除："+data.name).confirm((sourcefile,data)=>{
                                         let sourcedata = fetch(sourcefile);
