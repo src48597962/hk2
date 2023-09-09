@@ -486,10 +486,7 @@ function erji() {
                 eval("let 解析2 = " + 解析);
                 return 解析2(url,公共,参数);
             }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
-            if (stype=="小说" || details.rule==1) {
-                lazy = lazy.replace("@lazyRule=.",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
-            }
-            log(lazy);
+            
             let download = $.toString((解析,公共,参数) => {
                 eval("let 解析2 = " + 解析);
                 return 解析2(input,公共,参数);
@@ -761,7 +758,6 @@ function erji() {
                     extra = Object.assign(extra, 列表[i].extra || {});
                 }catch(e){}
                 extra.id = name + "_选集_" + i;
-                extra.url = 列表[i].url;
                 extra.cls = "loadlist playlist";
                 if(stype=="听书"||stype=="影视"){
                     extra.jsLoadingInject = true;
@@ -775,6 +771,10 @@ function erji() {
                 }
                 if(list_col_type.indexOf("_left")>-1){
                     extra.textAlign = 'left';
+                }
+                if (stype=="小说" || details["rule"] || 列表[i].rule) {
+                    extra.url = 列表[i].url;
+                    lazy = lazy.replace("@lazyRule=.",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
                 }
                 d.push({
                     title: 列表[i].title.trim().replace(/ |-|_/g,'').replace(name,''),
