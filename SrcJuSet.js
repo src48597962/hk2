@@ -873,7 +873,14 @@ function JYimport(input) {
                     addListener("onClose", $.toString(() => {
                         clearMyVar('SrcJu_searchMark');
                     }));
+                    setPageTitle('聚阅导入接口确认页');
                     let d = [];
+                    d.push({
+                        title: "本次导入共发现"+datalist3.length+"个已存在接口",
+                        desc: "点击下面接口进行对应操作",
+                        url: "hiker://empty",
+                        col_type: 'text_center_1'
+                    });
                     datalist3.forEach(item=>{
                         d.push({
                             title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
