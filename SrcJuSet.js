@@ -283,6 +283,9 @@ function SRCSet() {
                     return $(["覆盖", "跳过", "确认"],2).select((cfgfile,Juconfig) => {
                         Juconfig["ImportType"] = input=="覆盖"?"Coverage":input=="跳过"?"Skip":"Confirm";
                         writeFile(cfgfile, JSON.stringify(Juconfig));
+                        if(input=="确认"){
+                            toast("提醒：手工确认模式，不支持云口令直接导入，需点击导入按钮");
+                        }
                         refreshPage(false);
                         return 'toast://导入模式已设置为：' + input;
                     }, cfgfile, Juconfig)
@@ -876,7 +879,6 @@ function JYimport(input) {
                     addListener("onClose", $.toString(() => {
                         clearMyVar('SrcJu_searchMark');
                     }));
-                    setPageTitle('聚阅导入接口确认页');
                     let d = [];
                     d.push({
                         title: "本次导入共发现"+datalist3.length+"个已存在接口",
@@ -891,14 +893,14 @@ function JYimport(input) {
                                 data = JSON.parse(base64Decode(data));
                                 if (input == "查看本地") {
                                     return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, dataid) => {
-                                        setPageTitle('查看本地');
+                                        setPageTitle('查看本地数据');
                                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                                         let data = datalist.filter(d => d.name == dataid.name && d.type==dataid.type)[0];
                                         jiekouapi(sourcefile, data, 1);
                                     }, sourcefile, {type:data.type, name:data.name})
                                 }else if (input == "查看导入") {
                                     return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
-                                        setPageTitle('查看导入');
+                                        setPageTitle('查看导入数据');
                                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                                         jiekouapi(sourcefile, data, 1);
                                     }, sourcefile, data)
