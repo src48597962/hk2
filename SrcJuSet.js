@@ -871,6 +871,7 @@ function JYimport(input) {
                 refreshPage(false);
                 return "toast://合计" + datalist2.length + "个，导入" + num + "个";
             }else{
+                toast("合计" +datalist2.length + "个，导入" + num + "个，有" + datalist3.length + "个需手工确认");
                 return $("hiker://empty#noRecordHistory##noHistory#").rule((sourcefile,datalist3) => {
                     addListener("onClose", $.toString(() => {
                         clearMyVar('SrcJu_searchMark');
@@ -901,27 +902,33 @@ function JYimport(input) {
                                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                                         jiekouapi(sourcefile, data, 1);
                                     }, sourcefile, data)
-                                } else if (input == "删除") {
-                                    return $("确定删除："+data.name).confirm((sourcefile,data)=>{
+                                } else if (input == "覆盖导入") {
+                                    return $("将覆盖本地，确认？").confirm((sourcefile,data)=>{
                                         let sourcedata = fetch(sourcefile);
                                         eval("var datalist=" + sourcedata + ";");
                                         let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
                                         datalist.splice(index, 1);
+                                        data['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                                        datalist.push(data);
                                         writeFile(sourcefile, JSON.stringify(datalist));
                                         clearMyVar('SrcJu_searchMark');
-                                        refreshPage(false);
-                                        return 'toast://已删除';
+                                        return 'toast://已覆盖导入';
                                     },sourcefile,data)
-                                } else if (input == "改名") {
+                                } else if (input == "改名导入") {
                                     return $(data.name,"输入新名称").input((sourcefile,data)=>{
                                         let sourcedata = fetch(sourcefile);
                                         eval("var datalist=" + sourcedata + ";");
-                                        let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
-                                        datalist[index].name = input;
-                                        writeFile(sourcefile, JSON.stringify(datalist));
-                                        clearMyVar('SrcJu_searchMark');
-                                        refreshPage(false);
-                                        return 'toast://已重命名';
+                                        let index = datalist.indexOf(datalist.filter(d => d.name==input && d.type==data.type)[0]);
+                                        if(index>-1){
+                                            return "toast://名称已存在，未保存";
+                                        }else{
+                                            data.name = input;
+                                            data['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                                            datalist.push(data);
+                                            writeFile(sourcefile, JSON.stringify(datalist));
+                                            clearMyVar('SrcJu_searchMark');
+                                            return 'toast://已保存，新接口名称为：'+input;
+                                        }
                                     },sourcefile,data)
                                 }
                             }, sourcefile, base64Encode(JSON.stringify(item))),
