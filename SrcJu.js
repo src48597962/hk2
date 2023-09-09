@@ -486,6 +486,7 @@ function erji() {
                 eval("let 解析2 = " + 解析);
                 return 解析2(url,公共,参数);
             }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
+            log($.type(lazy));
             if (stype=="小说" || details.rule==1) {
                 lazy = lazy.replace("@lazyRule=",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
             }
