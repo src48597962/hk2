@@ -445,8 +445,9 @@ function erji() {
             }
 
             let lazy;
-            let itype;
+            let itype = stype=="漫画"?"comic":stype=="小说"?"novel":"";
             let 解析 = parse['解析'];
+            /*
             if (stype=="小说" || details.rule==1) {
                 lazy = $(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#").rule((解析,参数) => {
                     log(input.split("##")[1]);
@@ -460,7 +461,6 @@ function erji() {
                     eval("let 解析2 = " + 解析);
                     解析2(url,公共,参数);
                 }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
-                itype = "novel";
             }else{
                 lazy = $("").lazyRule((解析,参数) => {
                     let url = input.split("##")[1];
@@ -473,9 +473,21 @@ function erji() {
                     eval("let 解析2 = " + 解析);
                     return 解析2(url,公共,参数);
                 }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
-                if(stype=="漫画"){
-                    itype = "comic";
+            }
+            */
+            lazy = $("").lazyRule((解析,参数) => {
+                let url = input.split("##")[1];
+                let 公共 = {};
+                try{
+                    公共 = $.require('jiekou'+(/聚阅/.test(参数.规则名)?'':'?rule=聚阅√')).公共(参数.标识);
+                }catch(e){
+                    toast('未找到聚阅规则子页面');
                 }
+                eval("let 解析2 = " + 解析);
+                return 解析2(url,公共,参数);
+            }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
+            if (stype=="小说" || details.rule==1) {
+                lazy = lazy.replace("@lazyRule=",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
             }
             log(lazy);
             let download = $.toString((解析,公共,参数) => {
