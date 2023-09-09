@@ -278,10 +278,10 @@ function SRCSet() {
         col_type: "icon_4",
         extra: {
             longClick: [{
-                title: Juconfig['ImportType']!="Skip"?'导入模式：覆盖':'导入模式：跳过',
+                title: Juconfig['ImportType']=="Skip"?'导入模式：跳过':Juconfig['ImportType']=="Confirm"?'导入模式：确认':'导入模式：覆盖',
                 js: $.toString((cfgfile, Juconfig) => {
-                    return $(["覆盖", "跳过"],2).select((cfgfile,Juconfig) => {
-                        Juconfig["ImportType"] = input=="覆盖"?"Coverage":"Skip";
+                    return $(["覆盖", "跳过", "确认"],2).select((cfgfile,Juconfig) => {
+                        Juconfig["ImportType"] = input=="覆盖"?"Coverage":input=="跳过"?"Skip":"Confirm";
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
                         return 'toast://导入模式已设置为：' + input;
@@ -842,14 +842,21 @@ function JYimport(input) {
             }
             let num = 0;
             datalist.reverse();
+            let datalist3 = [];//存放待二次确认的临时接口
             for (let i = 0; i < datalist2.length; i++) {
-                if (Juconfig['ImportType']!="Skip" && datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
-                    let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
-                    datalist.splice(index, 1);
-                    datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
                     datalist.push(datalist2[i]);
                     num = num + 1;
-                }else if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
+                }else if(Juconfig['ImportType']=="Skip"){
+                    //已存在的跳过，啥也不做
+                }else if(Juconfig['ImportType']=="Confirm"){
+                    //二次手工确认代码
+                    datalist3.push(datalist2[i]);
+                }else{
+                    //默认是覆盖已存在的
+                    let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
+                    datalist.splice(index, 1);
                     datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                     datalist.push(datalist2[i]);
                     num = num + 1;
@@ -858,8 +865,66 @@ function JYimport(input) {
             writeFile(sourcefile, JSON.stringify(datalist));
             clearMyVar('SrcJu_searchMark');
             hideLoading();
-            refreshPage(false);
-            return "toast://合计" + datalist2.length + "个，导入" + num + "个";
+            if(datalist3.length==0){
+                refreshPage(false);
+                return "toast://合计" + datalist2.length + "个，导入" + num + "个";
+            }else{
+                return $("hiker://empty#noRecordHistory##noHistory#").rule((sourcefile,datalist3) => {
+                    addListener("onClose", $.toString(() => {
+                        clearMyVar('SrcJu_searchMark');
+                    }));
+                    let d = [];
+                    datalist3.forEach(item=>{
+                        d.push({
+                            title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
+                            url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
+                                data = JSON.parse(base64Decode(data));
+                                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                                duoselect(data);
+                                return "hiker://empty";
+                            },base64Encode(JSON.stringify(item))):$(["编辑", "删除", "改名"], 2).select((sourcefile, data) => {
+                                data = JSON.parse(base64Decode(data));
+                                if (input == "编辑") {
+                                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
+                                        setPageTitle('编辑 | 聚阅接口');
+                                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                                        jiekouapi(sourcefile, JSON.parse(base64Decode(data)));
+                                    }, sourcefile, base64Encode(JSON.stringify(data)))
+                                } else if (input == "删除") {
+                                    return $("确定删除："+data.name).confirm((sourcefile,data)=>{
+                                        let sourcedata = fetch(sourcefile);
+                                        eval("var datalist=" + sourcedata + ";");
+                                        let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                                        datalist.splice(index, 1);
+                                        writeFile(sourcefile, JSON.stringify(datalist));
+                                        clearMyVar('SrcJu_searchMark');
+                                        refreshPage(false);
+                                        return 'toast://已删除';
+                                    },sourcefile,data)
+                                } else if (input == "改名") {
+                                    return $(data.name,"输入新名称").input((sourcefile,data)=>{
+                                        let sourcedata = fetch(sourcefile);
+                                        eval("var datalist=" + sourcedata + ";");
+                                        let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                                        datalist[index].name = input;
+                                        writeFile(sourcefile, JSON.stringify(datalist));
+                                        clearMyVar('SrcJu_searchMark');
+                                        refreshPage(false);
+                                        return 'toast://已重命名';
+                                    },sourcefile,data)
+                                }
+                            }, sourcefile, base64Encode(JSON.stringify(item))),
+                            desc: (item.group?"["+item.group+"] ":"") + item.type,
+                            img: item.img || "https://hikerfans.com/tubiao/ke/31.png",
+                            col_type: "avatar",
+                            extra: {
+                                id: item.type+"_"+item.name
+                            }
+                        });
+                    })
+                    setResult(d);
+                },sourcefile,datalist3)
+            }
         } else {
             return "toast://非法口令";
         }
