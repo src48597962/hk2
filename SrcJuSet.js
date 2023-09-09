@@ -256,7 +256,7 @@ function SRCSet() {
             if(input=="聚阅口令"){
                 return $("", "聚阅分享口令").input(() => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                    JYimport(input)
+                    return JYimport(input);
                 })
             }else if(input=="文件导入"){
                 return `fileSelect://`+$.toString(()=>{
