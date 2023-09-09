@@ -394,7 +394,7 @@ function erji() {
             pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", (datasource[2].pageid || 0).toString()));
             try{
                 if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
-                    let 分页s = details.page;
+                    let 分页s = details.page || [];
                     if(pageid > 分页s.length){
                         pageid = 0;
                     }
@@ -449,6 +449,7 @@ function erji() {
             let 解析 = parse['解析'];
             if (stype=="小说" || details.rule==1) {
                 lazy = $(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#").rule((解析,参数) => {
+                    log(input.split("##")[1]);
                     let url = MY_PARAMS.url || "";
                     let 公共 = {};
                     try{
