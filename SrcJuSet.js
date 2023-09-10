@@ -159,11 +159,12 @@ function SRCSet() {
                                         let img = convertBase64Image(codeurl,headers).replace('data:image/jpeg;base64,','');
                                         let code = request('https://api.xhofe.top/ocr/b64/text', { body: img, method: 'POST', headers: {"Content-Type":"text/html"}});
                                         code = code.replace(/o/g, '0').replace(/u/g, '0').replace(/I/g, '1').replace(/l/g, '1').replace(/g/g, '9');
-                                        //log('识别验证码：'+code);
+                                        if(code.includes("+")&&code.includes("=")){
+                                            code = eval(code.split("=")[0]);
+                                        }
                                         return code;
                                     }
                                     ssdata = 搜索(name,page,公共,参数) || [];
-                                    //log('√'+objdata.name+">搜索结果>"+ssdata.length);
                                     let resultdata = [];
                                     ssdata.forEach(item => {
                                         if(item.title.includes(name)){
@@ -174,7 +175,6 @@ function SRCSet() {
                                 }
                                 return {success:0, message:'未找到搜索代码', id:标识};
                             } catch (e) {
-                                //log(标识+'>'+e.message);
                                 return {success:0, message:e.message, id:标识};
                             }
                         }
@@ -950,7 +950,7 @@ function JYimport(input) {
         }
     } catch (e) {
         hideLoading();
-        log('√口令解析失败>'+e.message);
+        xlog('√口令解析失败>'+e.message);
         return "toast://口令有误";
     }
 }
