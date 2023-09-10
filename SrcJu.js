@@ -34,7 +34,7 @@ function yiji() {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
             }catch(e){
-                //log("√缓存临时文件失败>"+e.message);
+                //xlog("√缓存临时文件失败>"+e.message);
             }
             页码 = parse["页码"];
             提示 = "当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : "");
@@ -43,7 +43,7 @@ function yiji() {
             }
         }
     } catch (e) {
-        log("√一级源接口加载异常>" + e.message);
+        xlog("√一级源接口加载异常>" + e.message);
     }
 
     页码 = 页码 || {};
@@ -258,8 +258,8 @@ function yiji() {
         getYiData('主页', d);
     }catch(e){
         toast("当前主页源有报错，可更换主页源或联系接口作者");
-        log("√"+提示);
-        log("√当前主页源报错信息>"+e.message);
+        xlog("√"+提示);
+        xlog("√当前主页源报错信息>"+e.message);
         setResult(d);
     }
 }
@@ -317,7 +317,7 @@ function erji() {
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
-            //log('√分享页面，且本地无对应接口');
+            //xlog('√分享页面，且本地无对应接口');
             sourcedata.push(MY_PARAMS.sourcedata);
         }
         if (sourcedata.length > 0 && sourcedata[0].erparse) {
@@ -338,7 +338,7 @@ function erji() {
             }
         }
     } catch (e) {
-        log("√加载二级源接口>"+e.message);
+        xlog("√加载二级源接口>"+e.message);
     }
     try {
         if (parse && surl) {
@@ -405,14 +405,14 @@ function erji() {
                     }
                 }
             }catch(e){
-                log('√'+sname+'分页选集处理失败>'+e.message);
+                xlog('√'+sname+'分页选集处理失败>'+e.message);
             }
             try{
                 if(线路s.length != 列表s.length){
-                    log('√'+sname+'>源接口返回的线路数'+线路s.length+'和列表数'+列表s.length+'不相等');
+                    xlog('√'+sname+'>源接口返回的线路数'+线路s.length+'和列表数'+列表s.length+'不相等');
                 }
             }catch(e){
-                log('√'+sname+">线路或列表返回数据有误>"+e.message);
+                xlog('√'+sname+">线路或列表返回数据有误>"+e.message);
                 线路s = ["线路"];
                 列表s = [[]];
             }
@@ -437,7 +437,7 @@ function erji() {
                         列表.reverse();
                     }
                 }catch(e){
-                    //log('√修正选集顺序失败>'+e.message)
+                    //xlog('√修正选集顺序失败>'+e.message)
                 }
             }
             if (getMyVar(sname + 'sort') == '1') {
@@ -765,7 +765,7 @@ function erji() {
         }
     } catch (e) {
         toast('有异常，看日志');
-        log('√'+sname + '>加载详情失败>' + e.message);
+        xlog('√'+sname + '>加载详情失败>' + e.message);
     }
 
     if (isload) {
@@ -1022,7 +1022,7 @@ function search(keyword, mode, sdata, group, type) {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                     cacheData(objdata);
                 }catch(e){
-                    //log("√缓存临时文件失败>"+e.message);
+                    //xlog("√缓存临时文件失败>"+e.message);
                 }
                 eval("let gonggong = " + objdata.public);
                 if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
@@ -1042,11 +1042,11 @@ function search(keyword, mode, sdata, group, type) {
                     if(code.includes("+")&&code.includes("=")){
                         code = eval(code.split("=")[0]);
                     }
-                    log('识别验证码：'+code);
+                    xlog('识别验证码：'+code);
                     return code;
                 }
                 ssdata = 搜索(name,page,公共,参数) || [];
-                //log('√'+objdata.name+">搜索结果>"+ssdata.length);
+                //xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
@@ -1087,7 +1087,7 @@ function search(keyword, mode, sdata, group, type) {
             }
             return {result:[], success:0};
         } catch (e) {
-            log('√'+objdata.name + '>搜索失败>' + e.message);
+            xlog('√'+objdata.name + '>搜索失败>' + e.message);
             return {result:[], success:0};
         }
     }
@@ -1245,7 +1245,7 @@ function Version() {
                     }, nowtime, newVersion.SrcJu),
                     cancel: ''
                 })
-                log('√检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
+                xlog('√检测到新版本！\nV' + newVersion.SrcJu + '版本》' + newVersion.SrcJudesc[newVersion.SrcJu]);
             }
             putMyVar('SrcJu_Version', '-V' + newVersion.SrcJu);
         } catch (e) { }
