@@ -18,7 +18,7 @@ function bookCase() {
                 Julist.push(it);
             }
         }catch(e){
-            log("√书架加载异常>"+e.message);
+            xlog("√书架加载异常>"+e.message);
         }
     })
     setPageTitle('我的书架');
@@ -62,7 +62,7 @@ function bookCase() {
             col_type: 'scroll_button'
         })
     })
-    //log(Julist)
+
     Julist.forEach(it => {
         try{
             let params = JSON.parse(it.params);
@@ -99,7 +99,7 @@ function bookCase() {
                 })
             }
         }catch(e){
-            log("√书架加载异常>"+e.message);
+            xlog("√书架加载异常>"+e.message);
         }
     })
     d.push({
