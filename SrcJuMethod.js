@@ -109,7 +109,7 @@ function banner(start, arr, data, cfg){
             require(obj.method);
             updateItem('bar', toerji(item,obj.info));
         } catch (e) {
-            xlog(e.message)
+            log(e.message)
             unRegisterTask('juyue')
         }
         putMyVar('banneri', i);
