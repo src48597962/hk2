@@ -155,9 +155,9 @@ function jianfan(str,x) {
     return PYStr(str,x);
 }
 //重定义打印日志，只允许调试模式下打印
-var logx = log;
+var tlogs = log;
 log = function(msg){
     if(getMyVar("SrcJu_调试模式")){
-        logx(msg);
+        tlogs(msg);
     }
 }
