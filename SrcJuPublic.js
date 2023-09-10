@@ -154,3 +154,10 @@ function jianfan(str,x) {
     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcSimple.js');
     return PYStr(str,x);
 }
+//重定义打印日志，只允许调试模式下打印
+var logx = log;
+log = function(msg){
+    if(getMyVar("SrcJu_调试模式")){
+        logx(msg);
+    }
+}
