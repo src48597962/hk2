@@ -634,7 +634,7 @@ function jiekouapi(sourcefile, data, look) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 3,
+            height: 2,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("SrcJu_jiekouparse", input)
@@ -651,7 +651,7 @@ function jiekouapi(sourcefile, data, look) {
             titleVisible: false,
             type: "textarea",
             highlight: true,
-            height: 3,
+            height: 2,
             onChange: $.toString(() => {
                 if (/{|}/.test(input) || !input) {
                     storage0.putMyVar("SrcJu_jiekouerparse", input)
