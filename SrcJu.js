@@ -1051,9 +1051,9 @@ function search(keyword, mode, sdata, group, type) {
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
-                    if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name.toUpperCase()==name.toUpperCase())||extra.name.toUpperCase().includes(name.toUpperCase()))) || objmode!="erji"){
+                    if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name.toLowerCase()==name.toLowerCase())||extra.name.toLowerCase().includes(name.toLowerCase()))) || objmode!="erji"){
                         let keepurl = /js:|select:|\(|\)|=>|hiker:\/\/page|toast:/;//定义保留传值的项目url
-                        if((!keepurl.test(item.url) && item.title.toUpperCase().includes(name.toUpperCase())) || keepurl.test(item.url)){
+                        if((!keepurl.test(item.url) && extra.name.toLowerCase().includes(name.toLowerCase())) || keepurl.test(item.url)){
                             extra.img = extra.img || item.img || item.pic_url;
                             extra.stype = objdata.type;
                             extra.sname = objdata.name;
