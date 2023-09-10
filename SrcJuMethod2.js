@@ -28,7 +28,7 @@ function readData(fileid,datatype){
         }
         
     }catch(e){
-        log("接口数据加载失败>"+fileid+">"+e.message);
+        xlog("接口数据加载失败>"+fileid+">"+e.message);
     }
 
     try{
@@ -61,7 +61,7 @@ function readData(fileid,datatype){
         }
         return parse;
     }catch(e){
-        log("读取接口本地缓存文件失败>"+e.message);
+        xlog("读取接口本地缓存文件失败>"+e.message);
         return "";
     }
 }
