@@ -61,7 +61,7 @@ function selectsource(input) {
                 }
             })
         }catch(e){
-            log('清MyVar失败>'+e.message);
+            xlog('清MyVar失败>'+e.message);
             clearMyVar(MY_RULE.title + "分类");
             clearMyVar(MY_RULE.title + "更新");
             clearMyVar(MY_RULE.title + "类别");
@@ -107,7 +107,7 @@ function getYiData(type,od) {
             }
         }
     }catch(e){
-        log("√一级源接口加载异常>"+e.message);
+        xlog("√一级源接口加载异常>"+e.message);
     }
     if(parse){
         eval("let gonggong = " + sourcedata[0].public);
@@ -124,7 +124,7 @@ function getYiData(type,od) {
             eval("let 数据 = " + parse[type])
             data = 数据();
         }catch(e){
-            log(e.message);
+            xlog(e.message);
         }
         if(data.length==0 && page==1){
             data.push({
@@ -155,9 +155,9 @@ function jianfan(str,x) {
     return PYStr(str,x);
 }
 //重定义打印日志，只允许调试模式下打印
-var tlogs = log;
+var xlog = log;
 log = function(msg){
     if(getMyVar("SrcJu_调试模式")){
-        tlogs(msg);
+        xlog(msg);
     }
 }
