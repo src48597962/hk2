@@ -748,7 +748,7 @@ function erji() {
                     lazy = lazy.replace("@lazyRule=.",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
                 }
                 d.push({
-                    title: 列表[i].title.replace(name,'').replace(/‘|’|“|”|<[^>]+>| |-|_|第|集/g,''),
+                    title: 列表[i].title.replace(name,'').replace(/‘|’|“|”|<[^>]+>| |-|_|第|集|\</g,'').replace('（','(').replace('）',')'),
                     url: "hiker://empty##" + 列表[i].url + lazy,
                     desc: 列表[i].desc,
                     img: 列表[i].img,
