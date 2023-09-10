@@ -317,7 +317,6 @@ function erji() {
     let sourcedata2;//用于正常加载时，将二级接口存入当前页面PARAMS，确保分享时可以打开
     try {
         if (sourcedata.length == 0 && MY_PARAMS && MY_PARAMS.sourcedata) {
-            //xlog('√分享页面，且本地无对应接口');
             sourcedata.push(MY_PARAMS.sourcedata);
         }
         if (sourcedata.length > 0 && sourcedata[0].erparse) {
