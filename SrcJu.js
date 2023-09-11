@@ -627,6 +627,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
+            let reviseLiTitle = getItem('reviseLiTitle','1');
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
                 url: $(["text_1","text_2","text_3","text_4","flex_button","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
@@ -650,7 +651,22 @@ function erji() {
                 }),
                 col_type: 'scroll_button',
                 extra: {
-                    cls: "loadlist"
+                    cls: "loadlist",
+                    longClick: [{
+                        title: "修正选集标题："+(reviseLiTitle=="1"?"是":"否"),
+                        js: $.toString(() => {
+                            let sm;
+                            if(getItem('reviseLiTitle','1')=="1"){
+                                setItem('reviseLiTitle','2');
+                                sm = "取消修正选集标题名称";
+                            }else{
+                                clearItem('reviseLiTitle');
+                                sm = "统一修正选集标题名称";
+                            }
+                            refreshPage(false);
+                            return "toast://"+sm;
+                        })
+                    }]
                 }
             })
             
@@ -747,7 +763,7 @@ function erji() {
                     lazy = lazy.replace("@lazyRule=.",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
                 }
                 d.push({
-                    title: 列表[i].title.replace(name,'').replace(/‘|’|“|”|<[^>]+>| |-|_|第|集|\</g,'').replace('（','(').replace('）',')'),
+                    title: reviseLiTitle=="1"?列表[i].title.replace(name,'').replace(/‘|’|“|”|<[^>]+>| |-|_|第|集|\</g,'').replace('（','(').replace('）',')'):列表[i].title,
                     url: "hiker://empty##" + 列表[i].url + lazy,
                     desc: 列表[i].desc,
                     img: 列表[i].img,
