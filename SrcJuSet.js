@@ -46,6 +46,18 @@ function SRCSet() {
                         return "toast://已设置"
                     })
                 })
+            },{
+                title: getItem("SrcJu_接口日志")?'关接口日志':'开接口日志',
+                js: $.toString(() => {
+                    return $().lazyRule(() => {
+                        if(getItem("SrcJu_接口日志")){
+                            clearItem("SrcJu_接口日志");
+                        }else{
+                            setItem("SrcJu_接口日志", "1");
+                        }
+                        return "toast://已设置"
+                    })
+                })
             }]
         }
     });
