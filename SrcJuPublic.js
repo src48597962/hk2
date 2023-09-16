@@ -157,7 +157,7 @@ function jianfan(str,x) {
 //重定义打印日志，只允许调试模式下打印
 var xlog = log;
 log = function(msg){
-    if(getMyVar("SrcJu_调试模式")){
+    if(getMyVar("SrcJu_调试模式") || getItem("SrcJu_接口日志")){
         xlog(msg);
     }
 }
