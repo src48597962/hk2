@@ -572,18 +572,11 @@ function erji() {
                     cls: "loadlist",
                     longClick: [{
                         title: "切换类型",
-                        js: $.toString(() => {
-                            let sm;
-                            if(getItem('searchMatch','1')=="1"){
-                                setItem('searchMatch','2');
-                                sm = "取消换源搜索精准匹配名称";
-                            }else{
-                                clearItem('searchMatch');
-                                sm = "换源搜索精准匹配名称";
-                            }
-                            refreshPage(false);
-                            return "toast://"+sm;
-                        })
+                        js: $.toString((runModes) => {
+                            return $(runModes, 2).select(() => {
+                            
+                            })
+                        },runModes)
                     },{
                         title: "精准匹配："+(getItem('searchMatch','1')=="1"?"是":"否"),
                         js: $.toString(() => {
