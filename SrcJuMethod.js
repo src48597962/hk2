@@ -9,7 +9,7 @@ function toerji(item,info) {
     if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url) && item.url!='hiker://empty'){
         extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
         extra.sname = info.name;
-        item.url = $('hiker://empty#immersiveTheme##autoCache#').rule(() => {
+        item.url = $('hiker://empty#immersiveTheme##autoCache##漫画').rule(() => {
             require(config.依赖);
             erji();
         })
