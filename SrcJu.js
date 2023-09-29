@@ -1082,7 +1082,7 @@ function search(keyword, mode, sdata, group, type) {
                             extra.pageTitle = extra.pageTitle || extra.name;
                             extra.surl = item.url && !keepurl.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
                             item.extra = extra;
-                            item.url = /sousuo/.test(objmode) ? (keepurl.test(item.url) || item.url=='hiker://empty')?item.url:$("hiker://empty#immersiveTheme##autoCache#"+objdata.type).rule(() => {
+                            item.url = /sousuo/.test(objmode) ? (keepurl.test(item.url) || item.url=='hiker://empty')?item.url:$("hiker://empty?type="+objdata.type+"#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
                                 erji();
                             }) : "hiker://empty##"+ item.url + $("#noLoading#").b64().lazyRule((extra) => {
