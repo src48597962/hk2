@@ -79,7 +79,7 @@ function bookCase() {
                     title: col=='movie_1_vertical_pic'?name + "\n\n‘‘’’<small>💠 "+stype+" | "+(sname||"")+"</small>":name,
                     pic_url: it.picUrl,
                     desc: col=='movie_1_vertical_pic'?"🕓 "+mask+"\n\n🔘 "+last:last,
-                    url: $("hiker://empty#immersiveTheme##autoCache#").rule(() => {
+                    url: $("hiker://empty?type="+stype+"#immersiveTheme##autoCache#").rule(() => {
                         require(config.依赖);
                         erji();
                         putMyVar('从书架进二级','1');
