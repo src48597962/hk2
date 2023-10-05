@@ -379,13 +379,13 @@ function SRCSet() {
         })
     }
 
-    let typebtn = runModes;
+    let typebtn = Object.assign([],runModes);
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
         /*
         if(it != "全部" && getItem(it+'stoptype')=="1"){
-            typename = typename+"(关)";
+            typename = typename+"(停)";
         }
         */
         let obj = {
