@@ -1352,8 +1352,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         }
     });
 
-    let typebtn = runModes;
-    typebtn.forEach((it,i) =>{
+    runModes.forEach((it,i) =>{
         let obj = {
             title: getMyVar("SrcJu_sousuoType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
             url: $('#noLoading#').lazyRule((it) => {
