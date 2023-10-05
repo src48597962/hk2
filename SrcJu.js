@@ -227,7 +227,7 @@ function yiji() {
         if(getItem('runtypebtn')=="1"){
             let runModes_btntype = getItem('runModes_btntype','scroll_button');
             runModes.forEach((it) =>{
-                d.push({
+                let item = {
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                     url: Juconfig["runMode"]==it?$('#noLoading#').lazyRule((input) => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
@@ -239,7 +239,26 @@ function yiji() {
                         return 'toast://运行模式已切换为：' + input;
                     }, cfgfile, Juconfig ,it),
                     col_type: runModes_btntype
-                });
+                }
+                if(Juconfig["runMode"]==it){
+                    item.extra = {
+                        longClick: [{
+                            title: "删除当前",
+                            js: $.toString((sourcefile,id) => {
+                                return $("确定删除："+id).confirm((sourcefile,id)=>{
+                                    let sourcedata = fetch(sourcefile);
+                                    eval("var datalist=" + sourcedata + ";");
+                                    let index = datalist.indexOf(datalist.filter(d => d.type+"_"+d.name == id)[0]);
+                                    datalist.splice(index, 1);
+                                    writeFile(sourcefile, JSON.stringify(datalist));
+                                    clearMyVar('SrcJu_searchMark');
+                                    return 'toast://已删除';
+                                },sourcefile,id)
+                            },sourcefile,Juconfig["runMode"]+"_"+sourcename)
+                        }]
+                    }
+                }
+                d.push(item);
             })
             if(runModes_btntype=="text_5"){
                 for (let i = 0; i < 8; i++) {
@@ -497,7 +516,7 @@ function erji() {
             if(stype=="影视"){
                 d.push({
                     title: "聚影搜索",
-                    url: "hiker://search?rule=聚影√&s=" + name,
+                    url: "hiker://search?rule=聚影√&s=" + name.split('/')[0].trim(),
                     pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
                     col_type: 'icon_small_3',
                     extra: {
@@ -565,7 +584,7 @@ function erji() {
                         hideLoading();
                         return  "hiker://empty";
                     }
-                }, name,sgroup,stype),
+                }, name.split('/')[0].trim(), sgroup||"" ,stype),
                 pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
@@ -765,9 +784,9 @@ function erji() {
                 if(list_col_type.indexOf("_left")>-1){
                     extra.textAlign = 'left';
                 }
-                if (stype=="小说" || details["rule"] || 列表[i].rule) {
+                if (stype=="小说" || details["rule"] || details["novel"] || 列表[i].rule) {
                     extra.url = 列表[i].url;
-                    lazy = lazy.replace("@lazyRule=.",(stype=="小说"?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
+                    lazy = lazy.replace("@lazyRule=.",((stype=="小说"||details["novel"])?"#readTheme##autoPage#":"#noRecordHistory#")+"@rule=").replace(`input.split("##")[1]`,`MY_PARAMS.url || ""`);
                 }
                 d.push({
                     title: reviseLiTitle=="1"?列表[i].title.replace(name,'').replace(/‘|’|“|”|<[^>]+>| |-|_|第|集|话|章|\</g,'').replace('（','(').replace('）',')'):列表[i].title,
