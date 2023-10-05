@@ -145,6 +145,8 @@ function yiji() {
             newsousuopage();
         })
         let sousuoextra = {
+            newWindow: true,
+            windowId: MY_RULE.title + "搜索页",
             longClick: [{
                 title: "🔍搜索",
                 js: $.toString((sousuopage) => {
@@ -1311,10 +1313,11 @@ function newsousuopage(keyword,searchtype,relyfile) {
     addListener('onRefresh', $.toString(() => {
         clearMyVar('SrcJu_sousuoName');
     }));
-    if(!getMyVar('SrcJu_rely') && config.依赖){
-        putMyVar('SrcJu_rely',config.依赖);
-    }
+    
     if(relyfile){
+        if(!getMyVar('SrcJu_rely') && config.依赖){
+            putMyVar('SrcJu_rely',config.依赖);
+        }
         initConfig({
             依赖: relyfile
         });
