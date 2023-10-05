@@ -515,10 +515,11 @@ function erji() {
                     cls: "loadlist"
                 }
             })
+            let sskeyword = name.split('/')[0].trim();
             if(stype=="影视"){
                 d.push({
                     title: "聚影搜索",
-                    url: "hiker://search?rule=聚影√&s=" + name.split('/')[0].trim(),
+                    url: "hiker://search?rule=聚影√&s=" + sskeyword,
                     pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
                     col_type: 'icon_small_3',
                     extra: {
@@ -586,18 +587,21 @@ function erji() {
                         hideLoading();
                         return  "hiker://empty";
                     }
-                }, name.split('/')[0].trim(), sgroup||"" ,stype),
+                }, sskeyword, sgroup||"" ,stype),
                 pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "loadlist",
+                    newWindow: true,
+                    windowId: MY_RULE.title + "搜索页",
                     longClick: [{
-                        title: "切换类型",
-                        js: $.toString((runModes) => {
-                            return $(runModes, 2).select(() => {
-                            
-                            })
-                        },runModes)
+                        title: "新搜索页",
+                        js: $.toString((sskeyword) => {
+                            return $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule((sskeyword) => {
+                                require(config.依赖);
+                                newsousuopage(sskeyword);
+                            },sskeyword)
+                        },sskeyword)
                     },{
                         title: "精准匹配："+(getItem('searchMatch','1')=="1"?"是":"否"),
                         js: $.toString(() => {
