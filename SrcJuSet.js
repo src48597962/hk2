@@ -963,6 +963,6 @@ function JYimport(input) {
     } catch (e) {
         hideLoading();
         xlog('√口令解析失败>'+e.message);
-        return "toast://口令有误";
+        return "toast://口令有误或无法访问";
     }
 }
