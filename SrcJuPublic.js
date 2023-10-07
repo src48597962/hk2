@@ -169,14 +169,6 @@ function getYiData(datatype,od) {
                 }
             })
             d.push({
-                title: "",
-                col_type: "text_1",
-                extra: {
-                    lineVisible: false,
-                    cls: "loading_gif"
-                }
-            })
-            d.push({
                 pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
                 col_type: "pic_1_center",
                 extra: {
