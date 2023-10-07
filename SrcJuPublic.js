@@ -89,7 +89,7 @@ function rulePage(type,page) {
 }
 
 //获取一级数据
-function getYiData(type,od) {
+function getYiData(datatype,od) {
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
         return it.name==sourcename && it.type==runMode;
@@ -117,11 +117,21 @@ function getYiData(type,od) {
         }
         公共 = gonggong || parse['公共'] || {};
         let info = storage0.getMyVar('一级源接口信息');
+        //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
         let 标识 = info.type + "_" + info.name;
+        d.push({
+            title: "加载中",
+            url: "hiker://empty",
+            col_type: "text_center_1",
+            extra: {
+                id: 标识 + "_" + datatype
+            }
+        })
+        setResult(d);
         let page = MY_PAGE || 1;
         let data = [];
         try{
-            eval("let 数据 = " + parse[type])
+            eval("let 数据 = " + parse[datatype])
             data = 数据();
         }catch(e){
             xlog(e.message);
@@ -134,20 +144,20 @@ function getYiData(type,od) {
             })
         }else if(data.length>0){
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-            let info = {type: sourcedata[0].type, name: sourcedata[0].name};
             data.forEach(item => {
                 item = toerji(item,info);
             })
         }
-        d = d.concat(data);
+        //d = d.concat(data);
+        addItemBefore(标识 + "_" + datatype, data);
     }else{
         d.push({
             title: "请先配置一个主页源\n设置-选择漫画/小说/听书/...",
             url: "hiker://empty",
             col_type: "text_center_1",
         })
+        setResult(d);
     }
-    setResult(d);
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
 function jianfan(str,x) {
