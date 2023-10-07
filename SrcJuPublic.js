@@ -128,6 +128,7 @@ function getYiData(datatype,od) {
                 id: itemid
             }
         })
+        xlog(d);
         setResult(d);
         let page = MY_PAGE || 1;
         let data = [];
@@ -150,6 +151,7 @@ function getYiData(datatype,od) {
             })
         }
         //d = d.concat(data);
+        xlog(data.length);
         addItemBefore(itemid, data);
         deleteItem(itemid);
     }else{
