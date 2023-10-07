@@ -136,8 +136,8 @@ function getYiData(datatype,od) {
         let info = storage0.getMyVar('一级源接口信息');
         //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
         let 标识 = info.type + "_" + info.name;
-        let itemid = 标识 + "_" + datatype;
         /*
+        let itemid = 标识 + "_" + datatype;
         d.push({
             title: "加载中",
             url: "hiker://empty",
@@ -186,7 +186,7 @@ function getYiData(datatype,od) {
             xlog(e.message);
         }
         if(loading){
-            deleteItemByCls(loading_gif);
+            deleteItemByCls("loading_gif");
         }
         if(data.length==0 && page==1){
             data.push({
