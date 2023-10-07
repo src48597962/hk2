@@ -276,6 +276,9 @@ function yiji() {
         })
         putMyVar(runMode+"_"+sourcename, "1");
     }
+    if (typeof(setPreResult)!="undefined") {
+        setPreResult(d);
+    }
     try{
         getYiData('主页', d);
     }catch(e){
