@@ -133,8 +133,9 @@ function getYiData(datatype,od) {
         setResult(d);
         */
         let page = MY_PAGE || 1;
+        let loading;
         if (page==1 && typeof(setPreResult)!="undefined") {           
-            //showLoading("正在加载中");
+            loading = 1;
             d.push({
                 pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
                 col_type: "pic_1_center",
@@ -152,6 +153,9 @@ function getYiData(datatype,od) {
         }catch(e){
             xlog(e.message);
         }
+        if(loading){
+            deleteItem(itemid);
+        }
         if(data.length==0 && page==1){
             data.push({
                 title: "未获取到数据",
@@ -168,7 +172,7 @@ function getYiData(datatype,od) {
         /*
         addItemBefore(itemid, data);
         */
-        deleteItem(itemid);
+        
         setResult(d);
     }else{
         d.push({
