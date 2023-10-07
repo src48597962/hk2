@@ -82,6 +82,7 @@ function selectsource(input) {
     }, input, sourcename, cfgfile, Juconfig)
 }
 function rulePage(type,page) {
+    updateItem("sousuopageid",{extra:{newWindow: false}});
     return $("hiker://empty#noRecordHistory##noHistory#" + (page ? "?page=fypage" : "")).rule((type) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
         getYiData(type);
