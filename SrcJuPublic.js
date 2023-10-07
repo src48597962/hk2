@@ -122,7 +122,6 @@ function getYiData(datatype,od) {
         let 标识 = info.type + "_" + info.name;
         let itemid = 标识 + "_" + datatype;
         /*
-        
         d.push({
             title: "加载中",
             url: "hiker://empty",
@@ -138,7 +137,7 @@ function getYiData(datatype,od) {
             //showLoading("正在加载中");
             d.push({
                 pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
-                col_type: "pic_1_full",//text_center_1
+                col_type: "pic_1_center",
                 extra: {
                     id: itemid
                 }
