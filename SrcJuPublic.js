@@ -119,6 +119,7 @@ function getYiData(datatype,od) {
         let info = storage0.getMyVar('一级源接口信息');
         //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
         let 标识 = info.type + "_" + info.name;
+        /*
         let itemid = 标识 + "_" + datatype;
         d.push({
             title: "加载中",
@@ -128,8 +129,8 @@ function getYiData(datatype,od) {
                 id: itemid
             }
         })
-        xlog(d);
         setResult(d);
+        */
         let page = MY_PAGE || 1;
         let data = [];
         try{
@@ -150,10 +151,12 @@ function getYiData(datatype,od) {
                 item = toerji(item,info);
             })
         }
-        //d = d.concat(data);
-        xlog(data.length);
+        d = d.concat(data);
+        /*
         addItemBefore(itemid, data);
         deleteItem(itemid);
+        */
+        setResult(d);
     }else{
         d.push({
             title: "请先配置一个主页源\n设置-选择漫画/小说/听书/...",
