@@ -33,6 +33,7 @@ let yidatalist = yxdatalist.filter(it=>{
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
+
 function selectsource(input) {
     let sourcenames = [];
     yidatalist.forEach(it=>{
@@ -81,8 +82,20 @@ function selectsource(input) {
         return 'toast://'+runMode+' 主页源已设置为：' + input;
     }, input, sourcename, cfgfile, Juconfig)
 }
+let sousuoextra = {
+    id: "sousuopageid",
+    newWindow: true,
+    windowId: MY_RULE.title + "搜索页",
+    longClick: [{
+        title: "🔍搜索",
+        js: $.toString((sousuopage) => {
+            return sousuopage;
+        },sousuopage)
+    }]
+}
 function rulePage(type,page) {
-    updateItem("sousuopageid",{extra:{newWindow: false}});
+    sousuoextra.newWindow = false;
+    updateItem("sousuopageid",{extra:sousuoextra});
     return $("hiker://empty#noRecordHistory##noHistory#" + (page ? "?page=fypage" : "")).rule((type) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
         getYiData(type);
@@ -137,10 +150,34 @@ function getYiData(datatype,od) {
         if (page==1 && typeof(setPreResult)!="undefined") {           
             loading = 1;
             d.push({
+                title: "",
+                col_type: "text_1",
+                extra: {
+                    lineVisible: false,
+                    cls: "loading_gif"
+                }
+            })
+            d.push({
+                title: "",
+                col_type: "text_1",
+                extra: {
+                    lineVisible: false,
+                    cls: "loading_gif"
+                }
+            })
+            d.push({
+                title: "",
+                col_type: "text_1",
+                extra: {
+                    lineVisible: false,
+                    cls: "loading_gif"
+                }
+            })
+            d.push({
                 pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
                 col_type: "pic_1_center",
                 extra: {
-                    id: itemid
+                    cls: "loading_gif"
                 }
             })
             setPreResult(d);
@@ -154,7 +191,7 @@ function getYiData(datatype,od) {
             xlog(e.message);
         }
         if(loading){
-            deleteItem(itemid);
+            deleteItemByCls(loading_gif);
         }
         if(data.length==0 && page==1){
             data.push({
