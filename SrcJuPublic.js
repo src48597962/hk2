@@ -84,7 +84,7 @@ function selectsource(input) {
 }
 let sousuoextra = {
     id: "sousuopageid",
-    newWindow = true,
+    newWindow: true,
     windowId: MY_RULE.title + "搜索页",
     longClick: [{
         title: "🔍搜索",
