@@ -88,9 +88,12 @@ let sousuoextra = {
     windowId: MY_RULE.title + "搜索页",
     longClick: [{
         title: "🔍搜索",
-        js: $.toString((sousuopage) => {
-            return sousuopage;
-        },sousuopage)
+        js: $.toString(() => {
+            return $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
+                require(config.依赖);
+                newsousuopage();
+            })
+        })
     }]
 }
 function rulePage(type,page) {
