@@ -49,7 +49,6 @@ function yiji() {
     页码 = 页码 || {};
     let d = [];
     if(MY_PAGE==1){
-        clearItem('searchmode');//临时先去掉视界聚合代理搜索
         if(getMyVar('SrcJu_versionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
             if(programversion<11){
@@ -144,33 +143,7 @@ function yiji() {
             require(config.依赖);
             newsousuopage();
         })
-        let sousuoextra = {
-            id: "sousuopageid",
-            newWindow: true,
-            windowId: MY_RULE.title + "搜索页",
-            longClick: [{
-                title: "🔍搜索",
-                js: $.toString((sousuopage) => {
-                    return sousuopage;
-                },sousuopage)
-            }]
-            /*
-            ,{
-                title: "聚搜："+(getItem('searchmode')=="jusousuo"?"程序":"规则"),
-                js: $.toString(() => {
-                    return $().lazyRule(() => {
-                        if(getItem('searchmode')=="jusousuo"){
-                            clearItem('searchmode');
-                        }else{
-                            setItem('searchmode',"jusousuo");
-                        }
-                        refreshPage(false);
-                        return "toast://已切换";
-                    })
-                })
-            }
-            */
-        }
+        
         if(parse&&parse["分类"]){
             d.push({
                 title: "分类",
