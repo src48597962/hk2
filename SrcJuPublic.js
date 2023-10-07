@@ -119,12 +119,13 @@ function getYiData(datatype,od) {
         let info = storage0.getMyVar('一级源接口信息');
         //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
         let 标识 = info.type + "_" + info.name;
+        let itemid = 标识 + "_" + datatype;
         d.push({
             title: "加载中",
             url: "hiker://empty",
             col_type: "text_center_1",
             extra: {
-                id: 标识 + "_" + datatype
+                id: itemid
             }
         })
         setResult(d);
@@ -149,10 +150,12 @@ function getYiData(datatype,od) {
             })
         }
         //d = d.concat(data);
-        addItemBefore(标识 + "_" + datatype, data);
+        addItemBefore(itemid, data);
+        deleteItem(itemid);
     }else{
         d.push({
             title: "请先配置一个主页源\n设置-选择漫画/小说/听书/...",
+            desc: "设置长按菜单可以开启界面切换开关",
             url: "hiker://empty",
             col_type: "text_center_1",
         })
