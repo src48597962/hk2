@@ -82,25 +82,11 @@ function selectsource(input) {
         return 'toast://'+runMode+' 主页源已设置为：' + input;
     }, input, sourcename, cfgfile, Juconfig)
 }
-let sousuoextra = {
-    id: "sousuopageid",
-    newWindow: true,
-    windowId: MY_RULE.title + "搜索页",
-    longClick: [{
-        title: "🔍搜索",
-        js: $.toString((sousuoextra) => {
-            sousuoextra.newWindow = true;
-            updateItem("sousuopageid",{extra:sousuoextra});
-            return $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
-                require(config.依赖);
-                newsousuopage();
-            })
-        },sousuoextra)
-    }]
-}
+
 function rulePage(datatype,ispage) {
     if(datatype=="分类"){
-        sousuoextra.newWindow = false;
+        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+        delete sousuoextra.newWindow;
         updateItem("sousuopageid",{extra:sousuoextra});
     }
     return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((datatype) => {
