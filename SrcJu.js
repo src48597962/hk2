@@ -147,9 +147,9 @@ function yiji() {
         let sousuoextra = {
             id: "sousuopageid",
             newWindow: true,
+            windowId: MY_RULE.title + "搜索页",
             longClick: [{
                 title: "🔍搜索",
-                windowId: MY_RULE.title + "搜索页",
                 js: $.toString((sousuopage) => {
                     return sousuopage;
                 },sousuopage)
