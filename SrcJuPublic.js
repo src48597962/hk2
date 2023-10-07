@@ -120,8 +120,9 @@ function getYiData(datatype,od) {
         let info = storage0.getMyVar('一级源接口信息');
         //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
         let 标识 = info.type + "_" + info.name;
-        /*
         let itemid = 标识 + "_" + datatype;
+        /*
+        
         d.push({
             title: "加载中",
             url: "hiker://empty",
@@ -133,6 +134,18 @@ function getYiData(datatype,od) {
         setResult(d);
         */
         let page = MY_PAGE || 1;
+        if (page==1 && typeof(setPreResult)!="undefined") {           
+            //showLoading("正在加载中");
+            d.push({
+                pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
+                col_type: "pic_1_full",//text_center_1
+                extra: {
+                    id: itemid
+                }
+            })
+            setPreResult(d);
+            d = [];
+        }
         let data = [];
         try{
             eval("let 数据 = " + parse[datatype])
@@ -155,8 +168,8 @@ function getYiData(datatype,od) {
         d = d.concat(data);
         /*
         addItemBefore(itemid, data);
-        deleteItem(itemid);
         */
+        deleteItem(itemid);
         setResult(d);
     }else{
         d.push({
