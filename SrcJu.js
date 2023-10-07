@@ -275,15 +275,9 @@ function yiji() {
             col_type: 'blank_block'
         })
         putMyVar(runMode+"_"+sourcename, "1");
-        if (typeof(setPreResult)!="undefined") {
-            setPreResult(d);
-            //showLoading("正在加载中");
-            d = [];
-        }
     }
     try{
         getYiData('主页', d);
-        //hideLoading();
     }catch(e){
         //hideLoading();
         toast("当前主页源有报错，可更换主页源或联系接口作者");
