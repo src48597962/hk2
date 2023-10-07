@@ -277,15 +277,15 @@ function yiji() {
         putMyVar(runMode+"_"+sourcename, "1");
         if (typeof(setPreResult)!="undefined") {
             setPreResult(d);
-            showLoading("正在加载中");
+            //showLoading("正在加载中");
             d = [];
         }
     }
     try{
         getYiData('主页', d);
-        hideLoading();
+        //hideLoading();
     }catch(e){
-        hideLoading();
+        //hideLoading();
         toast("当前主页源有报错，可更换主页源或联系接口作者");
         xlog("√"+提示);
         xlog("√当前主页源报错信息>"+e.message);
