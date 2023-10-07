@@ -88,21 +88,25 @@ let sousuoextra = {
     windowId: MY_RULE.title + "搜索页",
     longClick: [{
         title: "🔍搜索",
-        js: $.toString(() => {
+        js: $.toString((sousuoextra) => {
+            sousuoextra.newWindow = true;
+            updateItem("sousuopageid",{extra:sousuoextra});
             return $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
                 require(config.依赖);
                 newsousuopage();
             })
-        })
+        },sousuoextra)
     }]
 }
-function rulePage(type,page) {
-    sousuoextra.newWindow = false;
-    updateItem("sousuopageid",{extra:sousuoextra});
-    return $("hiker://empty#noRecordHistory##noHistory#" + (page ? "?page=fypage" : "")).rule((type) => {
+function rulePage(datatype,ispage) {
+    if(datatype=="分类"){
+        sousuoextra.newWindow = false;
+        updateItem("sousuopageid",{extra:sousuoextra});
+    }
+    return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((datatype) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-        getYiData(type);
-    },type)
+        getYiData(datatype);
+    },datatype)
 }
 
 //获取一级数据
