@@ -139,10 +139,6 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        let sousuopage = $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
-            require(config.依赖);
-            newsousuopage();
-        })
         
         if(parse&&parse["分类"]){
             d.push({
@@ -155,7 +151,10 @@ function yiji() {
         }else{
             d.push({
                 title: "搜索",
-                url: sousuopage,
+                url: $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
+                    require(config.依赖);
+                    newsousuopage();
+                }),
                 pic_url: "https://hikerfans.com/tubiao/more/101.png",
                 col_type: 'icon_5',
                 extra: sousuoextra
