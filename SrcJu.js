@@ -1317,7 +1317,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
     addListener('onRefresh', $.toString(() => {
         clearMyVar('SrcJu_sousuoName');
     }));
-    
+    setPageTitle("搜索|聚阅√");
     if(relyfile){
         if(!getMyVar('SrcJu_rely') && config.依赖){
             putMyVar('SrcJu_rely',config.依赖);
