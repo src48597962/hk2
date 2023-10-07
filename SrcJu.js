@@ -145,11 +145,11 @@ function yiji() {
             newsousuopage();
         })
         let sousuoextra = {
-            newWindow: true,
-            windowId: MY_RULE.title + "搜索页",
+            id: "sousuopageid",
             longClick: [{
                 title: "🔍搜索",
                 js: $.toString((sousuopage) => {
+                    updateItem("sousuopageid",{extra:{newWindow: true,windowId: MY_RULE.title + "搜索页"}});
                     return sousuopage;
                 },sousuopage)
             }]
