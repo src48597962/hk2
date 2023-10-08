@@ -99,7 +99,7 @@ let sousuoextra = {
 function rulePage(datatype,ispage) {
     let url = "hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "");
     if(datatype=="分类"){
-        return $.toString((url,sousuoextra) => {
+        return $('#noLoading#').lazyRule((url,sousuoextra) => {
             delete sousuoextra.newWindow;
             updateItem("sousuopageid",{extra:sousuoextra});
             return $(url).rule((sousuoextra) => {
