@@ -104,7 +104,7 @@ function rulePage(datatype,ispage) {
         return $(url).rule((datatype,sousuoextra) => {
             if(datatype=="分类"){
                 addListener("onClose", $.toString((sousuoextra) => {
-                sousuoextra.newWindow = true;
+                    sousuoextra.newWindow = true;
                     updateItem("sousuopageid",{extra:sousuoextra});
                 },sousuoextra));
             }
