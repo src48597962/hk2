@@ -139,7 +139,20 @@ function yiji() {
                 col_type: 'icon_5'
             })
         }
-        
+        let sousuoextra = {
+            id: "sousuopageid",
+            newWindow: true,
+            windowId: MY_RULE.title + "搜索页",
+            longClick: [{
+                title: "🔍搜索",
+                js: $.toString(() => {
+                    return $("hiker://empty#noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
+                        require(config.依赖);
+                        newsousuopage();
+                    })
+                })
+            }]
+        }
         if(parse&&parse["分类"]){
             d.push({
                 title: "分类",
