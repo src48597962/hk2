@@ -99,18 +99,18 @@ let sousuoextra = {
 function rulePage(datatype,ispage) {
     let url = "hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "");
     if(datatype=="分类"){
-        delete sousuoextra.newWindow;
-        updateItem("sousuopageid",{extra:sousuoextra});
-        return $(url).rule((datatype,sousuoextra) => {
-            if(datatype=="分类"){
+        return $.toString((url,sousuoextra) => {
+            delete sousuoextra.newWindow;
+            updateItem("sousuopageid",{extra:sousuoextra});
+            return $(url).rule((sousuoextra) => {
                 addListener("onClose", $.toString((sousuoextra) => {
                     sousuoextra.newWindow = true;
                     updateItem("sousuopageid",{extra:sousuoextra});
                 },sousuoextra));
-            }
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            getYiData(datatype);
-        },datatype,sousuoextra)
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                getYiData('分类');
+            },sousuoextra)
+        },url,sousuoextra)
     }else{
         return $(url).rule((datatype) => {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
