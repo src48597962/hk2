@@ -121,8 +121,8 @@ function getYiData(datatype,od) {
         let info = storage0.getMyVar('一级源接口信息');
         //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
         let 标识 = info.type + "_" + info.name;
-        /*
         let itemid = 标识 + "_" + datatype;
+        /*
         d.push({
             title: "加载中",
             url: "hiker://empty",
@@ -135,7 +135,7 @@ function getYiData(datatype,od) {
         */
         let page = MY_PAGE || 1;
         let loading;
-        if (page==1 && typeof(setPreResult)!="undefined") {           
+        if (page==1 && typeof(setPreResult)!="undefined" && getMyVar('动态加载loading')!=itemid) {           
             loading = 1;
             d.push({
                 title: "",
@@ -162,6 +162,7 @@ function getYiData(datatype,od) {
             })
             setPreResult(d);
             d = [];
+            putMyVar('动态加载loading', itemid);
         }
         let data = [];
         try{
