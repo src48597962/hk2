@@ -84,26 +84,10 @@ function selectsource(input) {
 }
 
 function rulePage(datatype,ispage) {
-    let url = "hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "");
-    if(datatype=="分类"){
-        return $('#noLoading#').lazyRule((url,sousuoextra) => {
-            delete sousuoextra.newWindow;
-            updateItem("sousuopageid",{extra:sousuoextra});
-            return $(url).rule((sousuoextra) => {
-                addListener("onClose", $.toString((sousuoextra) => {
-                    sousuoextra.newWindow = true;
-                    updateItem("sousuopageid",{extra:sousuoextra});
-                },sousuoextra));
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                getYiData('分类');
-            },sousuoextra)
-        },url,sousuoextra)
-    }else{
-        return $(url).rule((datatype) => {
-            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-            getYiData(datatype);
-        },datatype)
-    }
+    return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((datatype) => {
+        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+        getYiData(datatype);
+    },datatype)
 }
 
 //获取一级数据
