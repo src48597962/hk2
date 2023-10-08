@@ -156,7 +156,18 @@ function yiji() {
         if(parse&&parse["分类"]){
             d.push({
                 title: "分类",
-                url: rulePage('分类',页码["分类"]),
+                url: $('#noLoading#').lazyRule((sousuoextra,ispage) => {
+                        delete sousuoextra.newWindow;
+                        updateItem("sousuopageid",{extra:sousuoextra});
+                        return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((sousuoextra) => {
+                            addListener("onClose", $.toString((sousuoextra) => {
+                                sousuoextra.newWindow = true;
+                                updateItem("sousuopageid",{extra:sousuoextra});
+                            },sousuoextra));
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                            getYiData('分类');
+                        },sousuoextra)
+                    },sousuoextra,页码["分类"]),
                 pic_url: "https://hikerfans.com/tubiao/more/287.png",
                 col_type: 'icon_5',
                 extra: sousuoextra
