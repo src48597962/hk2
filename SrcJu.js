@@ -479,6 +479,7 @@ function erji() {
             
             let download = $.toString((解析,公共,参数) => {
                 eval("let 解析2 = " + 解析);
+                let 标识 = 参数.标识;
                 return 解析2(input,公共,参数);
             }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
 
@@ -847,16 +848,17 @@ function erji() {
         }
         //收藏更新最新章节
         if (parse['最新']) {
-            setLastChapterRule('js:' + $.toString((sname,surl, 最新, 公共) => {
+            setLastChapterRule('js:' + $.toString((sname,surl,最新,公共,参数) => {
                 let 最新str = 最新.toString().replace('setResult','return');
                 eval("let 最新2 = " + 最新str);
+                let 标识 = 参数.标识;
                 try{
                     let zx = 最新2(surl,公共) || "";
                     setResult(sname + " | " + (zx||""));
                 }catch(e){
                     最新2(surl,公共);
                 }
-            }, sname, surl, parse['最新'], 公共))
+            }, sname, surl, parse['最新'], 公共, {"规则名": MY_RULE.title, "标识": 标识}))
         }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined") {
