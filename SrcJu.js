@@ -775,7 +775,7 @@ function erji() {
                 try{
                     extra = Object.assign(extra, 列表[i].extra || {});
                 }catch(e){}
-                extra.id = name + "_选集_" + i;
+                extra.id = name + "_选集_" + (pageid?pageid+"_":"") + i;
                 extra.cls = "loadlist playlist";
                 if(stype=="听书"||stype=="影视"){
                     extra.jsLoadingInject = true;
