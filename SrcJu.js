@@ -659,7 +659,7 @@ function erji() {
                     cls: "loadlist"
                 }
             })
-            let reviseLiTitle = getItem('reviseLiTitle','1');
+            let reviseLiTitle = getItem('reviseLiTitle','0');
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
                 url: $(["text_1","text_2","text_3","text_4","flex_button","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
@@ -688,11 +688,11 @@ function erji() {
                         title: "修正选集标题："+(reviseLiTitle=="1"?"是":"否"),
                         js: $.toString(() => {
                             let sm;
-                            if(getItem('reviseLiTitle','1')=="1"){
-                                setItem('reviseLiTitle','2');
+                            if(getItem('reviseLiTitle','0')=="1"){
+                                clearItem('reviseLiTitle');
                                 sm = "取消修正选集标题名称";
                             }else{
-                                clearItem('reviseLiTitle');
+                                setItem('reviseLiTitle','1');
                                 sm = "统一修正选集标题名称";
                             }
                             refreshPage(false);
