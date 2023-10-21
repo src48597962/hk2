@@ -887,7 +887,8 @@ function JYimport(input) {
                 return "toast://合计" + datalist2.length + "个，导入" + num + "个";
             }else{
                 toast("合计" +datalist2.length + "个，导入" + num + "个，有" + datalist3.length + "个需手工确认");
-                return $("hiker://empty#noRecordHistory##noHistory#").rule((sourcefile,datalist3) => {
+                return "hiker://page/ImportConfirm";
+                /*$("hiker://empty#noRecordHistory##noHistory#").rule((sourcefile,datalist3) => {
                     addListener("onClose", $.toString(() => {
                         clearMyVar('SrcJu_searchMark');
                     }));
@@ -956,6 +957,7 @@ function JYimport(input) {
                     })
                     setResult(d);
                 },sourcefile,datalist3)
+                */
             }
         } else {
             return "toast://非法口令";
