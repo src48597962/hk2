@@ -887,7 +887,8 @@ function JYimport(input) {
                 return "toast://合计" + datalist2.length + "个，导入" + num + "个";
             }else{
                 toast("合计" +datalist2.length + "个，导入" + num + "个，有" + datalist3.length + "个需手工确认");
-                return $('').rule(() => {
+                return $("hiker://page/ImportConfirm?rule=聚阅√测").rule(() => {
+                    log("111");
                     require("hiker://page/ImportConfirm?rule=聚阅√测");
                 })
                 /*$("hiker://empty#noRecordHistory##noHistory#").rule((sourcefile,datalist3) => {
