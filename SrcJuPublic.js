@@ -1,5 +1,3 @@
-require('./SrcJuConfig.js');
-/*
 let cfgfile = "hiker://files/rules/Src/Ju/config.json";
 let Jucfg=fetch(cfgfile);
 if(Jucfg != ""){
@@ -9,11 +7,11 @@ if(Jucfg != ""){
     Juconfig["依赖"] = config.依赖 || "https://gitcode.net/src48597962/hk/-/raw/Ju/SrcJuPublic.js";
     writeFile(cfgfile, JSON.stringify(Juconfig));
 }
-*/
+
 let runModes = ["漫画","小说","听书","图集","影视"];
 let runMode = Juconfig["runMode"] || runModes[0];
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
-/*
+
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
 if(sourcedata != ""){
@@ -26,7 +24,6 @@ if(sourcedata != ""){
     var datalist = [];
 }
 datalist.reverse();
-*/
 
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
