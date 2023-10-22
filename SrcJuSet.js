@@ -888,7 +888,7 @@ function JYimport(input) {
             }else{
                 toast("合计" +datalist2.length + "个，导入" + num + "个，有" + datalist3.length + "个需手工确认");
                 storage0.putVar('importConfirm', datalist3);
-                return "hiker://page/importConfirm?rule=聚阅√测";
+                return "hiker://page/importConfirm?rule="+MY_RULE.title;//聚阅√测
             }
         } else {
             return "toast://非法口令";
