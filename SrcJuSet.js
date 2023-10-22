@@ -841,7 +841,7 @@ function jiekouapi(sourcefile, data, look) {
     setResult(d);
 }
 
-function JYimport(input) {
+function JYimport(input,ruleTitle) {
     try {
         input = input.replace("云口令：","");
         let inputname = input.split('￥')[0];
@@ -888,7 +888,8 @@ function JYimport(input) {
             }else{
                 toast("合计" +datalist2.length + "个，导入" + num + "个，有" + datalist3.length + "个需手工确认");
                 storage0.putVar('importConfirm', datalist3);
-                return "hiker://page/importConfirm?rule="+MY_RULE.title;//聚阅√测
+                ruleTitle = ruleTitle || MY_RULE.title;
+                return "hiker://page/importConfirm?rule=" + ruleTitle;//聚阅√测
             }
         } else {
             return "toast://非法口令";
