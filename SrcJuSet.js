@@ -888,7 +888,7 @@ function JYimport(input) {
             }else{
                 toast("合计" +datalist2.length + "个，导入" + num + "个，有" + datalist3.length + "个需手工确认");
                 storage0.putVar('importConfirm', datalist3);
-                return "hiker://page/importConfirm?rule=聚阅√测";//+(/聚阅/.test(MY_RULE.title)?'':'聚阅√');
+                return "hiker://page/importConfirm?rule="+(/聚阅/.test(MY_RULE.title)?MY_RULE.title:'聚阅√');
                 /*$("hiker://empty#noRecordHistory##noHistory#").rule((sourcefile,datalist3) => {
                     
                 },sourcefile,datalist3)
@@ -907,9 +907,9 @@ function JYimport(input) {
 function importConfirm() {
     addListener("onClose", $.toString(() => {
         clearMyVar('SrcJu_searchMark');
-        cleaVar('importConfirm');
+        clearVar('importConfirm');
     }));
-    let datalist3 = storage0.getVar('ImportConfirm', []); 
+    let datalist3 = storage0.getVar('importConfirm', []); 
     let d = [];
     d.push({
         title: "本次导入共发现"+datalist3.length+"个已存在接口",
