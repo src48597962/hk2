@@ -473,6 +473,30 @@ function SRCSet() {
             },sourcefile),
             col_type: 'scroll_button'
         })
+        d.push({
+            title: "禁用所选",
+            url: $('#noLoading#').lazyRule((sourcefile) => {
+                let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
+                if(duoselect.length==0){
+                    return "toast://未选择";
+                }
+                return $("确定要禁用选择的"+duoselect.length+"个接口？").confirm((sourcefile,duoselect)=>{
+                    let sourcedata = fetch(sourcefile);
+                    eval("var datalist=" + sourcedata + ";");
+                    for(let i = 0; i < datalist.length; i++) {
+                        if(duoselect.some(item => item.name == datalist[i].name && item.type==datalist[i].type)){
+                            datalist[i].stop = 1;
+                        }
+                    }
+                    writeFile(sourcefile, JSON.stringify(datalist));
+                    clearMyVar('SrcJu_searchMark');
+                    clearMyVar('SrcJu_duoselect');
+                    refreshPage(false);
+                    return 'toast://已禁用选择';
+                },sourcefile,duoselect)
+            },sourcefile),
+            col_type: 'scroll_button'
+        })
     }
     jkdatalist.forEach(item => {
         if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==item.type){
