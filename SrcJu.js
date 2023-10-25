@@ -823,6 +823,9 @@ function erji() {
                 relatitems.forEach(item => {
                     item = toerji(item,{type:stype,name:sname});
                 })
+                d.push({
+                    col_type: "blank_block"
+                })
                 d = d.concat(relatitems);
             }
         }
