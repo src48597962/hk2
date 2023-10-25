@@ -295,13 +295,17 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
-        let rulepages = storage0.getMyVar('rulepages') || [];
-        rulepages.length = rulepages.length-1;
-        storage0.putMyVar('rulepages',rulepages);
-        if(rulepages.length>0){
+        let rulenums = JSON.parseInt(getMyVar('rulenums','1'))-1;
+        putMyVar('rulenums',rulenums);
+        if(rulenums>0){
             back(false);
         }
     }));
+    //用于二级套娃自动返回计数
+    if(MY_PARAMS.back){
+        let rulenums = JSON.parseInt(getMyVar('rulenums','0'))+1;
+        putMyVar('rulenums',rulenums);
+    }
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
@@ -336,6 +340,7 @@ function erji() {
             }
         }
     }
+
     let sourcedata = erdatalist.filter(it => {
         return it.name == sname && it.type == stype;
     });
@@ -822,17 +827,13 @@ function erji() {
     }
 
     if (isload) {
-        let rulepages = storage0.getMyVar('rulepages') || [];
-        if(rulepages.indexOf(surl)==-1){
-            rulepages.push(surl);
-            storage0.putMyVar('rulepages',rulepages);
-        }
         if(details.relatitems && $.type(details.relatitems)=='array'){
             let relatitems = details.relatitems;
             if(relatitems.length>0){
                 //require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 relatitems.forEach(item => {
                     item = toerji(item,{type:stype,name:sname});
+                    item.extra['back'] = 1;
                 })
                 d.push({
                     col_type: "blank_block"
