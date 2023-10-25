@@ -285,7 +285,7 @@ function yiji() {
 
 //二级+源搜索
 function erji() {
-    addListener("onClose", $.toString(() => {
+    addListener("onClose", $.toString((back) => {
         clearMyVar('二级详情临时对象');
         clearMyVar('二级附加临时对象');
         clearMyVar('二级简介打开标识');
@@ -295,6 +295,10 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
+        if(back){
+            back(false);
+        }
+        /*
         let rulenums = parseInt(getMyVar('rulenums','1'))-1;
         putMyVar('rulenums',rulenums);
         if(rulenums>0){
@@ -303,8 +307,10 @@ function erji() {
             clearMyVar('rulenums');
             clearMyVar('rulepageid');
         }
-    }));
+        */
+    },MY_PARAMS.back||0));
     //用于二级套娃自动返回计数
+    /*
     let ruleloadnum = 1;
     if(getMyVar('rulepageid','0@@').split('@@')[1]==MY_PARAMS.surl){
         ruleloadnum = parseInt(getMyVar('rulepageid','0@@').split('@@')[0])+1;
@@ -314,7 +320,7 @@ function erji() {
         let rulenums = parseInt(getMyVar('rulenums','0'))+1;
         putMyVar('rulenums',rulenums);
     }
-
+    */
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
