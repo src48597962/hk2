@@ -285,7 +285,7 @@ function yiji() {
 
 //二级+源搜索
 function erji() {
-    addListener("onClose", $.toString((isback) => {
+    addListener("onClose", $.toString((isback,surl) => {
         clearMyVar('二级详情临时对象');
         clearMyVar('二级附加临时对象');
         clearMyVar('二级简介打开标识');
@@ -295,8 +295,11 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
-        if(isback && !getMyVar('noback')){
+        if(isback && surl!=getMyVar('rulepageid')){
             back(false);
+        }
+        if(!isback){
+            clearMyVar('rulepageid');
         }
         /*
         let rulenums = parseInt(getMyVar('rulenums','1'))-1;
@@ -308,10 +311,10 @@ function erji() {
             clearMyVar('rulepageid');
         }
         */
-    },MY_PARAMS.back||0));
+    },MY_PARAMS.back||0, MY_PARAMS.surl));
     //用于二级套娃自动返回计数
-    if(!MY_PARAMS.back && !getMyVar('noback')){
-        putMyVar('noback','1');
+    if(MY_PARAMS.back && !getMyVar('rulepageid')){
+        putMyVar('rulepageid', MY_PARAMS.surl);
     }
     /*
     let ruleloadnum = 1;
