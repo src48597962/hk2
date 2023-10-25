@@ -817,7 +817,14 @@ function erji() {
 
     if (isload) {
         if(details.relatitems && $.type(details.relatitems)=='array'){
-            d = d.concat(details.relatitems);
+            let relatitems = details.relatitems;
+            if(relatitems.length>0){
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                relatitems.forEach(item => {
+                    item = toerji(item,{type:stype,name:sname});
+                })
+                d = d.concat(relatitems);
+            }
         }
         d.push({
             title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + (sauthor?", 作者：" + sauthor:"") + "</font></small>",
