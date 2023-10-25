@@ -295,7 +295,7 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
-        if(isback){
+        if(isback && !getMyVar('noback')){
             back(false);
         }
         /*
@@ -310,6 +310,9 @@ function erji() {
         */
     },MY_PARAMS.back||0));
     //用于二级套娃自动返回计数
+    if(!MY_PARAMS.back && !getMyVar('noback')){
+        putMyVar('noback','1');
+    }
     /*
     let ruleloadnum = 1;
     if(getMyVar('rulepageid','0@@').split('@@')[1]==MY_PARAMS.surl){
