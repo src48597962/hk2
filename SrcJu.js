@@ -297,8 +297,7 @@ function erji() {
         }
         if(isback && surl!=getMyVar('rulepageid')){
             back(false);
-        }
-        if(!isback){
+        }else{
             clearMyVar('rulepageid');
         }
         /*
