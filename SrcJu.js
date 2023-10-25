@@ -840,15 +840,20 @@ function erji() {
         if(details.relatitems && $.type(details.relatitems)=='array'){
             let relatitems = details.relatitems;
             if(relatitems.length>0){
-                //require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                relatitems.forEach(item => {
-                    item = toerji(item,{type:stype,name:sname});
-                    item.extra['back'] = 1;
-                })
                 d.push({
-                    col_type: "blank_block"
+                    col_type: "blank_block",
+                    extra: {
+                        cls: "loadlist"
+                    }
                 })
-                d = d.concat(relatitems);
+                relatitems.forEach(item => {
+                    if(item.url!=surl){
+                        item = toerji(item,{type:stype,name:sname});
+                        item.extra['back'] = 1;
+                        item.extra['cls'] = "loadlist";
+                        d.push(item)
+                    }
+                })
             }
         }
         d.push({
