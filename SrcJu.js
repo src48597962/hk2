@@ -295,6 +295,12 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
+        let rulepages = storage0.getMyVar('rulepages') || [];
+        rulepages.length = rulepages.length-1;
+        storage0.putMyVar('rulepages',rulepages);
+        if(rulepages.length>0){
+            back(false);
+        }
     }));
     let isload;//是否正确加载
     let sauthor;
@@ -816,10 +822,15 @@ function erji() {
     }
 
     if (isload) {
+        let rulepages = storage0.getMyVar('rulepages') || [];
+        if(rulepages.indexOf(surl)==-1){
+            rulepages.push(surl);
+            storage0.putMyVar('rulepages',rulepages);
+        }
         if(details.relatitems && $.type(details.relatitems)=='array'){
             let relatitems = details.relatitems;
             if(relatitems.length>0){
-                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                //require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 relatitems.forEach(item => {
                     item = toerji(item,{type:stype,name:sname});
                 })
