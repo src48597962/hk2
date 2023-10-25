@@ -816,6 +816,9 @@ function erji() {
     }
 
     if (isload) {
+        if(details.relatitems && $.type(details.relatitems)=='array'){
+            d = d.concat(details.relatitems);
+        }
         d.push({
             title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + (sauthor?", 作者：" + sauthor:"") + "</font></small>",
             url: 'hiker://empty',
