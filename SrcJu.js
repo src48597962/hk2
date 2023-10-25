@@ -285,7 +285,7 @@ function yiji() {
 
 //二级+源搜索
 function erji() {
-    addListener("onClose", $.toString((back) => {
+    addListener("onClose", $.toString((isback) => {
         clearMyVar('二级详情临时对象');
         clearMyVar('二级附加临时对象');
         clearMyVar('二级简介打开标识');
@@ -295,7 +295,7 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
-        if(back){
+        if(isback){
             back(false);
         }
         /*
