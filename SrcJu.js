@@ -295,7 +295,7 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
-        let rulenums = JSON.parseInt(getMyVar('rulenums','1'))-1;
+        let rulenums = parseInt(getMyVar('rulenums','1'))-1;
         putMyVar('rulenums',rulenums);
         if(rulenums>0){
             back(false);
@@ -303,7 +303,7 @@ function erji() {
     }));
     //用于二级套娃自动返回计数
     if(MY_PARAMS.back){
-        let rulenums = JSON.parseInt(getMyVar('rulenums','0'))+1;
+        let rulenums = parseInt(getMyVar('rulenums','0'))+1;
         putMyVar('rulenums',rulenums);
     }
     let isload;//是否正确加载
