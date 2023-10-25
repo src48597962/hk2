@@ -711,15 +711,15 @@ function erji() {
                             return "toast://"+sm;
                         })
                     },{
-                        title: "显示关联项："+(getItem('relatitems','1')=="1"?"是":"否"),
+                        title: "显示扩展项："+(getItem('extenitems','1')=="1"?"是":"否"),
                         js: $.toString(() => {
                             let sm;
-                            if(getItem('relatitems','1')=="1"){
-                                setItem('relatitems','0');
-                                sm = "取消显示二级关联项";
+                            if(getItem('extenitems','1')=="1"){
+                                setItem('extenitems','0');
+                                sm = "取消显示二级扩展项";
                             }else{
-                                clearItem('relatitems');
-                                sm = "显示二级关联项";
+                                clearItem('extenitems');
+                                sm = "显示二级扩展项";
                             }
                             refreshPage(false);
                             return "toast://"+sm;
@@ -842,16 +842,16 @@ function erji() {
     }
 
     if (isload) {
-        if(getItem('relatitems','1')=="1" && details.relatitems && $.type(details.relatitems)=='array'){
-            let relatitems = details.relatitems;
-            if(relatitems.length>0){
+        if(getItem('extenitems','1')=="1" && details.extenitems && $.type(details.extenitems)=='array'){
+            let extenitems = details.extenitems;
+            if(extenitems.length>0){
                 d.push({
                     col_type: "blank_block",
                     extra: {
                         cls: "loadlist"
                     }
                 })
-                relatitems.forEach(item => {
+                extenitems.forEach(item => {
                     if(item.url!=surl){
                         item = toerji(item,{type:stype,name:sname});
                         item.extra['back'] = 1;
