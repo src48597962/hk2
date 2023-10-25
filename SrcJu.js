@@ -719,6 +719,20 @@ function erji() {
                             refreshPage(false);
                             return "toast://"+sm;
                         })
+                    },{
+                        title: "显示关联项："+(getItem('relatitems','1')=="1"?"是":"否"),
+                        js: $.toString(() => {
+                            let sm;
+                            if(getItem('relatitems','1')=="1"){
+                                setItem('relatitems','0');
+                                sm = "取消显示二级关联项";
+                            }else{
+                                clearItem('relatitems');
+                                sm = "显示二级关联项";
+                            }
+                            refreshPage(false);
+                            return "toast://"+sm;
+                        })
                     }]
                 }
             })
@@ -837,7 +851,7 @@ function erji() {
     }
 
     if (isload) {
-        if(details.relatitems && $.type(details.relatitems)=='array'){
+        if(getItem('relatitems','1')=="1" && details.relatitems && $.type(details.relatitems)=='array'){
             let relatitems = details.relatitems;
             if(relatitems.length>0){
                 d.push({
