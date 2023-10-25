@@ -295,17 +295,22 @@ function erji() {
             clearMyVar('从书架进二级');
             refreshPage(false);
         }
+        clearMyVar('ruleid-'+MY_PARAMS.surl);
         let rulenums = parseInt(getMyVar('rulenums','1'))-1;
         putMyVar('rulenums',rulenums);
         if(rulenums>0){
             back(false);
+        }else{
+            clearMyVar('rulenums');
         }
     }));
     //用于二级套娃自动返回计数
-    if(MY_PARAMS.back){
+    putMyVar('ruleid-'+MY_PARAMS.surl,parseInt(getMyVar('ruleid-'+MY_PARAMS.surl,'0'))+1);
+    if(MY_PARAMS.back && getMyVar('ruleid-'+MY_PARAMS.surl,'0')=="1"){
         let rulenums = parseInt(getMyVar('rulenums','0'))+1;
         putMyVar('rulenums',rulenums);
     }
+
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
@@ -340,7 +345,8 @@ function erji() {
             }
         }
     }
-
+    
+    //匹配取接口数据
     let sourcedata = erdatalist.filter(it => {
         return it.name == sname && it.type == stype;
     });
