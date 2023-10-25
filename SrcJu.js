@@ -711,14 +711,14 @@ function erji() {
                             return "toast://"+sm;
                         })
                     },{
-                        title: "显示扩展项："+(getItem('extenitems','1')=="1"?"是":"否"),
+                        title: "显示扩展项："+(getItem('extenditems','1')=="1"?"是":"否"),
                         js: $.toString(() => {
                             let sm;
-                            if(getItem('extenitems','1')=="1"){
-                                setItem('extenitems','0');
+                            if(getItem('extenditems','1')=="1"){
+                                setItem('extenditems','0');
                                 sm = "取消显示二级扩展项";
                             }else{
-                                clearItem('extenitems');
+                                clearItem('extenditems');
                                 sm = "显示二级扩展项";
                             }
                             refreshPage(false);
@@ -842,16 +842,16 @@ function erji() {
     }
 
     if (isload) {
-        if(getItem('extenitems','1')=="1" && details.extenitems && $.type(details.extenitems)=='array'){
-            let extenitems = details.extenitems;
-            if(extenitems.length>0){
+        if(getItem('extenditems','1')=="1" && details.extenditems && $.type(details.extenditems)=='array'){
+            let extenditems = details.extenditems;
+            if(extenditems.length>0){
                 d.push({
                     col_type: "blank_block",
                     extra: {
                         cls: "loadlist"
                     }
                 })
-                extenitems.forEach(item => {
+                extenditems.forEach(item => {
                     if(item.url!=surl){
                         item = toerji(item,{type:stype,name:sname});
                         item.extra['back'] = 1;
