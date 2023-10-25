@@ -300,32 +300,12 @@ function erji() {
         }else{
             clearMyVar('rulepageid');
         }
-        /*
-        let rulenums = parseInt(getMyVar('rulenums','1'))-1;
-        putMyVar('rulenums',rulenums);
-        if(rulenums>0){
-            back(false);
-        }else{
-            clearMyVar('rulenums');
-            clearMyVar('rulepageid');
-        }
-        */
     },MY_PARAMS.back||0, MY_PARAMS.surl));
     //用于二级套娃自动返回计数
     if(MY_PARAMS.back && !getMyVar('rulepageid')){
         putMyVar('rulepageid', MY_PARAMS.surl);
     }
-    /*
-    let ruleloadnum = 1;
-    if(getMyVar('rulepageid','0@@').split('@@')[1]==MY_PARAMS.surl){
-        ruleloadnum = parseInt(getMyVar('rulepageid','0@@').split('@@')[0])+1;
-    }
-    putMyVar('rulepageid',ruleloadnum+'@@'+MY_PARAMS.surl);
-    if(MY_PARAMS.back && ruleloadnum==1){
-        let rulenums = parseInt(getMyVar('rulenums','0'))+1;
-        putMyVar('rulenums',rulenums);
-    }
-    */
+
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
