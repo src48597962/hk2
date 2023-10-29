@@ -940,6 +940,7 @@ function erji() {
             }
         });
         setResult(d);
+        toast('当前源二级加载失败，刷新重试或切换站源');
         /*
         if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式")){
             showLoading('搜源中,请稍后.');
