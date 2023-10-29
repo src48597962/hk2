@@ -1373,6 +1373,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
         });
     }
     let d = [];
+    let descarr = ['搜你想要的，可切换下面类型','关键字+2个空格，搜当前接口','关键字+2个空格+接口名，搜指定接口','主页中间按钮长按可以进入这里','二级切换站源按钮长按可以进入这里','接口如果有分组，则只搜索同分组接口'];
     d.push({
         title: "🔍",
         url: $.toString(() => {
@@ -1390,7 +1391,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 refreshPage(true);
             }
         }),
-        desc: "搜你想要的...",
+        desc: descarr[Math.floor(Math.random() * descarr.length)],
         col_type: "input",
         extra: {
             defaultValue: getMyVar('SrcJu_sousuoName',keyword||''),
