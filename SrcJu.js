@@ -940,10 +940,12 @@ function erji() {
             }
         });
         setResult(d);
+        /*
         if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式")){
             showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup,stype);
         }
+        */
     }
     clearMyVar('换源变更列表id');
 }
