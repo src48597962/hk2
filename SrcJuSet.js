@@ -345,8 +345,9 @@ function SRCSet() {
                 }else{
                     showLoading('分享上传中，请稍后...');
                     let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
+                    log('生成分享地址>'+pasteurl);
                     hideLoading();
-                    if (/^http/.test(pasteurl)) {
+                    if (/^http|^云/.test(pasteurl)) {
                         let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
                         copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                         refreshPage(false);
