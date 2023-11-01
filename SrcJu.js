@@ -19,7 +19,6 @@ function yiji() {
     });
     let parse;
     let 页码;
-    let 提示;
     try {
         if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
@@ -37,7 +36,7 @@ function yiji() {
                 //xlog("√缓存临时文件失败>"+e.message);
             }
             页码 = parse["页码"];
-            提示 = "当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : "");
+            let 提示 = "当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : "");
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast(提示);
             }
@@ -272,15 +271,8 @@ function yiji() {
         })
         putMyVar(runMode+"_"+sourcename, "1");
     }
-    try{
-        getYiData('主页', d);
-    }catch(e){
-        //hideLoading();
-        toast("当前主页源有报错，可更换主页源或联系接口作者");
-        xlog("√"+提示);
-        xlog("√当前主页源报错信息>"+e.message);
-        setResult(d);
-    }
+    //加载主页内容
+    getYiData('主页', d);
 }
 
 //二级+源搜索
