@@ -347,6 +347,7 @@ function SRCSet() {
                     let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
                     hideLoading();
                     if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
+                        pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
                         let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
                         copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                         refreshPage(false);
@@ -516,6 +517,7 @@ function SRCSet() {
                         let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)));
                         hideLoading();
                         if (pasteurl) {
+                            pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
                             let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
                             copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                             return "toast://(单个)分享口令已生成";
@@ -874,7 +876,7 @@ function JYimport(input,ruleTitle) {
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
             let datalist2;
             if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
-                let content = parsePaste(parseurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com'));
+                let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
                 datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
