@@ -873,8 +873,8 @@ function JYimport(input,ruleTitle) {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
             let datalist2;
-            if(/^http/.test(parseurl)){
-                let content = parsePaste(parseurl);
+            if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
+                let content = parsePaste(parseurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com'));
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
                 datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
