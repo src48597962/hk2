@@ -1074,7 +1074,7 @@ function search(keyword, mode, sdata, group, type) {
         ssdatalist.push(sdata);
     }else if (sssname){
         ssdatalist = erdatalist.filter(it=>{
-            return it.name==sssname && it.type==ssstype;
+            return it.name.includes(sssname) && it.type==ssstype;
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
