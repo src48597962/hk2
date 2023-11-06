@@ -927,7 +927,8 @@ function JYimport(input,ruleTitle) {
     }
 }
 
-function importConfirm() {
+function importConfirm(ruleTitle) {
+    ruleTitle = ruleTitle || "聚阅√";
     addListener("onClose", $.toString(() => {
         clearMyVar('SrcJu_searchMark');
         clearVar('importConfirm');
@@ -943,21 +944,21 @@ function importConfirm() {
     datalist3.forEach(item=>{
         d.push({
             title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
-            url: $(["查看导入", "查看本地", "覆盖导入", "改名导入"], 2).select((sourcefile, data) => {
+            url: $(["查看导入", "查看本地", "覆盖导入", "改名导入"], 2).select((sourcefile, data,ruleTitle) => {
                 data = JSON.parse(base64Decode(data));
                 if (input == "查看本地") {
-                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, dataid) => {
+                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile,dataid,ruleTitle) => {
                         setPageTitle('查看本地数据');
-                        require($.require("config?rule=聚阅√").rely.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        require($.require("config?rule="+ruleTitle).rely.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         let data = datalist.filter(d => d.name == dataid.name && d.type==dataid.type)[0];
                         jiekouapi(sourcefile, data, 1);
-                    }, sourcefile, {type:data.type, name:data.name})
+                    }, sourcefile, {type:data.type, name:data.name}, ruleTitle)
                 }else if (input == "查看导入") {
-                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
+                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile,data,ruleTitle) => {
                         setPageTitle('查看导入数据');
-                        require($.require("config?rule=聚阅√").rely.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        require($.require("config?rule="+ruleTitle).rely.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         jiekouapi(sourcefile, data, 1);
-                    }, sourcefile, data)
+                    }, sourcefile, data, ruleTitle)
                 } else if (input == "覆盖导入") {
                     return $("将覆盖本地，确认？").confirm((sourcefile,data)=>{
                         let sourcedata = fetch(sourcefile);
@@ -987,7 +988,7 @@ function importConfirm() {
                         }
                     },sourcefile,data)
                 }
-            }, sourcefile, base64Encode(JSON.stringify(item))),
+            }, sourcefile, base64Encode(JSON.stringify(item)), ruleTitle),
             desc: (item.group?"["+item.group+"] ":"") + item.type,
             img: item.img || "https://hikerfans.com/tubiao/ke/31.png",
             col_type: "avatar",
