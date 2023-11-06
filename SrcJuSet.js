@@ -948,14 +948,14 @@ function importConfirm() {
                 if (input == "查看本地") {
                     return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, dataid) => {
                         setPageTitle('查看本地数据');
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        require($.require("config?rule=聚阅√").rely.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         let data = datalist.filter(d => d.name == dataid.name && d.type==dataid.type)[0];
                         jiekouapi(sourcefile, data, 1);
                     }, sourcefile, {type:data.type, name:data.name})
                 }else if (input == "查看导入") {
                     return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
                         setPageTitle('查看导入数据');
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        require($.require("config?rule=聚阅√").rely.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                         jiekouapi(sourcefile, data, 1);
                     }, sourcefile, data)
                 } else if (input == "覆盖导入") {
