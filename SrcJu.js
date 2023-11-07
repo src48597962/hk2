@@ -410,7 +410,9 @@ function erji() {
                 extra: detailextra
             })
             detailload = 1;
+            log(datasource[2].lineid);
             lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", (datasource[2].lineid || 0).toString()));
+            log(lineid);
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", (datasource[2].pageid || 0).toString()));
@@ -788,13 +790,56 @@ function erji() {
             }else{//启用分页 if(getItem('partpage'))
                 let 每页数量 = 40; // 分页的每页数量       
                 let 翻页阀值 = 100; // 分页的翻页阀值，超过多少才显示翻页
-                let 最大页数 = Math.ceil(列表.length / 每页数量);  
-                let 分页页码 = parseInt(getMyVar('分页页码', '1')) || 1; //当前页数
-                if (分页页码 > 最大页数) { //防止切换线路导致页数数组越界
-                    分页页码 = 最大页数;
-                    putMyVar('分页页码', '' + 分页页码);
-                }
+                
                 if (列表.length > 翻页阀值) { 
+                    let 最大页数 = Math.ceil(列表.length / 每页数量);  
+                    let 分页页码 = parseInt(getMyVar('分页页码', '1')) || 1; //当前页数
+                    if (分页页码 > 最大页数) { //防止切换线路导致页数数组越界
+                        分页页码 = 最大页数;
+                        putMyVar('分页页码', '' + 分页页码);
+                    }
+                    let 分页链接 = [];
+                    let 分页名 = [];
+                    最大页数.forEach((it,i)=>{
+                        分页链接.push($("#noLoading#").lazyRule((pageurl,nowid,newid) => {
+                                if(nowid != newid){
+                                    putMyVar(pageurl, newid);
+                                    refreshPage(false);
+                                }
+                                return 'hiker://empty'
+                            }, "SrcJu_"+surl+"_page", pageid, i)
+                        )
+                        分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+it.title:it.title)
+                    })
+                    d.push({
+                        col_type: "blank_block"
+                    });
+                        d.push({
+                        title: 分页页码==1?"↪️首页":"⏮️上页",
+                        url: 分页页码==1?"hiker://empty":分页链接[pageid-1],
+                        col_type: 'text_4',
+                        extra: {
+                            cls: "loadlist"
+                        }
+                    })
+                    d.push({
+                        title: 分页名[pageid],
+                        url: $(分页名, 2).select((分页名,分页链接) => {
+                            return 分页链接[分页名.indexOf(input)];
+                        },分页名,分页链接),
+                        col_type: 'text_2',
+                        extra: {
+                            cls: "loadlist"
+                        }
+                    })
+                    d.push({
+                        title: pageid==分页名.length-1?"尾页↩️":"下页⏭️",
+                        url: pageid==分页名.length-1?"hiker://empty":分页链接[pageid+1],
+                        col_type: 'text_4',
+                        extra: {
+                            cls: "loadlist"
+                        }
+                    })
                     列表 = 列表.slice(((分页页码 - 1) * 每页数量), 每页数量 * 分页页码);//第一页的话,最大显示40*1集,第2页41-80集  
                 }
             }
@@ -1276,7 +1321,7 @@ function getMark(name, stype) {
     if (mark.length > 0) {
         return mark[0];
     } else {
-        return "";
+        return {};
     }
 }
 //保存本地足迹记录
