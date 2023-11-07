@@ -410,27 +410,11 @@ function erji() {
                 extra: detailextra
             })
             detailload = 1;
-            log(datasource[2].lineid);
             lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", (datasource[2].lineid || 0).toString()));
-            log(lineid);
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
             pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", (datasource[2].pageid || 0).toString()));
-            try{
-                if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
-                    let 分页s = details.page || [];
-                    if(pageid > 分页s.length){
-                        pageid = 0;
-                    }
-                    let 分页选集 = details.pageparse(分页s[pageid].url);
-                    if($.type(分页选集)=="array"){
-                        列表s[lineid] = 分页选集;
-                        details.list = details.line?列表s:分页选集;
-                    }
-                }
-            }catch(e){
-                xlog('√'+sname+'分页选集处理失败>'+e.message);
-            }
+            
             try{
                 if(线路s.length != 列表s.length){
                     xlog('√'+sname+'>源接口返回的线路数'+线路s.length+'和列表数'+列表s.length+'不相等');
@@ -440,16 +424,35 @@ function erji() {
                 线路s = ["线路"];
                 列表s = [[]];
             }
-            if(lineid>0 && details.listparse){
+            if(details.listparse){//选集列表需要动态解析获取
                 let 线路选集 = details.listparse(lineid,线路s[lineid]) || [];
                 if(线路选集.length>0){
                     列表s[lineid] = 线路选集;
                 }
             }
+            if(details.pageparse){//网站分页显示列表的，需要动态解析获取
+                try{
+                    if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
+                        let 分页s = details.page || [];
+                        if(pageid > 分页s.length){
+                            pageid = 0;
+                        }
+                        let 分页选集 = details.pageparse(分页s[pageid].url);
+                        if($.type(分页选集)=="array"){
+                            列表s[lineid] = 分页选集;
+                            details.list = details.line?列表s:分页选集;
+                        }
+                    }
+                }catch(e){
+                    xlog('√'+sname+'分页选集处理失败>'+e.message);
+                }
+            }
+            
             if(lineid > 列表s.length-1){
                 toast('选择的线路无选集，将显示第1线路');
                 lineid = 0;
             }
+
             let 列表 = 列表s[lineid] || [];
             if(列表.length>0){
                 try{
@@ -725,7 +728,7 @@ function erji() {
             if(线路s.length>0 && 线路s[0] !="线路"){
                 线路s.forEach((it,i)=>{
                     d.push({
-                        title: getMyVar("SrcJu_"+surl+"_line")==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
+                        title: lineid==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
                         url: $("#noLoading#").lazyRule((surl,lineid) => {
                             let index = getMyVar("SrcJu_"+surl+"_line","0");
                             if(lineid != index){
