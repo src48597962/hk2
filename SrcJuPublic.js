@@ -166,31 +166,31 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
-            let data = [];
+            let getData = [];
             try{
                 eval("let 数据 = " + parse[datatype])
-                data = 数据();
+                getData = 数据();
             }catch(e){
                 xlog(e.message);
             }
             if(loading){
                 deleteItemByCls("loading_gif");
             }
-            if(data.length==0 && page==1){
-                data.push({
+            if(getData.length==0 && page==1){
+                getData.push({
                     title: "未获取到数据",
                     url: "hiker://empty",
                     col_type: "text_center_1",
                 })
-            }else if(data.length>0){
+            }else if(getData.length>0){
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                data.forEach(item => {
+                getData.forEach(item => {
                     item = toerji(item,info);
                 })
             }
-            d = d.concat(data);
+            d = d.concat(getData);
             /*
-            addItemBefore(itemid, data);
+            addItemBefore(itemid, getData);
             */
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
