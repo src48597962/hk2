@@ -311,25 +311,24 @@ function erji() {
     let 标识;
     let details;
     let stype = MY_PARAMS.stype;
-    let datasource = [myerjiextra, MY_PARAMS, getMark(name, stype)];
+    let smark = getMark(name, stype);//足迹记录
+    let datasource = [myerjiextra, MY_PARAMS, smark];
     let erjiextra;
     let sname;
     let surl;
     let sgroup;
-    let lineid;
-    let pageid;
+    let lineid = smark.lineid || 0;
+    let pageid = smark.pageid || 0;
     let detailload;
     let oldMY_PARAMS = Object.assign({}, MY_PARAMS);
     let pic;
     for(let i=0; i<datasource.length; i++){
-        if(datasource[i]){
-            sname = datasource[i].sname || "";
-            surl = datasource[i].surl || "";
-            if(sname&&surl){
-                erjiextra = datasource[i];
-                storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
-                break;
-            }
+        sname = datasource[i].sname || "";
+        surl = datasource[i].surl || "";
+        if(sname&&surl){
+            erjiextra = datasource[i];
+            storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
+            break;
         }
     }
     
@@ -410,10 +409,10 @@ function erji() {
                 extra: detailextra
             })
             detailload = 1;
-            lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", (datasource[2].lineid || 0).toString()));
+            lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", lineid.toString()));
             let 线路s = details.line?details.line:["线路"];
             let 列表s = details.line?details.list:[details.list];
-            pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", (datasource[2].pageid || 0).toString()));
+            pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", pageid.toString()));
             
             try{
                 if(线路s.length != 列表s.length){
@@ -430,10 +429,10 @@ function erji() {
                     列表s[lineid] = 线路选集;
                 }
             }
-            if(details.pageparse){//网站分页显示列表的，需要动态解析获取
+            if(details.page && details.pageparse){//网站分页显示列表的，需要动态解析获取
                 try{
                     if((detailsmark && pageid != details.pageid) || (!detailsmark && pageid>0)){
-                        let 分页s = details.page || [];
+                        let 分页s = details.page;
                         if(pageid > 分页s.length){
                             pageid = 0;
                         }
@@ -464,7 +463,7 @@ function erji() {
                         列表.reverse();
                     }
                 }catch(e){
-                    //xlog('√修正选集顺序失败>'+e.message)
+                    //xlog('√强制修正选集顺序失败>'+e.message)
                 }
             }
             if (getMyVar(sname + 'sort') == '1') {
@@ -729,14 +728,13 @@ function erji() {
                 线路s.forEach((it,i)=>{
                     d.push({
                         title: lineid==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
-                        url: $("#noLoading#").lazyRule((surl,lineid) => {
-                            let index = getMyVar("SrcJu_"+surl+"_line","0");
-                            if(lineid != index){
-                                putMyVar("SrcJu_"+surl+"_line", lineid);
+                        url: $("#noLoading#").lazyRule((lineurl,nowid,newid) => {
+                            if(nowid != newid){
+                                putMyVar(lineurl, newid);
                                 refreshPage(false);
                             }
                             return 'hiker://empty'
-                        }, surl, i),
+                        }, "SrcJu_"+surl+"_line", lineid, i),
                         col_type: 'scroll_button',
                         extra: {
                             cls: "loadlist"
@@ -796,14 +794,23 @@ function erji() {
                 
                 if (列表.length > 翻页阀值) { 
                     let 最大页数 = Math.ceil(列表.length / 每页数量);  
-                    let 分页页码 = parseInt(getMyVar('分页页码', '1')) || 1; //当前页数
+                    let 分页页码 = pageid + 1; //当前页数
                     if (分页页码 > 最大页数) { //防止切换线路导致页数数组越界
                         分页页码 = 最大页数;
-                        putMyVar('分页页码', '' + 分页页码);
                     }
                     let 分页链接 = [];
                     let 分页名 = [];
-                    最大页数.forEach((it,i)=>{
+                    function getNewArray(array, subGroupLength) {
+                        let index = 0;
+                        let newArray = [];
+                        while(index < array.length) {
+                            newArray.push(array.slice(index, index += subGroupLength));
+                        }
+                        return newArray;
+                    }
+                    let 分页s = getNewArray(列表, 每页数量);
+
+                    分页s.forEach((it,i)=>{
                         分页链接.push($("#noLoading#").lazyRule((pageurl,nowid,newid) => {
                                 if(nowid != newid){
                                     putMyVar(pageurl, newid);
@@ -812,7 +819,10 @@ function erji() {
                                 return 'hiker://empty'
                             }, "SrcJu_"+surl+"_page", pageid, i)
                         )
-                        分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+it.title:it.title)
+                        let start = i * 每页数量 + 1;
+                        let end = i * it.length + 每页数量;
+                        let title = start + ' - ' + end;
+                        分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+title:title)
                     })
                     d.push({
                         col_type: "blank_block"
@@ -843,7 +853,8 @@ function erji() {
                             cls: "loadlist"
                         }
                     })
-                    列表 = 列表.slice(((分页页码 - 1) * 每页数量), 每页数量 * 分页页码);//第一页的话,最大显示40*1集,第2页41-80集  
+                    列表 = 分页s[pageid];
+                    //列表 = 列表.slice(((分页页码 - 1) * 每页数量), 每页数量 * 分页页码);//第一页的话,最大显示40*1集,第2页41-80集  
                 }
             }
 
