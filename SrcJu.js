@@ -445,7 +445,7 @@ function erji() {
                 }
             }
             if(lineid > 列表s.length-1){
-                toast('选择的列表不存在，将显示第1线路选集');
+                toast('选择的线路无选集，将显示第1线路');
                 lineid = 0;
             }
             let 列表 = 列表s[lineid] || [];
@@ -784,6 +784,18 @@ function erji() {
                             cls: "loadlist"
                         }
                     })
+                }
+            }else{//启用分页 if(getItem('partpage'))
+                let 每页数量 = 40; // 分页的每页数量       
+                let 翻页阀值 = 100; // 分页的翻页阀值，超过多少才显示翻页
+                let 最大页数 = Math.ceil(列表.length / 每页数量);  
+                let 分页页码 = parseInt(getMyVar('分页页码', '1')) || 1; //当前页数
+                if (分页页码 > 最大页数) { //防止切换线路导致页数数组越界
+                    分页页码 = 最大页数;
+                    putMyVar('分页页码', '' + 分页页码);
+                }
+                if (列表.length > 翻页阀值) { 
+                    列表 = 列表.slice(((分页页码 - 1) * 每页数量), 每页数量 * 分页页码);//第一页的话,最大显示40*1集,第2页41-80集  
                 }
             }
 
