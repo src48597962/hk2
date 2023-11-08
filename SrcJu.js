@@ -297,7 +297,7 @@ function erji() {
     if(MY_PARAMS.back && !getMyVar('rulepageid')){
         putMyVar('rulepageid', MY_PARAMS.surl);
     }
-
+    clearMyVar('二级加载扩展列表');
     let isload;//是否正确加载
     let sauthor;
     let detailsfile = "hiker://files/_cache/SrcJu_details.json";
@@ -658,7 +658,8 @@ function erji() {
                     列表.forEach(item => {
                         item.col_type = item.type;
                     })
-                    addItemBefore(getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);//排序和样式动态处理插入列表时查找id
+                    
+                    addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);//排序和样式动态处理插入列表时查找id
                     return 'toast://切换排序成功'
                 }, sname),
                 col_type: 'scroll_button',
@@ -685,7 +686,7 @@ function erji() {
                             delete item.extra.textAlign;
                         }
                     })
-                    addItemBefore(getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);
+                    addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);
                     setItem('SrcJuList_col_type', input);
                     return 'hiker://empty'
                 }),
@@ -828,8 +829,8 @@ function erji() {
                         col_type: "blank_block"
                     });
                         d.push({
-                        title: 分页页码==1?"↪️首页":"⏮️上页",
-                        url: 分页页码==1?"hiker://empty":分页链接[pageid-1],
+                        title: 分页页码==1?"↪️尾页":"⏮️上页",
+                        url: 分页页码==1?分页链接[分页名.length]:分页链接[pageid-1],
                         col_type: 'text_4',
                         extra: {
                             cls: "loadlist"
@@ -846,8 +847,8 @@ function erji() {
                         }
                     })
                     d.push({
-                        title: pageid==分页名.length-1?"尾页↩️":"下页⏭️",
-                        url: pageid==分页名.length-1?"hiker://empty":分页链接[pageid+1],
+                        title: 分页页码==分页名.length?"首页↩️":"下页⏭️",
+                        url: 分页页码==分页名.length?分页链接[0]:分页链接[pageid+1],
                         col_type: 'text_4',
                         extra: {
                             cls: "loadlist"
@@ -911,18 +912,20 @@ function erji() {
                 d.push({
                     col_type: "blank_block",
                     extra: {
-                        cls: "loadlist"
+                        cls: "loadlist extendlist",
+                        id: "extendlist"
                     }
                 })
                 extenditems.forEach(item => {
                     if(item.url!=surl){
                         item = toerji(item,{type:stype,name:sname});
                         item.extra['back'] = 1;
-                        item.extra['cls'] = "loadlist";
+                        item.extra['cls'] = "loadlist extendlist";
                         d.push(item)
                     }
                 })
             }
+            putMyVar('二级加载扩展列表','1');
         }
         d.push({
             title: "‘‘’’<small><font color=#f20c00>当前数据源：" + sname + (sauthor?", 作者：" + sauthor:"") + "</font></small>",
