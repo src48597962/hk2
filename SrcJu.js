@@ -455,11 +455,13 @@ function erji() {
             let 列表 = 列表s[lineid] || [];
             if(列表.length>0){
                 try{
-                    let i1 = parseInt(列表.length / 5);
-                    let i2 = parseInt(列表.length / 3);
+                    let i1 = parseInt(列表.length / 6);
+                    let i2 = parseInt(列表.length / 4);
+                    let i3 = parseInt(列表.length / 2);
                     let list1 = 列表[i1].title;
                     let list2 = 列表[i2].title;
-                    if(parseInt(list1.match(/(\d+)/)[0])>parseInt(list2.match(/(\d+)/)[0])){
+                    let list3 = 列表[i3].title;
+                    if(parseInt(list1.match(/(\d+)/)[0])>parseInt(list2.match(/(\d+)/)[0]) && parseInt(list2.match(/(\d+)/)[0])>parseInt(list3.match(/(\d+)/)[0])){
                         列表.reverse();
                     }
                 }catch(e){
