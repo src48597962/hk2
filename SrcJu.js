@@ -685,13 +685,19 @@ function erji() {
                                 return $("40","每页选集数量").input((partpage) => {
                                     partpage.pagenum = parseInt(input);
                                     storage0.setItem('partpage',partpage);
+                                    refreshPage(false);
+                                    return 'hiker://empty'
                                 },partpage)
                             }else if(input=="分页阀值"){
                                 return $("100","选集数量超过多少才分页").input((partpage) => {
                                     partpage.partnum = parseInt(input);
                                     storage0.setItem('partpage',partpage);
+                                    refreshPage(false);
+                                    return 'hiker://empty'
                                 },partpage)
                             }
+                            refreshPage(false);
+                            return 'hiker://empty'
                         })
                     }else{
                         let 列表 = findItemsByCls('playlist') || [];
