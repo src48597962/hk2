@@ -682,14 +682,14 @@ function erji() {
                                 partpage.ispage = 0;
                                 storage0.setItem('partpage',partpage);
                             }else if(input=="每页数量"){
-                                return $("40","每页选集数量").input((partpage) => {
+                                return $(partpage.pagenum||"40","每页选集数量").input((partpage) => {
                                     partpage.pagenum = parseInt(input);
                                     storage0.setItem('partpage',partpage);
                                     refreshPage(false);
                                     return 'hiker://empty'
                                 },partpage)
                             }else if(input=="分页阀值"){
-                                return $("100","选集数量超过多少才分页").input((partpage) => {
+                                return $(partpage.partnum||"100","选集数量超过多少才分页").input((partpage) => {
                                     partpage.partnum = parseInt(input);
                                     storage0.setItem('partpage',partpage);
                                     refreshPage(false);
