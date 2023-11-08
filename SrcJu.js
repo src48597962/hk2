@@ -1037,12 +1037,11 @@ function erji() {
             }
         });
         setResult(d);
-        /*
-        if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式")){
+
+        if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式") && !oldMY_PARAMS.sousuo){
             showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup,stype);
         }
-        */
     }
     clearMyVar('换源变更列表id');
 }
@@ -1251,6 +1250,9 @@ function search(keyword, mode, sdata, group, type) {
                             extra.sname = objdata.name;
                             extra.pageTitle = extra.pageTitle || extra.name;
                             extra.surl = item.url && !keepurl.test(item.url) ? item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#readTheme#|#autoPage#|#noLoading#|#/g, "") : "";
+                            if(/sousuo/.test(objmode)){
+                                extra.sousuo = 1;
+                            }
                             item.extra = extra;
                             item.url = /sousuo/.test(objmode) ? (keepurl.test(item.url) || item.url=='hiker://empty')?item.url:$("hiker://empty?type="+objdata.type+"#immersiveTheme##autoCache#").rule(() => {
                                 require(config.依赖);
