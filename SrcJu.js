@@ -791,7 +791,10 @@ function erji() {
                 })
                 if(分页名.length>0){
                     d.push({
-                        col_type: "blank_block"
+                        col_type: "blank_block",
+                        extra: {
+                            cls: "loadlist"
+                        }
                     });
                         d.push({
                         title: pageid==0?"↪️尾页":"⏮️上页",
@@ -840,7 +843,7 @@ function erji() {
                         }
                         return newArray;
                     }
-                    let 分页s = getNewArray(列表, 每页数量);
+                    let 分页s = getNewArray(列表, 每页数量);//按每页数据切割成小数组
 
                     分页s.forEach((it,i)=>{
                         分页链接.push($("#noLoading#").lazyRule((pageurl,nowid,newid) => {
@@ -857,9 +860,12 @@ function erji() {
                         分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+title:title)
                     })
                     d.push({
-                        col_type: "blank_block"
+                        col_type: "blank_block",
+                        extra: {
+                            cls: "loadlist"
+                        }
                     });
-                        d.push({
+                    d.push({
                         title: 分页页码==1?"↪️尾页":"⏮️上页",
                         url: 分页页码==1?分页链接[分页名.length-1]:分页链接[pageid-1],
                         col_type: 'text_4',
@@ -885,8 +891,7 @@ function erji() {
                             cls: "loadlist"
                         }
                     })
-                    列表 = 分页s[pageid];
-                    //列表 = 列表.slice(((分页页码 - 1) * 每页数量), 每页数量 * 分页页码);//第一页的话,最大显示40*1集,第2页41-80集  
+                    列表 = 分页s[pageid];//取当前分页的选集列表
                 }
             }
 
