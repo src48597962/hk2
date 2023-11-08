@@ -671,24 +671,47 @@ function erji() {
             let reviseLiTitle = getItem('reviseLiTitle','0');
             d.push({
                 title: `““””<b><span style="color: #f47983">样式<small>🎨</small></span></b>`,
-                url: $(["text_1","text_2","text_3","text_4","flex_button","text_2_left","text_3_left"],2,"选集列表样式").select(() => {
-                    let 列表 = findItemsByCls('playlist') || [];
-                    if(列表.length==0){
-                        return 'toast://未获取到列表'
-                    }
-                    deleteItemByCls('playlist');
-                    let list_col_type = input;
-                    列表.forEach(item => {
-                        item.col_type = list_col_type.replace("_left","");
-                        if(list_col_type.indexOf("_left")>-1){
-                            item.extra.textAlign = 'left';
-                        }else{
-                            delete item.extra.textAlign;
+                url: $(["text_1","text_2","text_3","text_4","flex_button","text_2_left","text_3_left","分页设置"],2,"选集列表样式").select(() => {
+                    if(input=="分页设置"){
+                        return $(["开启分页","关闭分页","每页数量","分页阀值"],2).select(() => {
+                            let partpage = storage0.getItem('partpage') || {};
+                            if(input=="开启分页"){
+                                partpage.ispage = 1;
+                                storage0.setItem('partpage',partpage);
+                            }else if(input=="关闭分页"){
+                                partpage.ispage = 0;
+                                storage0.setItem('partpage',partpage);
+                            }else if(input=="每页数量"){
+                                return $("40","每页选集数量").input((partpage) => {
+                                    partpage.pagenum = parseInt(input);
+                                    storage0.setItem('partpage',partpage);
+                                },partpage)
+                            }else if(input=="分页阀值"){
+                                return $("100","选集数量超过多少才分页").input((partpage) => {
+                                    partpage.partnum = parseInt(input);
+                                    storage0.setItem('partpage',partpage);
+                                },partpage)
+                            }
+                        })
+                    }else{
+                        let 列表 = findItemsByCls('playlist') || [];
+                        if(列表.length==0){
+                            return 'toast://未获取到列表'
                         }
-                    })
-                    addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);
-                    setItem('SrcJuList_col_type', input);
-                    return 'hiker://empty'
+                        deleteItemByCls('playlist');
+                        let list_col_type = input;
+                        列表.forEach(item => {
+                            item.col_type = list_col_type.replace("_left","");
+                            if(list_col_type.indexOf("_left")>-1){
+                                item.extra.textAlign = 'left';
+                            }else{
+                                delete item.extra.textAlign;
+                            }
+                        })
+                        addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);
+                        setItem('SrcJuList_col_type', input);
+                        return 'hiker://empty'
+                    }
                 }),
                 col_type: 'scroll_button',
                 extra: {
@@ -743,7 +766,9 @@ function erji() {
                     })
                 })
             }
-            if(details.page && details.pageparse){
+            //分页定义
+            let partpage = storage0.getItem('partpage') || {};
+            if(details.page && details.pageparse){//原网站有分页，不执行自定义分页
                 let 分页s = details.page
                 let 分页链接 = [];
                 let 分页名 = [];
@@ -763,8 +788,8 @@ function erji() {
                         col_type: "blank_block"
                     });
                         d.push({
-                        title: pageid==0?"↪️首页":"⏮️上页",
-                        url: pageid==0?"hiker://empty":分页链接[pageid-1],
+                        title: pageid==0?"↪️尾页":"⏮️上页",
+                        url: pageid==0?分页链接[分页名.length-1]:分页链接[pageid-1],
                         col_type: 'text_4',
                         extra: {
                             cls: "loadlist"
@@ -781,17 +806,17 @@ function erji() {
                         }
                     })
                     d.push({
-                        title: pageid==分页名.length-1?"尾页↩️":"下页⏭️",
-                        url: pageid==分页名.length-1?"hiker://empty":分页链接[pageid+1],
+                        title: pageid==分页名.length-1?"首页↩️":"下页⏭️",
+                        url: pageid==分页名.length-1?分页链接[0]:分页链接[pageid+1],
                         col_type: 'text_4',
                         extra: {
                             cls: "loadlist"
                         }
                     })
                 }
-            }else{//启用分页 if(getItem('partpage'))
-                let 每页数量 = 40; // 分页的每页数量       
-                let 翻页阀值 = 100; // 分页的翻页阀值，超过多少才显示翻页
+            }else if(partpage.ispage){//启用分页
+                let 每页数量 = partpage.pagenum || 40; // 分页的每页数量       
+                let 翻页阀值 = partpage.partnum || 100; // 分页的翻页阀值，超过多少才显示翻页
                 
                 if (列表.length > 翻页阀值) { 
                     let 最大页数 = Math.ceil(列表.length / 每页数量);  
@@ -830,7 +855,7 @@ function erji() {
                     });
                         d.push({
                         title: 分页页码==1?"↪️尾页":"⏮️上页",
-                        url: 分页页码==1?分页链接[分页名.length]:分页链接[pageid-1],
+                        url: 分页页码==1?分页链接[分页名.length-1]:分页链接[pageid-1],
                         col_type: 'text_4',
                         extra: {
                             cls: "loadlist"
