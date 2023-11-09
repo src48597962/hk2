@@ -1044,7 +1044,7 @@ function erji() {
             }
         });
         setResult(d);
-
+        log(MY_TYPE);
         if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式") && !oldMY_PARAMS.sousuo){
             showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup,stype);
@@ -1114,7 +1114,7 @@ function search(keyword, mode, sdata, group, type) {
             }
         }
     }
-    let name = keyword.split('  ')[0];
+    let name = keyword.split('  ')[0].trim();
     let searchMark = storage0.getMyVar('SrcJu_searchMark') || {};//二级换源缓存
     if(mode=="erji" && searchMark[name]){
         addItemBefore(updateItemid, searchMark[name]);
@@ -1169,8 +1169,8 @@ function search(keyword, mode, sdata, group, type) {
     let ssstype = type || runMode;
     let sssname;
     if(keyword.indexOf('  ')>-1){
-        let keyword2 = keyword.split('  ')[1];
-        if(runModes.indexOf(keyword2)>-1){
+        let keyword2 = keyword.split('  ')[1].trim();
+        if(keyword2 && runModes.indexOf(keyword2)>-1){
             ssstype = keyword2;
         }else{
             sssname = keyword2 || sourcename;
