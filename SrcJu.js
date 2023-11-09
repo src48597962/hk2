@@ -1019,6 +1019,7 @@ function erji() {
             }
         }
         putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次在线取
+        log(MY_TYPE);
     } else {
         if(!detailload){
             pic = MY_PARAMS.img || "";
@@ -1044,7 +1045,7 @@ function erji() {
             }
         });
         setResult(d);
-        log(MY_TYPE);
+        
         if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式") && !oldMY_PARAMS.sousuo){
             showLoading('搜源中,请稍后.');
             search(name,"erji",false,sgroup,stype);
