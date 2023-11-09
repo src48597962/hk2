@@ -1015,11 +1015,11 @@ function erji() {
                 delete sourcedata2['parse']
                 erjiextra.name = erjiextra.name || name;
                 erjiextra.sourcedata = sourcedata2;
+                delete erjiextra.sousuo;//正常加载的清除返回搜索标识，用于下次加载异常时自动搜源
                 setPageParams(erjiextra);
             }
         }
         putMyVar('是否取缓存文件','1');//判断是否取本地缓存文件,软件打开初次在线取
-        log(MY_TYPE);
     } else {
         if(!detailload){
             pic = MY_PARAMS.img || "";
