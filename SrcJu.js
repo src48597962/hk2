@@ -857,7 +857,7 @@ function erji() {
                             }, "SrcJu_"+surl+"_page", pageid, i)
                         )
                         let start = i * 每页数量 + 1;
-                        let end = i * it.length + 每页数量;
+                        let end = i * 每页数量 + it.length;
                         let title = start + ' - ' + end;
                         分页名.push(pageid==i?'““””<span style="color: #87CEFA">'+title:title)
                     })
