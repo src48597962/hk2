@@ -1489,15 +1489,17 @@ function newsousuopage(keyword,searchtype,relyfile) {
             url: $.toString(() => {
                 if(input){
                     putMyVar('SrcJu_sousuoName',input);
-                    let recordlist = storage0.getItem('searchrecord') || [];
-                    if(recordlist.indexOf(input)>-1){
-                        recordlist = recordlist.filter((item) => item !== input);
+                    if(input){
+                        let recordlist = storage0.getItem('searchrecord') || [];
+                        if(recordlist.indexOf(input)>-1){
+                            recordlist = recordlist.filter((item) => item !== input);
+                        }
+                        recordlist.unshift(input);
+                        if(recordlist.length>20){
+                            recordlist.splice(recordlist.length-1,1);
+                        }
+                        storage0.setItem('searchrecord', recordlist);
                     }
-                    recordlist.unshift(input);
-                    if(recordlist.length>20){
-                        recordlist.splice(recordlist.length-1,1);
-                    }
-                    storage0.setItem('searchrecord', recordlist);
                     refreshPage(true);
                 }
             }),
