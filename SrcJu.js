@@ -1483,94 +1483,95 @@ function newsousuopage(keyword,searchtype,relyfile) {
     }
     let d = [];
     let descarr = ['可快速切换下面类型','关键字+2个空格，搜当前','关键字+2个空格+接口名','切换站源长按可进入这里','接口有分组，则搜索同分组'];
-    d.push({
-        title: "🔍",
-        url: $.toString(() => {
-            if(input){
-                putMyVar('SrcJu_sousuoName',input);
-                let recordlist = storage0.getItem('searchrecord') || [];
-                if(recordlist.indexOf(input)>-1){
-                    recordlist = recordlist.filter((item) => item !== input);
+    if(MY_PAGE==1){
+        d.push({
+            title: "🔍",
+            url: $.toString(() => {
+                if(input){
+                    putMyVar('SrcJu_sousuoName',input);
+                    let recordlist = storage0.getItem('searchrecord') || [];
+                    if(recordlist.indexOf(input)>-1){
+                        recordlist = recordlist.filter((item) => item !== input);
+                    }
+                    recordlist.unshift(input);
+                    if(recordlist.length>20){
+                        recordlist.splice(recordlist.length-1,1);
+                    }
+                    storage0.setItem('searchrecord', recordlist);
+                    refreshPage(true);
                 }
-                recordlist.unshift(input);
-                if(recordlist.length>20){
-                    recordlist.splice(recordlist.length-1,1);
-                }
-                storage0.setItem('searchrecord', recordlist);
-                refreshPage(true);
+            }),
+            desc: descarr[Math.floor(Math.random() * descarr.length)],
+            col_type: "input",
+            extra: {
+                defaultValue: getMyVar('SrcJu_sousuoName',keyword||''),
+                titleVisible: true
             }
-        }),
-        desc: descarr[Math.floor(Math.random() * descarr.length)],
-        col_type: "input",
-        extra: {
-            defaultValue: getMyVar('SrcJu_sousuoName',keyword||''),
-            titleVisible: true
-        }
-    });
+        });
 
-    runModes.forEach((it,i) =>{
-        let obj = {
-            title: getMyVar("SrcJu_sousuoType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-            url: $('#noLoading#').lazyRule((it) => {
-                putMyVar("SrcJu_sousuoType",it);
-                refreshPage(false);
-                return "hiker://empty";
-            },it),
-            col_type: 'text_5'
-        }
-        if(i==4){
-            obj.extra = {};
-            obj["extra"].longClick = [{
-                title:"🔍聚影搜索",
-                js: $.toString(()=>{
-                    putMyVar("SrcJu_sousuoType","聚影");
+        runModes.forEach((it,i) =>{
+            let obj = {
+                title: getMyVar("SrcJu_sousuoType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                url: $('#noLoading#').lazyRule((it) => {
+                    putMyVar("SrcJu_sousuoType",it);
                     refreshPage(false);
                     return "hiker://empty";
-                })
-            }];
+                },it),
+                col_type: 'text_5'
+            }
+            if(i==4){
+                obj.extra = {};
+                obj["extra"].longClick = [{
+                    title:"🔍聚影搜索",
+                    js: $.toString(()=>{
+                        putMyVar("SrcJu_sousuoType","聚影");
+                        refreshPage(false);
+                        return "hiker://empty";
+                    })
+                }];
+            }
+            d.push(obj);
+        })
+
+        let recordlist = storage0.getItem('searchrecord') || [];
+        if(recordlist.length>0){
+            d.push({
+                title: '🗑清空',
+                url: $('#noLoading#').lazyRule(() => {
+                    clearItem('searchrecord');
+                    deleteItemByCls('searchrecord');
+                    return "toast://已清空";
+                }),
+                col_type: 'flex_button',//scroll_button
+                extra: {
+                    cls: 'searchrecord'
+                }
+            });
+        }else{
+            d.push({
+                title: '↻无记录',
+                url: "hiker://empty",
+                col_type: 'flex_button',
+                extra: {
+                    cls: 'searchrecord'
+                }
+            });
         }
-        d.push(obj);
-    })
-
-    let recordlist = storage0.getItem('searchrecord') || [];
-    if(recordlist.length>0){
-        d.push({
-            title: '🗑清空',
-            url: $('#noLoading#').lazyRule(() => {
-                clearItem('searchrecord');
-                deleteItemByCls('searchrecord');
-                return "toast://已清空";
-            }),
-            col_type: 'flex_button',//scroll_button
-            extra: {
-                cls: 'searchrecord'
-            }
-        });
-    }else{
-        d.push({
-            title: '↻无记录',
-            url: "hiker://empty",
-            col_type: 'flex_button',
-            extra: {
-                cls: 'searchrecord'
-            }
-        });
+        recordlist.forEach(item=>{
+            d.push({
+                title: item,
+                url: $().lazyRule((input) => {
+                    putMyVar('SrcJu_sousuoName',input);
+                    refreshPage(true);
+                    return "hiker://empty";
+                },item),
+                col_type: 'flex_button',
+                extra: {
+                    cls: 'searchrecord'
+                }
+            });
+        })
     }
-    recordlist.forEach(item=>{
-        d.push({
-            title: item,
-            url: $().lazyRule((input) => {
-                putMyVar('SrcJu_sousuoName',input);
-                refreshPage(true);
-                return "hiker://empty";
-            },item),
-            col_type: 'flex_button',
-            extra: {
-                cls: 'searchrecord'
-            }
-        });
-    })
-
     d.push({
         title: "",
         col_type: 'text_center_1',
