@@ -145,7 +145,7 @@ function yiji() {
             longClick: [{
                 title: "🔍搜索",
                 js: $.toString(() => {
-                    return $("hiker://empty#Refresh##noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
+                    return $("hiker://empty#noRefresh##noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
                         require(config.依赖);
                         newsousuopage();
                     })
@@ -174,7 +174,7 @@ function yiji() {
         }else{
             d.push({
                 title: "搜索",
-                url: $("hiker://empty#Refresh##noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
+                url: $("hiker://empty#noRefresh##noRecordHistory##noHistory##fullTheme###fypage").rule(() => {
                     require(config.依赖);
                     newsousuopage();
                 }),
