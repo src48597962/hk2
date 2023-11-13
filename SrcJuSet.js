@@ -991,7 +991,7 @@ function importConfirm(ruleTitle) {
                         eval("var datalist=" + sourcedata + ";");
                         let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
                         datalist.splice(index, 1);
-                        data['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                        data['updatetime'] = data['updatetime'] || $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                         datalist.push(data);
                         writeFile(sourcefile, JSON.stringify(datalist));
                         clearMyVar('SrcJu_searchMark');
@@ -1006,7 +1006,7 @@ function importConfirm(ruleTitle) {
                             return "toast://名称已存在，未保存";
                         }else{
                             data.name = input;
-                            data['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                            data['updatetime'] = data['updatetime'] || $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                             datalist.push(data);
                             writeFile(sourcefile, JSON.stringify(datalist));
                             clearMyVar('SrcJu_searchMark');
