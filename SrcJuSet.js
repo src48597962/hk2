@@ -909,8 +909,9 @@ function JYimport(input,ruleTitle) {
             let datalist3 = [];//存放待二次确认的临时接口
             datalist2.forEach(data=>{
                 data['updatetime'] = data['updatetime'] || $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
-                if (datalist.some((item,i) => item.name == data.name && item.type==data.type)) {
-                    log(datalist[i].name);
+                let i = datalist.findIndex(item => item.name == data.name && item.type==data.type);
+                if (i>-1) {
+                    xlog(datalist[i].name);
                     //存在时，做对应处理
                     if(Juconfig['ImportType']=="Skip"){
                         //跳过，啥也不做
