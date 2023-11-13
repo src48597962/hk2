@@ -346,7 +346,6 @@ function SRCSet() {
                     showLoading('分享上传中，请稍后...');
                     let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
                     hideLoading();
-                    log(pasteurl);
                     if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
                         pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
                         let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
@@ -517,7 +516,7 @@ function SRCSet() {
                         oneshare.push(data);
                         let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)));
                         hideLoading();
-                        if (pasteurl) {
+                        if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
                             pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
                             let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
                             copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
