@@ -366,8 +366,13 @@ function SRCSet() {
                 title: '单接口分享剪贴板：' + (Juconfig['sharePaste'] || "自动选择"),
                 js: $.toString((cfgfile, Juconfig) => {
                     let pastes = getPastes();
+                    pastes.unshift('自动选择');
                     return $(pastes,2,'指定单接口分享时用哪个剪贴板').select((cfgfile,Juconfig) => {
-                        Juconfig["sharePaste"] = input;
+                        if(input=="自动选择"){
+                            delete Juconfig["sharePaste"];
+                        }else{
+                            Juconfig["sharePaste"] = input;
+                        }
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
                         return 'toast://单接口分享剪贴板已设置为：' + input;
