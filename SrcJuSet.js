@@ -910,6 +910,8 @@ function JYimport(input,ruleTitle) {
             datalist2.forEach(data=>{
                 data['updatetime'] = data['updatetime'] || $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                 let i = datalist.findIndex(item => item.name == data.name && item.type==data.type);
+                log(i);
+                xlog(i);
                 if (i>-1) {
                     log(datalist[i].name);
                     //存在时，做对应处理
