@@ -911,7 +911,6 @@ function JYimport(input,ruleTitle) {
                 data['updatetime'] = data['updatetime'] || $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
                 let index = datalist.findIndex(item => item.name == data.name && item.type==data.type);
                 if (index>-1) {
-                    log(datalist[index].name);
                     //存在时，做对应处理
                     if(Juconfig['ImportType']=="Skip"){
                         //跳过，啥也不做
@@ -922,7 +921,6 @@ function JYimport(input,ruleTitle) {
                         }
                     }else{
                         //默认是覆盖已存在的
-                        //let index = datalist.indexOf(datalist.filter(d => d.name == data.name && d.type==data.type)[0]);
                         datalist.splice(index, 1);
                         datalist.push(data);
                         num = num + 1;
