@@ -346,6 +346,7 @@ function SRCSet() {
                     showLoading('分享上传中，请稍后...');
                     let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(sharelist)), input);
                     hideLoading();
+                    log(pasteurl);
                     if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
                         pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
                         let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
@@ -874,11 +875,9 @@ function JYimport(input,ruleTitle) {
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
-            log(parseurl);
             let datalist2;
             if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
-                log(parseurl);
-                let content = parsePaste(parseurl.replace('https://netcut.cn/','https://netcut.txtbin.cn/'));
+                let content = parsePaste(parseurl);
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
                 datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
