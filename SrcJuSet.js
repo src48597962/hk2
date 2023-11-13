@@ -359,7 +359,21 @@ function SRCSet() {
             },sharelist)
         }),
         img: "https://hikerfans.com/tubiao/more/3.png",
-        col_type: "icon_4"
+        col_type: "icon_4",
+        extra: {
+            longClick: [{
+                title: '单接口分享剪贴板：' + Juconfig['sharePaste'],
+                js: $.toString((cfgfile, Juconfig) => {
+                    let pastes = getPastes();
+                    return $(pastes,2,'指定单接口分享时用哪个剪贴板').select((cfgfile,Juconfig) => {
+                        Juconfig["sharePaste"] = input;
+                        writeFile(cfgfile, JSON.stringify(Juconfig));
+                        refreshPage(false);
+                        return 'toast://单接口分享剪贴板已设置为：' + input;
+                    }, cfgfile, Juconfig)
+                },cfgfile, Juconfig)
+            }]
+        }
     });
     d.push({
         col_type: "line"
@@ -508,13 +522,13 @@ function SRCSet() {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                     duoselect(data);
                     return "hiker://empty";
-                },base64Encode(JSON.stringify(item))):$(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile, data) => {
+                },base64Encode(JSON.stringify(item))):$(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile,data,paste) => {
                     data = JSON.parse(base64Decode(data));
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
                         let oneshare = []
                         oneshare.push(data);
-                        let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)));
+                        let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)), paste||"");
                         hideLoading();
                         if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
                             pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
@@ -573,7 +587,7 @@ function SRCSet() {
                             return 'toast://已重命名';
                         },sourcefile,data)
                     }
-                }, sourcefile, base64Encode(JSON.stringify(item))),
+                }, sourcefile, base64Encode(JSON.stringify(item)), Juconfig['sharePaste']),
                 desc: (item.group?"["+item.group+"] ":"") + item.type,
                 img: item.img || "https://hikerfans.com/tubiao/ke/31.png",
                 col_type: "avatar",
