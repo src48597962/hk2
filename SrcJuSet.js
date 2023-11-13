@@ -907,25 +907,29 @@ function JYimport(input,ruleTitle) {
             let num = 0;
             datalist.reverse();
             let datalist3 = [];//存放待二次确认的临时接口
-            for (let i = 0; i < datalist2.length; i++) {
-                datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
-                if (!datalist.some(item => item.name == datalist2[i].name && item.type==datalist2[i].type)) {
-                    datalist.push(datalist2[i]);
-                    num = num + 1;
-                }else if(Juconfig['ImportType']=="Skip"){
-                    //已存在的跳过，啥也不做
-                }else if(Juconfig['ImportType']=="Confirm"){
-                    //二次手工确认代码
-                    datalist3.push(datalist2[i]);
+            datalist2.forEach(data=>{
+                data['updatetime'] = data['updatetime'] || $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
+                if (datalist.some((item,i) => item.name == data.name && item.type==data.type)) {
+                    log(datalist[i].name);
+                    //存在时，做对应处理
+                    if(Juconfig['ImportType']=="Skip"){
+                        //跳过，啥也不做
+                    }else if(Juconfig['ImportType']=="Confirm"){
+                        //二次手工确认代码
+                        datalist3.push(data);
+                    }else{
+                        //默认是覆盖已存在的
+                        let index = datalist.indexOf(datalist.filter(d => d.name == data.name && d.type==data.type)[0]);
+                        datalist.splice(index, 1);
+                        datalist.push(data);
+                        num = num + 1;
+                    }
                 }else{
-                    //默认是覆盖已存在的
-                    let index = datalist.indexOf(datalist.filter(d => d.name == datalist2[i].name && d.type==datalist2[i].type)[0]);
-                    datalist.splice(index, 1);
-                    datalist2['updatetime'] = $.dateFormat(new Date(),"yyyy-MM-dd HH:mm:ss");
-                    datalist.push(datalist2[i]);
+                    //不存在，则导入
+                    datalist.push(data);
                     num = num + 1;
                 }
-            }
+            })
             writeFile(sourcefile, JSON.stringify(datalist));
             clearMyVar('SrcJu_searchMark');
             hideLoading();
