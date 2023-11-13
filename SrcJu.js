@@ -1031,7 +1031,8 @@ function erji() {
                 url: pic,
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: {
-                    gradient: true
+                    gradient: true,
+                    id: "detailid"
                 }
             });
         }
