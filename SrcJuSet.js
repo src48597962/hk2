@@ -876,6 +876,7 @@ function JYimport(input,ruleTitle) {
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
             let datalist2;
             if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
+                log(parseurl);
                 let content = parsePaste(parseurl.replace('https://netcut.cn/','https://netcut.txtbin.cn/'));
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
