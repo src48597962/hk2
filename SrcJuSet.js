@@ -348,7 +348,7 @@ function SRCSet() {
                     hideLoading();
                     if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
                         pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
-                        log('剪贴板地址为>'+pasteurl);
+                        log('剪贴板地址>'+pasteurl);
                         let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥共' + sharelist.length + '条('+input+')';
                         copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                         refreshPage(false);
@@ -363,7 +363,7 @@ function SRCSet() {
         col_type: "icon_4",
         extra: {
             longClick: [{
-                title: '单接口分享剪贴板：' + Juconfig['sharePaste'],
+                title: '单接口分享剪贴板：' + (Juconfig['sharePaste'] || "自动选择"),
                 js: $.toString((cfgfile, Juconfig) => {
                     let pastes = getPastes();
                     return $(pastes,2,'指定单接口分享时用哪个剪贴板').select((cfgfile,Juconfig) => {
@@ -533,7 +533,7 @@ function SRCSet() {
                         hideLoading();
                         if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
                             pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
-                            log('剪贴板地址为>'+pasteurl);
+                            log('剪贴板地址>'+pasteurl);
                             let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
                             copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
                             return "toast://(单个)分享口令已生成";
