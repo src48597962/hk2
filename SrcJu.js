@@ -509,7 +509,10 @@ function erji() {
                         addItemAfter('detailid', [{
                             title: `<font color="#098AC1">详情简介 </font><small><font color="#f47983"> ></font></small>`,
                             col_type: "avatar",
-                            url: "hiker://empty",
+                            url: $("#noLoading#").lazyRule(() => {
+                                clearMyVar('二级简介打开标识');
+                                deleteItemByCls("SrcJudescload");
+                            }),
                             pic_url: "https://hikerfans.com/tubiao/ke/91.png",
                             extra: {
                                 cls: "SrcJudescload"
