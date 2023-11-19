@@ -19,6 +19,7 @@ function yiji() {
     });
     let parse;
     let 页码;
+    let 转换;
     try {
         if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
@@ -36,6 +37,7 @@ function yiji() {
                 //xlog("√缓存临时文件失败>"+e.message);
             }
             页码 = parse["页码"];
+            转换 = parse["转换"];
             let 提示 = "当前主页源：" + sourcename + (parse["作者"] ? "，作者：" + parse["作者"] : "");
             if(!getMyVar(runMode+"_"+sourcename)){
                 toast(提示);
@@ -45,7 +47,7 @@ function yiji() {
         xlog("√一级源接口加载异常>" + e.message);
     }
 
-    页码 = 页码 || {};
+    转换 = 转换 || {};
     let d = [];
     if(MY_PAGE==1){
         if(getMyVar('SrcJu_versionCheck', '0') == '0'){
@@ -123,10 +125,11 @@ function yiji() {
                 }])
             }
         })
-        if(parse&&parse["排行"]){
+        let zz = 转换["排行"] || "排行";
+        if(parse&&parse[zz]){
             d.push({
-                title: "排行",
-                url: rulePage('排行',页码["排行"]),
+                title: zz,
+                url: rulePage(zz,页码[zz]),
                 pic_url: "https://hikerfans.com/tubiao/more/229.png",
                 col_type: 'icon_5'
             })
@@ -152,21 +155,22 @@ function yiji() {
                 })
             }]
         }
-        if(parse&&parse["分类"]){
+        zz = 转换["分类"] || "分类";
+        if(parse&&parse[zz]){
             d.push({
-                title: "分类",
-                url: $('#noLoading#').lazyRule((sousuoextra,ispage) => {
+                title: zz,
+                url: $('#noLoading#').lazyRule((sousuoextra,ispage,zz) => {
                         delete sousuoextra.newWindow;
                         updateItem("sousuopageid",{extra:sousuoextra});
-                        return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((sousuoextra) => {
+                        return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((sousuoextra,zz) => {
                             addListener("onClose", $.toString((sousuoextra) => {
                                 sousuoextra.newWindow = true;
                                 updateItem("sousuopageid",{extra:sousuoextra});
                             },sousuoextra));
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                            getYiData('分类');
-                        },sousuoextra)
-                    },sousuoextra,页码["分类"]),
+                            getYiData(zz);
+                        },sousuoextra,zz)
+                    },sousuoextra,页码[zz],zz),
                 pic_url: "https://hikerfans.com/tubiao/more/287.png",
                 col_type: 'icon_5',
                 extra: sousuoextra
@@ -183,10 +187,11 @@ function yiji() {
                 extra: sousuoextra
             })
         }
-        if(parse&&parse["更新"]){
+        zz = 转换["更新"] || "更新";
+        if(parse&&parse[zz]){
             d.push({
-                title: "更新",
-                url: rulePage('更新',页码["更新"]),
+                title: zz,
+                url: rulePage(zz,页码[zz]),
                 pic_url: "https://hikerfans.com/tubiao/more/288.png",
                 col_type: 'icon_5'
             })
