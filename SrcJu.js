@@ -512,6 +512,7 @@ function erji() {
                             url: $("#noLoading#").lazyRule(() => {
                                 clearMyVar('二级简介打开标识');
                                 deleteItemByCls("SrcJudescload");
+                                return "hiker://empty";
                             }),
                             pic_url: "https://hikerfans.com/tubiao/ke/91.png",
                             extra: {
