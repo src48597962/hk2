@@ -288,6 +288,7 @@ function erji() {
         clearMyVar('二级简介打开标识');
         clearMyVar('换源变更列表id');
         clearMyVar('二级源接口信息');
+        clearMyVar('加载异常自动换源');
         if(getMyVar('从书架进二级')){
             clearMyVar('从书架进二级');
             refreshPage(false);
@@ -298,6 +299,9 @@ function erji() {
             clearMyVar('rulepageid');
         }
     },MY_PARAMS.back||0, MY_PARAMS.surl));
+    addListener('onRefresh', $.toString(() => {
+        putMyVar('加载异常自动换源','1');
+    }));
     //用于二级套娃自动返回计数
     if(MY_PARAMS.back && !getMyVar('rulepageid')){
         putMyVar('rulepageid', MY_PARAMS.surl);
@@ -383,7 +387,6 @@ function erji() {
             标识 = stype + "_" + sname;
             MY_URL = surl;
             let detailsmark;
-            
             if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息') && !getMyVar("SrcJu_调试模式")){
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
@@ -392,12 +395,12 @@ function erji() {
                         if(detailsjson.sname==sname && detailsjson.surl==surl){
                             detailsmark = detailsjson;//本地缓存接口+链接对得上则取本地，用于切换排序和样式时加快
                         }
-
                     }catch(e){ }
                 }
             }
             //方便换源时二级代码中使用MY_PARAMS
             MY_PARAMS = erjiextra;
+
             eval("let 二获获取 = " + parse['二级'])
             details = detailsmark || 二获获取(surl);
             pic = details.img || oldMY_PARAMS.img;// || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
@@ -414,7 +417,7 @@ function erji() {
                 title: erjidetails.detail1 || "",
                 desc: erjidetails.detail2 || "",
                 pic_url: erjidetails.img,
-                url: details.detailurl || (surl+'#noRecordHistory##noHistory#'),
+                url: details.detailurl || (/^http/.test(surl)?surl+'#noRecordHistory##noHistory#':erjidetails.img),
                 col_type: 'movie_1_vertical_pic_blur',
                 extra: detailextra
             })
@@ -1062,8 +1065,12 @@ function erji() {
         setResult(d);
         
         if(!getMyVar('SrcJu_sousuoTest') && !getMyVar("SrcJu_调试模式") && !oldMY_PARAMS.sousuo){
-            showLoading('搜源中,请稍后.');
-            search(name,"erji",false,sgroup,stype);
+            if(getMyVar('加载异常自动换源')=="1"){
+                showLoading('搜源中,请稍后.');
+                search(name,"erji",false,sgroup,stype);
+            }else{
+                toast('下拉刷新看看');
+            }
         }
     }
     clearMyVar('换源变更列表id');
