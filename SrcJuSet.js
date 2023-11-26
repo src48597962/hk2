@@ -918,6 +918,8 @@ function JYimport(input,ruleTitle) {
                         //二次手工确认代码
                         if(datalist[index].updatetime != data.updatetime){
                             datalist3.push(data);
+                        }else{
+                            num = num + 1;
                         }
                     }else{
                         //默认是覆盖已存在的
