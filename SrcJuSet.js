@@ -995,6 +995,15 @@ function importConfirm(ruleTitle) {
                         datalist.push(data);
                         writeFile(sourcefile, JSON.stringify(datalist));
                         clearMyVar('SrcJu_searchMark');
+                        let importlist = storage0.getVar('importConfirm', []);
+                        if(importlist.length==1){
+                            back(false);
+                        }else{
+                            let index2 = importlist.indexOf(importlist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                            importlist.splice(index2, 1);
+                            storage0.putVar('importConfirm', importlist);
+                            deleteItem(data.type+"_"+data.name);
+                        }
                         return 'toast://已覆盖导入';
                     },sourcefile,data)
                 } else if (input == "改名导入") {
@@ -1010,6 +1019,15 @@ function importConfirm(ruleTitle) {
                             datalist.push(data);
                             writeFile(sourcefile, JSON.stringify(datalist));
                             clearMyVar('SrcJu_searchMark');
+                            let importlist = storage0.getVar('importConfirm', []);
+                            if(importlist.length==1){
+                                back(false);
+                            }else{
+                                let index2 = importlist.indexOf(importlist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                                importlist.splice(index2, 1);
+                                storage0.putVar('importConfirm', importlist);
+                                deleteItem(data.type+"_"+data.name);
+                            }
                             return 'toast://已保存，新接口名称为：'+input;
                         }
                     },sourcefile,data)
