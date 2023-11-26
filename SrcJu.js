@@ -311,7 +311,7 @@ function erji() {
     let name = erjidetails.name.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim();
     let myerjiextra = storage0.getMyVar('二级附加临时对象') || {};//二级换源时临时extra数据
     let d = [];
-    let parse;
+    let parse = {};
     let 公共;
     let 标识;
     let details;
@@ -363,22 +363,27 @@ function erji() {
                 //log("√缓存临时文件失败>"+e.message);
             }
         }
+        sauthor = parse["作者"];
     } catch (e) {
-        xlog("√加载二级源接口>"+e.message);
+        xlog("√加载二级源接口有错误>"+e.message);
     }
     try {
         if (parse && surl) {
-            eval("let gonggong = " + sourcedata[0].public);
-            if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
-                requireCache(gonggong.ext, 48);
-                gonggong = ggdata;
+            try{
+                eval("let gonggong = " + sourcedata[0].public);
+                if (gonggong && gonggong.ext && /^http/.test(gonggong.ext)) {
+                    requireCache(gonggong.ext, 48);
+                    gonggong = ggdata;
+                }
+                公共 = gonggong || parse['公共'] || {};
+            }catch(e){
+                xlog("√加载公共代码有错误>"+e.message);
             }
-            公共 = gonggong || parse['公共'] || {};
             
             标识 = stype + "_" + sname;
             MY_URL = surl;
-            sauthor = parse["作者"];
             let detailsmark;
+            
             if(getMyVar('是否取缓存文件') && getMyVar('一级源接口信息') && !getMyVar("SrcJu_调试模式")){
                 let detailsdata = fetch(detailsfile);
                 if (detailsdata != "") {
