@@ -996,7 +996,6 @@ function importConfirm(ruleTitle) {
                         writeFile(sourcefile, JSON.stringify(datalist));
                         clearMyVar('SrcJu_searchMark');
                         let importlist = storage0.getVar('importConfirm', []);
-                        log(importlist.length);
                         if(importlist.length==1){
                             back(false);
                         }else{
