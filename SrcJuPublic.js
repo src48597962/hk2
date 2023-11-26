@@ -76,11 +76,10 @@ function selectsource(input) {
             clearMyVar(runMode+"_"+sourcename);
             clearMyVar("一级源接口信息");
         }
-        /*
         try{
             refreshX5WebView('about:blank');
         }catch(e){}
-        */
+
         Juconfig["runMode"] = runMode;
         Juconfig[runMode+'sourcename'] = input;
         writeFile(cfgfile, JSON.stringify(Juconfig));
