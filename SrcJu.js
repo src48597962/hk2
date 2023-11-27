@@ -423,18 +423,18 @@ function erji() {
             })
             detailload = 1;
             lineid = parseInt(getMyVar("SrcJu_"+surl+"_line", lineid.toString()));
-            let 线路s = details.line?details.line:["线路"];
-            let 列表s = details.line?details.list:[details.list];
             pageid = parseInt(getMyVar("SrcJu_"+surl+"_page", pageid.toString()));
-            
+
+            let 线路s = ["线路"];
+            let 列表s = [[]];
             try{
+                线路s = details.line?details.line:["线路"];
+                列表s = details.line?details.list:[details.list];
                 if(线路s.length != 列表s.length){
                     xlog('√'+sname+'>源接口返回的线路数'+线路s.length+'和列表数'+列表s.length+'不相等');
                 }
             }catch(e){
                 xlog('√'+sname+">线路或列表返回数据有误>"+e.message);
-                线路s = ["线路"];
-                列表s = [[]];
             }
             if(details.listparse){//选集列表需要动态解析获取
                 let 线路选集 = details.listparse(lineid,线路s[lineid]) || [];
