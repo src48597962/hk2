@@ -369,7 +369,7 @@ function erji() {
         }
         sauthor = parse["作者"];
     } catch (e) {
-        xlog("√加载二级源接口有错误>"+e.message);
+        xlog("√加载搜索源接口代码错误>"+e.message);
     }
     try {
         if (parse && surl) {
@@ -381,7 +381,7 @@ function erji() {
                 }
                 公共 = gonggong || parse['公共'] || {};
             }catch(e){
-                xlog("√加载公共代码有错误>"+e.message);
+                xlog("√加载公共代码错误>"+e.message);
             }
             
             标识 = stype + "_" + sname;
@@ -400,9 +400,18 @@ function erji() {
             }
             //方便换源时二级代码中使用MY_PARAMS
             MY_PARAMS = erjiextra;
-
-            eval("let 二获获取 = " + parse['二级'])
-            details = detailsmark || 二获获取(surl);
+            if(detailsmark){
+                details = detailsmark;
+            }else{
+                try{
+                    eval("let 二级获取 = " + parse['二级'])
+                    details = 二级获取(surl);
+                }catch(e){
+                    details = {};
+                    xlog("√二级获取数据错误>"+e.message);
+                }
+            }
+            
             pic = details.img || oldMY_PARAMS.img;// || "https://p1.ssl.qhimgs1.com/sdr/400__/t018d6e64991221597b.jpg";
             pic = pic&&pic.indexOf("@Referer=") == -1 ? pic + "@Referer=" : pic;
             erjiextra.img = pic;
