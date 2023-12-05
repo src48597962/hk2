@@ -179,8 +179,15 @@ function getYiData(datatype,od) {
                 getData.forEach(item => {
                     let it = toerji(item,info);
                     d.push(it);
+                    try{
+                        log('aaa>'+it.extra.surl);
+                    }catch(e){}
                 })
-                log(d);
+                d.forEach(it=>{
+                    try{
+                        log('bbb>'+it.extra.surl);
+                    }catch(e){}
+                })
             }
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
