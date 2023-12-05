@@ -8,7 +8,6 @@ function toerji(item,info) {
     extra.pageTitle = extra.pageTitle || extra.name;
     if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url) && item.col_type!="x5_webview_single" && item.url!='hiker://empty'){
         extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
-        log(extra.surl);
         extra.sname = info.name;
         item.url = $("hiker://empty?type="+info.type+"#immersiveTheme##autoCache#").rule(() => {
             require(config.依赖);
@@ -18,6 +17,7 @@ function toerji(item,info) {
     if((item.col_type!="scroll_button") || item.extra){
         item.extra = extra;
     }
+    log(item.extra.surl);
     return item;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
