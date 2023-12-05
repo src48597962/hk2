@@ -1,6 +1,5 @@
 //修正按钮元素
 function toerji(item,info) {
-    log(item.url);
     info = info || storage0.getMyVar('一级源接口信息');
     let extra = item.extra || {};
     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
@@ -9,6 +8,7 @@ function toerji(item,info) {
     extra.pageTitle = extra.pageTitle || extra.name;
     if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url) && item.col_type!="x5_webview_single" && item.url!='hiker://empty'){
         extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
+        log(extra.surl);
         extra.sname = info.name;
         item.url = $("hiker://empty?type="+info.type+"#immersiveTheme##autoCache#").rule(() => {
             require(config.依赖);
