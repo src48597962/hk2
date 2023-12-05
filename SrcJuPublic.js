@@ -181,7 +181,7 @@ function getYiData(datatype,od) {
                 deleteItemByCls("loading_gif");
             }
             if(getData.length==0 && page==1){
-                getData.push({
+                d.push({
                     title: "未获取到数据",
                     url: "hiker://empty",
                     col_type: "text_center_1",
@@ -189,11 +189,11 @@ function getYiData(datatype,od) {
             }else if(getData.length>0){
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 getData.forEach(item => {
-                    item = toerji(item,info);
+                    d.push(toerji(item,info));
                 })
             }
-            log(getData);
-            d = d.concat(getData);
+            //log(getData);
+            //d = d.concat(getData);
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
             xlog("√报错信息>"+e.message);
