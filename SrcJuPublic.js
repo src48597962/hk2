@@ -124,24 +124,12 @@ function getYiData(datatype,od) {
                 gonggong = ggdata;
             }
             公共 = gonggong || parse['公共'] || {};
-            let info = storage0.getMyVar('一级源接口信息');
-            //let info = {type: sourcedata[0].type, name: sourcedata[0].name};
+            let info = {type: sourcedata[0].type, name: sourcedata[0].name};
             let 标识 = info.type + "_" + info.name;
             let itemid = 标识 + "_" + datatype;
-            /*
-            d.push({
-                title: "加载中",
-                url: "hiker://empty",
-                col_type: "text_center_1",
-                extra: {
-                    id: itemid
-                }
-            })
-            setResult(d);
-            */
             let page = MY_PAGE || 1;
             let loading;
-            if (page==1 && typeof(setPreResult)!="undefined" && getMyVar('动态加载loading')!=itemid) {           
+            if (page==0 && typeof(setPreResult)!="undefined" && getMyVar('动态加载loading')!=itemid) {           
                 loading = 1;
                 d.push({
                     title: "",
