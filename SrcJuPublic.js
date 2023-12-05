@@ -178,9 +178,9 @@ function getYiData(datatype,od) {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 getData.forEach(item => {
                     let it = toerji(item,info);
-                    log(it);
                     d.push(it);
                 })
+                log(d);
             }
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
