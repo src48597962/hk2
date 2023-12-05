@@ -188,16 +188,11 @@ function getYiData(datatype,od) {
                 })
             }else if(getData.length>0){
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                getData.forEach(item => {
-                    item = toerji(item,info);
-                    log(item);
+                getData = getData.map(item => {
+                    return toerji(item,info);
                 })
             }
-            
             d = d.concat(getData);
-            /*
-            addItemBefore(itemid, getData);
-            */
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
             xlog("√报错信息>"+e.message);
