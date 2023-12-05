@@ -180,12 +180,16 @@ function getYiData(datatype,od) {
                     let it = toerji(item,info);
                     d.push(it);
                     try{
-                        log('aaa>'+it.extra.surl);
+                        if(it.extra.surl){
+                            log('it>'+it.extra.surl);
+                        }
                     }catch(e){}
                 })
                 d.forEach(it=>{
                     try{
-                        log('bbb>'+it.extra.surl);
+                        if(it.extra.surl){
+                            log('d>'+it.extra.surl);
+                        }
                     }catch(e){}
                 })
             }
