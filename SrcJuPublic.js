@@ -192,8 +192,8 @@ function getYiData(datatype,od) {
                     item = toerji(item,info);
                 })
             }
+            log(getData);
             d = d.concat(getData);
-            log(d);
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
             xlog("√报错信息>"+e.message);
