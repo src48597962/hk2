@@ -190,11 +190,9 @@ function getYiData(datatype,od) {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 getData.forEach(item => {
                     item = toerji(item,info);
-                    try{
-                        log(item.extra.surl);
-                    }catch(e){}
                 })
             }
+            log(getData);
             d = d.concat(getData);
             /*
             addItemBefore(itemid, getData);
