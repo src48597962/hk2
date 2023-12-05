@@ -17,10 +17,6 @@ function toerji(item,info) {
     if((item.col_type!="scroll_button") || item.extra){
         item.extra = extra;
     }
-    try{
-        log(item.extra.surl);
-    }catch(e){}
-    
     return item;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
