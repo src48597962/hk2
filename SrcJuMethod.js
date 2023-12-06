@@ -16,7 +16,8 @@ function toerji(item,info) {
         })
     }
     if((item.col_type!="scroll_button") || item.extra){
-        item.extra = extra;
+        //item.extra = extra;
+        item.extra = Object.assign(item.extra, extra);
     }
     return item;
 }
