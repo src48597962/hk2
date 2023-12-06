@@ -98,7 +98,7 @@
 
 
     如取公共整个代码  let 公共 = $.require('jiekou').公共(标识);
-    如取一级的作者 let 作者 = $.require('jiekou').属性("标识","一级","作者");
+    如取一级的作者 let 作者 = $.require('jiekou').属性(标识,"一级","作者");
     标识为：类型_接口名
     标识在一级、二级、搜索均可直接用，如需要在新开页面调用可通过此取得let info = storage0.getMyVar('一级源接口信息');let 标识 = info.type + "_" + info.name;
     如需在解析中取得标识，则参数.标识即可
