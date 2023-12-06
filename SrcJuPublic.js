@@ -177,22 +177,10 @@ function getYiData(datatype,od) {
             }else if(getData.length>0){
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 getData.forEach(item => {
-                    let it = toerji(item,info);
-                    d.push(it);
-                    try{
-                        if(it.extra.surl){
-                            log('it>'+it.extra.surl);
-                        }
-                    }catch(e){}
-                })
-                d.forEach(it=>{
-                    try{
-                        if(it.extra.surl){
-                            log('d>'+it.extra.surl);
-                        }
-                    }catch(e){}
+                    item = toerji(item,info);
                 })
             }
+            d = d.concat(getData);
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
             xlog("√报错信息>"+e.message);
