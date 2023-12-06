@@ -52,7 +52,7 @@ function yiji() {
     if(MY_PAGE==1){
         if(getMyVar('SrcJu_versionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
-            if(programversion<13){
+            if(programversion<14){
                 confirm({
                     title: "温馨提示",
                     content: "发现小程序新版本",
