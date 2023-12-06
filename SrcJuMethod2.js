@@ -85,3 +85,10 @@ let 属性 = function(fileid, parse, attribut) {
     eval("接口 = " + parse);
     return 接口(fileid)[attribut];
 };
+
+$.exports = {
+    一级: 一级,
+    二级: 二级,
+    公共: 公共,
+    属性: 属性
+}
