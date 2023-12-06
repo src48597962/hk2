@@ -1,8 +1,7 @@
 //修正按钮元素
 function toerji(item,info) {
     info = info || storage0.getMyVar('一级源接口信息');
-    let extra = Object.assign({}, item.extra || {});
-    //let extra = item.extra || {};
+    let extra = item.extra || {};
     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
     extra.img = extra.img || item.pic_url || item.img;
     extra.stype = info.type;
@@ -16,8 +15,7 @@ function toerji(item,info) {
         })
     }
     if((item.col_type!="scroll_button") || item.extra){
-        //item.extra = extra;
-        item.extra = Object.assign(item.extra || {}, extra);
+        item.extra = extra;
     }
     return item;
 }
