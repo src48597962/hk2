@@ -29,7 +29,7 @@ function yiji() {
             } else {
                 parse = source;
             }
-            storage0.putMyVar('一级源接口信息',{name: sourcename, type: runMode, group: sourcedata[0].group});//传导给方法文件
+            storage0.putMyVar('一级源接口信息',{name: sourcename, type: runMode, group: sourcedata[0].group, img: sourcedata[0].img});//传导给方法文件
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
@@ -321,7 +321,7 @@ function erji() {
     let details;
     let stype = MY_PARAMS.stype;
     let smark = getMark(name, stype);//足迹记录
-    let datasource = [myerjiextra, MY_PARAMS, smark];
+    let extrasource = [myerjiextra, MY_PARAMS, smark];
     let erjiextra;
     let sname;
     let surl;
@@ -331,12 +331,11 @@ function erji() {
     let detailload;
     let oldMY_PARAMS = Object.assign({}, MY_PARAMS);
     let pic;
-    for(let i=0; i<datasource.length; i++){
-        sname = datasource[i].sname || "";
-        surl = datasource[i].surl || "";
+    for(let i=0; i<extrasource.length; i++){
+        sname = extrasource[i].sname || "";
+        surl = extrasource[i].surl || "";
         if(sname&&surl){
-            erjiextra = datasource[i];
-            storage0.putMyVar('二级源接口信息',{name: sname, type: stype});
+            erjiextra = extrasource[i];
             break;
         }
     }
@@ -360,6 +359,8 @@ function erji() {
             }
             sourcedata2 = sourcedata[0];
             sgroup = sourcedata2.group;
+            storage0.putMyVar('二级源接口信息',{name: sname, type: stype, group: sgroup||"", img: sourcedata[0].img||""});
+            
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
