@@ -151,13 +151,16 @@ let exports = {
     "属性": 属性,
     "imageDecrypt": 图片解密
 }
-let exportskeys = Object.keys(exports);
-let arr = 公共().exports || [];
-arr.forEach(it => {
-    if(!exportskeys.includes(it.key)){
-        let parse = eval('('+it.type+'())');
-        exports[it.key] = parse[it.key];
-    }
-})
+try{
+    let exportskeys = Object.keys(exports);
+    let getexp = 公共() || {};
+    let arr = getexp.exports || [];
+    arr.forEach(it => {
+        if(!exportskeys.includes(it.key)){
+            let parse = eval('('+it.type+'())');
+            exports[it.key] = parse[it.key];
+        }
+    })
+}catch(e){}
 
 $.exports = exports
