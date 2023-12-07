@@ -155,8 +155,8 @@ let exportskeys = Object.keys(exports);
 let arr = 公共().exports || [];
 arr.forEach(it => {
     if(!exportskeys.includes(it.key)){
-
-        log(eval(it.type[it.key]));
+        let parse = eval('('+it.type+'())');
+        log(parse[it.key]);
         exports[it.key] = eval('('+it.type[it.key]+')');
     }
 })
