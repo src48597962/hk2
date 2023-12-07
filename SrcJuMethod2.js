@@ -153,11 +153,11 @@ let exports = {
 }
 let exportskeys = Object.keys(exports);
 let arr = 公共().exports || [];
-log(arr.toString());
 arr.forEach(it => {
     log(it);
     if(!exportskeys.includes(it.key)){
-        log(it.key);
+        log(exports[it.key].toString());
+        log(it.type[it.key].toString());
         exports[it.key] = it.type[it.key];
     }
 })
