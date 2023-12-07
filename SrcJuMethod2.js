@@ -88,63 +88,9 @@ let 属性 = function(fileid, parse, attribut) {
     eval("接口 = " + parse);
     return 接口(fileid)[attribut];
 };
-/*
-let 图片解密 = function(key,iv,kiType,mode) {
-    function hexStringToBytes(cipherText) {
-        cipherText = String(cipherText);
-        let str = cipherText.toLowerCase();
-        let length = str.length;
-        let bArr = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, length / 2);
-        for (let i = 0, o = 0; i < length; i += 2, o++) {
-            let a = str[i + 1],
-                b = str[i];
-            if (b != "0") {
-                a = b + a;
-            }
-            let hexInt = java.lang.Integer.parseInt(new java.lang.String(a), 16);
-            let inty = hexInt > 127 ? hexInt - 255 - 1 : hexInt;
-            bArr[o] = inty;
-        }
-        return bArr;
-    }
-    let javaImport = new JavaImporter();
-    javaImport.importPackage(
-        Packages.com.example.hikerview.utils,
-        Packages.java.lang,
-        Packages.java.security,
-        Packages.javax.crypto,
-        Packages.javax.crypto.spec
-    );
-    with(javaImport) {
-        function getBytes(str) {
-            let bytes;
-            if (kiType === "Base64") {
-                bytes = _base64.decode(str, _base64.NO_WRAP);
-            } else if (kiType === "Hex") {
-                bytes = hexStringToBytes(str);
-            } else {
-                bytes = String(str).getBytes("UTF-8");
-            }
-            return bytes;
-        }
-        kiType = kiType || "String";
-        mode = mode || 'AES/CBC/PKCS5Padding';
-        key = getBytes(key);
-        iv = getBytes(iv);
-        function decryptData(cipherText) {
-            let secretKeySpec = new SecretKeySpec(key, "AES");
-            let ivParameterSpec = new IvParameterSpec(iv);
-            let cipher = Cipher.getInstance(mode);
-            cipher.init(2, secretKeySpec, ivParameterSpec);
-            return cipher.doFinal(cipherText);
-        }
-        let bytes = FileUtil.toBytes(input);
-        bytes = decryptData(bytes);
-        return FileUtil.toInputStream(bytes);
-    }
-}
-*/
+
 function 图片解密(key, iv, kiType, mode) {
+    //by LoyDgIk
     const CryptoUtil = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6805&auth=5e44e1a1-51f6-5825-97ae-4d381341bc00");
     let getData = (str, type) => {
         switch (type) {
