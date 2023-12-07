@@ -90,10 +90,10 @@ let 属性 = function(fileid, parse, attribut) {
 };
 
 let 图片解密 = function(key,iv,kiType,mode) {
-    const FileUtil = com.example.hikerview.utils.FileUtil;
-    const Cipher = Cipher = javax.crypto.Cipher;
-    const IvParameterSpec = javax.crypto.spec.IvParameterSpec;
-    const SecretKeySpec = javax.crypto.spec.SecretKeySpec;
+    //const FileUtil = com.example.hikerview.utils.FileUtil;
+    //const Cipher = Cipher = javax.crypto.Cipher;
+    //const IvParameterSpec = javax.crypto.spec.IvParameterSpec;
+    //const SecretKeySpec = javax.crypto.spec.SecretKeySpec;
     function hexStringToBytes(cipherText) {
         cipherText = String(cipherText);
         let str = cipherText.toLowerCase();
@@ -111,37 +111,41 @@ let 图片解密 = function(key,iv,kiType,mode) {
         }
         return bArr;
     }
-    function getBytes(str) {
-        let bytes;
-        if (kiType === "Base64") {
-            bytes = _base64.decode(str, _base64.NO_WRAP);
-        } else if (kiType === "Hex") {
-            bytes = hexStringToBytes(str);
-        } else {
-            let javaImport = new JavaImporter();
-            javaImport.importPackage(
-                Packages.com.example.hikerview.utils
-            );
-            with(javaImport) {
+    let javaImport = new JavaImporter();
+    javaImport.importPackage(
+        Packages.com.example.hikerview.utils,
+        Packages.java.lang,
+        Packages.java.security,
+        Packages.javax.crypto,
+        Packages.javax.crypto.spec
+    );
+    with(javaImport) {
+        function getBytes(str) {
+            let bytes;
+            if (kiType === "Base64") {
+                bytes = _base64.decode(str, _base64.NO_WRAP);
+            } else if (kiType === "Hex") {
+                bytes = hexStringToBytes(str);
+            } else {
                 bytes = String(str).getBytes("UTF-8");
             }
+            return bytes;
         }
-        return bytes;
+        kiType = kiType || "String";
+        mode = mode || 'AES/CBC/PKCS5Padding';
+        key = getBytes(key);
+        iv = getBytes(iv);
+        function decryptData(cipherText) {
+            let secretKeySpec = new SecretKeySpec(key, "AES");
+            let ivParameterSpec = new IvParameterSpec(iv);
+            let cipher = Cipher.getInstance(mode);
+            cipher.init(2, secretKeySpec, ivParameterSpec);
+            return cipher.doFinal(cipherText);
+        }
+        let bytes = FileUtil.toBytes(input);
+        bytes = decryptData(bytes);
+        return FileUtil.toInputStream(bytes);
     }
-    kiType = kiType || "String";
-    mode = mode || 'AES/CBC/PKCS5Padding';
-    key = getBytes(key);
-    iv = getBytes(iv);
-    function decryptData(cipherText) {
-        let secretKeySpec = new SecretKeySpec(key, "AES");
-        let ivParameterSpec = new IvParameterSpec(iv);
-        let cipher = Cipher.getInstance(mode);
-        cipher.init(2, secretKeySpec, ivParameterSpec);
-        return cipher.doFinal(cipherText);
-    }
-    let bytes = FileUtil.toBytes(input);
-    bytes = decryptData(bytes);
-    return FileUtil.toInputStream(bytes);
 }
 
 $.exports = {
