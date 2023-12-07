@@ -118,7 +118,7 @@ let 图片解密 = function(key,iv,kiType,mode) {
         } else if (kiType === "Hex") {
             bytes = hexStringToBytes(str);
         } else {
-            bytes = FileUtil.String(str).getBytes();
+            bytes = String(str).FileUtil.getBytes();
             /*
             let javaImport = new JavaImporter();
             javaImport.importPackage(
