@@ -118,7 +118,17 @@ let 图片解密 = function(key,iv,kiType,mode) {
         } else if (kiType === "Hex") {
             bytes = hexStringToBytes(str);
         } else {
-            bytes = String(str).getBytes();
+            let javaImport = new JavaImporter();
+            javaImport.importPackage(
+                Packages.com.example.hikerview.utils,
+                Packages.java.lang,
+                Packages.java.security,
+                Packages.javax.crypto,
+                Packages.javax.crypto.spec
+            );
+            with(javaImport) {
+                bytes = String(str).getBytes();
+            }
         }
         return bytes;
     }
