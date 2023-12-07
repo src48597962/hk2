@@ -88,7 +88,7 @@ let 属性 = function(fileid, parse, attribut) {
     eval("接口 = " + parse);
     return 接口(fileid)[attribut];
 };
-
+/*
 let 图片解密 = function(key,iv,kiType,mode) {
     function hexStringToBytes(cipherText) {
         cipherText = String(cipherText);
@@ -142,6 +142,29 @@ let 图片解密 = function(key,iv,kiType,mode) {
         bytes = decryptData(bytes);
         return FileUtil.toInputStream(bytes);
     }
+}
+*/
+function 图片解密(key, iv, kiType, mode) {
+    const CryptoUtil = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6805&auth=5e44e1a1-51f6-5825-97ae-4d381341bc00");
+    let getData = (str, type) => {
+        switch (type) {
+            case "Hex":
+                return CryptoUtil.Data.parseHex(str);
+            case "Base64":
+                return CryptoUtil.Data.parseBase64(str);
+            case "UTF8":
+            default:
+                return CryptoUtil.Data.parseUTF8(str);
+        }
+    }
+    let keyData = getData(key, kiType),
+        ivData = getData(iv, kiType),
+        textData = CryptoUtil.Data.parseInputStream(input);
+    let encrypted = CryptoUtil.AES.decrypt(textData, keyData, {
+        mode: mode,
+        iv: ivData
+    });
+    return encrypted.toInputStream();
 }
 
 let exports = {
