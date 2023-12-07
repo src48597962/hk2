@@ -118,20 +118,13 @@ let 图片解密 = function(key,iv,kiType,mode) {
         } else if (kiType === "Hex") {
             bytes = hexStringToBytes(str);
         } else {
-            bytes = String(str).FileUtil.getBytes();
-            /*
             let javaImport = new JavaImporter();
             javaImport.importPackage(
-                Packages.com.example.hikerview.utils,
-                Packages.java.lang,
-                Packages.java.security,
-                Packages.javax.crypto,
-                Packages.javax.crypto.spec
+                Packages.com.example.hikerview.utils
             );
             with(javaImport) {
-                bytes = FileUtil.String(str).getBytes();
+                bytes = String(str).getBytes("UTF-8");
             }
-            */
         }
         return bytes;
     }
