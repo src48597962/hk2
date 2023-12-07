@@ -118,7 +118,7 @@ let 图片解密 = function(key,iv,kiType,mode) {
         } else if (kiType === "Hex") {
             bytes = hexStringToBytes(str);
         } else {
-            bytes = String(str).getBytes("UTF-8");
+            bytes = String(str).getBytes();
         }
         return bytes;
     }
