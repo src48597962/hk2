@@ -155,7 +155,7 @@ let exportskeys = Object.values(exports);
 let arr = 公共.exports || [];
 arr.forEach(it => {
     if(!exportskeys.includes(it.key)){
-        exports[it.key] = it.type[it];
+        exports[it.key] = it.type[it.key];
     }
 })
 
