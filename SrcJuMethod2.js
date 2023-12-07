@@ -151,7 +151,7 @@ let exports = {
     "属性": 属性,
     "imageDecrypt": 图片解密
 }
-let exportskeys = Object.values(exports);
+let exportskeys = Object.keys(exports);
 log(exportskeys.toString());
 let arr = 公共.exports || [];
 log(arr.toString());
