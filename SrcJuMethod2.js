@@ -89,13 +89,7 @@ let 属性 = function(fileid, parse, attribut) {
     return 接口(fileid)[attribut];
 };
 
-$.exports = {
-    一级: 一级,
-    二级: 二级,
-    公共: 公共,
-    属性: 属性
-}
-$.exports.imageDecrypt = function(key,iv,kiType,mode) {
+let 图片解密 = function(key,iv,kiType,mode) {
     const FileUtil = com.example.hikerview.utils.FileUtil;
     const Cipher = Cipher = javax.crypto.Cipher;
     const IvParameterSpec = javax.crypto.spec.IvParameterSpec;
@@ -142,4 +136,12 @@ $.exports.imageDecrypt = function(key,iv,kiType,mode) {
     let bytes = FileUtil.toBytes(input);
     bytes = decryptData(bytes);
     return FileUtil.toInputStream(bytes);
+}
+
+$.exports = {
+    "一级": 一级,
+    "二级": 二级,
+    "公共": 公共,
+    "属性": 属性,
+    "imageDecrypt": 图片解密
 }
