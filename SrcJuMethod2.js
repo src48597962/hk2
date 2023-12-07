@@ -152,9 +152,13 @@ let exports = {
     "imageDecrypt": 图片解密
 }
 let exportskeys = Object.values(exports);
+log(exportskeys);
 let arr = 公共.exports || [];
+log(arr);
 arr.forEach(it => {
+    log(it);
     if(!exportskeys.includes(it.key)){
+        log(it.key);
         exports[it.key] = it.type[it.key];
     }
 })
