@@ -90,10 +90,6 @@ let 属性 = function(fileid, parse, attribut) {
 };
 
 let 图片解密 = function(key,iv,kiType,mode) {
-    //const FileUtil = com.example.hikerview.utils.FileUtil;
-    //const Cipher = Cipher = javax.crypto.Cipher;
-    //const IvParameterSpec = javax.crypto.spec.IvParameterSpec;
-    //const SecretKeySpec = javax.crypto.spec.SecretKeySpec;
     function hexStringToBytes(cipherText) {
         cipherText = String(cipherText);
         let str = cipherText.toLowerCase();
@@ -148,10 +144,19 @@ let 图片解密 = function(key,iv,kiType,mode) {
     }
 }
 
-$.exports = {
+let exports = {
     "一级": 一级,
     "二级": 二级,
     "公共": 公共,
     "属性": 属性,
     "imageDecrypt": 图片解密
 }
+let exportskeys = Object.values(exports);
+let arr = 公共.exports || [];
+arr.forEach(it => {
+    if(!exportskeys.includes(it.key)){
+        exports[it.key] = it.type[it];
+    }
+})
+
+$.exports = exports
