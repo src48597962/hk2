@@ -108,6 +108,17 @@
     标识为：类型_接口名
     标识在一级、二级、搜索、解析、最新均可直接用，但如需要在新开页面调用可通过此取得let info = storage0.getMyVar('一级源接口信息');let 标识 = info.type + "_" + info.name;
 
+    新支持了自定义$.exports|$.require引用方法，如下
+    内置了图片解密方法
+    let imgfunc = $().image(() => $.require("jiekou?rule=" + MY_TITLE).imageDecrypt(key,iv,kiType,mode));这是一个方法需要传对应参数//key,iv,"Hex","AES/CBC/PKCS7Padding"
+    图片链接 + 解密方法imgfunc
+
+    需要在一级、二级或者公共内自己封装方法，然后又想在$工具下，以$.require方式直接使用的，可以将需要主动引用在子页面的属性名写在公共.exports，示例如下
+    "exports" : [{type:"公共",key:"测试a"},{type:"一级",key:"测试b"},{type:"公共",key:"测试c"}],
+    我会在子页面中自动加载指定的代码到$.exports中
+    在需要使用的地方直接= $.require("jiekou").测试a;//如果在解析、下载等跨小程序的调用中记得加上规则名
+
+
 四、其他技巧
 
 
