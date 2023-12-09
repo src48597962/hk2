@@ -1,20 +1,18 @@
 //修正按钮元素
 function toerji(item,info) {
     info = info || storage0.getMyVar('一级源接口信息');
-    let extra = item.extra || {};
-    extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
-    extra.img = extra.img || item.pic_url || item.img;
-    extra.stype = info.type;
-    extra.pageTitle = extra.pageTitle || extra.name;
     if(item.url && !/js:|select:|\(|\)|=>|@|toast:|hiker:\/\/page/.test(item.url) && item.col_type!="x5_webview_single" && item.url!='hiker://empty'){
+        let extra = item.extra || {};
+        extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>/g,""):"");
+        extra.img = extra.img || item.pic_url || item.img;
+        extra.stype = info.type;
+        extra.pageTitle = extra.pageTitle || extra.name;
         extra.surl = item.url.replace(/hiker:\/\/empty|#immersiveTheme#|#autoCache#|#noRecordHistory#|#noHistory#|#noLoading#|#/g,"");
         extra.sname = info.name;
         item.url = $("hiker://empty?type="+info.type+"#immersiveTheme##autoCache#").rule(() => {
             require(config.依赖);
             erji();
         })
-    }
-    if((item.col_type!="scroll_button") || item.extra){
         item.extra = extra;
     }
     return item;
