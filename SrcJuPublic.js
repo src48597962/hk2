@@ -129,7 +129,7 @@ function getYiData(datatype,od) {
             let itemid = 标识 + "_" + datatype;
             let page = MY_PAGE || 1;
             let loading;
-            if (page==0 && typeof(setPreResult)!="undefined" && getMyVar('动态加载loading')!=itemid) {           
+            if (page==1 && typeof(setPreResult)!="undefined" && getMyVar('动态加载loading')!=itemid) {           
                 loading = 1;
                 d.push({
                     title: "",
