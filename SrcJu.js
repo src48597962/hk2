@@ -984,6 +984,7 @@ function erji() {
                 extenditems.forEach(item => {
                     if(item.url!=surl){
                         item = toerji(item,{type:stype,name:sname});
+                        item.extra = item.extra || {};
                         item.extra['back'] = 1;
                         item.extra['cls'] = "loadlist extendlist";
                         d.push(item)
