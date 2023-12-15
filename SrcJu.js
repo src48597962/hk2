@@ -17,9 +17,9 @@ function yiji() {
     let sourcedata = yidatalist.filter(it => {
         return it.name == sourcename && it.type==runMode;
     });
-    let parse;
-    let 页码;
-    let 转换;
+    let parse = {};
+    let 页码 = {};
+    let 转换 = {};
     try {
         if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
