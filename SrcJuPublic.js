@@ -204,11 +204,79 @@ function getClassData() {
     let class_url = (obj.class_url||"").split('&').filter(item => item != '');
     let area_name = (obj.area_name||"").split('&').filter(item => item != '');
     let area_url = (obj.area_url||"").split('&').filter(item => item != '');
-    xlog(area_name.length);
-    xlog(area_url.length);
-    let area = [];
-    let year = [];
-    let sort = [];
+    let year_name = (obj.year_name||"").split('&').filter(item => item != '');
+    let year_url = (obj.year_url||"").split('&').filter(item => item != '');
+    let sort_name = (obj.sort_name||"").split('&').filter(item => item != '');
+    let sort_url = (obj.sort_url||"").split('&').filter(item => item != '');
+    let isAll = (obj.url||"").includes('fyAll')?1:0;
+    let all_id = getMyVar("fyAll_id","0");
+    let class_id = isAll?all_id:getMyVar("fyclass_id","0");
+    let area_id = isAll?all_id:getMyVar("fyarea_id","0");
+    let year_id = isAll?all_id:getMyVar("fyyear_id","0");
+    let sort_id = isAll?all_id:getMyVar("fysort_id ","0");
+
+    class_name.forEach((it,i)=>{
+        d.push({
+            title: class_id==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
+            url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                if(nowid != newid){
+                    putMyVar(id_name, newid);
+                    refreshPage(false);
+                }
+                return 'hiker://empty'
+            }, isAll?"fyAll_id":"fyclass_id", class_id, i),
+            col_type: 'scroll_button'
+        })
+    })
+    d.push({
+        col_type: "blank_block"
+    })
+    area_name.forEach((it,i)=>{
+        d.push({
+            title: area_id==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
+            url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                if(nowid != newid){
+                    putMyVar(id_name, newid);
+                    refreshPage(false);
+                }
+                return 'hiker://empty'
+            }, isAll?"fyAll_id":"area_id", area_id, i),
+            col_type: 'scroll_button'
+        })
+    })
+    d.push({
+        col_type: "blank_block"
+    })
+    year_name.forEach((it,i)=>{
+        d.push({
+            title: year_id==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
+            url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                if(nowid != newid){
+                    putMyVar(id_name, newid);
+                    refreshPage(false);
+                }
+                return 'hiker://empty'
+            }, isAll?"fyAll_id":"year_id", year_id, i),
+            col_type: 'scroll_button'
+        })
+    })
+    d.push({
+        col_type: "blank_block"
+    })
+    sort_name.forEach((it,i)=>{
+        d.push({
+            title: sort_id==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
+            url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                if(nowid != newid){
+                    putMyVar(id_name, newid);
+                    refreshPage(false);
+                }
+                return 'hiker://empty'
+            }, isAll?"fyAll_id":"sort_id", sort_id, i),
+            col_type: 'scroll_button'
+        })
+    })
+    
     return d;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
