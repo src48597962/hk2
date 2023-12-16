@@ -199,13 +199,13 @@ function getYiData(datatype,od) {
 //四大金刚获取数据专用方法
 function getClassData() {
     let d = [];
-    xlog(this.四大金刚);
-    xlog(parse.四大金刚);
     let obj = parse.四大金刚 || {};
     let class_name = (obj.class_name||"").split('&');
     let class_url = (obj.class_url||"").split('&');
-    xlog(class_name);
-    xlog(class_url);
+    let area_name = (obj.area_name||"").split('&');
+    let area_url = (obj.area_url||"").split('&');
+    xlog(area_name);
+    xlog(area_url);
     let area = [];
     let year = [];
     let sort = [];
