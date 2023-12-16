@@ -199,7 +199,9 @@ function getYiData(datatype,od) {
 //四大金刚获取数据专用方法
 function getClassData() {
     let d = [];
-    let obj = 一级.四大金刚 || {};
+    xlog(this.四大金刚);
+    xlog(parse.四大金刚);
+    let obj = parse.四大金刚 || {};
     let class_name = (obj.class_name||"").split('&');
     let class_url = (obj.class_url||"").split('&');
     xlog(class_name);
