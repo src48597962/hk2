@@ -196,6 +196,17 @@ function getYiData(datatype,od) {
         setResult(d);
     }
 }
+//四大金刚获取数据专用方法
+function getClassData() {
+    let d = [];
+    let obj = this.四大金刚 || {};
+    let class_name = (obj.class_name||"").split('&');
+    let class_url = (obj.class_url||"").split('&');
+    let area = [];
+    let year = [];
+    let sort = [];
+    return d;
+}
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
 function jianfan(str,x) {
     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcSimple.js');
