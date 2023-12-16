@@ -198,16 +198,12 @@ function getYiData(datatype,od) {
 }
 //四大金刚获取数据专用方法
 function getClassData() {
-    let split = function (s) { 
-        return this.split(s).filter(item => item != '');
-    }
-
     let d = [];
     let obj = parse.四大金刚 || {};
-    let class_name = (obj.class_name||"").split('&');
-    let class_url = (obj.class_url||"").split('&');
-    let area_name = (obj.area_name||"").split('&');
-    let area_url = (obj.area_url||"").split('&');
+    let class_name = (obj.class_name||"").split('&').filter(item => item != '');
+    let class_url = (obj.class_url||"").split('&').filter(item => item != '');
+    let area_name = (obj.area_name||"").split('&').filter(item => item != '');
+    let area_url = (obj.area_url||"").split('&').filter(item => item != '');
     xlog(area_name.length);
     xlog(area_url.length);
     let area = [];
