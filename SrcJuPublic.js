@@ -198,6 +198,10 @@ function getYiData(datatype,od) {
 }
 //四大金刚获取数据专用方法
 function getClassData() {
+    let split = function (s) { 
+        return this.split(s).filter(item => item != '');
+    }
+
     let d = [];
     let obj = parse.四大金刚 || {};
     let class_name = (obj.class_name||"").split('&');
