@@ -202,6 +202,8 @@ function getClassData() {
     let obj = this.四大金刚 || {};
     let class_name = (obj.class_name||"").split('&');
     let class_url = (obj.class_url||"").split('&');
+    xlog(class_name);
+    xlog(class_url);
     let area = [];
     let year = [];
     let sort = [];
