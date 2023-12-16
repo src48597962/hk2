@@ -204,8 +204,8 @@ function getClassData() {
     let class_url = (obj.class_url||"").split('&');
     let area_name = (obj.area_name||"").split('&');
     let area_url = (obj.area_url||"").split('&');
-    xlog(area_name);
-    xlog(area_url);
+    xlog(area_name.length);
+    xlog(area_url.length);
     let area = [];
     let year = [];
     let sort = [];
