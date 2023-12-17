@@ -286,8 +286,7 @@ function getClassData() {
         })
     }
     let fypage = page;
-    let url = obj.url.replace('fyAll','${fyAll}').replace('fyclass','${fyclass}').replace('fyarea','${fyarea}').replace('fyyear','${fyyear}').replace('fysort','${fysort}').replace('fypage','${fypage}');
-    let MY_URL = url;
+    let MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
     log(MY_URL);
     log(fyclass);
     log(fypage);
