@@ -46,7 +46,7 @@ function yiji() {
     } catch (e) {
         xlog("√一级源接口加载异常>" + e.message);
     }
-
+    页码 = 页码 || {};
     转换 = 转换 || {};
     let d = [];
     if(MY_PAGE==1){
@@ -157,7 +157,6 @@ function yiji() {
         }
         zz = 转换["分类"] || "分类";
         if(parse&&parse[zz]){
-            log(页码);
             d.push({
                 title: zz,
                 url: $('#noLoading#').lazyRule((sousuoextra,ispage,zz) => {
