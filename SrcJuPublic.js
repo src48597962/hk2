@@ -177,7 +177,11 @@ function getYiData(datatype,od) {
             }else if(getData.length>0){
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 getData.forEach(item => {
-                    item = toerji(item,info);
+                    try{
+                        item = toerji(item,info);
+                    }catch(e){
+                        log(item);
+                    }
                 })
             }
             d = d.concat(getData);
