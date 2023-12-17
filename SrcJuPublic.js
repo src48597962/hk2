@@ -252,7 +252,7 @@ function getClassData() {
     d.push({
         col_type: "blank_block"
     })
-    year_name.forEach((it,i)=>{
+    year_url.forEach((it,i)=>{
         try{
             d.push({
                 title: fyyear==it?`““””<b><span style="color: #09c11b">`+year_name[i]+`</span></b>`:year_name[i],
@@ -270,7 +270,7 @@ function getClassData() {
     d.push({
         col_type: "blank_block"
     })
-    sort_name.forEach((it,i)=>{
+    sort_url.forEach((it,i)=>{
         try{
             d.push({
                 title: fysort==it?`““””<b><span style="color: #09c11b">`+sort_name[i]+`</span></b>`:sort_name[i],
