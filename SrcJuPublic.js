@@ -286,7 +286,11 @@ function getClassData() {
         })
     }
     let fypage = page;
-    let MY_URL = obj.url.replace('fyAll','${fyAll}').replace('fyclass','${fyclass}').replace('fyarea','${fyarea}').replace('fyyear','${fyyear}').replace('fysort','${fysort}').replace('fypage','${fypage}');
+    let url = obj.url.replace('fyAll','${fyAll}').replace('fyclass','${fyclass}').replace('fyarea','${fyarea}').replace('fyyear','${fyyear}').replace('fysort','${fysort}').replace('fypage','${fypage}');
+    let MY_URL = url;
+    log(MY_URL);
+    log(fyclass);
+    log(fypage);
     function getResCode() {
         return request(MY_URL);
     }
