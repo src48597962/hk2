@@ -297,7 +297,7 @@ function getClassData() {
     function setResult(dd) {
         return dd;
     }
-    eval('let 解析内容 = ' + obj.find_url);
+    eval('var 解析内容 = ' + obj.find_url);
     log(解析内容());
     //d = d.concat(解析内容());
     return d;
