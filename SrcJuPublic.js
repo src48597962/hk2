@@ -264,6 +264,7 @@ function getYiData(datatype,od) {
                 eval("let 数据 = " + parse[datatype]);
                 getData = 数据();
             }catch(e){
+                getData = [];
                 xlog(e.message);
             }
             if(loading){
