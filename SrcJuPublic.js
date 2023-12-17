@@ -291,14 +291,8 @@ function getClassData() {
     }
     let fypage = page;
     let MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-    /*
-    getResCode = function () {
-        return request(MY_URL);
-    }
-    */
     eval('var 解析内容 = ' + obj.find_url.toString().replace('setResult','return ').replace('getResCode()','request(MY_URL)'));
-    log(解析内容());
-    //d = d.concat(解析内容());
+    d = d.concat(解析内容());
     return d;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
