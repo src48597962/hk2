@@ -198,94 +198,104 @@ function getYiData(datatype,od) {
 }
 //四大金刚获取数据专用方法
 function getClassData() {
-    let page = page || MY_PAGE;
     let d = [];
-    let obj = parse.四大金刚 || {};
-    let class_name = (obj.class_name||"").split('&').filter(item => item != '');
-    let class_url = (obj.class_url||"").split('&').filter(item => item != '');
-    let area_name = (obj.area_name||"").split('&').filter(item => item != '');
-    let area_url = (obj.area_url||"").split('&').filter(item => item != '');
-    let year_name = (obj.year_name||"").split('&').filter(item => item != '');
-    let year_url = (obj.year_url||"").split('&').filter(item => item != '');
-    let sort_name = (obj.sort_name||"").split('&').filter(item => item != '');
-    let sort_url = (obj.sort_url||"").split('&').filter(item => item != '');
-    let isAll = (obj.url||"").includes('fyAll')?1:0;
-    let fyAll = getMyVar("fyAll_id", class_url.length>0?class_url[0]:"");
-    let fyclass = isAll?fyAll:getMyVar("fyclass_id", class_url.length>0?class_url[0]:"");
-    let fyarea = isAll?fyAll:getMyVar("fyarea_id", area_url.length>0?area_url[0]:"");
-    let fyyear = isAll?fyAll:getMyVar("fyyear_id", year_url.length>0?year_url[0]:"");
-    let fysort = isAll?fyAll:getMyVar("fysort_id", sort_url.length>0?sort_url[0]:"");
+    if(page==1){
+        let obj = parse.四大金刚 || {};
+        let class_name = (obj.class_name||"").split('&').filter(item => item != '');
+        let class_url = (obj.class_url||"").split('&').filter(item => item != '');
+        let area_name = (obj.area_name||"").split('&').filter(item => item != '');
+        let area_url = (obj.area_url||"").split('&').filter(item => item != '');
+        let year_name = (obj.year_name||"").split('&').filter(item => item != '');
+        let year_url = (obj.year_url||"").split('&').filter(item => item != '');
+        let sort_name = (obj.sort_name||"").split('&').filter(item => item != '');
+        let sort_url = (obj.sort_url||"").split('&').filter(item => item != '');
+        let isAll = (obj.url||"").includes('fyAll')?1:0;
+        let fyAll = getMyVar("fyAll_id", class_url.length>0?class_url[0]:"");
+        let fyclass = isAll?fyAll:getMyVar("fyclass_id", class_url.length>0?class_url[0]:"");
+        let fyarea = isAll?fyAll:getMyVar("fyarea_id", area_url.length>0?area_url[0]:"");
+        let fyyear = isAll?fyAll:getMyVar("fyyear_id", year_url.length>0?year_url[0]:"");
+        let fysort = isAll?fyAll:getMyVar("fysort_id", sort_url.length>0?sort_url[0]:"");
 
-    class_url.forEach((it,i)=>{
-        try{
-            d.push({
-                title: fyclass==it?`““””<b><span style="color: #09c11b">`+class_name[i]+`</span></b>`:class_name[i],
-                url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
-                    if(nowid != newid){
-                        putMyVar(id_name, newid);
-                        refreshPage(false);
-                    }
-                    return 'hiker://empty'
-                }, isAll?"fyAll_id":"fyclass_id", fyclass, it),
-                col_type: 'scroll_button'
-            })
-        }catch(e){}
-    })
-    d.push({
-        col_type: "blank_block"
-    })
-    area_url.forEach((it,i)=>{
-        try{
-            d.push({
-                title: fyarea==it?`““””<b><span style="color: #09c11b">`+area_name[i]+`</span></b>`:area_name[i],
-                url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
-                    if(nowid != newid){
-                        putMyVar(id_name, newid);
-                        refreshPage(false);
-                    }
-                    return 'hiker://empty'
-                }, isAll?"fyAll_id":"fyarea_id", fyarea, it),
-                col_type: 'scroll_button'
-            })
-        }catch(e){}
-    })
-    d.push({
-        col_type: "blank_block"
-    })
-    year_url.forEach((it,i)=>{
-        try{
-            d.push({
-                title: fyyear==it?`““””<b><span style="color: #09c11b">`+year_name[i]+`</span></b>`:year_name[i],
-                url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
-                    if(nowid != newid){
-                        putMyVar(id_name, newid);
-                        refreshPage(false);
-                    }
-                    return 'hiker://empty'
-                }, isAll?"fyAll_id":"fyyear_id", fyyear, it),
-                col_type: 'scroll_button'
-            })
-        }catch(e){}
-    })
-    d.push({
-        col_type: "blank_block"
-    })
-    sort_url.forEach((it,i)=>{
-        try{
-            d.push({
-                title: fysort==it?`““””<b><span style="color: #09c11b">`+sort_name[i]+`</span></b>`:sort_name[i],
-                url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
-                    if(nowid != newid){
-                        putMyVar(id_name, newid);
-                        refreshPage(false);
-                    }
-                    return 'hiker://empty'
-                }, isAll?"fyAll_id":"fysort_id", fysort, it),
-                col_type: 'scroll_button'
-            })
-        }catch(e){}
-    })
-    
+        class_url.forEach((it,i)=>{
+            try{
+                d.push({
+                    title: fyclass==it?`““””<b><span style="color: #09c11b">`+class_name[i]+`</span></b>`:class_name[i],
+                    url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                        if(nowid != newid){
+                            putMyVar(id_name, newid);
+                            refreshPage(false);
+                        }
+                        return 'hiker://empty'
+                    }, isAll?"fyAll_id":"fyclass_id", fyclass, it),
+                    col_type: 'scroll_button'
+                })
+            }catch(e){}
+        })
+        d.push({
+            col_type: "blank_block"
+        })
+        area_url.forEach((it,i)=>{
+            try{
+                d.push({
+                    title: fyarea==it?`““””<b><span style="color: #09c11b">`+area_name[i]+`</span></b>`:area_name[i],
+                    url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                        if(nowid != newid){
+                            putMyVar(id_name, newid);
+                            refreshPage(false);
+                        }
+                        return 'hiker://empty'
+                    }, isAll?"fyAll_id":"fyarea_id", fyarea, it),
+                    col_type: 'scroll_button'
+                })
+            }catch(e){}
+        })
+        d.push({
+            col_type: "blank_block"
+        })
+        year_url.forEach((it,i)=>{
+            try{
+                d.push({
+                    title: fyyear==it?`““””<b><span style="color: #09c11b">`+year_name[i]+`</span></b>`:year_name[i],
+                    url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                        if(nowid != newid){
+                            putMyVar(id_name, newid);
+                            refreshPage(false);
+                        }
+                        return 'hiker://empty'
+                    }, isAll?"fyAll_id":"fyyear_id", fyyear, it),
+                    col_type: 'scroll_button'
+                })
+            }catch(e){}
+        })
+        d.push({
+            col_type: "blank_block"
+        })
+        sort_url.forEach((it,i)=>{
+            try{
+                d.push({
+                    title: fysort==it?`““””<b><span style="color: #09c11b">`+sort_name[i]+`</span></b>`:sort_name[i],
+                    url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
+                        if(nowid != newid){
+                            putMyVar(id_name, newid);
+                            refreshPage(false);
+                        }
+                        return 'hiker://empty'
+                    }, isAll?"fyAll_id":"fysort_id", fysort, it),
+                    col_type: 'scroll_button'
+                })
+            }catch(e){}
+        })
+    }
+    let fypage = page;
+    let MY_URL = obj.url.replace('fyAll','${fyAll}').replace('fyclass','${fyclass}').replace('fyarea','${fyarea}').replace('fyyear','${fyyear}').replace('fysort','${fysort}').replace('fypage','${fypage}');
+    function getResCode() {
+        return request(MY_URL);
+    }
+    function setResult(dd) {
+        return dd;
+    }
+    eval('let 解析内容 = ' + obj.find_url);
+    d = d.concat(解析内容());
     return d;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
