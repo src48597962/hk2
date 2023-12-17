@@ -291,15 +291,12 @@ function getClassData() {
     }
     let fypage = page;
     let MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-    var xgetResCode = getResCode;
+    /*
     getResCode = function () {
         return request(MY_URL);
     }
-    var xsetResult = setResult; 
-    setResult = function (dd) {
-        return dd;
-    }
-    eval('var 解析内容 = ' + obj.find_url);
+    */
+    eval('var 解析内容 = ' + obj.find_url.toString().replace('setResult','return ').replace('getResCode()','request(MY_URL)'));
     log(解析内容());
     //d = d.concat(解析内容());
     return d;
