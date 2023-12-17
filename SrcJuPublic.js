@@ -158,18 +158,14 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
-            if(parse.四大金刚){
-                d = d.concat(getClassData());
+            let obj = parse.四大金刚 || {};
+            if(obj.url){
+                eval("("+getClassData()+")")
+                d = d.concat(classData);
             }
             let getData = [];
             try{
-                let 执行代码 = parse[datatype].toString();
-                if(parse.url){
-                    let fypage = page;
-                    let fyurl = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-                    执行代码 = 执行代码.replace('setResult','return ').replace('getResCode()','request(fyurl)');
-                }
-                eval("let 数据 = " + 执行代码)
+                eval("let 数据 = " + parse[datatype]);
                 getData = 数据();
             }catch(e){
                 xlog(e.message);
@@ -211,8 +207,7 @@ function getYiData(datatype,od) {
 }
 //四大金刚获取分类专用方法
 function getClassData() {
-    let d = [];
-    let obj = parse.四大金刚 || {};
+    let classData = [];
     let class_name = (obj.class_name||"").split('&').filter(item => item != '');
     let class_url = (obj.class_url||"").split('&').filter(item => item != '');
     let area_name = (obj.area_name||"").split('&').filter(item => item != '');
@@ -230,7 +225,7 @@ function getClassData() {
     if(page==1){
         class_url.forEach((it,i)=>{
             try{
-                d.push({
+                classData.push({
                     title: fyclass==it?`““””<b><span style="color: #09c11b">`+class_name[i]+`</span></b>`:class_name[i],
                     url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
                         if(nowid != newid){
@@ -243,12 +238,12 @@ function getClassData() {
                 })
             }catch(e){}
         })
-        d.push({
+        classData.push({
             col_type: "blank_block"
         })
         area_url.forEach((it,i)=>{
             try{
-                d.push({
+                classData.push({
                     title: fyarea==it?`““””<b><span style="color: #09c11b">`+area_name[i]+`</span></b>`:area_name[i],
                     url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
                         if(nowid != newid){
@@ -261,12 +256,12 @@ function getClassData() {
                 })
             }catch(e){}
         })
-        d.push({
+        classData.push({
             col_type: "blank_block"
         })
         year_url.forEach((it,i)=>{
             try{
-                d.push({
+                classData.push({
                     title: fyyear==it?`““””<b><span style="color: #09c11b">`+year_name[i]+`</span></b>`:year_name[i],
                     url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
                         if(nowid != newid){
@@ -279,12 +274,12 @@ function getClassData() {
                 })
             }catch(e){}
         })
-        d.push({
+        classData.push({
             col_type: "blank_block"
         })
         sort_url.forEach((it,i)=>{
             try{
-                d.push({
+                classData.push({
                     title: fysort==it?`““””<b><span style="color: #09c11b">`+sort_name[i]+`</span></b>`:sort_name[i],
                     url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
                         if(nowid != newid){
@@ -298,7 +293,10 @@ function getClassData() {
             }catch(e){}
         })
     }
-    return d;
+    let 执行代码 = parse[datatype].toString();
+    let fypage = page;
+    MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
+    parse[datatype] = 执行代码.replace('setResult','return ').replace('getResCode()','request(MY_URL)');
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
 function jianfan(str,x) {
