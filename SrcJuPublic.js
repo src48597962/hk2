@@ -162,7 +162,6 @@ function getYiData(datatype,od) {
             try{
                 eval("let 数据 = " + parse[datatype])
                 getData = 数据();
-                log(getData);
             }catch(e){
                 xlog(e.message);
             }
@@ -299,7 +298,8 @@ function getClassData() {
         return dd;
     }
     eval('let 解析内容 = ' + obj.find_url);
-    d = d.concat(解析内容());
+    log(解析内容());
+    //d = d.concat(解析内容());
     return d;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
