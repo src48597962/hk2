@@ -155,6 +155,7 @@ function yiji() {
                 })
             }]
         }
+        log(转换);
         zz = 转换["分类"] || "分类";
         if(parse&&parse[zz]){
             d.push({
