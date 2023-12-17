@@ -160,7 +160,7 @@ function getYiData(datatype,od) {
             }
             let obj = parse.四大金刚 || {};
             if(obj.url){
-                eval("("+getClassData()+")")
+                eval(getClassData());
                 d = d.concat(classData);
             }
             let getData = [];
