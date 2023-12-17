@@ -159,7 +159,7 @@ function getYiData(datatype,od) {
                 putMyVar('动态加载loading', itemid);
             }
             let obj = parse.四大金刚 || {};
-            if(obj.url){//四大金刚获取分类数据
+            if(obj.url && obj.type == datatype){//四大金刚获取分类数据
                 let class_name = (obj.class_name||"").split('&').filter(item => item != '');
                 let class_url = (obj.class_url||"").split('&').filter(item => item != '');
                 let area_name = (obj.area_name||"").split('&').filter(item => item != '');
@@ -177,7 +177,7 @@ function getYiData(datatype,od) {
                 if(page==1){
                     d.forEach((it,i)=>{
                         try{
-                            classData.push({
+                            d.push({
                                 title: fyclass==it?`““””<b><span style="color: #09c11b">`+class_name[i]+`</span></b>`:class_name[i],
                                 url: $("#noLoading#").lazyRule((id_name,nowid,newid) => {
                                     if(nowid != newid){
