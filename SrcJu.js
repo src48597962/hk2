@@ -157,7 +157,7 @@ function yiji() {
         }
         zz = 转换["分类"] || "分类";
         if(parse&&parse[zz]){
-            log("1");
+            log(页码);
             d.push({
                 title: zz,
                 url: $('#noLoading#').lazyRule((sousuoextra,ispage,zz) => {
@@ -176,7 +176,6 @@ function yiji() {
                 col_type: 'icon_5',
                 extra: sousuoextra
             })
-            log("2");
         }else{
             d.push({
                 title: "搜索",
