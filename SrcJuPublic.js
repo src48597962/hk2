@@ -200,22 +200,21 @@ function getYiData(datatype,od) {
 function getClassData() {
     let d = [];
     let obj = parse.四大金刚 || {};
+    let class_name = (obj.class_name||"").split('&').filter(item => item != '');
+    let class_url = (obj.class_url||"").split('&').filter(item => item != '');
+    let area_name = (obj.area_name||"").split('&').filter(item => item != '');
+    let area_url = (obj.area_url||"").split('&').filter(item => item != '');
+    let year_name = (obj.year_name||"").split('&').filter(item => item != '');
+    let year_url = (obj.year_url||"").split('&').filter(item => item != '');
+    let sort_name = (obj.sort_name||"").split('&').filter(item => item != '');
+    let sort_url = (obj.sort_url||"").split('&').filter(item => item != '');
+    let isAll = (obj.url||"").includes('fyAll')?1:0;
+    let fyAll = getMyVar("fyAll_id", class_url.length>0?class_url[0]:"");
+    let fyclass = isAll?fyAll:getMyVar("fyclass_id", class_url.length>0?class_url[0]:"");
+    let fyarea = isAll?fyAll:getMyVar("fyarea_id", area_url.length>0?area_url[0]:"");
+    let fyyear = isAll?fyAll:getMyVar("fyyear_id", year_url.length>0?year_url[0]:"");
+    let fysort = isAll?fyAll:getMyVar("fysort_id", sort_url.length>0?sort_url[0]:"");
     if(page==1){
-        let class_name = (obj.class_name||"").split('&').filter(item => item != '');
-        let class_url = (obj.class_url||"").split('&').filter(item => item != '');
-        let area_name = (obj.area_name||"").split('&').filter(item => item != '');
-        let area_url = (obj.area_url||"").split('&').filter(item => item != '');
-        let year_name = (obj.year_name||"").split('&').filter(item => item != '');
-        let year_url = (obj.year_url||"").split('&').filter(item => item != '');
-        let sort_name = (obj.sort_name||"").split('&').filter(item => item != '');
-        let sort_url = (obj.sort_url||"").split('&').filter(item => item != '');
-        let isAll = (obj.url||"").includes('fyAll')?1:0;
-        let fyAll = getMyVar("fyAll_id", class_url.length>0?class_url[0]:"");
-        let fyclass = isAll?fyAll:getMyVar("fyclass_id", class_url.length>0?class_url[0]:"");
-        let fyarea = isAll?fyAll:getMyVar("fyarea_id", area_url.length>0?area_url[0]:"");
-        let fyyear = isAll?fyAll:getMyVar("fyyear_id", year_url.length>0?year_url[0]:"");
-        let fysort = isAll?fyAll:getMyVar("fysort_id", sort_url.length>0?sort_url[0]:"");
-
         class_url.forEach((it,i)=>{
             try{
                 d.push({
