@@ -156,8 +156,8 @@ function yiji() {
             }]
         }
         zz = 转换["分类"] || "分类";
-        log(zz);
         if(parse&&parse[zz]){
+            log("1");
             d.push({
                 title: zz,
                 url: $('#noLoading#').lazyRule((sousuoextra,ispage,zz) => {
@@ -176,6 +176,7 @@ function yiji() {
                 col_type: 'icon_5',
                 extra: sousuoextra
             })
+            log("2");
         }else{
             d.push({
                 title: "搜索",
@@ -189,7 +190,6 @@ function yiji() {
             })
         }
         zz = 转换["更新"] || "更新";
-        log(zz);
         if(parse&&parse[zz]){
             d.push({
                 title: zz,
