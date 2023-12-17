@@ -158,9 +158,18 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
+            if(parse.四大金刚){
+                d = d.concat(getClassData());
+            }
             let getData = [];
             try{
-                eval("let 数据 = " + parse[datatype])
+                let 执行代码 = parse[datatype].toString();
+                if(parse.url){
+                    let fypage = page;
+                    let fyurl = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
+                    执行代码 = 执行代码.replace('setResult','return ').replace('getResCode()','request(fyurl)');
+                }
+                eval("let 数据 = " + 执行代码)
                 getData = 数据();
             }catch(e){
                 xlog(e.message);
@@ -200,7 +209,7 @@ function getYiData(datatype,od) {
         setResult(d);
     }
 }
-//四大金刚获取数据专用方法
+//四大金刚获取分类专用方法
 function getClassData() {
     let d = [];
     let obj = parse.四大金刚 || {};
@@ -213,11 +222,11 @@ function getClassData() {
     let sort_name = (obj.sort_name||"").split('&').filter(item => item != '');
     let sort_url = (obj.sort_url||"").split('&').filter(item => item != '');
     let isAll = (obj.url||"").includes('fyAll')?1:0;
-    let fyAll = getMyVar("fyAll_id", class_url.length>0?class_url[0]:"");
-    let fyclass = isAll?fyAll:getMyVar("fyclass_id", class_url.length>0?class_url[0]:"");
-    let fyarea = isAll?fyAll:getMyVar("fyarea_id", area_url.length>0?area_url[0]:"");
-    let fyyear = isAll?fyAll:getMyVar("fyyear_id", year_url.length>0?year_url[0]:"");
-    let fysort = isAll?fyAll:getMyVar("fysort_id", sort_url.length>0?sort_url[0]:"");
+    fyAll = getMyVar("fyAll_id", class_url.length>0?class_url[0]:"");
+    fyclass = isAll?fyAll:getMyVar("fyclass_id", class_url.length>0?class_url[0]:"");
+    fyarea = isAll?fyAll:getMyVar("fyarea_id", area_url.length>0?area_url[0]:"");
+    fyyear = isAll?fyAll:getMyVar("fyyear_id", year_url.length>0?year_url[0]:"");
+    fysort = isAll?fyAll:getMyVar("fysort_id", sort_url.length>0?sort_url[0]:"");
     if(page==1){
         class_url.forEach((it,i)=>{
             try{
@@ -289,10 +298,6 @@ function getClassData() {
             }catch(e){}
         })
     }
-    let fypage = page;
-    let MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-    eval('var 解析内容 = ' + obj.find_url.toString().replace('setResult','return ').replace('getResCode()','request(MY_URL)'));
-    d = d.concat(解析内容());
     return d;
 }
 //简繁互转,x可不传，默认转成简体，传2则是转成繁体
