@@ -183,7 +183,7 @@ function getYiData(datatype,od) {
             d = d.concat(getData);
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
-            xlog("√报错信息>"+e.message);
+            xlog("√报错信息>"+e.message + " 错误行#" + e.lineNumber);
         }
         setResult(d);
     }else{
@@ -287,9 +287,6 @@ function getClassData() {
     }
     let fypage = page;
     let MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-    log(MY_URL);
-    log(fyclass);
-    log(fypage);
     function getResCode() {
         return request(MY_URL);
     }
