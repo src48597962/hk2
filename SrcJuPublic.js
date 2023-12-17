@@ -291,10 +291,10 @@ function getClassData() {
     }
     let fypage = page;
     let MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-    function getResCode() {
+    var getResCode = function () {
         return request(MY_URL);
     }
-    function setResult(dd) {
+    var setResult = function (dd) {
         return dd;
     }
     eval('var 解析内容 = ' + obj.find_url);
