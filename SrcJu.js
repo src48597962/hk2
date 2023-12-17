@@ -155,8 +155,8 @@ function yiji() {
                 })
             }]
         }
-        log(转换);
         zz = 转换["分类"] || "分类";
+        log(zz);
         if(parse&&parse[zz]){
             d.push({
                 title: zz,
@@ -189,6 +189,7 @@ function yiji() {
             })
         }
         zz = 转换["更新"] || "更新";
+        log(zz);
         if(parse&&parse[zz]){
             d.push({
                 title: zz,
