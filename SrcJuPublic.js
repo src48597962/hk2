@@ -162,6 +162,7 @@ function getYiData(datatype,od) {
             try{
                 eval("let 数据 = " + parse[datatype])
                 getData = 数据();
+                log(getData);
             }catch(e){
                 xlog(e.message);
             }
@@ -180,7 +181,7 @@ function getYiData(datatype,od) {
                     try{
                         item = toerji(item,info);
                     }catch(e){
-                        log(item);
+                        //log(item);
                     }
                 })
             }
