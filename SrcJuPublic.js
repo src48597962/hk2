@@ -158,6 +158,7 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
+            let 执行代码 = parse[datatype].toString().replace('setResult','return ');
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
                 let class_name = (obj.class_name||"").split('&').filter(item => item != '');
@@ -254,14 +255,13 @@ function getYiData(datatype,od) {
                 d.push({
                     col_type: "blank_block"
                 })
-                let 执行代码 = parse[datatype].toString();
                 let fypage = page;
                 MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
-                parse[datatype] = 执行代码.replace('setResult','return ').replace('getResCode()','request(MY_URL)');
+                执行代码 = 执行代码.replace('getResCode()','request(MY_URL)');
             }
             let getData = [];
             try{
-                eval("let 数据 = " + parse[datatype]);
+                eval("let 数据 = " + 执行代码);
                 getData = 数据();
             }catch(e){
                 getData = [];
