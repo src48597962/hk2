@@ -1026,7 +1026,7 @@ function erji() {
         //收藏更新最新章节
         if (parse['最新']) {
             setLastChapterRule('js:' + $.toString((sname,surl,最新,公共,参数) => {
-                let 最新str = 最新.toString().replace('setResult','return');
+                let 最新str = 最新.toString().replace('setResult','return ').replace('getResCode()','request(surl)');
                 eval("let 最新2 = " + 最新str);
                 let 标识 = 参数.标识;
                 try{
@@ -1263,8 +1263,9 @@ function search(keyword, mode, sdata, group, type) {
                 }
                 公共 = gonggong || parse['公共'] || {};
                 标识 = objdata.type + "_" + objdata.name;
-                    let ssdata = [];
-                eval("let 搜索 = " + parse['搜索'])
+                let ssdata = [];
+                let 搜索str = parse['搜索'].toString().replace('setResult','return ');
+                eval("let 搜索 = " + 搜索str)
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 function ocr(codeurl,headers) {
                     headers= headers || {};
