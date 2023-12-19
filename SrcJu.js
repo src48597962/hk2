@@ -1265,7 +1265,7 @@ function search(keyword, mode, sdata, group, type) {
                 标识 = objdata.type + "_" + objdata.name;
                 let ssdata = [];
                 let 搜索str = parse['搜索'].toString();
-                if(!搜索str.includes('@rule')){
+                if(!搜索str.includes('rule')){
                     搜索str = 搜索str.replace('setResult','return ');
                 }
                 eval("let 搜索 = " + 搜索str)
