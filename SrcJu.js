@@ -1264,7 +1264,10 @@ function search(keyword, mode, sdata, group, type) {
                 公共 = gonggong || parse['公共'] || {};
                 标识 = objdata.type + "_" + objdata.name;
                 let ssdata = [];
-                let 搜索str = parse['搜索'].toString().replace('setResult','return ');
+                let 搜索str = parse['搜索'].toString();
+                if(!搜索str.includes('@rule')){
+                    搜索str = 搜索str.replace('setResult','return ');
+                }
                 eval("let 搜索 = " + 搜索str)
                 let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
                 function ocr(codeurl,headers) {
