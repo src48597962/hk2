@@ -159,7 +159,7 @@ function getYiData(datatype,od) {
                 putMyVar('动态加载loading', itemid);
             }
             let 执行str = parse[datatype].toString();
-            if(!执行str.includes('@rule')){
+            if(!执行str.includes('rule')){
                 执行str = 执行str.replace('setResult','return ');
             }
             let obj = parse.四大金刚 || {};
