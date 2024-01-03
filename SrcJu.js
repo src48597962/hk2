@@ -1202,11 +1202,13 @@ function search(keyword, mode, sdata, group, type) {
     }
     let ssstype = type || runMode;
     let sssname;
+    let 是否当前接口;
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
         if(keyword2 && runModes.indexOf(keyword2)>-1){
             ssstype = keyword2;
         }else{
+            是否当前接口 = keyword2?0:1;
             sssname = keyword2 || sourcename;
         }
     }
@@ -1219,7 +1221,7 @@ function search(keyword, mode, sdata, group, type) {
         ssdatalist.push(sdata);
     }else if (sssname){
         ssdatalist = erdatalist.filter(it=>{
-            return it.name.includes(sssname) && it.type==ssstype;
+            return (是否当前接口?it.name==sssname:it.name.includes(sssname)) && it.type==ssstype;
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
