@@ -926,9 +926,9 @@ function erji() {
 
             let list_col_type = getItem('SrcJuList_col_type', 'text_2');//列表样式
             for(let i=0; i<列表.length; i++) {
-                let extra = details["extra"] || {};
+                let extra = Object.assign({}, details["extra"] || {});//二级返回数据中的extra设为默认
                 try{
-                    extra = Object.assign(extra, 列表[i].extra || {});
+                    extra = Object.assign(extra, 列表[i].extra || {});//优先用选集的extra
                 }catch(e){}
                 extra.id = name + "_选集_" + (pageid?pageid+"_":"") + i;
                 extra.cls = "loadlist playlist";
