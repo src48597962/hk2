@@ -549,7 +549,7 @@ function erji() {
                 pic_url: "https://hikerfans.com/tubiao/messy/32.svg",
                 col_type: 'icon_small_3',
                 extra: {
-                    cls: "loadlist"
+                    cls: "Juloadlist"
                 }
             })
             let sskeyword = name.split('/')[0].trim();
@@ -591,7 +591,7 @@ function erji() {
                     pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
                     col_type: 'icon_small_3',
                     extra: {
-                        cls: "loadlist",
+                        cls: "Juloadlist",
                         longClick: [{
                             title: "搜索类型",
                             js: $.toString(() => {
@@ -613,7 +613,7 @@ function erji() {
                     pic_url: 'https://hikerfans.com/tubiao/messy/70.svg',
                     col_type: 'icon_small_3',
                     extra: {
-                        cls: "loadlist",
+                        cls: "Juloadlist",
                         inheritTitle: false,
                         longClick: [{
                             title: "下载本地📥",
@@ -658,7 +658,7 @@ function erji() {
                     }else{
                         clearMyVar('换源变更列表id');
                         require(config.依赖);
-                        deleteItemByCls('loadlist');
+                        deleteItemByCls('Juloadlist');
                         showLoading('搜源中,请稍后.');
                         search(name,"erji",false,sgroup,stype);
                         hideLoading();
@@ -668,7 +668,7 @@ function erji() {
                 pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
-                    cls: "loadlist",
+                    cls: "Juloadlist",
                     newWindow: true,
                     windowId: MY_RULE.title + "搜索页",
                     longClick: [{
@@ -734,7 +734,7 @@ function erji() {
                 col_type: 'scroll_button',
                 extra: {
                     id: "listsort",
-                    cls: "loadlist"
+                    cls: "Juloadlist"
                 }
             })
             let reviseLiTitle = getItem('reviseLiTitle','0');
@@ -790,7 +790,7 @@ function erji() {
                 }),
                 col_type: 'scroll_button',
                 extra: {
-                    cls: "loadlist",
+                    cls: "Juloadlist",
                     longClick: [{
                         title: "修正选集标题："+(reviseLiTitle=="1"?"是":"否"),
                         js: $.toString(() => {
@@ -836,7 +836,7 @@ function erji() {
                         }, "SrcJu_"+surl+"_line", lineid, i),
                         col_type: 'scroll_button',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                 })
@@ -862,7 +862,7 @@ function erji() {
                     d.push({
                         col_type: "blank_block",
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     });
                         d.push({
@@ -870,7 +870,7 @@ function erji() {
                         url: pageid==0?分页链接[分页名.length-1]:分页链接[pageid-1],
                         col_type: 'text_4',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                     d.push({
@@ -880,7 +880,7 @@ function erji() {
                         },分页名,分页链接),
                         col_type: 'text_2',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                     d.push({
@@ -888,7 +888,7 @@ function erji() {
                         url: pageid==分页名.length-1?分页链接[0]:分页链接[pageid+1],
                         col_type: 'text_4',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                 }
@@ -931,7 +931,7 @@ function erji() {
                     d.push({
                         col_type: "blank_block",
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     });
                     d.push({
@@ -939,7 +939,7 @@ function erji() {
                         url: 分页页码==1?分页链接[分页名.length-1]:分页链接[pageid-1],
                         col_type: 'text_4',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                     d.push({
@@ -949,7 +949,7 @@ function erji() {
                         },分页名,分页链接),
                         col_type: 'text_2',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                     d.push({
@@ -957,7 +957,7 @@ function erji() {
                         url: 分页页码==分页名.length?分页链接[0]:分页链接[pageid+1],
                         col_type: 'text_4',
                         extra: {
-                            cls: "loadlist"
+                            cls: "Juloadlist"
                         }
                     })
                     列表 = 分页s[pageid];//取当前分页的选集列表
@@ -971,7 +971,7 @@ function erji() {
                     extra = Object.assign(extra, 列表[i].extra || {});//优先用选集的extra
                 }catch(e){}
                 extra.id = name + "_选集_" + (pageid?pageid+"_":"") + i;
-                extra.cls = "loadlist playlist";
+                extra.cls = "Juloadlist playlist";
                 if(stype=="听书"||stype=="影视"){
                     extra.jsLoadingInject = true;
                     let blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com', '51.la'];
@@ -1017,7 +1017,7 @@ function erji() {
                 d.push({
                     col_type: "blank_block",
                     extra: {
-                        cls: "loadlist extendlist",
+                        cls: "Juloadlist extendlist",
                         id: "extendlist"
                     }
                 })
@@ -1026,7 +1026,7 @@ function erji() {
                         item = toerji(item,{type:stype,name:sname});
                         item.extra = item.extra || {};
                         item.extra['back'] = 1;
-                        item.extra['cls'] = "loadlist extendlist";
+                        item.extra['cls'] = "Juloadlist extendlist";
                         d.push(item)
                     }
                 })
