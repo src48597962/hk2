@@ -556,11 +556,51 @@ function erji() {
             if(stype=="影视"){
                 d.push({
                     title: "聚影搜索",
-                    url: "hiker://search?rule=聚影√&s=" + sskeyword,
+                    url: getItem("juyingSeachType")=="聚搜接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyXunmi.js');
+                            xunmi(name);
+                        }, sskeyword):getItem("juyingSeachType")=="云盘接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
+                            let d = [];
+                            d.push({
+                                title: name+"-云盘聚合搜索",
+                                url: "hiker://empty",
+                                col_type: "text_center_1",
+                                extra: {
+                                    id: "listloading",
+                                    lineVisible: false
+                                }
+                            })
+                            setResult(d);
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliDisk.js');
+                            aliDiskSearch(name);
+                        }, sskeyword):getItem("juyingSeachType")=="Alist接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
+                            let d = [];
+                            d.push({
+                                title: name+"-Alist聚合搜索",
+                                url: "hiker://empty",
+                                col_type: "text_center_1",
+                                extra: {
+                                    id: "listloading",
+                                    lineVisible: false
+                                }
+                            })
+                            setResult(d);
+                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAlist.js');
+                            alistSearch2(name,1);
+                        }, sskeyword):"hiker://search?rule=聚影√&s=" + sskeyword,
                     pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
                     col_type: 'icon_small_3',
                     extra: {
-                        cls: "loadlist"
+                        cls: "loadlist",
+                        longClick: [{
+                            title: "搜索类型",
+                            js: $.toString(() => {
+                                return $(["聚搜接口","云盘接口","Alist接口"], 3).select(() => {
+                                    setItem("juyingSeachType",input);
+                                    refreshPage(false);
+                                })
+                            })
+                        }]
                     }
                 })
             }else{
