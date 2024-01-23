@@ -566,7 +566,7 @@ function erji() {
                                 url: "hiker://empty",
                                 col_type: "text_center_1",
                                 extra: {
-                                    id: "listloading",
+                                    id: "Julistloading",
                                     lineVisible: false
                                 }
                             })
@@ -580,7 +580,7 @@ function erji() {
                                 url: "hiker://empty",
                                 col_type: "text_center_1",
                                 extra: {
-                                    id: "listloading",
+                                    id: "Julistloading",
                                     lineVisible: false
                                 }
                             })
@@ -645,9 +645,9 @@ function erji() {
             d.push({
                 title: "切换站源",
                 url: $("#noLoading#").lazyRule((name,sgroup,stype) => {
-                    updateItem("listloading2", { 
+                    updateItem("Julistloading2", { 
                         extra: {
-                            id: "listloading",
+                            id: "Julistloading",
                             lineVisible: false
                         } 
                     });
@@ -728,7 +728,7 @@ function erji() {
                         item.col_type = item.type;
                     })
                     
-                    addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);//排序和样式动态处理插入列表时查找id
+                    addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"Julistloading2":"Julistloading", 列表);//排序和样式动态处理插入列表时查找id
                     return 'toast://切换排序成功'
                 }, sname),
                 col_type: 'scroll_button',
@@ -783,7 +783,7 @@ function erji() {
                                 delete item.extra.textAlign;
                             }
                         })
-                        addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"listloading2":"listloading", 列表);
+                        addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"Julistloading2":"Julistloading", 列表);
                         setItem('SrcJuList_col_type', input);
                         return 'hiker://empty'
                     }
@@ -1038,7 +1038,7 @@ function erji() {
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
-                id: getMyVar('换源变更列表id')?"listloading2":"listloading",
+                id: getMyVar('换源变更列表id')?"Julistloading2":"Julistloading",
                 lineVisible: false
             }
         });
@@ -1109,7 +1109,7 @@ function erji() {
             url: 'hiker://empty',
             col_type: 'text_center_1',
             extra: {
-                id: "listloading",
+                id: "Julistloading",
                 lineVisible: false
             }
         });
@@ -1173,7 +1173,7 @@ function sousuo() {
 //搜索接口
 function search(keyword, mode, sdata, group, type) {
     //mode:sousuo(聚阅聚合)、sousuotest(接口测试)、erji(二级换源)、sousuopage(嗅觉新搜索页)、jusousuo(视界聚合)
-    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('SrcJu_sousuoType',type||''):"listloading";
+    let updateItemid = mode=="sousuo" ?  "sousuoloading" : mode=="sousuopage"?"sousuoloading"+getMyVar('SrcJu_sousuoType',type||''):"Julistloading";
     if((mode=="sousuo") && getMyVar('SrcJu_searching')=="1"){
         if(MY_PAGE==1){
             putMyVar("SrcJu_停止搜索线程", "1");
@@ -1394,7 +1394,7 @@ function search(keyword, mode, sdata, group, type) {
                             searchMark[name] = searchMark[name].concat(data);
                             storage0.putMyVar('SrcJu_searchMark', searchMark);
                             if(!getMyVar('换源变更列表id')){
-                                addItemBefore("listloading", data);
+                                addItemBefore("Julistloading", data);
                             }
                             hideLoading();
                         }else if(mode=="sousuo"){
