@@ -593,7 +593,7 @@ function erji() {
                     extra: {
                         cls: "Juloadlist",
                         longClick: [{
-                            title: "搜索类型",
+                            title: "搜索类型：" + getItem("juyingSeachType", "默认"),
                             js: $.toString(() => {
                                 return $(["聚搜接口","云盘接口","Alist接口"], 3).select(() => {
                                     setItem("juyingSeachType",input);
