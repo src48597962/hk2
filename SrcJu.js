@@ -566,7 +566,7 @@ function erji() {
                                 url: "hiker://empty",
                                 col_type: "text_center_1",
                                 extra: {
-                                    id: "Julistloading",
+                                    id: "listloading",
                                     lineVisible: false
                                 }
                             })
@@ -580,7 +580,7 @@ function erji() {
                                 url: "hiker://empty",
                                 col_type: "text_center_1",
                                 extra: {
-                                    id: "Julistloading",
+                                    id: "listloading",
                                     lineVisible: false
                                 }
                             })
