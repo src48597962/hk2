@@ -1324,14 +1324,14 @@ function search(keyword, mode, sdata, group, type) {
                     return code;
                 }
                 ssdata = 搜索(name,page,公共,参数) || [];
-                xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
+                //xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
                     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
                     if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name.toLowerCase()==name.toLowerCase())||(getItem('searchMatch')=="2"&&extra.name.toLowerCase().includes(name.toLowerCase())))) || objmode!="erji"){
                         let keepurl = /js:|select:|\(|\)|=>|hiker:\/\/page|toast:/;//定义保留传值的项目url
-                        if((!keepurl.test(item.url) && extra.name.toLowerCase().includes(name.toLowerCase())) || keepurl.test(item.url)){
+                        //if((!keepurl.test(item.url) && extra.name.toLowerCase().includes(name.toLowerCase())) || keepurl.test(item.url) || objmode!="erji"){
                             extra.img = extra.img || item.img || item.pic_url;
                             extra.stype = objdata.type;
                             extra.sname = objdata.name;
@@ -1360,9 +1360,9 @@ function search(keyword, mode, sdata, group, type) {
                             item.desc = item.desc || "";
                             item.desc = objmode=="sousuo"||objmode=="sousuopage"  ? MY_RULE.title+' · '+objdata.name+' · '+item.desc :objmode=="sousuotest"?(item.content || item.desc): (extra.desc || item.desc);
                             item.col_type = objmode=="sousuo"||objmode=="jusousuo"  ? "video" : (objmode=="sousuotest"||objmode=="sousuopage") ? "movie_1_vertical_pic" : "avatar";
-                            log(item);
+                            //log(item);
                             resultdata.push(item);
-                        }
+                        //}
                     }
                 })
                 return {result:resultdata, success:1};
