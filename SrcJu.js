@@ -1002,7 +1002,7 @@ function erji() {
             if(列表.length>0 || getMyVar('SrcJu_sousuoTest')){
                 isload = 1;
             }else if(列表.length==0){
-                if(!getMyVar('加载异常自动换源')){
+                if(!getMyVar('加载异常自动换源') && sname.includes('老白')){
                     putMyVar('加载异常自动换源','1');
                     refreshPage(false);
                 }else{
