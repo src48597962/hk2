@@ -67,7 +67,7 @@ function yiji() {
             Version();
             downloadicon();
         }
-        let adminbtn = Object.assign([],runModes);
+        let adminbtn = Object.assign([],getItem('listtype')=="group"?groupLists:runModes);
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
         d.push({
