@@ -30,8 +30,9 @@ let yxdatalist = datalist.filter(it=>{
 });
 let groupLists = [];//接口分组列表
 yxdatalist.forEach(it=>{
-    if(groupLists.indexOf(it.group)==-1){
-        groupLists.push(it.group || "未分组");
+    let group = it.group || it.type;
+    if(groupLists.indexOf(group)==-1){
+        groupLists.push(group);
     }
 })
 let yidatalist = yxdatalist.filter(it=>{
