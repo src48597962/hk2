@@ -136,7 +136,7 @@ function SRCSet() {
                         }else{
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                             ssdatalist = yxdatalist.filter(it=>{
-                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type);
+                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type);
                             })
                         }
                         let page = 1;
@@ -315,7 +315,7 @@ function SRCSet() {
             }else{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                 sharelist = yxdatalist.filter(it=>{
-                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type);
+                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type);
                 })
             }
             sharelist.reverse();//从显示排序回到实际排序
@@ -396,7 +396,7 @@ function SRCSet() {
         })
     }else{
         jkdatalist = datalist.filter(it=>{
-            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type);
+            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type);
         })
     }
 
@@ -536,16 +536,16 @@ function SRCSet() {
             col_type: 'scroll_button'
         })
     }
-    jkdatalist.forEach(item => {
-        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type)){
+    jkdatalist.forEach(it => {
+        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type)){
             d.push({
-                title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
+                title: (it.stop?`<font color=#f20c00>`:"") + it.name + (it.parse ? " [主页源]" : "") + (it.erparse ? " [搜索源]" : "") + (it.stop?`</font>`:""),
                 url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
                     data = JSON.parse(base64Decode(data));
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                     duoselect(data);
                     return "hiker://empty";
-                },base64Encode(JSON.stringify(item))):$(["分享", "编辑", "删除", item.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile,data,paste) => {
+                },base64Encode(JSON.stringify(it))):$(["分享", "编辑", "删除", it.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile,data,paste) => {
                     data = JSON.parse(base64Decode(data));
                     if (input == "分享") {
                         showLoading('分享上传中，请稍后...');
@@ -611,12 +611,12 @@ function SRCSet() {
                             return 'toast://已重命名';
                         },sourcefile,data)
                     }
-                }, sourcefile, base64Encode(JSON.stringify(item)), Juconfig['sharePaste']),
-                desc: (item.group?"["+item.group+"] ":"") + item.type,
-                img: item.img || "https://hikerfans.com/tubiao/ke/31.png",
+                }, sourcefile, base64Encode(JSON.stringify(it)), Juconfig['sharePaste']),
+                desc: (it.group?"["+it.group+"] ":"") + it.type,
+                img: it.img || "https://hikerfans.com/tubiao/ke/31.png",
                 col_type: "avatar",
                 extra: {
-                    id: item.type+"_"+item.name
+                    id: it.type+"_"+it.name
                 }
             });
         }
@@ -986,9 +986,9 @@ function importConfirm(ruleTitle) {
         url: "hiker://empty",
         col_type: 'text_center_1'
     });
-    datalist3.forEach(item=>{
+    datalist3.forEach(it=>{
         d.push({
-            title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
+            title: (it.stop?`<font color=#f20c00>`:"") + it.name + (it.parse ? " [主页源]" : "") + (it.erparse ? " [搜索源]" : "") + (it.stop?`</font>`:""),
             url: $(["查看导入", "查看本地", "覆盖导入", "改名导入"], 2).select((sourcefile, data,ruleTitle) => {
                 data = JSON.parse(base64Decode(data));
                 if (input == "查看本地") {
@@ -1051,12 +1051,12 @@ function importConfirm(ruleTitle) {
                         }
                     },sourcefile,data)
                 }
-            }, sourcefile, base64Encode(JSON.stringify(item)), ruleTitle),
-            desc: (item.group?"["+item.group+"] ":"") + item.type,
-            img: item.img || "https://hikerfans.com/tubiao/ke/31.png",
+            }, sourcefile, base64Encode(JSON.stringify(it)), ruleTitle),
+            desc: (it.group?"["+it.group+"] ":"") + it.type,
+            img: it.img || "https://hikerfans.com/tubiao/ke/31.png",
             col_type: "avatar",
             extra: {
-                id: item.type+"_"+item.name
+                id: it.type+"_"+it.name
             }
         });
     })
