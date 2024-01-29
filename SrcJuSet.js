@@ -315,7 +315,7 @@ function SRCSet() {
             }else{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                 sharelist = yxdatalist.filter(it=>{
-                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
+                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type);
                 })
             }
             sharelist.reverse();//从显示排序回到实际排序
@@ -396,7 +396,7 @@ function SRCSet() {
         })
     }else{
         jkdatalist = datalist.filter(it=>{
-            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
+            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type);
         })
     }
 
@@ -537,7 +537,7 @@ function SRCSet() {
         })
     }
     jkdatalist.forEach(item => {
-        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==item.type){
+        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type)){
             d.push({
                 title: (item.stop?`<font color=#f20c00>`:"") + item.name + (item.parse ? " [主页源]" : "") + (item.erparse ? " [搜索源]" : "") + (item.stop?`</font>`:""),
                 url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
