@@ -229,7 +229,8 @@ function yiji() {
         })
         if(getItem('runtypebtn')=="1"){
             let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            runModes.forEach((it) =>{
+            let typemenubtn = Object.assign([],getItem('listtype')=="group"?groupLists:runModes);
+            typemenubtn.forEach((it) =>{
                 let item = {
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                     url: Juconfig["runMode"]==it?$('#noLoading#').lazyRule((input) => {
