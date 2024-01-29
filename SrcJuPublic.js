@@ -28,6 +28,12 @@ datalist.reverse();
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
+let groupLists = [];//接口分组列表
+yxdatalist.forEach(it=>{
+    if(groupLists.indexOf(it.group)==-1){
+        groupLists.push(it.group);
+    }
+})
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse;
 });
