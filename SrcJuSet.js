@@ -400,7 +400,7 @@ function SRCSet() {
         })
     }
 
-    let typebtn = Object.assign([],runModes);
+    let typebtn = Object.assign([],getItem('listtype')=="group"?groupLists:runModes);
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
@@ -451,6 +451,7 @@ function SRCSet() {
                         }else{
                             setItem('listtype','group');
                         }
+                        clearMyVar("SrcJu_jiekouType");
                         refreshPage(false);
                         return "hiker://empty";
                     })
