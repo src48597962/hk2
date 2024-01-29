@@ -80,11 +80,11 @@ function yiji() {
                     })
                 }else if(input=="快速切换"){
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return $(runModes,2,"运行模式").select((cfgfile,Juconfig) => {
+                    return $(runModes,2,"分类分组").select((cfgfile,Juconfig) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
-                        return 'toast://运行模式已切换为：' + input;
+                        return 'toast://主页源分类分组已切换为：' + input;
                     }, cfgfile, Juconfig)
                 }else{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
@@ -103,7 +103,7 @@ function yiji() {
                             Juconfig["runMode"] = input;
                             writeFile(cfgfile, JSON.stringify(Juconfig));
                             refreshPage(false);
-                            return 'toast://运行模式已切换为：' + input;
+                            return 'toast://主页源分类分组已切换为：' + input;
                         }, cfgfile, Juconfig,it)
                     }
                 }).concat([{
@@ -240,7 +240,7 @@ function yiji() {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
                         refreshPage(false);
-                        return 'toast://运行模式已切换为：' + input;
+                        return 'toast://主页源分类分组已切换为：' + input;
                     }, cfgfile, Juconfig ,it),
                     col_type: runModes_btntype
                 }
