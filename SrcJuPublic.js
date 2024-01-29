@@ -86,7 +86,7 @@ function selectsource(input) {
         writeFile(cfgfile, JSON.stringify(Juconfig));
         refreshPage(false);
         return 'toast://'+runMode+' 主页源已设置为：' + input;
-    }, sourcetypes[sourcenames.indexOf(input)], sourcename, cfgfile, Juconfig)
+    }, input, sourcename, cfgfile, Juconfig)
 }
 
 function rulePage(datatype,ispage) {
