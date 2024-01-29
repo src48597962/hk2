@@ -136,7 +136,7 @@ function SRCSet() {
                         }else{
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                             ssdatalist = yxdatalist.filter(it=>{
-                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
+                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group:it.type);
                             })
                         }
                         let page = 1;
@@ -441,6 +441,22 @@ function SRCSet() {
             if(longClick.length>0){obj["extra"].longClick = longClick;}
         }
         */
+        if(it == "全部"){
+            obj.extra = {
+                longClick: [{
+                    title: getItem('listtype')=="group"?"按类型分组":"按自定义分组",
+                    js: $.toString(() => {
+                        if(getItem('listtype')=="group"){
+                            clearItem('listtype');
+                        }else{
+                            setItem('listtype','group');
+                        }
+                        refreshPage(false);
+                        return "hiker://empty";
+                    })
+                }]
+            };
+        }
         d.push(obj);
     })
     d.push({
