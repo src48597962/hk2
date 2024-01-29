@@ -28,13 +28,7 @@ datalist.reverse();
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
-let groupLists = [];//接口分组列表
-yxdatalist.forEach(it=>{
-    let group = it.group || it.type;
-    if(groupLists.indexOf(group)==-1){
-        groupLists.push(group);
-    }
-})
+
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse;
 });
@@ -44,14 +38,12 @@ let erdatalist = yxdatalist.filter(it=>{
 
 function selectsource(input) {
     let sourcenames = [];
-    let sourcetypes = [];
     yidatalist.forEach(it=>{
-        if((getItem('listtype')=="group"?it.group||it.type:it.type)==input && sourcenames.indexOf(it.name)==-1){
+        if(it.type==input && sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
             }
             sourcenames.push(it.name);
-            sourcetypes.push(it.type);
         }
     })
     return $(sourcenames,3,"选择"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
