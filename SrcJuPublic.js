@@ -45,7 +45,7 @@ let erdatalist = yxdatalist.filter(it=>{
 function selectsource(input) {
     let sourcenames = [];
     yidatalist.forEach(it=>{
-        if(it.type==input && sourcenames.indexOf(it.name)==-1){
+        if((getItem('listtype')=="group"?it.group||it.type:it.type)==input && sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
             }
