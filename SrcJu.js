@@ -67,7 +67,7 @@ function yiji() {
             Version();
             downloadicon();
         }
-        let adminbtn = Object.assign([],getItem('listtype')=="group"?groupLists:runModes);
+        let adminbtn = Object.assign([],runModes);
         adminbtn.unshift("快速切换");
         adminbtn.unshift("接口管理");
         d.push({
@@ -229,7 +229,7 @@ function yiji() {
         })
         if(getItem('runtypebtn')=="1"){
             let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            let typemenubtn = Object.assign([],getItem('listtype')=="group"?groupLists:runModes);
+            let typemenubtn = Object.assign([],runModes);
             typemenubtn.forEach((it) =>{
                 let item = {
                     title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
