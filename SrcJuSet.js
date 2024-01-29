@@ -136,7 +136,7 @@ function SRCSet() {
                         }else{
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                             ssdatalist = yxdatalist.filter(it=>{
-                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type);
+                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;//(getItem('listtype')=="group"?it.group||it.type:it.type)
                             })
                         }
                         let page = 1;
@@ -315,7 +315,7 @@ function SRCSet() {
             }else{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                 sharelist = yxdatalist.filter(it=>{
-                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type);
+                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
                 })
             }
             sharelist.reverse();//从显示排序回到实际排序
@@ -396,11 +396,11 @@ function SRCSet() {
         })
     }else{
         jkdatalist = datalist.filter(it=>{
-            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type);
+            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
         })
     }
 
-    let typebtn = Object.assign([],getItem('listtype')=="group"?groupLists:runModes);
+    let typebtn = Object.assign([], runModes);//getItem('listtype')=="group"?groupLists:
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
@@ -440,7 +440,7 @@ function SRCSet() {
             }
             if(longClick.length>0){obj["extra"].longClick = longClick;}
         }
-        */
+        
         if(it == "全部"){
             obj.extra = {
                 longClick: [{
@@ -458,6 +458,7 @@ function SRCSet() {
                 }]
             };
         }
+        */
         d.push(obj);
     })
     d.push({
@@ -537,7 +538,7 @@ function SRCSet() {
         })
     }
     jkdatalist.forEach(it => {
-        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==(getItem('listtype')=="group"?it.group||it.type:it.type)){
+        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type){
             d.push({
                 title: (it.stop?`<font color=#f20c00>`:"") + it.name + (it.parse ? " [主页源]" : "") + (it.erparse ? " [搜索源]" : "") + (it.stop?`</font>`:""),
                 url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
