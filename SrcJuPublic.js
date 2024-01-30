@@ -33,15 +33,6 @@ let yxdatalist = datalist.filter(it=>{
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse;
 });
-if(jkGroupType=="2" && datalist.length>0){
-    runModes = [];
-    datalist.forEach(it=>{
-        let grouname = it.group || it.type;
-        if(runModes.indexOf(grouname) == -1){
-            runModes.push(grouname);
-        }
-    })
-}
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
