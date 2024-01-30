@@ -9,7 +9,7 @@ if(Jucfg != ""){
 }
 
 let runModes = ["漫画","小说","听书","图集","影视","其它"];
-let groupType = getItem('listtype')=="group"?"2":"1"; //列表分组类型1按类型2按自定义分组
+let jkGroupType = getItem('jkGroupType','0'); //接口列表分组列表类型
 let runMode = Juconfig["runMode"] || runModes[0];
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
 
@@ -29,7 +29,7 @@ datalist.reverse();
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
-if(groupType=="2"){
+if(jkGroupType=="2"){
     runModes = [];
     yxdatalist.forEach(it=>{
         let grouname = it.group||it.type;
