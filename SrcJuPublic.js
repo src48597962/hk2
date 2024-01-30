@@ -84,7 +84,7 @@ function selectsource(selectType) {
             sourcenames.push(it.name);
         }
     })
-    return $(sourcenames,3,"选择 "+grouptype+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+    return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
