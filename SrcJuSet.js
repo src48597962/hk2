@@ -129,16 +129,13 @@ function SRCSet() {
                             }
                         });
                         setResult(d);
-                        let selectType = getMyVar("SrcJu_jiekouType","全部");
                         let ssdatalist;
                         let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                         if(duoselect.length>0){
                             ssdatalist = duoselect;
                         }else{
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                            ssdatalist = yxdatalist.filter(it=>{
-                                return selectType=="全部" || selectType==it.type;//(getItem('listtype')=="group"?it.group||it.type:it.type)
-                            })
+                            ssdatalist = getListData("yx", getMyVar("SrcJu_jiekouType","全部"));
                         }
                         let page = 1;
                         let success = 0;
@@ -315,9 +312,7 @@ function SRCSet() {
                 sharelist = duoselect;
             }else{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                sharelist = yxdatalist.filter(it=>{
-                    return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
-                })
+                sharelist = getListData("yx", getMyVar("SrcJu_jiekouType","全部"));
             }
             sharelist.reverse();//从显示排序回到实际排序
             let pastes = getPastes();
@@ -396,9 +391,7 @@ function SRCSet() {
             return it.name.indexOf(getMyVar("SrcJu_seacrhJiekou"))>-1;
         })
     }else{
-        jkdatalist = datalist.filter(it=>{
-            return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;
-        })
+        jkdatalist = getListData("all", getMyVar("SrcJu_jiekouType","全部"));
     }
 
     let typebtn = Object.assign([], runModes);//getItem('listtype')=="group"?groupLists:
@@ -539,89 +532,87 @@ function SRCSet() {
         })
     }
     jkdatalist.forEach(it => {
-        if(getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type){
-            d.push({
-                title: (it.stop?`<font color=#f20c00>`:"") + it.name + (it.parse ? " [主页源]" : "") + (it.erparse ? " [搜索源]" : "") + (it.stop?`</font>`:""),
-                url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
-                    data = JSON.parse(base64Decode(data));
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                    duoselect(data);
-                    return "hiker://empty";
-                },base64Encode(JSON.stringify(it))):$(["分享", "编辑", "删除", it.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile,data,paste) => {
-                    data = JSON.parse(base64Decode(data));
-                    if (input == "分享") {
-                        showLoading('分享上传中，请稍后...');
-                        let oneshare = []
-                        oneshare.push(data);
-                        let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)), paste||"");
-                        hideLoading();
-                        if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
-                            pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
-                            log('剪贴板地址>'+pasteurl);
-                            let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
-                            copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
-                            return "toast://(单个)分享口令已生成";
-                        } else {
-                            return "toast://分享失败，剪粘板或网络异常>"+pasteurl;
-                        }
-                    } else if (input == "编辑") {
-                        return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
-                            setPageTitle('编辑 | 聚阅接口');
-                            require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                            jiekouapi(sourcefile, JSON.parse(base64Decode(data)));
-                        }, sourcefile, base64Encode(JSON.stringify(data)))
-                    } else if (input == "删除") {
-                        return $("确定删除："+data.name).confirm((sourcefile,data)=>{
-                            let sourcedata = fetch(sourcefile);
-                            eval("var datalist=" + sourcedata + ";");
-                            let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
-                            datalist.splice(index, 1);
-                            writeFile(sourcefile, JSON.stringify(datalist));
-                            clearMyVar('SrcJu_searchMark');
-                            refreshPage(false);
-                            return 'toast://已删除';
-                        },sourcefile,data)
-                    } else if (input == "禁用" || input == "启用" ) {
+        d.push({
+            title: (it.stop?`<font color=#f20c00>`:"") + it.name + (it.parse ? " [主页源]" : "") + (it.erparse ? " [搜索源]" : "") + (it.stop?`</font>`:""),
+            url: getMyVar('SrcJu_批量选择模式')?$('#noLoading#').lazyRule((data) => {
+                data = JSON.parse(base64Decode(data));
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                duoselect(data);
+                return "hiker://empty";
+            },base64Encode(JSON.stringify(it))):$(["分享", "编辑", "删除", it.stop?"启用":"禁用","选择","改名"], 2).select((sourcefile,data,paste) => {
+                data = JSON.parse(base64Decode(data));
+                if (input == "分享") {
+                    showLoading('分享上传中，请稍后...');
+                    let oneshare = []
+                    oneshare.push(data);
+                    let pasteurl = sharePaste(aesEncode('SrcJu', JSON.stringify(oneshare)), paste||"");
+                    hideLoading();
+                    if (/^http|^云/.test(pasteurl) && pasteurl.includes('/')) {
+                        pasteurl = pasteurl.replace('云6oooole', 'https://pasteme.tyrantg.com').replace('云2oooole', 'https://netcut.cn').replace('云5oooole', 'https://cmd.im').replace('云7oooole', 'https://note.ms').replace('云9oooole', 'https://txtpbbd.cn').replace('云10oooole', 'https://hassdtebin.com');   
+                        log('剪贴板地址>'+pasteurl);
+                        let code = '聚阅接口￥' + aesEncode('SrcJu', pasteurl) + '￥' + data.name;
+                        copy('云口令：'+code+`@import=js:$.require("hiker://page/import?rule=`+MY_RULE.title+`");`);
+                        return "toast://(单个)分享口令已生成";
+                    } else {
+                        return "toast://分享失败，剪粘板或网络异常>"+pasteurl;
+                    }
+                } else if (input == "编辑") {
+                    return $('hiker://empty#noRecordHistory##noHistory#').rule((sourcefile, data) => {
+                        setPageTitle('编辑 | 聚阅接口');
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                        jiekouapi(sourcefile, JSON.parse(base64Decode(data)));
+                    }, sourcefile, base64Encode(JSON.stringify(data)))
+                } else if (input == "删除") {
+                    return $("确定删除："+data.name).confirm((sourcefile,data)=>{
                         let sourcedata = fetch(sourcefile);
                         eval("var datalist=" + sourcedata + ";");
                         let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
-                        let sm;
-                        if(input == "禁用"){
-                            datalist[index].stop = 1;
-                            sm = data.name + "已禁用";
-                        }else{
-                            delete datalist[index].stop;
-                            sm = data.name + "已启用";
-                        }
+                        datalist.splice(index, 1);
                         writeFile(sourcefile, JSON.stringify(datalist));
                         clearMyVar('SrcJu_searchMark');
                         refreshPage(false);
-                        return 'toast://' + sm;
-                    } else if (input=="选择") {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
-                        duoselect(data);
-                        return "hiker://empty";
-                    } else if (input == "改名") {
-                        return $(data.name,"输入新名称").input((sourcefile,data)=>{
-                            let sourcedata = fetch(sourcefile);
-                            eval("var datalist=" + sourcedata + ";");
-                            let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
-                            datalist[index].name = input;
-                            writeFile(sourcefile, JSON.stringify(datalist));
-                            clearMyVar('SrcJu_searchMark');
-                            refreshPage(false);
-                            return 'toast://已重命名';
-                        },sourcefile,data)
+                        return 'toast://已删除';
+                    },sourcefile,data)
+                } else if (input == "禁用" || input == "启用" ) {
+                    let sourcedata = fetch(sourcefile);
+                    eval("var datalist=" + sourcedata + ";");
+                    let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                    let sm;
+                    if(input == "禁用"){
+                        datalist[index].stop = 1;
+                        sm = data.name + "已禁用";
+                    }else{
+                        delete datalist[index].stop;
+                        sm = data.name + "已启用";
                     }
-                }, sourcefile, base64Encode(JSON.stringify(it)), Juconfig['sharePaste']),
-                desc: (it.group?"["+it.group+"] ":"") + it.type,
-                img: it.img || "https://hikerfans.com/tubiao/ke/31.png",
-                col_type: "avatar",
-                extra: {
-                    id: it.type+"_"+it.name
+                    writeFile(sourcefile, JSON.stringify(datalist));
+                    clearMyVar('SrcJu_searchMark');
+                    refreshPage(false);
+                    return 'toast://' + sm;
+                } else if (input=="选择") {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
+                    duoselect(data);
+                    return "hiker://empty";
+                } else if (input == "改名") {
+                    return $(data.name,"输入新名称").input((sourcefile,data)=>{
+                        let sourcedata = fetch(sourcefile);
+                        eval("var datalist=" + sourcedata + ";");
+                        let index = datalist.indexOf(datalist.filter(d => d.name==data.name && d.type==data.type)[0]);
+                        datalist[index].name = input;
+                        writeFile(sourcefile, JSON.stringify(datalist));
+                        clearMyVar('SrcJu_searchMark');
+                        refreshPage(false);
+                        return 'toast://已重命名';
+                    },sourcefile,data)
                 }
-            });
-        }
+            }, sourcefile, base64Encode(JSON.stringify(it)), Juconfig['sharePaste']),
+            desc: (it.group?"["+it.group+"] ":"") + it.type,
+            img: it.img || "https://hikerfans.com/tubiao/ke/31.png",
+            col_type: "avatar",
+            extra: {
+                id: it.type+"_"+it.name
+            }
+        });
     })
     d.push({
         title: "‘‘’’<small><font color=#f20c00>当前接口数：" + jkdatalist.length + "，总有效数："+yxdatalist.length+"</font></small>",
