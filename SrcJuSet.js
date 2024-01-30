@@ -404,6 +404,7 @@ function SRCSet() {
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
+        log(typename);
         /*
         if(it != "全部" && getItem(it+'stoptype')=="1"){
             typename = typename+"(停)";
@@ -444,12 +445,12 @@ function SRCSet() {
         if(it == "全部"){
             obj.extra = {
                 longClick: [{
-                    title: getItem('listtype')=="group"?"按类型分组":"按自定义分组",
+                    title: jkGroupType?"按类型分组":"按自定义分组",
                     js: $.toString(() => {
-                        if(getItem('listtype')=="group"){
-                            clearItem('listtype');
+                        if(jkGroupType){
+                            clearItem('jkGroupType');
                         }else{
-                            setItem('listtype','group');
+                            setItem('jkGroupType','1');
                         }
                         clearMyVar("SrcJu_jiekouType");
                         refreshPage(false);
