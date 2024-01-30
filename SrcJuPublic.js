@@ -29,9 +29,13 @@ datalist.reverse();
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
-if(jkGroupType=="2"){
+
+let yidatalist = yxdatalist.filter(it=>{
+    return it.parse;
+});
+if(jkGroupType=="2" && yidatalist.length>0){
     runModes = [];
-    yxdatalist.forEach(it=>{
+    yidatalist.forEach(it=>{
         let grouname = it.group || it.type;
         if(runModes.indexOf(grouname) == -1){
             runModes.push(grouname);
@@ -39,9 +43,6 @@ if(jkGroupType=="2"){
     })
 }
 
-let yidatalist = yxdatalist.filter(it=>{
-    return it.parse;
-});
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
