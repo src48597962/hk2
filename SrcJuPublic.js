@@ -29,6 +29,15 @@ datalist.reverse();
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
+if(groupType=="2"){
+    runModes = [];
+    yxdatalist.forEach(it=>{
+        let grouname = it.group||it.type;
+        if(runModes.indexOf(grouname)>-1){
+            runModes.push(grouname);
+        }
+    })
+}
 
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse;
