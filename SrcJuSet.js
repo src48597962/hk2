@@ -445,9 +445,9 @@ function SRCSet() {
         if(it == "全部"){
             obj.extra = {
                 longClick: [{
-                    title: jkGroupType?"按类型分组":"按自定义分组",
+                    title: getItem('jkGroupType')?"按类型分组":"按自定义分组",
                     js: $.toString(() => {
-                        if(jkGroupType){
+                        if(getItem('jkGroupType')){
                             clearItem('jkGroupType');
                         }else{
                             setItem('jkGroupType','1');
