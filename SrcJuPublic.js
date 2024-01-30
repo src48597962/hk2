@@ -9,7 +9,7 @@ if(Jucfg != ""){
 }
 
 let runModes = ["漫画","小说","听书","图集","影视","其它"];
-let jkGroupType = getItem('jkGroupType','0'); //接口列表分组列表类型
+let jkGroupType = getItem('jkGroupType','1'); //接口列表分组列表类型
 let runMode = Juconfig["runMode"] || runModes[0];
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
 
