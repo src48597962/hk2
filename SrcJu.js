@@ -249,7 +249,7 @@ function yiji() {
                         refreshPage(false);
                         return 'toast://主页源分类分组已切换为：' + input;
                     }, cfgfile, Juconfig ,it),
-                    col_type: scroll_button//runModes_btntype
+                    col_type: "scroll_button"//runModes_btntype
                 }
                 if(runMode==it){
                     item.extra = {
