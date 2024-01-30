@@ -8,7 +8,7 @@ if(Jucfg != ""){
     writeFile(cfgfile, JSON.stringify(Juconfig));
 }
 
-let runModes = ["漫画","小说","听书","图集","影视","其它"];
+let runModes = ["漫画","小说","听书","图集","影视","音乐","聚合","其它"];
 let jkGroupType = getItem('jkGroupType','1'); //接口列表分组列表类型
 let runMode = Juconfig["runMode"] || "漫画";
 let runType = Juconfig["runType"] || "漫画";
@@ -33,9 +33,9 @@ let yxdatalist = datalist.filter(it=>{
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse;
 });
-if(jkGroupType=="2" && yidatalist.length>0){
+if(jkGroupType=="2" && datalist.length>0){
     runModes = [];
-    yidatalist.forEach(it=>{
+    datalist.forEach(it=>{
         let grouname = it.group || it.type;
         if(runModes.indexOf(grouname) == -1){
             runModes.push(grouname);
@@ -45,6 +45,24 @@ if(jkGroupType=="2" && yidatalist.length>0){
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
+//获取分组名称数组
+function getGroupNames(type) {
+    let jkdatalist = [];
+    let snames = [];
+    if(type=="管理"){
+        jkdatalist = datalist;
+        snames.push("全部");
+    }else if(type=="主页"){
+        jkdatalist = yidatalist;
+    }
+    jkdatalist.forEach(it=>{
+        let name = jkGroupType=="2"?it.group||it.type:it.type
+        if(snames.indexOf(name) == -1){
+            snames.push(name);
+        }
+    })
+    return snames;
+}
 //获取接口列表数据
 function getListData(lx, selectType) {
     let jkdatalist = [];
@@ -56,26 +74,24 @@ function getListData(lx, selectType) {
         jkdatalist = yidatalist;
     }else if(lx=="er"){
         jkdatalist = erdatalist;
-    }else{
-        jkdatalist = datalist;
-    } 
+    }
     return jkdatalist.filter(it=>{
         return selectType=="全部" || selectType==(jkGroupType=="2"?it.group||it.type:it.type);
     })
 }
 
 //封装选择主页源方法
-function selectsource(grouptype) {
+function selectsource(selectType) {
     let sourcenames = [];
     yidatalist.forEach(it=>{
-        if(it.type==grouptype && sourcenames.indexOf(it.name)==-1){
+        if(it.type==selectType && sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
             }
             sourcenames.push(it.name);
         }
     })
-    return $(sourcenames,3,"选择<"+grouptype+">主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+    return $(sourcenames,3,"选择 "+grouptype+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
@@ -115,7 +131,7 @@ function selectsource(grouptype) {
         writeFile(cfgfile, JSON.stringify(Juconfig));
         refreshPage(false);
         return 'toast://'+runMode+' 主页源已设置为：' + input;
-    }, grouptype, sourcename, cfgfile, Juconfig)
+    }, selectType, sourcename, cfgfile, Juconfig)
 }
 //打开指定类型的新页面
 function rulePage(datatype,ispage) {
