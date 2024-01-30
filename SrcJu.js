@@ -271,6 +271,7 @@ function yiji() {
                 }
                 d.push(item);
             })
+            /*
             if(runModes_btntype=="text_5"){
                 for (let i = 0; i < 8; i++) {
                     d.push({
@@ -278,6 +279,7 @@ function yiji() {
                     })
                 }
             }
+            */
         }
         d.push({
             col_type: 'blank_block'
