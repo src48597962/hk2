@@ -129,6 +129,7 @@ function SRCSet() {
                             }
                         });
                         setResult(d);
+                        let selectType = getMyVar("SrcJu_jiekouType","全部");
                         let ssdatalist;
                         let duoselect = storage0.getMyVar('SrcJu_duoselect')?storage0.getMyVar('SrcJu_duoselect'):[];
                         if(duoselect.length>0){
@@ -136,7 +137,7 @@ function SRCSet() {
                         }else{
                             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                             ssdatalist = yxdatalist.filter(it=>{
-                                return getMyVar("SrcJu_jiekouType","全部")=="全部" || getMyVar("SrcJu_jiekouType","全部")==it.type;//(getItem('listtype')=="group"?it.group||it.type:it.type)
+                                return selectType=="全部" || selectType==it.type;//(getItem('listtype')=="group"?it.group||it.type:it.type)
                             })
                         }
                         let page = 1;
