@@ -129,7 +129,7 @@ function rulePage(datatype,ispage) {
 function getYiData(datatype,od) {
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
-        return it.name==sourcename && it.type==runMode;
+        return it.name==sourcename && (jkGroupType=="2"?it.group||it.type:it.type)==runMode;
     });
     let parse;
     let 公共;
