@@ -32,8 +32,8 @@ let yxdatalist = datalist.filter(it=>{
 if(jkGroupType=="2"){
     runModes = [];
     yxdatalist.forEach(it=>{
-        let grouname = it.group||it.type;
-        if(runModes.indexOf(grouname)>-1){
+        let grouname = it.group || it.type;
+        if(runModes.indexOf(grouname) == -1){
             runModes.push(grouname);
         }
     })
