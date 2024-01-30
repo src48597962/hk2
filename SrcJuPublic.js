@@ -29,7 +29,6 @@ datalist.reverse();
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
-
 let yidatalist = yxdatalist.filter(it=>{
     return it.parse;
 });
@@ -42,22 +41,40 @@ if(jkGroupType=="2" && yidatalist.length>0){
         }
     })
 }
-
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
+//获取接口列表数据
+function getListData(lx, selectType) {
+    let jkdatalist = [];
+    if(lx=="all"){
+        jkdatalist = datalist;
+    }else if(lx=="yx"){
+        jkdatalist = yxdatalist;
+    }else if(lx=="yi"){
+        jkdatalist = yidatalist;
+    }else if(lx=="er"){
+        jkdatalist = erdatalist;
+    }else{
+        jkdatalist = datalist;
+    } 
+    return jkdatalist.filter(it=>{
+        return selectType=="全部" || selectType==(jkGroupType=="2"?it.group||it.type:it.type);
+    })
+}
 
-function selectsource(input) {
+//封装选择主页源方法
+function selectsource(grouptype) {
     let sourcenames = [];
     yidatalist.forEach(it=>{
-        if(it.type==input && sourcenames.indexOf(it.name)==-1){
+        if(it.type==grouptype && sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
             }
             sourcenames.push(it.name);
         }
     })
-    return $(sourcenames,3,"选择"+input+"主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+    return $(sourcenames,3,"选择<"+grouptype+">主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
@@ -97,9 +114,9 @@ function selectsource(input) {
         writeFile(cfgfile, JSON.stringify(Juconfig));
         refreshPage(false);
         return 'toast://'+runMode+' 主页源已设置为：' + input;
-    }, input, sourcename, cfgfile, Juconfig)
+    }, grouptype, sourcename, cfgfile, Juconfig)
 }
-
+//打开指定类型的新页面
 function rulePage(datatype,ispage) {
     return $("hiker://empty#noRecordHistory##noHistory#" + (ispage ? "?page=fypage" : "")).rule((datatype) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
