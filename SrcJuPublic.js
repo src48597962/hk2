@@ -40,18 +40,20 @@ let erdatalist = yxdatalist.filter(it=>{
 function getGroupNames(type) {
     let jkdatalist = [];
     let snames = [];
-    if(type=="管理"){
-        jkdatalist = datalist;
-        snames.push("全部");
-    }else if(type=="主页"){
-        jkdatalist = yidatalist;
+    if(jkGroupType=="2"){
+        jkdatalist = type=="管理"?datalist:type=="主页"?yidatalist:[];
+        jkdatalist.forEach(it=>{
+            let name = jkGroupType=="2"?it.group||it.type:it.type
+            if(snames.indexOf(name) == -1){
+                snames.push(name);
+            }
+        })
+    }else{
+        snames = runModes;
     }
-    jkdatalist.forEach(it=>{
-        let name = jkGroupType=="2"?it.group||it.type:it.type
-        if(snames.indexOf(name) == -1){
-            snames.push(name);
-        }
-    })
+    if(type=="管理"){
+        snames.unshift("全部");
+    }
     return snames;
 }
 //获取接口列表数据
