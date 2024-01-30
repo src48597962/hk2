@@ -20,6 +20,7 @@ function yiji() {
     let parse = {};
     let 页码 = {};
     let 转换 = {};
+    let runType;
     try {
         if (sourcedata.length > 0) {
             eval("let source = " + sourcedata[0].parse);
@@ -68,12 +69,13 @@ function yiji() {
             Version();
             downloadicon();
         }
-        let adminbtn = Object.assign([],runModes);
-        adminbtn.unshift("快速切换");
-        adminbtn.unshift("接口管理");
+        /*
+        let setbtn = Object.assign([],runModes);
+        setbtn.unshift("快速切换");
+        setbtn.unshift("接口管理");
         d.push({
             title: "设置",
-            url: $(adminbtn, 2).select(() => {
+            url: $(setbtn, 2).select(() => {
                 if(input=="接口管理"){
                     return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
@@ -114,6 +116,20 @@ function yiji() {
                             return  "hiker://empty";
                         })
                 }]
+            }
+        })
+        */
+        d.push({
+            title: "管理",
+            url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
+                SRCSet();
+            }),
+            pic_url: "https://hikerfans.com/tubiao/more/129.png",
+            col_type: 'icon_5',
+            extra: {
+                newWindow: true,
+                windowId: MY_RULE.title + "管理"
             }
         })
         let zz = 转换["排行"] || "排行";
@@ -218,9 +234,9 @@ function yiji() {
                 }]
             }
         })
-        if(getItem('runtypebtn')=="1"){
-            let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            let typemenubtn = Object.assign([],runModes);
+        //if(getItem('runtypebtn')=="1"){
+            //let runModes_btntype = getItem('runModes_btntype','scroll_button');
+            let typemenubtn = getGroupNames("主页");
             typemenubtn.forEach((it) =>{
                 let item = {
                     title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -233,7 +249,7 @@ function yiji() {
                         refreshPage(false);
                         return 'toast://主页源分类分组已切换为：' + input;
                     }, cfgfile, Juconfig ,it),
-                    col_type: runModes_btntype
+                    col_type: scroll_button//runModes_btntype
                 }
                 if(runMode==it){
                     item.extra = {
@@ -267,7 +283,7 @@ function yiji() {
             col_type: 'blank_block'
         })
         putMyVar(runMode+"_"+sourcename, "1");
-    }
+    //}
     //加载主页内容
     getYiData('主页', d);
 }
