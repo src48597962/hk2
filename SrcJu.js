@@ -15,7 +15,7 @@ require(publicfile);
 //一级
 function yiji() {
     let sourcedata = yidatalist.filter(it => {
-        return it.name == sourcename && it.type==runMode;
+        return it.name == sourcename && (jkGroupType=="2"?it.group||it.type:it.type) == runMode;
     });
     let parse = {};
     let 页码 = {};
@@ -29,7 +29,8 @@ function yiji() {
             } else {
                 parse = source;
             }
-            storage0.putMyVar('一级源接口信息',{name: sourcename, type: runMode, group: sourcedata[0].group, img: sourcedata[0].img});//传导给方法文件
+            runType = sourcedata[0].type;
+            storage0.putMyVar('一级源接口信息',{name: sourcename, type: runType, group: sourcedata[0].group, img: sourcedata[0].img});//传导给方法文件
             try{
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuMethod.js');
                 cacheData(sourcedata[0]);
@@ -96,17 +97,7 @@ function yiji() {
             extra: {
                 newWindow: true,
                 windowId: MY_RULE.title + "管理",
-                longClick: runModes.map((it)=>{
-                    return {
-                        title: it,
-                        js: $.toString((cfgfile,Juconfig,input)=>{
-                            Juconfig["runMode"] = input;
-                            writeFile(cfgfile, JSON.stringify(Juconfig));
-                            refreshPage(false);
-                            return 'toast://主页源分类分组已切换为：' + input;
-                        }, cfgfile, Juconfig,it)
-                    }
-                }).concat([{
+                longClick: [{
                     title:getItem('runtypebtn')=="1"?"关界面按钮":"开界面按钮",
                     js: $.toString(()=>{
                             if(getItem('runtypebtn')=="1"){
@@ -122,7 +113,7 @@ function yiji() {
                             refreshPage(false);
                             return  "hiker://empty";
                         })
-                }])
+                }]
             }
         })
         let zz = 转换["排行"] || "排行";
@@ -232,8 +223,8 @@ function yiji() {
             let typemenubtn = Object.assign([],runModes);
             typemenubtn.forEach((it) =>{
                 let item = {
-                    title: Juconfig["runMode"]==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: Juconfig["runMode"]==it?$('#noLoading#').lazyRule((input) => {
+                    title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                    url: runMode==it?$('#noLoading#').lazyRule((input) => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                         return selectsource(input);
                     }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
@@ -244,7 +235,7 @@ function yiji() {
                     }, cfgfile, Juconfig ,it),
                     col_type: runModes_btntype
                 }
-                if(Juconfig["runMode"]==it){
+                if(runMode==it){
                     item.extra = {
                         longClick: [{
                             title: "删除当前",
@@ -258,7 +249,7 @@ function yiji() {
                                     clearMyVar('SrcJu_searchMark');
                                     return 'toast://已删除';
                                 },sourcefile,id)
-                            },sourcefile,Juconfig["runMode"]+"_"+sourcename)
+                            }, sourcefile, runType+"_"+sourcename)
                         }]
                     }
                 }
