@@ -440,7 +440,7 @@ function SRCSet() {
             }
             if(longClick.length>0){obj["extra"].longClick = longClick;}
         }
-        
+        */
         if(it == "全部"){
             obj.extra = {
                 longClick: [{
@@ -458,7 +458,7 @@ function SRCSet() {
                 }]
             };
         }
-        */
+        
         d.push(obj);
     })
     d.push({
