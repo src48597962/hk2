@@ -394,8 +394,7 @@ function SRCSet() {
         jkdatalist = getListData("all", getMyVar("SrcJu_jiekouType","全部"));
     }
 
-    let typebtn = Object.assign([], runModes);//getItem('listtype')=="group"?groupLists:
-    typebtn.unshift("全部");
+    let typebtn = getGroupNames("管理");
     typebtn.forEach(it =>{
         let typename = it;
         /*
