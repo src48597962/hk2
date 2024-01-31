@@ -395,6 +395,7 @@ function SRCSet() {
     }
 
     let typebtn = getGroupNames("管理");
+    typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
         /*
@@ -638,7 +639,7 @@ function jiekouapi(sourcefile, data, look) {
         putMyVar('SrcJu_jiekouedit', '1');
         putMyVar('SrcJu_jiekouname', data.name);
         putMyVar('SrcJu_jiekouimg', data.img||"");
-        putMyVar('SrcJu_jiekoutype', data.type||"漫画");
+        putMyVar('SrcJu_jiekoutype', data.type||"");
         putMyVar('SrcJu_jiekougroup', data.group||"");
         storage0.putMyVar('SrcJu_jiekouparse', data.parse);
         storage0.putMyVar('SrcJu_jiekouerparse', data.erparse ? data.erparse : "");
@@ -658,9 +659,9 @@ function jiekouapi(sourcefile, data, look) {
         }
     });
     d.push({
-        title: '接口类型：'+ getMyVar('SrcJu_jiekoutype','漫画'),
+        title: '接口类型：'+ getMyVar('SrcJu_jiekoutype',''),
         col_type: 'text_1',
-        url: $(runModes,2,"接口类型").select(() => {
+        url: $(runTypes,2,"接口类型").select(() => {
             putMyVar('SrcJu_jiekoutype',input);
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
@@ -814,13 +815,16 @@ function jiekouapi(sourcefile, data, look) {
                 if (!getMyVar('SrcJu_jiekouparse') && !getMyVar('SrcJu_jiekouerparse')) {
                     return "toast://主页源数据和搜索源数据不能同时为空";
                 }
+                if (!getMyVar('SrcJu_jiekoutype')) {
+                    return "toast://接口类型不能为空";
+                }
                 try {
                     let name = getMyVar('SrcJu_jiekouname');
-                    let img = getMyVar('SrcJu_jiekouimg');
                     if (runModes.indexOf(name)>-1) {
                         return "toast://接口名称不能属于类型名";
                     }
-                    let type = getMyVar('SrcJu_jiekoutype','漫画');
+                    let img = getMyVar('SrcJu_jiekouimg');
+                    let type = getMyVar('SrcJu_jiekoutype');
                     let group = getMyVar('SrcJu_jiekougroup');
                     let parse = getMyVar('SrcJu_jiekouparse');
                     let erparse = getMyVar('SrcJu_jiekouerparse');
