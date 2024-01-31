@@ -11,6 +11,7 @@ if(Jucfg != ""){
 let runTypes = ["漫画","小说","听书","图集","影视","音乐","聚合","其它"];
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
+let stopTypes = storage0.getItem('stopTypes',[]);
 
 let sourcefile = "hiker://files/rules/Src/Ju/jiekou.json";
 let sourcedata = fetch(sourcefile);
@@ -36,10 +37,17 @@ let erdatalist = yxdatalist.filter(it=>{
 });
 //获取分组名称数组
 function getGroupNames(type) {
-    let jkdatalist = [];
     let snames = [];
-    
-    return runTypes;
+    if(type=="所有"){
+        snames = runTypes;
+    }else{
+        runTypes.forEach(it=>{
+            if(stopTypes.indexOf(it)==-1){
+                snames.push(it);
+            }
+        })
+    }
+    return snames;
 }
 //获取接口列表数据
 function getListData(lx, selectType) {
