@@ -91,7 +91,7 @@ function yiji() {
                     }, cfgfile, Juconfig)
                 }else{
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return selectsource(input);
+                    return selectSource(input);
                 }
             }),
             pic_url: "https://hikerfans.com/tubiao/more/129.png",
@@ -242,7 +242,7 @@ function yiji() {
                     title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                     url: runMode==it?$('#noLoading#').lazyRule((input) => {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                        return selectsource(input);
+                        return selectSource(input);
                     }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
                         Juconfig["runMode"] = input;
                         writeFile(cfgfile, JSON.stringify(Juconfig));
