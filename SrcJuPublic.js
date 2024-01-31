@@ -8,7 +8,7 @@ if(Jucfg != ""){
     writeFile(cfgfile, JSON.stringify(Juconfig));
 }
 
-let runModes = ["漫画","小说","听书","图集","影视","音乐","聚合","其它"];
+let runTypes = ["漫画","小说","听书","图集","影视","音乐","聚合","其它"];
 let jkGroupType = getItem('jkGroupType','1'); //接口列表分组列表类型
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
@@ -48,7 +48,7 @@ function getGroupNames(type) {
             }
         })
     }else{
-        snames = runModes;
+        snames = runTypes;
     }
     return snames;
 }
