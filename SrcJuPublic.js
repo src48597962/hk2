@@ -9,7 +9,6 @@ if(Jucfg != ""){
 }
 
 let runTypes = ["漫画","小说","听书","图集","影视","音乐","聚合","其它"];
-let jkGroupType = getItem('jkGroupType','1'); //接口列表分组列表类型
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
 
@@ -39,18 +38,8 @@ let erdatalist = yxdatalist.filter(it=>{
 function getGroupNames(type) {
     let jkdatalist = [];
     let snames = [];
-    if(jkGroupType=="2"){
-        jkdatalist = type=="管理"?datalist:type=="主页"?yidatalist:type=="搜索"?erdatalist:[];
-        jkdatalist.forEach(it=>{
-            let name = jkGroupType=="2"?it.group||it.type:it.type
-            if(snames.indexOf(name) == -1){
-                snames.push(name);
-            }
-        })
-    }else{
-        snames = runTypes;
-    }
-    return snames;
+    
+    return runTypes;
 }
 //获取接口列表数据
 function getListData(lx, selectType) {
@@ -65,7 +54,7 @@ function getListData(lx, selectType) {
         jkdatalist = erdatalist;
     }
     return jkdatalist.filter(it=>{
-        return selectType=="全部" || selectType==(jkGroupType=="2"?it.group||it.type:it.type);
+        return selectType=="全部" || selectType==it.type;
     })
 }
 
@@ -134,7 +123,7 @@ function rulePage(datatype,ispage) {
 function getYiData(datatype,od) {
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
-        return it.name==sourcename && (jkGroupType=="2"?it.group||it.type:it.type)==runMode;
+        return it.name==sourcename && it.type==runMode;
     });
     let parse;
     let 公共;
