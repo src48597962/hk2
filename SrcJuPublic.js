@@ -168,6 +168,7 @@ function getYiData(datatype,od) {
                 loading = 1;
                 d.push({
                     title: "",
+                    url: "hiker://empty",
                     col_type: "text_1",
                     extra: {
                         lineVisible: false,
@@ -176,6 +177,7 @@ function getYiData(datatype,od) {
                 })
                 d.push({
                     title: "",
+                    url: "hiker://empty",
                     col_type: "text_1",
                     extra: {
                         lineVisible: false,
@@ -185,6 +187,7 @@ function getYiData(datatype,od) {
                 d.push({
                     pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
                     col_type: "pic_1_center",
+                    url: "hiker://empty",
                     extra: {
                         cls: "loading_gif"
                     }
