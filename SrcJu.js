@@ -1263,7 +1263,7 @@ function search(keyword, mode, sdata, group, type) {
     let 是否当前接口;
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
-        if(keyword2 && runModes.indexOf(keyword2)>-1){
+        if(keyword2 && getGroupNames("搜索").indexOf(keyword2)>-1){
             ssstype = keyword2;
         }else{
             是否当前接口 = keyword2?0:1;
