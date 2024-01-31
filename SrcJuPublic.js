@@ -35,8 +35,8 @@ let yidatalist = yxdatalist.filter(it=>{
 let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
-//获取分组名称数组
-function getGroupNames(type) {
+//获取类型名称数组
+function getTypeNames(type) {
     let snames = [];
     if(type=="所有"){
         snames = runTypes;
@@ -49,6 +49,7 @@ function getGroupNames(type) {
     }
     return snames;
 }
+
 //获取接口列表数据
 function getListData(lx, selectType) {
     let jkdatalist = [];
