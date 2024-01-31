@@ -1267,6 +1267,8 @@ function search(keyword, mode, sdata, group, type) {
             sssname = keyword2 || sourcename;
         }
     }
+    log(ssstype);
+    log(sssname);
     putMyVar('SrcJu_searchMode',mode);
     putMyVar('SrcJu_searching','1');
     let success = 0;
