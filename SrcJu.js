@@ -15,7 +15,7 @@ require(publicfile);
 //一级
 function yiji() {
     let sourcedata = yidatalist.filter(it => {
-        return it.name == sourcename && (jkGroupType=="2"?it.group||it.type:it.type) == runMode;
+        return it.name==sourcename && it.type==runMode;
     });
     let parse = {};
     let 页码 = {};
@@ -1259,7 +1259,7 @@ function search(keyword, mode, sdata, group, type) {
     let ssstype = type || runMode;
     let sssname;
     let 是否当前接口;
-    log(getGroupNames("搜索"));
+
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
         if(keyword2 && getGroupNames("搜索").indexOf(keyword2)>-1){
@@ -1269,8 +1269,7 @@ function search(keyword, mode, sdata, group, type) {
             sssname = keyword2 || sourcename;
         }
     }
-    log(ssstype);
-    log(sssname);
+
     putMyVar('SrcJu_searchMode',mode);
     putMyVar('SrcJu_searching','1');
     let success = 0;
@@ -1283,7 +1282,7 @@ function search(keyword, mode, sdata, group, type) {
             return (是否当前接口?it.name==sssname:it.name.includes(sssname));
         });
     }else{
-        ssdatalist = jkGroupType=="2"?getListData("er", ssstype):erdatalist.filter(it=>{
+        ssdatalist = erdatalist.filter(it=>{
             if(group=="全全" || !group){//未分组或当前为全全分组的接口时，搜索所有此类型的接口
                 return it.type==ssstype;
             }else{
@@ -1295,7 +1294,7 @@ function search(keyword, mode, sdata, group, type) {
     ssdatalist = ssdatalist.filter(it => {
         return nosousuolist.indexOf(it.name) == -1;
     })
-    log(ssdatalist.length);
+
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
