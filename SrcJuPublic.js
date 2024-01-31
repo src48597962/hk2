@@ -345,7 +345,7 @@ function getYiData(datatype,od) {
     }else{
         if(datatype=="主页"){
             d.push({
-                title: "请先配置一个主页源...",//\n设置-选择漫画/小说/听书/
+                title: runMode+" 主页源未配置或无法访问\n可重新选择配置主页源",//\n设置-选择漫画/小说/听书/
                 desc: "点此或上面类型按钮都可选择",//设置长按菜单可以开启界面切换开关
                 url: $('#noLoading#').lazyRule((input) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
