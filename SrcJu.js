@@ -236,7 +236,7 @@ function yiji() {
         })
         //if(getItem('runtypebtn')=="1"){
             //let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            let typemenubtn = getGroupNames("主页");
+            let typemenubtn = getTypeNames(0);
             typemenubtn.forEach((it) =>{
                 let item = {
                     title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -1262,7 +1262,7 @@ function search(keyword, mode, sdata, group, type) {
 
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
-        if(keyword2 && getGroupNames("搜索").indexOf(keyword2)>-1){
+        if(keyword2 && getTypeNames().indexOf(keyword2)>-1){
             ssstype = keyword2;
         }else{
             是否当前接口 = keyword2?0:1;
