@@ -1259,6 +1259,7 @@ function search(keyword, mode, sdata, group, type) {
     let ssstype = type || runMode;
     let sssname;
     let 是否当前接口;
+    log(getGroupNames("搜索"));
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
         if(keyword2 && getGroupNames("搜索").indexOf(keyword2)>-1){
