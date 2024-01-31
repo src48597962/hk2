@@ -1342,6 +1342,7 @@ function search(keyword, mode, sdata, group, type) {
                 //xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
+                    xlog(item.url);
                     let extra = item.extra || {};
                     extra.name = extra.name || extra.pageTitle || (item.title?item.title.replace(/‘|’|“|”|<[^>]+>|全集|国语|粤语/g,"").trim():"");
                     if((objmode=="erji" && ((getItem('searchMatch','1')=="1"&&extra.name.toLowerCase()==name.toLowerCase())||(getItem('searchMatch')=="2"&&extra.name.toLowerCase().includes(name.toLowerCase())))) || objmode!="erji"){
