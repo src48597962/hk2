@@ -394,7 +394,7 @@ function SRCSet() {
         jkdatalist = getListData("all", getMyVar("SrcJu_jiekouType","全部"));
     }
 
-    let typebtn = getGroupNames("管理");
+    let typebtn = getTypeNames();
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
@@ -643,7 +643,7 @@ function jiekouapi(sourcefile, data, look) {
     d.push({
         title: '接口类型：'+ getMyVar('SrcJu_jiekoutype',''),
         col_type: 'text_1',
-        url: $(runTypes,2,"接口类型").select(() => {
+        url: $(getTypeNames(),2,"接口类型").select(() => {
             putMyVar('SrcJu_jiekoutype',input);
             refreshPage(false);
             return 'toast://接口类型已设置为：' + input;
