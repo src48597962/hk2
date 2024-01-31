@@ -40,7 +40,7 @@ function getGroupNames(type) {
     let jkdatalist = [];
     let snames = [];
     if(jkGroupType=="2"){
-        jkdatalist = type=="管理"?datalist:type=="主页"?yidatalist:[];
+        jkdatalist = type=="管理"?datalist:type=="主页"?yidatalist:type=="搜索"?erdatalist:[];
         jkdatalist.forEach(it=>{
             let name = jkGroupType=="2"?it.group||it.type:it.type
             if(snames.indexOf(name) == -1){
