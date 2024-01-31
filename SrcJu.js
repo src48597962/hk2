@@ -1257,6 +1257,9 @@ function search(keyword, mode, sdata, group, type) {
     }
     let ssstype = type || runMode;
     let sssname;
+    log(ssstype);
+    log(sssname);
+    
     let 是否当前接口;
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
@@ -1267,8 +1270,7 @@ function search(keyword, mode, sdata, group, type) {
             sssname = keyword2 || sourcename;
         }
     }
-    log(ssstype);
-    log(sssname);
+    
     putMyVar('SrcJu_searchMode',mode);
     putMyVar('SrcJu_searching','1');
     let success = 0;
