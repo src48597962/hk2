@@ -70,10 +70,10 @@ function getListData(lx, selectType) {
 }
 
 //封装选择主页源方法
-function selectsource(selectType) {
+function selectSource(selectType) {
     let sourcenames = [];
-    yidatalist.forEach(it=>{
-        if(it.type==selectType && sourcenames.indexOf(it.name)==-1){
+    getListData("yi",selectType).forEach(it=>{
+        if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
             }
