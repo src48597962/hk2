@@ -398,11 +398,10 @@ function SRCSet() {
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         let typename = it;
-        /*
-        if(it != "全部" && getItem(it+'stoptype')=="1"){
+        if(it != "全部" && stopTypes.indexOf(it)>-1){
             typename = typename+"(停)";
         }
-        */
+
         let obj = {
             title: getMyVar("SrcJu_jiekouType","全部")==it?`““””<b><span style="color: #3399cc">`+typename+`</span></b>`:typename,
             url: $('#noLoading#').lazyRule((it) => {
@@ -414,43 +413,26 @@ function SRCSet() {
             },it),
             col_type: 'scroll_button'
         }
-        /*
+        
         if(it != "全部"){
             obj.extra = {};
             let longClick = [];
             if(getMyVar("SrcJu_jiekouType")==it){
                 longClick.push({
-                    title: (getItem(it+'stoptype')=="1"?"启用":"停用")+it,
-                    js: $.toString((it) => {
-                        if(getItem(it+'stoptype')=="1"){
-                            clearItem(it+'stoptype');
+                    title: (stopTypes.indexOf(it)>-1?"启用":"停用")+it,
+                    js: $.toString((stopTypes,it) => {
+                        if(stopTypes.indexOf(it)>-1){
+                            stopTypes.splice(stopTypes.indexOf(it), 1);
                         }else{
-                            setItem(it+'stoptype','1');
+                            stopTypes.push(it);
                         }
+                        storage0.setItem('stopTypes', stopTypes);
                         refreshPage(false);
                         return "hiker://empty";
-                    },it)
+                    },stopTypes,it)
                 })
             }
             if(longClick.length>0){obj["extra"].longClick = longClick;}
-        }
-        */
-        if(it == "全部"){
-            obj.extra = {
-                longClick: [{
-                    title: getItem('jkGroupType')=="2"?"按类型分组":"按自定义分组",
-                    js: $.toString(() => {
-                        if(getItem('jkGroupType')=="2"){
-                            clearItem('jkGroupType');
-                        }else{
-                            setItem('jkGroupType','2');
-                        }
-                        clearMyVar("SrcJu_jiekouType");
-                        refreshPage(false);
-                        return "hiker://empty";
-                    })
-                }]
-            };
         }
         
         d.push(obj);
