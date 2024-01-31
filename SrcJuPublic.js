@@ -36,9 +36,10 @@ let erdatalist = yxdatalist.filter(it=>{
     return it.erparse;
 });
 //获取类型名称数组
-function getTypeNames(type) {
+function getTypeNames(is) {
+    is = is || 0;
     let snames = [];
-    if(type=="所有"){
+    if(is==0){
         snames = runTypes;
     }else{
         runTypes.forEach(it=>{
