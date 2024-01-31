@@ -50,9 +50,6 @@ function getGroupNames(type) {
     }else{
         snames = runModes;
     }
-    if(type=="管理"){
-        snames.unshift("全部");
-    }
     return snames;
 }
 //获取接口列表数据
