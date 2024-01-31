@@ -1291,6 +1291,7 @@ function search(keyword, mode, sdata, group, type) {
     ssdatalist = ssdatalist.filter(it => {
         return nosousuolist.indexOf(it.name) == -1;
     })
+    log(ssdatalist.length);
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
