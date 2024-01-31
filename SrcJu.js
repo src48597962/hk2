@@ -1609,8 +1609,8 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 titleVisible: true
             }
         });
-
-        runModes.forEach((it,i) =>{
+        let searchTypes = ["漫画","小说","听书","影视","聚合"];
+        searchTypes.forEach((it,i) =>{
             let obj = {
                 title: getMyVar("SrcJu_sousuoType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                 url: $('#noLoading#').lazyRule((it) => {
@@ -1620,7 +1620,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 },it),
                 col_type: 'text_5'
             }
-            if(i==4){
+            if(i==3){
                 obj.extra = {};
                 obj["extra"].longClick = [{
                     title:"🔍聚影搜索",
