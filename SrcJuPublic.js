@@ -50,6 +50,16 @@ function getTypeNames(is) {
     }
     return snames;
 }
+//获取类型名称数组
+function getGroupNames() {
+    let gnames = [];
+    erdatalist.forEach(it=>{
+        if(it.group && gnames.indexOf(it.group)==-1){
+            gnames.push(it.group);
+        }
+    })
+    return gnames;
+}
 
 //获取接口列表数据
 function getListData(lx, selectType) {
