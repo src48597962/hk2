@@ -1275,11 +1275,11 @@ function search(keyword, mode, sdata, group, type) {
     if (sdata) {
         ssdatalist.push(sdata);
     }else if (sssname){
-        ssdatalist = erdatalist.filter(it=>{
-            return (是否当前接口?it.name==sssname:it.name.includes(sssname)) && it.type==ssstype;
+        ssdatalist = getListData("er", ssstype).filter(it=>{
+            return (是否当前接口?it.name==sssname:it.name.includes(sssname));
         });
     }else{
-        ssdatalist = erdatalist.filter(it=>{
+        ssdatalist = jkGroupType=="2"?getListData("er", ssstype):erdatalist.filter(it=>{
             if(group=="全全" || !group){//未分组或当前为全全分组的接口时，搜索所有此类型的接口
                 return it.type==ssstype;
             }else{
