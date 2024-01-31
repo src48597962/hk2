@@ -49,7 +49,7 @@ function bookCase() {
             col_type: "blank_block"
         })
     }
-    let typebtn = runModes;
+    let typebtn = getTypeNames();
     typebtn.unshift("全部");
     typebtn.forEach(it =>{
         d.push({
