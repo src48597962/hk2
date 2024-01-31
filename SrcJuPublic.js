@@ -352,6 +352,9 @@ function getYiData(datatype,od) {
                     return selectSource(input);
                 }, runMode),
                 col_type: "text_center_1",
+                extra: {
+                    lineVisible: false
+                }
             })
         }
         setResult(d);
