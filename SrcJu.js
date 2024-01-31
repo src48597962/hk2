@@ -236,7 +236,7 @@ function yiji() {
         })
         //if(getItem('runtypebtn')=="1"){
             //let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            let typemenubtn = getTypeNames(0);
+            let typemenubtn = getTypeNames(2);
             typemenubtn.forEach((it) =>{
                 let item = {
                     title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
