@@ -366,7 +366,7 @@ log = function(msg){
     }
 }
 //聚影搜索调用
-function JySeach() {
+function JySeach(sskeyword) {
     return getItem("juyingSeachType")=="聚搜接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyXunmi.js');
         xunmi(name);
