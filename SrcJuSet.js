@@ -664,16 +664,27 @@ function jiekouapi(sourcefile, data, look) {
             })
         }
     });
+
+    let groupNames = getGroupNames();
+    groupNames.push("自定义");
     d.push({
         title: '搜索分组：'+ getMyVar('SrcJu_jiekougroup',''),
-        col_type: 'input',
-        desc:"搜索分组可留空,强制搜索输入全全",
+        col_type: 'text_1',
+        url: $(groupNames,2,"搜索分组：").select(() => {
+            if(input=="自定义"){
+                return $("", "自定义搜索分组名称").input(() => {
+                    putMyVar('SrcJu_jiekougroup',input);
+                    refreshPage(false);
+                    return 'toast://搜索分组已设置为：' + input;
+                })
+            }else{
+                putMyVar('SrcJu_jiekougroup',input);
+                refreshPage(false);
+            }
+            return 'toast://搜索分组已设置为：' + input;
+        }),
         extra: {
-            defaultValue: getMyVar('SrcJu_jiekougroup') || "",
-            titleVisible: false,
-            onChange: $.toString(() => {
-                putMyVar('SrcJu_jiekougroup', input);
-            })
+            lineVisible: false
         }
     });
     d.push({
