@@ -8,7 +8,7 @@ if(Jucfg != ""){
     writeFile(cfgfile, JSON.stringify(Juconfig));
 }
 
-let runTypes = ["漫画","小说","听书","图集","影视","音乐","聚合","其它"];
+let runTypes = ["漫画","小说","听书","图集","影视","音频","聚合","其它"];
 let runMode = Juconfig["runMode"] || "漫画";
 let sourcename = Juconfig[runMode+'sourcename'] || "";//主页源名称
 let stopTypes = storage0.getItem('stopTypes',[]);
