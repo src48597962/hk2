@@ -383,37 +383,45 @@ log = function(msg){
     }
 }
 //聚影搜索调用
-function JySearch(sskeyword) {
-    return getItem("juyingSeachType")=="聚搜接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
-        require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyXunmi.js');
-        xunmi(name);
-    }, sskeyword):getItem("juyingSeachType")=="云盘接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
-        let d = [];
-        d.push({
-            title: name+"-云盘聚合搜索",
-            url: "hiker://empty",
-            col_type: "text_center_1",
-            extra: {
-                id: "listloading",
-                lineVisible: false
-            }
-        })
-        setResult(d);
-        require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliDisk.js');
-        aliDiskSearch(name);
-    }, sskeyword):getItem("juyingSeachType")=="Alist接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
-        let d = [];
-        d.push({
-            title: name+"-Alist聚合搜索",
-            url: "hiker://empty",
-            col_type: "text_center_1",
-            extra: {
-                id: "listloading",
-                lineVisible: false
-            }
-        })
-        setResult(d);
-        require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAlist.js');
-        alistSearch2(name,1);
-    }, sskeyword):"hiker://search?rule=聚影√&s=" + sskeyword
+function JySearch(sskeyword,sstype) {
+    if(sstype=="聚搜接口"){
+        return $('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyXunmi.js');
+            xunmi(name);
+        }, sskeyword);
+    }else if(sstype=="云盘接口"){
+        return $('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
+            let d = [];
+            d.push({
+                title: name+"-云盘聚合搜索",
+                url: "hiker://empty",
+                col_type: "text_center_1",
+                extra: {
+                    id: "listloading",
+                    lineVisible: false
+                }
+            })
+            setResult(d);
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAliDisk.js');
+            aliDiskSearch(name);
+        }, sskeyword);
+    }else if(sstype=="Alist接口"){
+        return $('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
+            let d = [];
+            d.push({
+                title: name+"-Alist聚合搜索",
+                url: "hiker://empty",
+                col_type: "text_center_1",
+                extra: {
+                    id: "listloading",
+                    lineVisible: false
+                }
+            })
+            setResult(d);
+            require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyAlist.js');
+            alistSearch2(name,1);
+        }, sskeyword);
+    }else{
+        return "hiker://search?rule=聚影√&s=" + sskeyword;
+    }
 }
