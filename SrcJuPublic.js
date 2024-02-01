@@ -90,7 +90,7 @@ function selectSource(selectType) {
             sourcenames.push(it.name);
         }
     })
-    if(sourcenames.length){
+    if(sourcenames.length==0){
         return "toast://当前分类无接口"
     }
     return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
