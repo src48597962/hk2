@@ -45,12 +45,7 @@ function getTypeNames(is) {
             }
         })
     }else if(is=="搜索页"){
-        runTypes.forEach(it=>{
-            if(stopTypes.indexOf(it)==-1){
-                snames.push(it);
-            }
-        })
-        snames.splice(snames.indexOf("其他"), 1);
+        snames = ["漫画","小说","听书","影视","聚合"];
     }else{
         snames = runTypes;
     }
