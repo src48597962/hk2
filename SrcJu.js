@@ -1549,6 +1549,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
             依赖: relyfile
         });
     }
+    let name = getMyVar('SrcJu_sousuoName',keyword||'');
     let d = [];
     let descarr = ['可快速切换下面类型','关键字+2个空格，搜当前','关键字+2个空格+接口名','切换站源长按可进入这里','接口有分组，则搜索同分组'];
     if(MY_PAGE==1){
@@ -1593,11 +1594,9 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 obj.extra = {};
                 obj["extra"].longClick = [{
                     title:"🔍聚影搜索",
-                    js: $.toString(()=>{
-                        putMyVar("SrcJu_sousuoType","聚影");
-                        refreshPage(false);
-                        return "hiker://empty";
-                    })
+                    js: $.toString((url)=>{
+                        return url;
+                    }, JySearch(name, getItem("juyingSeachType")))
                 }];
             }
             d.push(obj);
@@ -1647,22 +1646,16 @@ function newsousuopage(keyword,searchtype,relyfile) {
         col_type: 'text_center_1',
         url: "hiker://empty",
         extra: {
-            id: getMyVar('SrcJu_sousuoType')=="聚影"?"loading":"sousuoloading"+getMyVar('SrcJu_sousuoType', searchtype||runMode),
+            id: "sousuoloading"+getMyVar('SrcJu_sousuoType', searchtype||runMode),
             lineVisible: false
         }
     });
     setResult(d);
-    let name = getMyVar('SrcJu_sousuoName',keyword||'');
+    
     if(name){
         deleteItemByCls('searchrecord');
-        if(getMyVar('SrcJu_sousuoType')=="聚影"){
-            relyfile = relyfile || config.依赖;
-            require(relyfile.match(/http(s)?:\/\/.*\//)[0].replace('Ju','master') + 'SrcJyXunmi.js');
-            xunmi(name);
-        }else{
-            let info = storage0.getMyVar('一级源接口信息') || {};
-            let type = getMyVar("SrcJu_sousuoType", searchtype||info.type);
-            search(name,"sousuopage",false,info.group,type);
-        }
+        let info = storage0.getMyVar('一级源接口信息') || {};
+        let type = getMyVar("SrcJu_sousuoType", searchtype||info.type);
+        search(name,"sousuopage",false,info.group,type);
     }
 }
