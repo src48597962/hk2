@@ -37,16 +37,22 @@ let erdatalist = yxdatalist.filter(it=>{
 });
 //获取类型名称数组
 function getTypeNames(is) {
-    is = is || 1;
     let snames = [];
     if(is==1){
-        snames = runTypes;
-    }else{
         runTypes.forEach(it=>{
             if(stopTypes.indexOf(it)==-1){
                 snames.push(it);
             }
         })
+    }else if(is==2){
+        runTypes.forEach(it=>{
+            if(stopTypes.indexOf(it)==-1){
+                snames.push(it);
+            }
+        })
+        snames.splice(snames.indexOf("其他"), 1);
+    }else{
+        snames = runTypes;
     }
     return snames;
 }
