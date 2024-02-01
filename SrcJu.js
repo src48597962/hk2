@@ -236,7 +236,7 @@ function yiji() {
         })
         //if(getItem('runtypebtn')=="1"){
             //let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            let typemenubtn = getTypeNames(2);
+            let typemenubtn = getTypeNames("主页");
             typemenubtn.forEach((it) =>{
                 let item = {
                     title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
@@ -1609,8 +1609,8 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 titleVisible: true
             }
         });
-        let searchTypes = ["漫画","小说","听书","影视","聚合"];
-        searchTypes.forEach((it,i) =>{
+        let searchTypes = getTypeNames("搜索页");
+        searchTypes.forEach((it) =>{
             let obj = {
                 title: getMyVar("SrcJu_sousuoType",searchtype||runMode)==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                 url: $('#noLoading#').lazyRule((it) => {
@@ -1620,7 +1620,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 },it),
                 col_type: 'text_5'
             }
-            if(i==3){
+            if(it=="影视"){
                 obj.extra = {};
                 obj["extra"].longClick = [{
                     title:"🔍聚影搜索",
