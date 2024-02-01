@@ -38,13 +38,13 @@ let erdatalist = yxdatalist.filter(it=>{
 //获取类型名称数组
 function getTypeNames(is) {
     let snames = [];
-    if(is==1){
+    if(is=="主页"){
         runTypes.forEach(it=>{
             if(stopTypes.indexOf(it)==-1){
                 snames.push(it);
             }
         })
-    }else if(is==2){
+    }else if(is=="搜索页"){
         runTypes.forEach(it=>{
             if(stopTypes.indexOf(it)==-1){
                 snames.push(it);
@@ -383,7 +383,7 @@ log = function(msg){
     }
 }
 //聚影搜索调用
-function JySeach(sskeyword) {
+function JySearch(sskeyword) {
     return getItem("juyingSeachType")=="聚搜接口"?$('hiker://empty#noRecordHistory##noHistory#').rule((name) => {
         require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/','/master/') + 'SrcJyXunmi.js');
         xunmi(name);
