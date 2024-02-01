@@ -1590,7 +1590,7 @@ function newsousuopage(keyword,searchtype,relyfile) {
                 },it),
                 col_type: 'text_5'
             }
-            if(it=="影视"){
+            if(it=="影视" && name){
                 obj.extra = {};
                 obj["extra"].longClick = [{
                     title:"🔍聚影搜索",
