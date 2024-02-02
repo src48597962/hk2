@@ -82,6 +82,7 @@ function getListData(lx, selectType) {
 //封装选择主页源方法
 function selectSource(selectType) {
     let sourcenames = [];
+    /*
     getListData("yi",selectType).forEach(it=>{
         if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
@@ -90,10 +91,21 @@ function selectSource(selectType) {
             sourcenames.push(it.name);
         }
     })
+    */
+    const hikerPop = require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'hikerPop.js');
+    getListData("yi",selectType).forEach(it=>{
+        if(sourcenames.indexOf(it.name)==-1){
+            if(Juconfig[runMode+'sourcename'] == it.name){
+                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
+            }
+            sourcenames.push({title: it.name, icon: it.img, url: it.name});
+        }
+    })
     if(sourcenames.length==0){
         return "toast://当前分类无接口"
     }
-    return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+    //return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+    hikerPop.selectCenterIcon({iconList: sourcenames, title: "选择 "+selectType+" 主页源", columns: 2, click(input) {
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
@@ -133,7 +145,8 @@ function selectSource(selectType) {
         writeFile(cfgfile, JSON.stringify(Juconfig));
         refreshPage(false);
         return 'toast://'+runMode+' 主页源已设置为：' + input;
-    }, selectType, sourcename, cfgfile, Juconfig)
+    //}, selectType, sourcename, cfgfile, Juconfig)
+    }});
 }
 //打开指定类型的新页面
 function rulePage(datatype,ispage) {
