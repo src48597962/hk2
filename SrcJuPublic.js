@@ -95,6 +95,9 @@ function selectSource(selectType) {
     const hikerPop = require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'hikerPop.js');
     getListData("yi",selectType).forEach(it=>{
         if(sourcenames.indexOf(it.name)==-1){
+            if(Juconfig[runMode+'sourcename'] == it.name){
+                it.name = it.name+'√';
+            }
             sourcenames.push({title: it.name, icon: it.img, url: it.name});
         }
     })
@@ -102,8 +105,8 @@ function selectSource(selectType) {
         return "toast://当前分类无接口"
     }
     //return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
-    hikerPop.selectCenterIcon({iconList: sourcenames, title: selectType+"-当前主页源-" + sourcename, columns: 2, click(input) {
-        input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
+    hikerPop.selectCenterIcon({iconList: sourcenames, title: selectType + ">主页源>" + sourcename, columns: 2, click(input) {
+        input = input.replace(/‘|’|“|”|<[^>]+>/g,"").replace(/(.*)√/,'$1');
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
         }
