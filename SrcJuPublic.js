@@ -105,7 +105,7 @@ function selectSource(selectType) {
         return "toast://当前分类无接口"
     }
     //return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
-    hikerPop.selectCenterIcon({iconList: sourcenames, title: "选择 "+selectType+" 主页源", columns: 2, click(input) {
+    hikerPop.selectCenterIcon({iconList: sourcenames, title: "选择 "+selectType+" 主页源", columns: 3, click(input) {
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"");
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
@@ -147,6 +147,7 @@ function selectSource(selectType) {
         return 'toast://'+runMode+' 主页源已设置为：' + input;
     //}, selectType, sourcename, cfgfile, Juconfig)
     }});
+    return "hiker://empty";
 }
 //打开指定类型的新页面
 function rulePage(datatype,ispage) {
