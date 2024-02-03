@@ -459,23 +459,17 @@ function SortList(a, b) {
         return 1;
     }
 
-    // 判断是否为英文字符
-    function isAscii(char) {
-        return /^[A-Za-z]$/.test(char);
-    }
-
     // 英文字符排序
-    if (isAscii(aFirstChar) && isAscii(bFirstChar)) {
+    if (/^[A-Za-z]$/.test(aFirstChar) && /^[A-Za-z]$/.test(bFirstChar)) {
         return aFirstChar.localeCompare(bFirstChar, 'en', { sensitivity: 'base' });
     }
 
-    // 如果仅有一个是英文字符，则英文排在前面
-    if (isAscii(aFirstChar)) {
-        return -1;
-    } else if (isAscii(bFirstChar)) {
-        return 1;
+    // 中文字符排序（通过Unicode码点近似按拼音顺序）
+    if (/^[\u4e00-\u9fa5]$/.test(aFirstChar) && /^[\u4e00-\u9fa5]$/.test(bFirstChar)) {
+        return aFirstChar.charCodeAt(0) - bFirstChar.charCodeAt(0);
     }
 
-    // 其他情况（包括中文字符）按Unicode编码排序
-    return aFirstChar.charCodeAt(0) - bFirstChar.charCodeAt(0);
+    // 其他情况，返回ASCII比较结果作为默认排序
+    return aFirstChar.localeCompare(bFirstChar);
 }
+
