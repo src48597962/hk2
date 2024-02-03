@@ -439,6 +439,29 @@ function JySearch(sskeyword,sstype) {
 }
 
 function SortList(v1, v2) {
+    const aTitle = v1.title.toLowerCase();
+    const bTitle = v2.title.toLowerCase();
+    
+    // 先判断是否为数字 
+    const isANumber = /^\d+$/.test(aTitle);
+    const isBNumber = /^\d+$/.test(bTitle);
+    
+    if (isANumber && isBNumber) {
+        // 都是数字，按数字大小排序 
+        return aTitle - bTitle;
+    } else if (isANumber) {
+        // 只有 A 是数字，A 排在前面 
+        return -1;
+    } else if (isBNumber) {
+        // 只有 B 是数字，B 排在前面 
+        return 1;
+    } else {
+        // 都不是数字，按字母顺序排序 
+        if (aTitle < bTitle) return -1;
+        if (aTitle > bTitle) return 1;
+        return 0;
+    }
+    /*
     var a = v1.name || v1.title;
     var b = v2.name || v2.title;
     var reg = /[0-9]+/g;
@@ -488,4 +511,5 @@ function SortList(v1, v2) {
             }
         }
     }
+    */
 }
