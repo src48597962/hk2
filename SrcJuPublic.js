@@ -439,42 +439,42 @@ function JySearch(sskeyword,sstype) {
 }
 
 function SortList(v1, v2) {
-    // 先将title拆分为数字部分和非数字部分
-    var aNum = parseInt(v1.title.replace(/[^0-9]/g, ''), 10);
-    var bNum = parseInt(v2.title.replace(/[^0-9]/g, ''), 10);
+    var aFirstChar = v1.title.charAt(0);
+    var bFirstChar = v2.title.charAt(0);
 
-    // 如果两者都为数字，则按数字大小排序
-    if (!isNaN(aNum) && !isNaN(bNum)) {
-        return aNum - bNum;
+    // 判断是否为数字
+    function isNumber(char) {
+        return !isNaN(Number(char));
+    }
+
+    // 数字排序
+    if (isNumber(aFirstChar) && isNumber(bFirstChar)) {
+        return parseInt(aFirstChar, 10) - parseInt(bFirstChar, 10);
     }
 
     // 如果仅有一个是数字，则数字排在前面
-    if (isNaN(aNum)) {
-        return 1;
-    } else if (isNaN(bNum)) {
+    if (isNumber(aFirstChar)) {
         return -1;
+    } else if (isNumber(bFirstChar)) {
+        return 1;
     }
 
-    // 都不是数字时，先按ASCII码排序英文部分，然后按Unicode编码排序中文部分
-    var aNonNum = a.title.replace(/[0-9]/g, '');
-    var bNonNum = b.title.replace(/[0-9]/g, '');
+    // 对于非数字字符，先按ASCII码排序英文部分
+    var asciiResult = aFirstChar.localeCompare(bFirstChar, 'en', { sensitivity: 'base' });
 
-    // 对于ASCII部分，直接使用localeCompare()即可
-    var asciiResult = aNonNum.localeCompare(bNonNum);
+    // 再按Unicode编码排序中文部分
+    if (asciiResult === 0) {
+        var aChinese = /[^\x00-\xff]/.test(aFirstChar);
+        var bChinese = /[^\x00-\xff]/.test(bFirstChar);
 
-    // 对于可能存在的中文部分，确保区分中英文，这里假设ASCII部分已经区分完毕，现在只需比较可能的中文部分
-    // 使用正则匹配找出中文部分并转成Unicode编码以进行排序
-    var aChinese = aNonNum.match(/[\u4e00-\u9fa5]+/g) || [];
-    var bChinese = bNonNum.match(/[\u4e00-\u9fa5]+/g) || [];
+        // 如果都是中文或者都是非中文，则根据ASCII结果返回
+        if ((aChinese && bChinese) || (!aChinese && !bChinese)) {
+        return asciiResult;
+        }
 
-    // 按照中文字符的Unicode编码值进行排序
-    for (var i = 0; i < Math.max(aChinese.length, bChinese.length); i++) {
-        if (i >= aChinese.length) return -1; // 如果a没有更多中文字符，b在后面
-        if (i >= bChinese.length) return 1; // 如果b没有更多中文字符，a在后面
-        var chineseResult = aChinese[i].charCodeAt(0) - bChinese[i].charCodeAt(0);
-        if (chineseResult !== 0) return chineseResult;
+        // 否则，中文排在非中文后面
+        return aChinese ? 1 : -1;
     }
 
-    // 如果所有部分都相同，则认为相等
     return asciiResult;
 }
