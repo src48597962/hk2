@@ -439,77 +439,42 @@ function JySearch(sskeyword,sstype) {
 }
 
 function SortList(v1, v2) {
-    const aTitle = v1.title.toLowerCase();
-    const bTitle = v2.title.toLowerCase();
-    
-    // 先判断是否为数字 
-    const isANumber = /^\d+$/.test(aTitle);
-    const isBNumber = /^\d+$/.test(bTitle);
-    
-    if (isANumber && isBNumber) {
-        // 都是数字，按数字大小排序 
-        return aTitle - bTitle;
-    } else if (isANumber) {
-        // 只有 A 是数字，A 排在前面 
-        return -1;
-    } else if (isBNumber) {
-        // 只有 B 是数字，B 排在前面 
+    // 先将title拆分为数字部分和非数字部分
+    var aNum = parseInt(v1.title.replace(/[^0-9]/g, ''), 10);
+    var bNum = parseInt(v2.title.replace(/[^0-9]/g, ''), 10);
+
+    // 如果两者都为数字，则按数字大小排序
+    if (!isNaN(aNum) && !isNaN(bNum)) {
+        return aNum - bNum;
+    }
+
+    // 如果仅有一个是数字，则数字排在前面
+    if (isNaN(aNum)) {
         return 1;
-    } else {
-        // 都不是数字，按字母顺序排序 
-        if (aTitle < bTitle) return -1;
-        if (aTitle > bTitle) return 1;
-        return 0;
+    } else if (isNaN(bNum)) {
+        return -1;
     }
-    /*
-    var a = v1.name || v1.title;
-    var b = v2.name || v2.title;
-    var reg = /[0-9]+/g;
-    var lista = a.match(reg);
-    var listb = b.match(reg);
-    if (!lista || !listb) {
-        return a.localeCompare(b);
+
+    // 都不是数字时，先按ASCII码排序英文部分，然后按Unicode编码排序中文部分
+    var aNonNum = a.title.replace(/[0-9]/g, '');
+    var bNonNum = b.title.replace(/[0-9]/g, '');
+
+    // 对于ASCII部分，直接使用localeCompare()即可
+    var asciiResult = aNonNum.localeCompare(bNonNum);
+
+    // 对于可能存在的中文部分，确保区分中英文，这里假设ASCII部分已经区分完毕，现在只需比较可能的中文部分
+    // 使用正则匹配找出中文部分并转成Unicode编码以进行排序
+    var aChinese = aNonNum.match(/[\u4e00-\u9fa5]+/g) || [];
+    var bChinese = bNonNum.match(/[\u4e00-\u9fa5]+/g) || [];
+
+    // 按照中文字符的Unicode编码值进行排序
+    for (var i = 0; i < Math.max(aChinese.length, bChinese.length); i++) {
+        if (i >= aChinese.length) return -1; // 如果a没有更多中文字符，b在后面
+        if (i >= bChinese.length) return 1; // 如果b没有更多中文字符，a在后面
+        var chineseResult = aChinese[i].charCodeAt(0) - bChinese[i].charCodeAt(0);
+        if (chineseResult !== 0) return chineseResult;
     }
-    for (var i = 0, minLen = Math.min(lista.length, listb.length); i < minLen; i++) {
-        //数字所在位置序号
-        var indexa = a.indexOf(lista[i]);
-        var indexb = b.indexOf(listb[i]);
-        //数字前面的前缀
-        var prefixa = a.substring(0, indexa);
-        var prefixb = a.substring(0, indexb);
-        //数字的string
-        var stra = lista[i];
-        var strb = listb[i];
-        //数字的值
-        var numa = parseInt(stra);
-        var numb = parseInt(strb);
-        //如果数字的序号不等或前缀不等，属于前缀不同的情况，直接比较
-        if (indexa != indexb || prefixa != prefixb) {
-            return a.localeCompare(b);
-        }
-        else {
-            //数字的string全等
-            if (stra === strb) {
-                //如果是最后一个数字，比较数字的后缀
-                if (i == minLen - 1) {
-                    return a.substring(indexa).localeCompare(b.substring(indexb));
-                }
-                //如果不是最后一个数字，则循环跳转到下一个数字，并去掉前面相同的部分
-                else {
-                    a = a.substring(indexa + stra.length);
-                    b = b.substring(indexa + stra.length);
-                }
-            }
-            //如果数字的string不全等，但值相等
-            else if (numa == numb) {
-                //直接比较数字前缀0的个数，多的更小
-                return strb.lastIndexOf(numb + '') - stra.lastIndexOf(numa + '');
-            }
-            else {
-                //如果数字不等，直接比较数字大小
-                return numa - numb;
-            }
-        }
-    }
-    */
+
+    // 如果所有部分都相同，则认为相等
+    return asciiResult;
 }
