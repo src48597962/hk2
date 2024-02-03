@@ -92,7 +92,7 @@ function selectSource(selectType) {
         }
     })
     */
-    const hikerPop = require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'hikerPop.js');
+    const hikerPop = $.require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'hikerPop.js');
     getListData("yi",selectType).forEach(it=>{
         if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
@@ -103,6 +103,9 @@ function selectSource(selectType) {
     })
     if(sourcenames.length==0){
         return "toast://当前分类无接口"
+    }
+    if(getItem('sourceListSort','update') == 'name'){
+        sourcenames.sort();
     }
     //return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
     hikerPop.selectCenterIcon({iconList: sourcenames, title: selectType + ">主页源>" + sourcename, columns: 2, click(input) {
