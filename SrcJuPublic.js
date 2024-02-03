@@ -438,9 +438,9 @@ function JySearch(sskeyword,sstype) {
     }
 }
 
-function SortList(v1, v2) {
-    var aFirstChar = v1.title.charAt(0);
-    var bFirstChar = v2.title.charAt(0);
+function SortList(a, b) {
+    var aFirstChar = a.title.charAt(0);
+    var bFirstChar = b.title.charAt(0);
 
     // 判断是否为数字
     function isNumber(char) {
@@ -459,22 +459,23 @@ function SortList(v1, v2) {
         return 1;
     }
 
-    // 对于非数字字符，先按ASCII码排序英文部分
-    var asciiResult = aFirstChar.localeCompare(bFirstChar, 'en', { sensitivity: 'base' });
-
-    // 再按Unicode编码排序中文部分
-    if (asciiResult === 0) {
-        var aChinese = /[^\x00-\xff]/.test(aFirstChar);
-        var bChinese = /[^\x00-\xff]/.test(bFirstChar);
-
-        // 如果都是中文或者都是非中文，则根据ASCII结果返回
-        if ((aChinese && bChinese) || (!aChinese && !bChinese)) {
-        return asciiResult;
-        }
-
-        // 否则，中文排在非中文后面
-        return aChinese ? 1 : -1;
+    // 判断是否为英文字符
+    function isAscii(char) {
+        return /^[A-Za-z]$/.test(char);
     }
 
-    return asciiResult;
+    // 英文字符排序
+    if (isAscii(aFirstChar) && isAscii(bFirstChar)) {
+        return aFirstChar.localeCompare(bFirstChar, 'en', { sensitivity: 'base' });
+    }
+
+    // 如果仅有一个是英文字符，则英文排在前面
+    if (isAscii(aFirstChar)) {
+        return -1;
+    } else if (isAscii(bFirstChar)) {
+        return 1;
+    }
+
+    // 其他情况（包括中文字符）按Unicode编码排序
+    return aFirstChar.charCodeAt(0) - bFirstChar.charCodeAt(0);
 }
