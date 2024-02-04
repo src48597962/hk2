@@ -105,7 +105,8 @@ function selectSource(selectType) {
         return "toast://当前分类无接口"
     }
     if(getItem('sourceListSort','update') == 'name'){
-        sourcenames.sort(SortList);
+        //sourcenames.sort(SortList);
+        sourcenames = sortByPinyin(sourcenames);
     }
     //return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
     hikerPop.selectCenterIcon({iconList: sourcenames, title: selectType + ">主页源>" + sourcename, columns: 2, click(input) {
@@ -473,3 +474,23 @@ function SortList(a, b) {
     return aFirstChar.localeCompare(bFirstChar);
 }
 
+function sortByPinyin(arr) {
+    var arrNew = arr.sort((a, b) => a.title.localeCompare(b.title));
+    for (var m in arrNew) {
+        var mm = /^[\u4e00-\u9fa5]/.test(arrNew[m].title) ? m : '-1';
+        if (mm > -1) {
+            break;
+        }
+    }
+    for (var n = arrNew.length - 1; n >= 0; n--) {
+        var nn = /^[\u4e00-\u9fa5]/.test(arrNew[n].title) ? n : '-1';
+        if (nn > -1) {
+            break;
+        }
+    }
+    if (mm > -1) {
+        var arrTmp = arrNew.splice(m, parseInt(n - m) + 1);
+        arrNew = arrNew.concat(arrTmp);
+    }
+    return arrNew
+}
