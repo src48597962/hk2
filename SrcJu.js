@@ -294,9 +294,7 @@ function yiji() {
             }
             */
         }
-        d.push({
-            col_type: 'blank_block'
-        })
+
         putMyVar(runMode+"_"+sourcename, "1");
     //}
     //加载主页内容
