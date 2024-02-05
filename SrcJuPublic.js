@@ -323,10 +323,12 @@ function getYiData(datatype,od) {
                             })
                         }catch(e){}
                     })
+                    d.push({
+                        col_type: "blank_block"
+                    })
                 }
-                d.push({
-                    col_type: "blank_block"
-                })
+                
+                log("进到四大金刚了");
                 let fypage = page;
                 MY_URL = obj.url.replace('fyAll',fyAll).replace('fyclass',fyclass).replace('fyarea',fyarea).replace('fyyear',fyyear).replace('fysort',fysort).replace('fypage',fypage);
                 执行str = 执行str.replace('getResCode()','request(MY_URL)');
