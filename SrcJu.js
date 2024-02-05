@@ -294,7 +294,6 @@ function yiji() {
             }
             */
         }
-
         putMyVar(runMode+"_"+sourcename, "1");
     //}
     //加载主页内容
