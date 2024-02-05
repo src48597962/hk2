@@ -363,6 +363,9 @@ function getYiData(datatype,od) {
             toast(datatype+"代码报错，更换主页源或联系接口作者");
             xlog("√报错信息>"+e.message + " 错误行#" + e.lineNumber);
         }
+        log('第'+page+'页，第1个元素>');
+        log(d[0]);
+        log('第'+page+'页，最后1个元素>');
         log(d[d.length-1]);
         setResult(d);
     }else{
