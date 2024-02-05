@@ -293,13 +293,11 @@ function yiji() {
                 }
             }
             */
-        }
-        putMyVar(runMode+"_"+sourcename, "1");
-    //}
-    if(MY_PAGE==1){
+        //}
         d.push({
             col_type: "blank_block"
         })
+        putMyVar(runMode+"_"+sourcename, "1");
     }
     //加载主页内容
     getYiData('主页', d);
