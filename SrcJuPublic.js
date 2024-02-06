@@ -93,10 +93,12 @@ function selectSource(selectType) {
     })
     */
 
-    getListData("yi",selectType).forEach(it=>{
+    let selectIndex = -1;
+    getListData("yi",selectType).forEach((it,i)=>{
         if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = it.name + '√';
+                selectIndex = i;
             }
             sourcenames.push({title: it.name, icon: it.img});
         }
@@ -107,7 +109,7 @@ function selectSource(selectType) {
     if(getItem('sourceListSort','update') == 'name'){
         sourcenames = sortByPinyin(sourcenames);
     }
-    return $(sourcenames,3,selectType+">主页源>"+sourcename,sourcenames.indexOf(sourcename)).select((runMode,sourcename,cfgfile,Juconfig) => {
+    return $(sourcenames,3,selectType+">主页源>"+sourcename,selectIndex).select((runMode,sourcename,cfgfile,Juconfig) => {
     
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"").replace(/(.*)√/,'$1');
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
