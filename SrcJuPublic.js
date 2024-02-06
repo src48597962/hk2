@@ -107,7 +107,7 @@ function selectSource(selectType) {
     if(getItem('sourceListSort','update') == 'name'){
         sourcenames = sortByPinyin(sourcenames);
     }
-    return $(sourcenames,3,selectType+">主页源>"+sourcename,sourcenames[sourcename]).select((runMode,sourcename,cfgfile,Juconfig) => {
+    return $(sourcenames,3,selectType+">主页源>"+sourcename,sourcenames.indexOf(sourcename)).select((runMode,sourcename,cfgfile,Juconfig) => {
     
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"").replace(/(.*)√/,'$1');
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
