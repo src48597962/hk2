@@ -92,13 +92,13 @@ function selectSource(selectType) {
         }
     })
     */
-    const hikerPop = $.require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'hikerPop.js');
+
     getListData("yi",selectType).forEach(it=>{
         if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
                 it.name = it.name + '√';
             }
-            sourcenames.push({title: it.name, icon: it.img, url: it.name});
+            sourcenames.push({title: it.name, icon: it.img});
         }
     })
     if(sourcenames.length==0){
@@ -108,8 +108,8 @@ function selectSource(selectType) {
         //sourcenames.sort(SortList);
         sourcenames = sortByPinyin(sourcenames);
     }
-    //return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
-    hikerPop.selectCenterIcon({iconList: sourcenames, title: selectType + ">主页源>" + sourcename, columns: 2, click(input) {
+    return $(sourcenames,3,"选择 "+selectType+" 主页源").select((runMode,sourcename,cfgfile,Juconfig) => {
+    
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"").replace(/(.*)√/,'$1');
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
             return 'toast://'+runMode+' 主页源：' + input;
@@ -149,8 +149,8 @@ function selectSource(selectType) {
         writeFile(cfgfile, JSON.stringify(Juconfig));
         refreshPage(false);
         return 'toast://'+runMode+' 主页源已设置为：' + input;
-    //}, selectType, sourcename, cfgfile, Juconfig)
-    }});
+    }, selectType, sourcename, cfgfile, Juconfig)
+    //}});
     return "hiker://empty";
 }
 //打开指定类型的新页面
@@ -442,41 +442,6 @@ function JySearch(sskeyword,sstype) {
     }else{
         return "hiker://search?rule=聚影√&s=" + sskeyword;
     }
-}
-
-function SortList(a, b) {
-    var aFirstChar = a.title.charAt(0);
-    var bFirstChar = b.title.charAt(0);
-
-    // 判断是否为数字
-    function isNumber(char) {
-        return !isNaN(Number(char));
-    }
-
-    // 数字排序
-    if (isNumber(aFirstChar) && isNumber(bFirstChar)) {
-        return parseInt(aFirstChar, 10) - parseInt(bFirstChar, 10);
-    }
-
-    // 如果仅有一个是数字，则数字排在前面
-    if (isNumber(aFirstChar)) {
-        return -1;
-    } else if (isNumber(bFirstChar)) {
-        return 1;
-    }
-
-    // 英文字符排序
-    if (/^[A-Za-z]$/.test(aFirstChar) && /^[A-Za-z]$/.test(bFirstChar)) {
-        return aFirstChar.localeCompare(bFirstChar, 'en', { sensitivity: 'base' });
-    }
-
-    // 中文字符排序（通过Unicode码点近似按拼音顺序）
-    if (/^[\u4e00-\u9fa5]$/.test(aFirstChar) && /^[\u4e00-\u9fa5]$/.test(bFirstChar)) {
-        return aFirstChar.charCodeAt(0) - bFirstChar.charCodeAt(0);
-    }
-
-    // 其他情况，返回ASCII比较结果作为默认排序
-    return aFirstChar.localeCompare(bFirstChar);
 }
 
 function sortByPinyin(arr) {
