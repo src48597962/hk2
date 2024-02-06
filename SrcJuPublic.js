@@ -96,7 +96,7 @@ function selectSource(selectType) {
     getListData("yi",selectType).forEach(it=>{
         if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
-                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'√</span>';
+                it.name = it.name + '√';
             }
             sourcenames.push({title: it.name, icon: it.img});
         }
@@ -105,10 +105,9 @@ function selectSource(selectType) {
         return "toast://当前分类无接口"
     }
     if(getItem('sourceListSort','update') == 'name'){
-        //sourcenames.sort(SortList);
         sourcenames = sortByPinyin(sourcenames);
-    }//,sourcenames[sourcename]
-    return $(sourcenames,3,selectType+">主页源>"+sourcename).select((runMode,sourcename,cfgfile,Juconfig) => {
+    }
+    return $(sourcenames,3,selectType+">主页源>"+sourcename,sourcenames[sourcename]).select((runMode,sourcename,cfgfile,Juconfig) => {
     
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"").replace(/(.*)√/,'$1');
         if(Juconfig["runMode"] == runMode && input==Juconfig[runMode+'sourcename']){
