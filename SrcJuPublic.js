@@ -96,7 +96,7 @@ function selectSource(selectType) {
     getListData("yi",selectType).forEach(it=>{
         if(sourcenames.indexOf(it.name)==-1){
             if(Juconfig[runMode+'sourcename'] == it.name){
-                it.name = '‘‘’’<span style="color:red">'+it.name+'√</span>';
+                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'√</span>';
             }
             sourcenames.push({title: it.name, icon: it.img});
         }
