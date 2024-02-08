@@ -82,27 +82,29 @@ function getListData(lx, selectType) {
 //封装选择主页源方法
 function selectSource(selectType) {
     let sourcenames = [];
-    /*
-    getListData("yi",selectType).forEach(it=>{
-        if(sourcenames.indexOf(it.name)==-1){
-            if(Juconfig[runMode+'sourcename'] == it.name){
-                it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
-            }
-            sourcenames.push(it.name);
-        }
-    })
-    */
-
     let selectIndex = -1;
-    getListData("yi",selectType).forEach((it,i)=>{
-        if(sourcenames.indexOf(it.name)==-1){
-            if(Juconfig[runMode+'sourcename'] == it.name){
-                it.name = it.name + '√';
-                selectIndex = i;
+
+    if((MY_NAME=="海阔视界"&&getAppVersion()>=4706)){
+        getListData("yi",selectType).forEach((it,i)=>{
+            if(sourcenames.indexOf(it.name)==-1){
+                if(Juconfig[runMode+'sourcename'] == it.name){
+                    it.name = it.name + '√';
+                    selectIndex = i;
+                }
+                sourcenames.push({title: it.name, icon: it.img});
             }
-            sourcenames.push({title: it.name, icon: it.img});
-        }
-    })
+        })
+    }else{
+        getListData("yi",selectType).forEach(it=>{
+            if(sourcenames.indexOf(it.name)==-1){
+                if(Juconfig[runMode+'sourcename'] == it.name){
+                    it.name = '‘‘’’<span style="color:red" title="'+it.name+'">'+it.name+'</span>';
+                }
+                sourcenames.push(it.name);
+            }
+        })
+    }
+    
     if(sourcenames.length==0){
         return "toast://当前分类无接口"
     }
