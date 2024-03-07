@@ -52,6 +52,7 @@ function yiji() {
     转换 = 转换 || {};
     let d = [];
     if(MY_PAGE==1){
+        setItem('searchmode', "jusousuo");
         if(getMyVar('SrcJu_versionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
             if(programversion<14){
@@ -1139,6 +1140,27 @@ function sousuo() {
         let info = storage0.getMyVar('一级源接口信息') || {};
         search(name,'sousuo',false,info.group);
     }else{
+        let extrarules = $.toString((name) => {
+                    let info = storage0.getMyVar('一级源接口信息') || {};
+                    require(config.依赖);
+                    let ssdatalist = erdatalist.filter(it=>{
+                        if(info.group=="全全" || !group){
+                            return it.type==info.type;
+                        }else{
+                            return it.type==info.type && (it.group==info.group||it.group=="全全");
+                        }
+                    });
+                    let data = [];
+                    ssdatalist.forEach(it=>{
+                        data.push({
+                            "title": it.name,
+                            "search_url": "hiker://empty##fypage",
+                            "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
+                        });
+                    })
+                    return JSON.stringify(data)
+                },name)
+        log(extrarules);
         setResult([{
             title: "视界聚搜",
             url: "hiker://search?s=" + name,
