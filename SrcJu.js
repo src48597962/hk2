@@ -1140,7 +1140,7 @@ function sousuo() {
         let info = storage0.getMyVar('一级源接口信息') || {};
         search(name,'sousuo',false,info.group);
     }else{
-        let extrarules = $.toString((name) => {
+        let extrarules = $().lazyRule((name) => {
                     let info = storage0.getMyVar('一级源接口信息') || {};
                     require(config.依赖);
                     let ssdatalist = erdatalist.filter(it=>{
