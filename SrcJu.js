@@ -1140,27 +1140,6 @@ function sousuo() {
         let info = storage0.getMyVar('一级源接口信息') || {};
         search(name,'sousuo',false,info.group);
     }else{
-        let extrarules = $().lazyRule((name) => {
-                    let info = storage0.getMyVar('一级源接口信息') || {};
-                    require(config.依赖);
-                    let ssdatalist = erdatalist.filter(it=>{
-                        if(info.group=="全全" || !group){
-                            return it.type==info.type;
-                        }else{
-                            return it.type==info.type && (it.group==info.group||it.group=="全全");
-                        }
-                    });
-                    let data = [];
-                    ssdatalist.forEach(it=>{
-                        data.push({
-                            "title": it.name,
-                            "search_url": "hiker://empty##fypage",
-                            "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
-                        });
-                    })
-                    return JSON.stringify(data)
-                },name)
-        log(extrarules);
         setResult([{
             title: "视界聚搜",
             url: "hiker://search?s=" + name,
@@ -1175,6 +1154,7 @@ function sousuo() {
                             return it.type==info.type && (it.group==info.group||it.group=="全全");
                         }
                     });
+
                     let data = [];
                     ssdatalist.forEach(it=>{
                         data.push({
@@ -1183,6 +1163,7 @@ function sousuo() {
                             "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
                         });
                     })
+                    log(JSON.stringify(data));
                     return JSON.stringify(data)
                 },name)
             }
@@ -1262,14 +1243,12 @@ function search(keyword, mode, sdata, group, type) {
 
     let ssstype = type || runMode;
     let sssname;
-    let 是否当前接口;
 
     if(keyword.indexOf('  ')>-1){
         let keyword2 = keyword.split('  ')[1].trim();
         if(keyword2 && getTypeNames().indexOf(keyword2)>-1){
             ssstype = keyword2;
         }else{
-            是否当前接口 = keyword2?0:1;
             sssname = keyword2 || sourcename;
         }
     }
@@ -1283,7 +1262,7 @@ function search(keyword, mode, sdata, group, type) {
         ssdatalist.push(sdata);
     }else if (sssname){
         ssdatalist = getListData("er", ssstype).filter(it=>{
-            return (是否当前接口?it.name==sssname:it.name.includes(sssname));
+            return it.name==sssname;
         });
     }else{
         ssdatalist = erdatalist.filter(it=>{
