@@ -1154,6 +1154,7 @@ function sousuo() {
                             return it.type==info.type && (it.group==info.group||it.group=="全全");
                         }
                     });
+                    log(ssdatalist.length);
 
                     let data = [];
                     ssdatalist.forEach(it=>{
