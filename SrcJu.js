@@ -1141,7 +1141,6 @@ function sousuo() {
         search(name,'sousuo',false,info.group);
     }else{
         //require(config.依赖);
-        log("1");
         let ssdatalist = erdatalist.filter(it=>{
             if(info.group=="全全" || !info.group){
                 return it.type==info.type;
@@ -1159,7 +1158,7 @@ function sousuo() {
                 "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
             });
         })
-
+        log(data);
         setResult([{
             title: "视界聚搜",
             url: "hiker://search?s=" + name,
