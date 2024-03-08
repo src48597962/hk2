@@ -1143,12 +1143,13 @@ function sousuo() {
         let info = storage0.getMyVar('一级源接口信息') || {};
         require(config.依赖);
         let ssdatalist = erdatalist.filter(it=>{
-            if(info.group=="全全" || !it.group){
+            if(info.group=="全全" || !info.group){
                 return it.type==info.type;
             }else{
                 return it.type==info.type && (it.group==info.group||it.group=="全全");
             }
         });
+        log(ssdatalist.length);
         let data = [];
         ssdatalist.forEach(it=>{
             data.push({
