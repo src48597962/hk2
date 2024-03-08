@@ -1141,6 +1141,7 @@ function sousuo() {
         search(name,'sousuo',false,info.group);
     }else{
         let info = storage0.getMyVar('一级源接口信息') || {};
+        log(info);
         require(config.依赖);
         let ssdatalist = erdatalist.filter(it=>{
             if(info.group=="全全" || !group){
