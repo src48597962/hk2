@@ -1127,7 +1127,7 @@ function erji() {
 //搜索页面
 function sousuo() {
     let name = MY_URL.split('##')[1];
-    let info = storage0.getMyVar('一级源接口信息') || {};
+    
     if(getItem('searchmode')!="jusousuo"){
         let d = [];
         d.push({
@@ -1138,27 +1138,9 @@ function sousuo() {
             }
         });
         setResult(d);
+        let info = storage0.getMyVar('一级源接口信息') || {};
         search(name,'sousuo',false,info.group);
     }else{
-        //require(config.依赖);
-        let ssdatalist = erdatalist.filter(it=>{
-            if(info.group=="全全" || !info.group){
-                return it.type==info.type;
-            }else{
-                return it.type==info.type && (it.group==info.group||it.group=="全全");
-            }
-        });
-        log("2");
-        log(ssdatalist.length);
-        let data = [];
-        ssdatalist.forEach(it=>{
-            data.push({
-                "title": it.name,
-                "search_url": "hiker://empty##fypage",
-                "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
-            });
-        })
-        log(data);
         setResult([{
             title: "视界聚搜",
             url: "hiker://search?s=" + name,
@@ -1168,7 +1150,7 @@ function sousuo() {
                     let info = storage0.getMyVar('一级源接口信息') || {};
                     require(config.依赖);
                     let ssdatalist = erdatalist.filter(it=>{
-                        if(info.group=="全全" || !group){
+                        if(info.group=="全全" || !info.group){
                             return it.type==info.type;
                         }else{
                             return it.type==info.type && (it.group==info.group||it.group=="全全");
