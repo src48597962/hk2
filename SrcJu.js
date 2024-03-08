@@ -52,7 +52,6 @@ function yiji() {
     转换 = 转换 || {};
     let d = [];
     if(MY_PAGE==1){
-        setItem('searchmode', "jusousuo");
         if(getMyVar('SrcJu_versionCheck', '0') == '0'){
             let programversion = $.require("config").version || 0;
             if(programversion<14){
@@ -70,56 +69,7 @@ function yiji() {
             Version();
             downloadicon();
         }
-        /*
-        let setbtn = Object.assign([],runModes);
-        setbtn.unshift("快速切换");
-        setbtn.unshift("接口管理");
-        d.push({
-            title: "设置",
-            url: $(setbtn, 2).select(() => {
-                if(input=="接口管理"){
-                    return $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
-                        SRCSet();
-                    })
-                }else if(input=="快速切换"){
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return $(runModes,2,"分类分组").select((cfgfile,Juconfig) => {
-                        Juconfig["runMode"] = input;
-                        writeFile(cfgfile, JSON.stringify(Juconfig));
-                        refreshPage(false);
-                        return 'toast://主页源分类分组已切换为：' + input;
-                    }, cfgfile, Juconfig)
-                }else{
-                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return selectSource(input);
-                }
-            }),
-            pic_url: "https://hikerfans.com/tubiao/more/129.png",
-            col_type: 'icon_5',
-            extra: {
-                newWindow: true,
-                windowId: MY_RULE.title + "管理",
-                longClick: [{
-                    title:getItem('runtypebtn')=="1"?"关界面按钮":"开界面按钮",
-                    js: $.toString(()=>{
-                            if(getItem('runtypebtn')=="1"){
-                                clearItem('runtypebtn');
-                            }else{
-                                setItem('runtypebtn','1');
-                                return $(["scroll_button","text_5"],1,"样式选择").select(() => {
-                                    setItem('runModes_btntype',input);
-                                    refreshPage(false);
-                                    return "hiker://empty";
-                                })
-                            }
-                            refreshPage(false);
-                            return  "hiker://empty";
-                        })
-                }]
-            }
-        })
-        */
+        
         d.push({
             title: "管理",
             url: $("hiker://empty#noRecordHistory##noHistory#").rule(() => {
@@ -161,8 +111,20 @@ function yiji() {
                         newsousuopage();
                     })
                 })
+            },{
+                title: "🔎聚搜代理："+(getItem('searchmode')=="jusousuo"?"是":"否"),
+                js: $.toString(() => {
+                    if(getItem('searchmode')=="jusousuo"){
+                        clearItem('searchmode');
+                        return "toast://取消软件聚搜代理，走小程序聚搜";
+                    }else{
+                        setItem('searchmode', "jusousuo");
+                        return "toast://开启软件聚搜代理，走软件聚搜";
+                    }
+                })
             }]
         }
+        
         zz = 转换["分类"] || "分类";
         if(parse&&parse[zz]){
             d.push({
@@ -235,66 +197,54 @@ function yiji() {
                 }]
             }
         })
-        //if(getItem('runtypebtn')=="1"){
-            //let runModes_btntype = getItem('runModes_btntype','scroll_button');
-            let typemenubtn = getTypeNames("主页");
-            typemenubtn.forEach((it) =>{
-                let item = {
-                    title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
-                    url: runMode==it?$('#noLoading#').lazyRule((input) => {
-                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                        return selectSource(input);
-                    }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
-                        Juconfig["runMode"] = input;
-                        writeFile(cfgfile, JSON.stringify(Juconfig));
-                        refreshPage(false);
-                        return 'toast://主页源分类分组已切换为：' + input;
-                    }, cfgfile, Juconfig ,it),
-                    col_type: "scroll_button"//runModes_btntype
-                }
-                if(runMode==it){
-                    item.extra = {
-                        longClick: [{
-                            title: "删除当前",
-                            js: $.toString((sourcefile,id) => {
-                                return $("确定删除："+id).confirm((sourcefile,id)=>{
-                                    let sourcedata = fetch(sourcefile);
-                                    eval("var datalist=" + sourcedata + ";");
-                                    let index = datalist.indexOf(datalist.filter(d => d.type+"_"+d.name == id)[0]);
-                                    datalist.splice(index, 1);
-                                    writeFile(sourcefile, JSON.stringify(datalist));
-                                    clearMyVar('SrcJu_searchMark');
-                                    return 'toast://已删除';
-                                },sourcefile,id)
-                            }, sourcefile, runType+"_"+sourcename)
-                        },{
-                            title: "列表排序：" + getItem("sourceListSort", "update"),
-                            js: $.toString(() => {
-                                return $(["更新时间","接口名称"], 1).select(() => {
-                                    if(input=='接口名称'){
-                                        setItem("sourceListSort","name");
-                                    }else{
-                                        clearItem("sourceListSort");
-                                    }
-                                    
-                                    //refreshPage(false);
-                                })
+
+        let typemenubtn = getTypeNames("主页");
+        typemenubtn.forEach((it) =>{
+            let item = {
+                title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
+                url: runMode==it?$('#noLoading#').lazyRule((input) => {
+                    require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                    return selectSource(input);
+                }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
+                    Juconfig["runMode"] = input;
+                    writeFile(cfgfile, JSON.stringify(Juconfig));
+                    refreshPage(false);
+                    return 'toast://主页源分类分组已切换为：' + input;
+                }, cfgfile, Juconfig ,it),
+                col_type: "scroll_button"//runModes_btntype
+            }
+            if(runMode==it){
+                item.extra = {
+                    longClick: [{
+                        title: "删除当前",
+                        js: $.toString((sourcefile,id) => {
+                            return $("确定删除："+id).confirm((sourcefile,id)=>{
+                                let sourcedata = fetch(sourcefile);
+                                eval("var datalist=" + sourcedata + ";");
+                                let index = datalist.indexOf(datalist.filter(d => d.type+"_"+d.name == id)[0]);
+                                datalist.splice(index, 1);
+                                writeFile(sourcefile, JSON.stringify(datalist));
+                                clearMyVar('SrcJu_searchMark');
+                                return 'toast://已删除';
+                            },sourcefile,id)
+                        }, sourcefile, runType+"_"+sourcename)
+                    },{
+                        title: "列表排序：" + getItem("sourceListSort", "update"),
+                        js: $.toString(() => {
+                            return $(["更新时间","接口名称"], 1).select(() => {
+                                if(input=='接口名称'){
+                                    setItem("sourceListSort","name");
+                                }else{
+                                    clearItem("sourceListSort");
+                                }
+                                //refreshPage(false);
                             })
-                        }]
-                    }
-                }
-                d.push(item);
-            })
-            /*
-            if(runModes_btntype=="text_5"){
-                for (let i = 0; i < 8; i++) {
-                    d.push({
-                        col_type: "blank_block"
-                    })
+                        })
+                    }]
                 }
             }
-            */
-        //}
+            d.push(item);
+        })
         d.push({
             col_type: "blank_block"
         })
