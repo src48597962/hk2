@@ -482,13 +482,13 @@ function erji() {
                 eval("let 解析2 = " + 解析);
                 let 标识 = 参数.标识;
                 return 解析2(url,公共,参数);
-            }, 解析, {"规则名": MY_RULE.title, "标识": 标识});
+            }, 解析, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识});
             
             let download = $.toString((解析,公共,参数) => {
                 eval("let 解析2 = " + 解析);
                 let 标识 = 参数.标识;
                 return 解析2(input,公共,参数);
-            }, 解析, 公共, {"规则名": MY_RULE.title, "标识": 标识});
+            }, 解析, 公共, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识});
 
             d.push({
                 title: "详情简介",
@@ -574,7 +574,7 @@ function erji() {
                             "bookName": name,
                             "bookTopPic": pic,
                             "parseCode": download,
-                            "ruleName": MY_RULE.title,
+                            "ruleName": MY_RULE._title || MY_RULE.title,
                             "type": itype,
                             "decode": 公共["imgdec"]?$.type(公共["imgdec"])=="function"?$.toString((imgdec)=>{
                                 let imgDecrypt = imgdec;
@@ -1023,7 +1023,7 @@ function erji() {
                 }catch(e){
                     最新2(surl,公共);
                 }
-            }, sname, surl, parse['最新'], 公共, {"规则名": MY_RULE.title, "标识": 标识}))
+            }, sname, surl, parse['最新'], 公共, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识}))
         }
         //切换源时更新收藏数据，以及分享时附带接口
         if (typeof (setPageParams) != "undefined") {
@@ -1264,7 +1264,7 @@ function search(keyword, mode, sdata, group, type) {
                     搜索str = 搜索str.replace('setResult','return ');
                 }
                 eval("let 搜索 = " + 搜索str)
-                let 参数 = {"规则名": MY_RULE.title, "标识": 标识}
+                let 参数 = {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识}
                 function ocr(codeurl,headers) {
                     headers= headers || {};
                     let img = convertBase64Image(codeurl,headers).replace('data:image/jpeg;base64,','');
