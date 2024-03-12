@@ -349,6 +349,7 @@ function getYiData(datatype,od) {
             if(getData.length==0 && page==1){
                 d.push({
                     title: "未获取到数据",
+                    desc: "下拉刷新重试或点击分类名更换主页源",
                     url: "hiker://empty",
                     col_type: "text_center_1",
                 })
