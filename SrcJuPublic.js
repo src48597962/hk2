@@ -349,8 +349,11 @@ function getYiData(datatype,od) {
             if(getData.length==0 && page==1){
                 d.push({
                     title: "未获取到数据",
-                    desc: "下拉刷新重试或点击分类名更换主页源",
-                    url: "hiker://empty",
+                    desc: "下拉刷新重试或点此更换主页源",
+                    url: $('#noLoading#').lazyRule((input) => {
+                        require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
+                        return selectSource(input);
+                    }, runMode),
                     col_type: "text_center_1",
                 })
             }else if(getData.length>0){
@@ -373,7 +376,7 @@ function getYiData(datatype,od) {
         if(datatype=="主页"){
             d.push({
                 title: runMode+" 主页源不存在\n需先选择配置主页源",//\n设置-选择漫画/小说/听书/
-                desc: "点此或上面类型按钮皆可选择",//设置长按菜单可以开启界面切换开关
+                desc: "点此或上面分类按钮皆可选择",//设置长按菜单可以开启界面切换开关
                 url: $('#noLoading#').lazyRule((input) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return selectSource(input);
