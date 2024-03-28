@@ -1239,7 +1239,7 @@ function search(keyword, mode, sdata, group, type) {
         });
     }
     let nosousuolist = storage0.getMyVar('nosousuolist') || [];
-    if (mode != 'sousuotest'){
+    if (nosousuolist.length>0){
         ssdatalist = ssdatalist.filter(it => {
             return nosousuolist.indexOf(it.name) == -1;
         })
@@ -1357,7 +1357,6 @@ function search(keyword, mode, sdata, group, type) {
                     return "break";
                 }else if(taskResult.success==1){
                     let data = taskResult.result;
-                    log(data);
                     if(data.length>0){
                         success++;
                         if(mode=="erji"){
@@ -1392,6 +1391,8 @@ function search(keyword, mode, sdata, group, type) {
         */
         clearMyVar('SrcJu_searching');
         clearMyVar('SrcJu_searchMode');
+        hideLoading();
+        clearMyVar("SrcJu_停止搜索线程");
         if(mode=="sousuotest"||mode=="jusousuo"){
             return results;
         }else{
@@ -1401,6 +1402,8 @@ function search(keyword, mode, sdata, group, type) {
     } else {
         clearMyVar('SrcJu_searching');
         clearMyVar('SrcJu_searchMode');
+        hideLoading();
+        clearMyVar("SrcJu_停止搜索线程");
         if(page==1){
             toast("无接口");
             if(mode=="sousuo"||mode=="sousuopage"){
@@ -1411,8 +1414,6 @@ function search(keyword, mode, sdata, group, type) {
             return [];
         }
     }
-    hideLoading();
-    clearMyVar("SrcJu_停止搜索线程");
 }
 
 //取本地足迹记录
