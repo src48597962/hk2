@@ -1239,9 +1239,11 @@ function search(keyword, mode, sdata, group, type) {
         });
     }
     let nosousuolist = storage0.getMyVar('nosousuolist') || [];
-    ssdatalist = ssdatalist.filter(it => {
-        return nosousuolist.indexOf(it.name) == -1;
-    })
+    if (mode != 'sousuotest'){
+        ssdatalist = ssdatalist.filter(it => {
+            return nosousuolist.indexOf(it.name) == -1;
+        })
+    }
 
     let task = function (obj) {
         let objdata = obj.data;
