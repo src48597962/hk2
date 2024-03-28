@@ -1244,7 +1244,8 @@ function search(keyword, mode, sdata, group, type) {
             return nosousuolist.indexOf(it.name) == -1;
         })
     }
-
+    log(name);
+    log(ssdatalist.length);
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
