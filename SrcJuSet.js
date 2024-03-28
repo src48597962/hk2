@@ -780,6 +780,7 @@ function jiekouapi(sourcefile, data, look) {
                             clearMyVar('SrcJu_sousuoTest');
                         }));
                         putMyVar('SrcJu_sousuoTest','1');
+                        clearMyVar("SrcJu_停止搜索线程");
                         let d = [];
                         require(config.依赖);
                         d = search(name,"sousuotest",sdata);
