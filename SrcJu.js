@@ -1335,7 +1335,6 @@ function search(keyword, mode, sdata, group, type) {
                         //}
                     }
                 })
-                log(resultdata.length);
                 return {result:resultdata, success:1};
             }
             return {result:[], success:0};
@@ -1358,6 +1357,7 @@ function search(keyword, mode, sdata, group, type) {
                     return "break";
                 }else if(taskResult.success==1){
                     let data = taskResult.result;
+                    log(data);
                     if(data.length>0){
                         success++;
                         if(mode=="erji"){
