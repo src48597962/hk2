@@ -1294,7 +1294,7 @@ function search(keyword, mode, sdata, group, type) {
                     return code;
                 }
                 ssdata = 搜索(name,page,公共,参数) || [];
-                xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
+                //xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
@@ -1335,6 +1335,7 @@ function search(keyword, mode, sdata, group, type) {
                         //}
                     }
                 })
+                log(resultdata.length);
                 return {result:resultdata, success:1};
             }
             return {result:[], success:0};
