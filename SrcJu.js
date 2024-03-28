@@ -1249,9 +1249,7 @@ function search(keyword, mode, sdata, group, type) {
         let objdata = obj.data;
         let objmode = obj.mode;
         let name = obj.name;
-        log(objdata);
-        log(objmode);
-        log(name+'qqq');
+
         try {
             let parse;
             let 公共;
@@ -1296,7 +1294,7 @@ function search(keyword, mode, sdata, group, type) {
                     return code;
                 }
                 ssdata = 搜索(name,page,公共,参数) || [];
-                //xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
+                xlog('√'+objdata.name+">搜索结果>"+ssdata.length);
                 let resultdata = [];
                 ssdata.forEach(item => {
                     let extra = item.extra || {};
