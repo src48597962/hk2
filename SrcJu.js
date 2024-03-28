@@ -1244,12 +1244,14 @@ function search(keyword, mode, sdata, group, type) {
             return nosousuolist.indexOf(it.name) == -1;
         })
     }
-    log(name);
-    log(ssdatalist.length);
+    
     let task = function (obj) {
         let objdata = obj.data;
         let objmode = obj.mode;
         let name = obj.name;
+        log(objdata);
+        log(objmode);
+        log(name+'qqq');
         try {
             let parse;
             let 公共;
