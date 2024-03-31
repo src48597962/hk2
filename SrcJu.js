@@ -663,7 +663,7 @@ function erji() {
                     })
                 }
             }
-            
+            let line_col_type = getItem('SrcJuLine_col_type', 'scroll_button');
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((sname) => {
@@ -691,7 +691,7 @@ function erji() {
                     addItemBefore(getMyVar('二级加载扩展列表')?"extendlist":getMyVar('换源变更列表id')?"Julistloading2":"Julistloading", 列表);//排序和样式动态处理插入列表时查找id
                     return 'toast://切换排序成功'
                 }, sname),
-                col_type: 'scroll_button',
+                col_type: line_col_type,
                 extra: {
                     id: "listsort",
                     cls: "Juloadlist"
@@ -748,7 +748,7 @@ function erji() {
                         return 'hiker://empty'
                     }
                 }),
-                col_type: 'scroll_button',
+                col_type: line_col_type,
                 extra: {
                     cls: "Juloadlist",
                     longClick: [{
@@ -779,6 +779,20 @@ function erji() {
                             refreshPage(false);
                             return "toast://"+sm;
                         })
+                    },{
+                        title: "线路样式："+getItem('SrcJuLine_col_type', 'scroll_button'),
+                        js: $.toString(() => {
+                            let sm;
+                            if(getItem('SrcJuLine_col_type', 'scroll_button')=="flex_button"){
+                                clearItem('SrcJuLine_col_type');
+                                sm = "线路样式已切换为scroll_button";
+                            }else{
+                                setItem('SrcJuLine_col_type','flex_button');
+                                sm = "线路样式已切换为flex_button";
+                            }
+                            refreshPage(false);
+                            return "toast://"+sm;
+                        })
                     }]
                 }
             })
@@ -794,7 +808,7 @@ function erji() {
                             }
                             return 'hiker://empty'
                         }, "SrcJu_"+surl+"_line", lineid, i),
-                        col_type: 'scroll_button',
+                        col_type: line_col_type,
                         extra: {
                             cls: "Juloadlist"
                         }
