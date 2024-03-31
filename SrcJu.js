@@ -642,6 +642,7 @@ function erji() {
             d.push({
                 col_type: "line_blank"
             });
+            let line_col_type = getItem('SrcJuLine_col_type', 'scroll_button');
 
             if(getItem('extenditems','1')=="1" && details.moreitems && $.type(details.moreitems)=='array'){
                 let moreitems = details.moreitems;
@@ -656,14 +657,14 @@ function erji() {
                         }
                     })
                 }
-            } else {
+            } else if (line_col_type == 'scroll_button') {
                 for (let i = 0; i < 10; i++) {
                     d.push({
                         col_type: "blank_block"
                     })
                 }
             }
-            let line_col_type = getItem('SrcJuLine_col_type', 'scroll_button');
+
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((sname) => {
