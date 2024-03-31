@@ -642,6 +642,7 @@ function erji() {
             d.push({
                 col_type: "line_blank"
             });
+
             if(getItem('extenditems','1')=="1" && details.moreitems && $.type(details.moreitems)=='array'){
                 let moreitems = details.moreitems;
                 if(moreitems.length>0){
@@ -651,16 +652,18 @@ function erji() {
                             item.extra = item.extra || {};
                             item.extra['back'] = 1;
                             item.extra['cls'] = "Juloadlist extendlist";
-                            d.push(item)
+                            d.push(item);
                         }
                     })
                 }
+            } else {
+                for (let i = 0; i < 10; i++) {
+                    d.push({
+                        col_type: "blank_block"
+                    })
+                }
             }
-            for (let i = 0; i < 10; i++) {
-                d.push({
-                    col_type: "blank_block"
-                })
-            }
+            
             d.push({
                 title: getMyVar(sname + 'sort') == '1' ? `““””<b><span style="color: #66CCEE">排序⇅</span></b>` : `““””<b><span style="color: #55AA44">排序⇅</span></b>`,
                 url: $("#noLoading#").lazyRule((sname) => {
