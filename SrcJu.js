@@ -643,7 +643,7 @@ function erji() {
                 col_type: "line_blank"
             });
             let line_col_type = getItem('SrcJuLine_col_type', 'scroll_button');
-
+            let addmoreitems = 0;
             if(getItem('extenditems','1')=="1" && details.moreitems && $.type(details.moreitems)=='array'){
                 let moreitems = details.moreitems;
                 if(moreitems.length>0){
@@ -654,10 +654,12 @@ function erji() {
                             item.extra['back'] = 1;
                             item.extra['cls'] = "Juloadlist extendlist";
                             d.push(item);
+                            addmoreitems = 1;
                         }
                     })
                 }
-            } else if (line_col_type == 'scroll_button') {
+            }
+            if (line_col_type == 'scroll_button' && addmoreitems == 0) {
                 for (let i = 0; i < 10; i++) {
                     d.push({
                         col_type: "blank_block"
@@ -801,7 +803,7 @@ function erji() {
             if(线路s.length>0 && 线路s[0] !="线路"){
                 线路s.forEach((it,i)=>{
                     d.push({
-                        title: lineid==i?`““””<b><span style="color: #09c11b">`+it+`</span></b>`:it,
+                        title: lineid==i?`““””<b><span style="color: #04B45F">`+it+`</span></b>`:it,
                         url: $("#noLoading#").lazyRule((lineurl,nowid,newid) => {
                             if(nowid != newid){
                                 putMyVar(lineurl, newid);
