@@ -241,8 +241,8 @@ function getYiData(datatype,od) {
                 执行str = 执行str.replace('setResult','return ');
             }
             */
+            执行str = replaceLast(执行str, 'setResult', 'return ')
 
-            log(replaceLast(执行str, 'setResult', 'return '));
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
                 let class_name = (obj.class_name||"").split('&').filter(item => item != '');
@@ -346,8 +346,10 @@ function getYiData(datatype,od) {
             }
             let getData = [];
             try{
+                log(执行str);
                 eval("let 数据 = " + 执行str);
                 getData = 数据();
+                log(getData);
             }catch(e){
                 getData = [];
                 xlog(e.message);
@@ -355,7 +357,7 @@ function getYiData(datatype,od) {
             if(loading){
                 deleteItemByCls("loading_gif");
             }
-            log(getData);
+            
             if(getData.length==0 && page==1){
                 d.push({
                     title: "未获取到数据",
