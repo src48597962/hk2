@@ -90,7 +90,7 @@
             let 选集列表 = {};
             选集列表.title = pdfh(data, 'a--span--i&&Text')
             选集列表.url = pd(data, 'a&&href');
-            //选集列表.extra = {test: 1};
+            //选集列表.extra = {test: 1};//可不传，这是单独传每个选集的附加，优先级高于二级返回的extra
             return 选集列表;
         })
         */
