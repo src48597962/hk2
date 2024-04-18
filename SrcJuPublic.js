@@ -479,18 +479,11 @@ function sortByPinyin(arr) {
 }
 // 替换最后一个指定字符串
 function replaceLast(str, search, replacement) {
-  let startIndex = str.lastIndexOf(search);
-  let endIndex = str.length;
- 
-  // 从后往前找到第一个匹配的search，并替换
-  while (startIndex !== -1 && startIndex + search.length !== endIndex) {
-    endIndex = startIndex;
-    startIndex = str.lastIndexOf(search, startIndex - 1);
+  const lastIndex = str.lastIndexOf(search);
+
+  if (lastIndex !== -1) {
+    return str.slice(0, lastIndex) + replacement + str.slice(lastIndex + search.length);
   }
- 
-  if (startIndex !== -1) {
-    return str.substring(0, startIndex) + replacement + str.substring(startIndex + search.length);
-  }
- 
+
   return str; // 如果没找到，返回原字符串
 }
