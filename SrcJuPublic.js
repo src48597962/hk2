@@ -166,6 +166,10 @@ function rulePage(datatype,ispage) {
 
 //获取一级数据
 function getYiData(datatype,od) {
+    addListener('onRefresh', $.toString(() => {
+        clearMyVar('动态加载loading')
+    }));
+
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
         return it.name==sourcename && it.type==runMode;
@@ -230,10 +234,12 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
-            let 执行str = parse[datatype].toString();
+            let 执行str = replaceLast(parse[datatype].toString(), 'setResult', 'return ');
+            /*
             if(!执行str.includes('rule')){
                 执行str = 执行str.replace('setResult','return ');
-            }
+            }*/
+
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
                 let class_name = (obj.class_name||"").split('&').filter(item => item != '');
@@ -446,7 +452,7 @@ function JySearch(sskeyword,sstype) {
         return "hiker://search?rule=聚影√&s=" + sskeyword;
     }
 }
-
+// 按拼音排序
 function sortByPinyin(arr) {
     var arrNew = arr.sort((a, b) => a.title.localeCompare(b.title));
     for (var m in arrNew) {
@@ -466,4 +472,21 @@ function sortByPinyin(arr) {
         arrNew = arrNew.concat(arrTmp);
     }
     return arrNew
+}
+// 替换最后一个指定字符串
+function replaceLast(str, search, replacement) {
+  let startIndex = str.lastIndexOf(search);
+  let endIndex = str.length;
+ 
+  // 从后往前找到第一个匹配的search，并替换
+  while (startIndex !== -1 && startIndex + search.length !== endIndex) {
+    endIndex = startIndex;
+    startIndex = str.lastIndexOf(search, startIndex - 1);
+  }
+ 
+  if (startIndex !== -1) {
+    return str.substring(0, startIndex) + replacement + str.substring(startIndex + search.length);
+  }
+ 
+  return str; // 如果没找到，返回原字符串
 }
