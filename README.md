@@ -126,7 +126,6 @@
     接口分组可以留空，如写上分组名则影响搜索，如留空则搜索时会调用留空+全全的接口，如国漫则搜索会调用分组为国漫+全全的接口
     搜索时可以在关键字后面加2个空格指定搜索接口，2个空格后留空则以当前主页源接口作为默认搜索接口
     简繁互换内置方法jianfan(str)转为简体，jianfan(str,2)转为繁体
-    主页长按设置可开启界面切换类型按钮
     主页长按分类可进入新搜索页
     二级长按切换站源可进入搜索页，搜其他类型、切换二级换源列表是否精准匹配
     二级长按样式，可设置统一修正选集标题、是否显示扩展列表项
@@ -136,3 +135,11 @@
     管理页长按导入可以切换导入类型，覆盖、跳过、确认
     管理页分享时可选分类，或多选，再点右上角分享
 
+
+五、部分开发示例
+
+
+    云口令：聚阅接口￥vmrxQ4eCSrkg8KXfevYkimhuIwMhXyLIPB++pTiLy0wKeZltEsEWbHHQNGxprmcDa4TFJNbIowkqz2JLutWK8w==￥四大金刚测试@import=js:$.require("hiker://page/import?rule=聚阅√");
+    云口令：聚阅接口￥vmrxQ4eCSrkg8KXfevYkimhuIwMhXyLIPB++pTiLy0xcrS+jZmVWyFKDvoudjI/qTJjO9JGWnve+nedjQBse2A==￥子页面测试@import=js:$.require("hiker://page/import?rule=聚阅√");
+    云口令：聚阅接口￥vmrxQ4eCSrkg8KXfevYkimhuIwMhXyLIPB++pTiLy0w+uuMQ41jCi44EWWYXNOTDO5K6WrSjgCI0zHVxhWN63w==￥预处理测试@import=js:$.require("hiker://page/import?rule=聚阅√");
+    云口令：聚阅接口￥vmrxQ4eCSrkg8KXfevYkimhuIwMhXyLIPB++pTiLy0zc6gIug8SwyUnbW8XW++OT1xsnrmXvw8iJz+y5ZGBysw==￥exports测试@import=js:$.require("hiker://page/import?rule=聚阅√");
