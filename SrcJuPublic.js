@@ -234,11 +234,11 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
-            let 执行str = replaceLast(parse[datatype].toString(), 'setResult', 'return ');
-            /*
+            //let 执行str = replaceLast(parse[datatype].toString(), 'setResult', 'return ');
+            
             if(!执行str.includes('rule')){
                 执行str = 执行str.replace('setResult','return ');
-            }*/
+            }
             log(执行str);
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
