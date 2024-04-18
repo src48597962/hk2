@@ -355,6 +355,13 @@ function erji() {
                     gonggong = ggdata;
                 }
                 公共 = gonggong || parse['公共'] || {};
+                if(公共['预处理']){
+                    try{
+                        公共['预处理']();
+                    }catch(e){
+                        xlog('√执行预处理报错，信息>'+e.message);
+                    }
+                }
             }catch(e){
                 xlog("√加载公共代码错误>"+e.message);
             }
@@ -1294,6 +1301,13 @@ function search(keyword, mode, sdata, group, type) {
                     gonggong = ggdata;
                 }
                 公共 = gonggong || parse['公共'] || {};
+                if(公共['预处理']){
+                    try{
+                        公共['预处理']();
+                    }catch(e){
+                        xlog('√执行预处理报错，信息>'+e.message);
+                    }
+                }
                 标识 = objdata.type + "_" + objdata.name;
                 let ssdata = [];
                 let 搜索str = parse['搜索'].toString();
