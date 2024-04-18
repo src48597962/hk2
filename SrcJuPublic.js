@@ -242,7 +242,7 @@ function getYiData(datatype,od) {
             }
             */
 
-            log(replaceLast('sdfsfdsfdsfs   setResult(d)', 'setResult', 'return '));
+            log(replaceLast(执行str, 'setResult', 'return '));
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
                 let class_name = (obj.class_name||"").split('&').filter(item => item != '');
