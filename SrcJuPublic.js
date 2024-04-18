@@ -346,10 +346,8 @@ function getYiData(datatype,od) {
             }
             let getData = [];
             try{
-                log(执行str);
                 eval("let 数据 = " + 执行str);
-                getData = 数据();
-                log(getData);
+                getData = 数据() || [];
             }catch(e){
                 getData = [];
                 xlog(e.message);
