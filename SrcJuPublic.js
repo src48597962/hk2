@@ -234,12 +234,15 @@ function getYiData(datatype,od) {
                 d = [];
                 putMyVar('动态加载loading', itemid);
             }
-            //let 执行str = replaceLast(parse[datatype].toString(), 'setResult', 'return ');
-            
+            let 执行str = parse[datatype].toString();
+
+            /*
             if(!执行str.includes('rule')){
                 执行str = 执行str.replace('setResult','return ');
             }
-            log(执行str);
+            */
+
+            log(replaceLast(执行str, 'setResult', 'return '));
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
                 let class_name = (obj.class_name||"").split('&').filter(item => item != '');
