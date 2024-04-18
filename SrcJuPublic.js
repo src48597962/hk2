@@ -197,6 +197,13 @@ function getYiData(datatype,od) {
                 gonggong = ggdata;
             }
             公共 = gonggong || parse['公共'] || {};
+            if(公共['预处理']){
+                try{
+                    公共['预处理']();
+                }catch(e){
+                    xlog('√执行预处理报错，信息>'+e.message);
+                }
+            }
             let info = {type: sourcedata[0].type, name: sourcedata[0].name};
             let 标识 = info.type + "_" + info.name;
             let itemid = 标识 + "_" + datatype;
@@ -350,7 +357,7 @@ function getYiData(datatype,od) {
                 getData = 数据() || [];
             }catch(e){
                 getData = [];
-                xlog(e.message);
+                xlog('√执行获取数据报错，信息>'+e.message);
             }
             if(loading){
                 deleteItemByCls("loading_gif");
