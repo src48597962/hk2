@@ -352,6 +352,7 @@ function getYiData(datatype,od) {
             if(loading){
                 deleteItemByCls("loading_gif");
             }
+            log(getData);
             if(getData.length==0 && page==1){
                 d.push({
                     title: "未获取到数据",
