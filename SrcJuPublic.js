@@ -243,12 +243,9 @@ function getYiData(datatype,od) {
             }
             let 执行str = parse[datatype].toString();
 
-            /*
             if(!执行str.includes('rule')){
-                执行str = 执行str.replace('setResult','return ');
-            }
-            */
-            执行str = replaceLast(执行str, 'setResult', 'return ')
+                执行str = replaceLast(执行str, 'setResult', 'return ')
+            }       
 
             let obj = parse.四大金刚 || {};
             if(obj.url && obj.type == datatype){//四大金刚获取分类数据
