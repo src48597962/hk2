@@ -1164,7 +1164,7 @@ function sousuo() {
                         data.push({
                             "title": it.name,
                             "search_url": "hiker://empty##fypage",//`  ` + it.name + 
-                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `','jusousuo',` + it + `); setResult(d);`
+                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `','jusousuo',JSON.parse(` + JSON.stringify(it) + `)); setResult(d);`
                         });
                     })
                     return JSON.stringify(data)
