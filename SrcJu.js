@@ -1152,19 +1152,19 @@ function sousuo() {
                     if(name.indexOf('  ')>-1){
                         keyword2 = name.split('  ')[1].trim() || info.name;
                     }
-                    log(keyword2);
+
                     if(keyword2){
                         ssdatalist = ssdatalist.filter(it=>{
                             return it.type==keyword2 || it.name==keyword2;
                         });
                     }
-                    log(ssdatalist.length);
+
                     let data = [];
                     ssdatalist.forEach(it=>{
                         data.push({
                             "title": it.name,
-                            "search_url": "hiker://empty##fypage",
-                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `  ` + it.name + `','jusousuo'); setResult(d);`
+                            "search_url": "hiker://empty##fypage",//`  ` + it.name + 
+                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `','jusousuo',` + it + `); setResult(d);`
                         });
                     })
                     return JSON.stringify(data)
