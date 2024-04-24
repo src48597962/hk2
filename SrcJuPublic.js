@@ -350,7 +350,6 @@ function getYiData(datatype,od) {
             }
             let getData = [];
             try{
-                let abc = parse.abc;
                 eval("let 数据 = " + 执行str);
                 getData = 数据() || [];
             }catch(e){
