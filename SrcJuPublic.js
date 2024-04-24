@@ -389,6 +389,7 @@ function getYiData(datatype,od) {
             toast(datatype+"代码报错，更换主页源或联系接口作者");
             xlog("√报错信息>" + e.message + " 错误行#" + e.lineNumber);
         }
+        log(d);
         setResult(d);
     }else{
         if(datatype=="主页"){
