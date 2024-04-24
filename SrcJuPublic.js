@@ -201,7 +201,7 @@ function getYiData(datatype,od) {
                 try{
                     公共['预处理']();
                 }catch(e){
-                    xlog('√执行预处理报错，信息>'+e.message);
+                    xlog('√执行预处理报错，信息>' + e.message + " 错误行#" + e.lineNumber);
                 }
             }
             let info = {type: sourcedata[0].type, name: sourcedata[0].name};
@@ -354,7 +354,7 @@ function getYiData(datatype,od) {
                 getData = 数据() || [];
             }catch(e){
                 getData = [];
-                xlog('√执行获取数据报错，信息>'+e.message);
+                xlog('√执行获取数据报错，信息>'+e.message + " 错误行#" + e.lineNumber);
             }
             if(loading){
                 deleteItemByCls("loading_gif");
@@ -383,7 +383,7 @@ function getYiData(datatype,od) {
             d = d.concat(getData);
         }catch(e){
             toast(datatype+"代码报错，更换主页源或联系接口作者");
-            xlog("√报错信息>"+e.message + " 错误行#" + e.lineNumber);
+            xlog("√报错信息>" + e.message + " 错误行#" + e.lineNumber);
         }
         setResult(d);
     }else{
