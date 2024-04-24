@@ -1134,7 +1134,7 @@ function sousuo() {
     }else{
         setResult([{
             title: "视界聚搜",
-            url: "hiker://search?s=" + name,
+            url: "hiker://search?s=" + name.split('  ')[0].trim(),
             extra: {
                 delegateOnlySearch: true,
                 rules: $.toString((name) => {
@@ -1147,13 +1147,24 @@ function sousuo() {
                             return it.type==info.type && (it.group==info.group||it.group=="全全");
                         }
                     });
+                    let keyword = name.split('  ')[0].trim();
+                    let keyword2;
+                    if(name.indexOf('  ')>-1){
+                        keyword2 = name.split('  ')[1].trim() || info.type;
+                    }
+                    
+                    if(keyword2){
+                        ssdatalist = ssdatalist.filter(it=>{
+                            return it.type==keyword2 || it.name==keyword2;
+                        });
+                    }
 
                     let data = [];
                     ssdatalist.forEach(it=>{
                         data.push({
                             "title": it.name,
                             "search_url": "hiker://empty##fypage",
-                            "searchFind": `js: require(config.依赖); let d = search('`+name+`  `+it.name+`','jusousuo'); setResult(d);`
+                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `  ` + it.name + `','jusousuo'); setResult(d);`
                         });
                     })
                     return JSON.stringify(data)
