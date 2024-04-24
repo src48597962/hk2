@@ -1150,7 +1150,7 @@ function sousuo() {
                     let keyword = name.split('  ')[0].trim();
                     let keyword2;
                     if(name.indexOf('  ')>-1){
-                        keyword2 = name.split('  ')[1].trim() || info.type;
+                        keyword2 = name.split('  ')[1].trim() || info.name;
                     }
                     log(keyword2);
                     if(keyword2){
