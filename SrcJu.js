@@ -1163,8 +1163,8 @@ function sousuo() {
                     ssdatalist.forEach(it=>{
                         data.push({
                             "title": it.name,
-                            "search_url": "hiker://empty##fypage",// + `  ` + it.name
-                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `','jusousuo',`+JSON.stringify(it)+`); setResult(d);`
+                            "search_url": "hiker://empty##fypage",
+                            "searchFind": `js: require(config.依赖); let d = search('` + keyword + `','jusousuo',` + JSON.stringify(it) + `); setResult(d);`
                         });
                     })
                     return JSON.stringify(data)
