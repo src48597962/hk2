@@ -168,9 +168,11 @@ function rulePage(datatype,ispage) {
 
 //获取一级数据
 function getYiData(datatype,od) {
+    /*
     addListener('onRefresh', $.toString(() => {
         clearMyVar('动态加载loading')
     }));
+    */
 
     let d = od || [];
     let sourcedata = yidatalist.filter(it=>{
