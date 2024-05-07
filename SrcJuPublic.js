@@ -351,7 +351,8 @@ function getYiData(datatype,od) {
             let getData = [];
             try{
                 eval("let 数据 = " + 执行str);
-                getData = 数据() || [];
+                //getData = 数据() || [];
+                数据();
             }catch(e){
                 getData = [];
                 xlog('√执行获取数据报错，信息>'+e.message + " 错误行#" + e.lineNumber);
