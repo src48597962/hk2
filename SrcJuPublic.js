@@ -74,9 +74,13 @@ function getListData(lx, selectType) {
     }else if(lx=="er"){
         jkdatalist = erdatalist;
     }
-    return jkdatalist.filter(it=>{
+    jkdatalist = jkdatalist.filter(it=>{
         return selectType=="全部" || selectType==it.type;
     })
+    if(getItem('sourceListSort','update') == 'name'){
+        jkdatalist = sortByPinyin(jkdatalist);
+    }
+    return jkdatalist;
 }
 
 //封装选择主页源方法
@@ -108,9 +112,7 @@ function selectSource(selectType) {
     if(sourcenames.length==0){
         return "toast://当前分类无接口"
     }
-    if(getItem('sourceListSort','update') == 'name'){
-        sourcenames = sortByPinyin(sourcenames);
-    }
+    
     return $(sourcenames,3,selectType+">主页源>"+sourcename,selectIndex).select((runMode,sourcename,cfgfile,Juconfig) => {
     
         input = input.replace(/‘|’|“|”|<[^>]+>/g,"").replace(/(.*)√/,'$1');
@@ -462,15 +464,15 @@ function JySearch(sskeyword,sstype) {
 }
 // 按拼音排序
 function sortByPinyin(arr) {
-    var arrNew = arr.sort((a, b) => a.title.localeCompare(b.title));
+    var arrNew = arr.sort((a, b) => a.name.localeCompare(b.name));
     for (var m in arrNew) {
-        var mm = /^[\u4e00-\u9fa5]/.test(arrNew[m].title) ? m : '-1';
+        var mm = /^[\u4e00-\u9fa5]/.test(arrNew[m].name) ? m : '-1';
         if (mm > -1) {
             break;
         }
     }
     for (var n = arrNew.length - 1; n >= 0; n--) {
-        var nn = /^[\u4e00-\u9fa5]/.test(arrNew[n].title) ? n : '-1';
+        var nn = /^[\u4e00-\u9fa5]/.test(arrNew[n].name) ? n : '-1';
         if (nn > -1) {
             break;
         }
