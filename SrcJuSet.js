@@ -433,6 +433,22 @@ function SRCSet() {
                 })
             }
             if(longClick.length>0){obj["extra"].longClick = longClick;}
+        }else{
+            obj.extra = {
+                longClick: [{
+                    title: "列表排序：" + getItem("sourceListSort", "update"),
+                    js: $.toString(() => {
+                        return $(["更新时间","接口名称"], 1).select(() => {
+                            if(input=='接口名称'){
+                                setItem("sourceListSort","name");
+                            }else{
+                                clearItem("sourceListSort");
+                            }
+                            refreshPage(false);
+                        })
+                    })
+                }]
+            }
         }
         
         d.push(obj);
