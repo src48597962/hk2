@@ -237,7 +237,7 @@ function yiji() {
                                 }else{
                                     clearItem("sourceListSort");
                                 }
-                                //refreshPage(false);
+                                refreshPage(false);
                             })
                         })
                     }]
