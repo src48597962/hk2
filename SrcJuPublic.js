@@ -214,41 +214,37 @@ function getYiData(datatype,od) {
             let itemid = 标识 + "_" + datatype;
             let page = MY_PAGE || 1;
             let loading;
-            if (page==1 && typeof(setPreResult)!="undefined") {   
-                if(getMyVar('动态加载loading')==itemid){
-                    setPreResult(d);
-                }else{
-                    loading = 1;
-                    d.push({
-                        title: "",
-                        url: "hiker://empty",
-                        col_type: "text_1",
-                        extra: {
-                            lineVisible: false,
-                            cls: "loading_gif"
-                        }
-                    })
-                    d.push({
-                        title: "",
-                        url: "hiker://empty",
-                        col_type: "text_1",
-                        extra: {
-                            lineVisible: false,
-                            cls: "loading_gif"
-                        }
-                    })
-                    d.push({
-                        pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
-                        col_type: "pic_1_center",
-                        url: "hiker://empty",
-                        extra: {
-                            cls: "loading_gif"
-                        }
-                    })
-                    setPreResult(d);
-                    putMyVar('动态加载loading', itemid);
-                }
+            if (page==1 && typeof(setPreResult)!="undefined" && getMyVar('动态加载loading')!=itemid) {           
+                loading = 1;
+                d.push({
+                    title: "",
+                    url: "hiker://empty",
+                    col_type: "text_1",
+                    extra: {
+                        lineVisible: false,
+                        cls: "loading_gif"
+                    }
+                })
+                d.push({
+                    title: "",
+                    url: "hiker://empty",
+                    col_type: "text_1",
+                    extra: {
+                        lineVisible: false,
+                        cls: "loading_gif"
+                    }
+                })
+                d.push({
+                    pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
+                    col_type: "pic_1_center",
+                    url: "hiker://empty",
+                    extra: {
+                        cls: "loading_gif"
+                    }
+                })
+                setPreResult(d);
                 d = [];
+                putMyVar('动态加载loading', itemid);
             }
             let 执行str = parse[datatype].toString();
 
