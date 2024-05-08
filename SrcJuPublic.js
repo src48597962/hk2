@@ -243,9 +243,9 @@ function getYiData(datatype,od) {
                         }
                     })
                     setPreResult(d);
-                    d = [];
                     putMyVar('动态加载loading', itemid);
                 }
+                d = [];
             }
             let 执行str = parse[datatype].toString();
 
