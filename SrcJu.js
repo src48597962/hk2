@@ -956,15 +956,11 @@ function erji() {
                 }catch(e){}
                 extra.id = name + "_选集_" + (pageid?pageid+"_":"") + i;
                 extra.cls = "Juloadlist playlist";
-                if(stype=="听书"||stype=="影视"){
+                if(stype=="听书"||stype=="影视"||stype=="音乐"){
                     extra.jsLoadingInject = true;
-                    let blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com', '51.la'];
-                    if(extra.blockRules && $.type(extra.blockRules)=="array"){
-                        try{
-                            blockRules = Object.assign(blockRules,extra.blockRules);
-                        }catch(e){}
+                    if(!extra.blockRules){
+                        extra.blockRules = ['.m4a', '.mp3', '.gif', '.jpeg', '.jpg', '.ico', '.png', 'hm.baidu.com', '/ads/*.js', 'cnzz.com', '51.la'];
                     }
-                    extra.blockRules = blockRules;
                 }
                 if(list_col_type.indexOf("_left")>-1){
                     extra.textAlign = 'left';
