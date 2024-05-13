@@ -921,7 +921,7 @@ function JYimport(input,ruleTitle) {
             //xlog(parseurl);
             let datalist2;
             if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
-                let content = parsePaste(parseurl.replace('https://netcut.cn','https://textdb.online'));
+                let content = parsePaste(parseurl.replace('https://netcut.cn/apidb/','云2oooole/apidb/'));
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
                 datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
