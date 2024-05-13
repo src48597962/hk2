@@ -918,6 +918,7 @@ function JYimport(input,ruleTitle) {
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
+            xlog(parseurl);
             let datalist2;
             if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
                 let content = parsePaste(parseurl);
