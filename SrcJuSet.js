@@ -918,10 +918,10 @@ function JYimport(input,ruleTitle) {
         if (inputname == "聚阅接口") {
             showLoading("正在导入，请稍后...");
             let parseurl = aesDecode('SrcJu', input.split('￥')[1]);
-            xlog(parseurl);
+            //xlog(parseurl);
             let datalist2;
             if(/^http|^云/.test(parseurl) && parseurl.includes('/')){
-                let content = parsePaste(parseurl);
+                let content = parsePaste(parseurl.replace('https://netcut.cn','https://textdb.online'));
                 datalist2 = JSON.parse(aesDecode('SrcJu', content));
             }else if(/JYshare_/.test(parseurl)){
                 datalist2 = JSON.parse(aesDecode('SrcJu', fetch('file://'+parseurl)));
