@@ -85,9 +85,9 @@ function getListData(lx, selectType) {
     // 禁用的放到最后
     let withStop = jkdatalist.filter(item => item.stop);
     let withoutStop = jkdatalist.filter(item => !item.stop);
-
     // 合并数组
     let result = withoutStop.concat(withStop);
+    
     return result;
 }
 
