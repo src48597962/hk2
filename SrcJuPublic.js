@@ -87,7 +87,7 @@ function getListData(lx, selectType) {
         // 如果当前元素需要移到末尾（即stop属性为1）
         if ('stop' in jkdatalist[i] && jkdatalist[i].stop === 1) {
             // 交换i和j指向的元素
-            [jkdatalist[i], jkdatalist[j]] = [ajkdatalistrr[j], jkdatalist[i]];
+            [jkdatalist[i], jkdatalist[j]] = [jkdatalist[j], jkdatalist[i]];
             // 缩小j的范围，因为刚换过来的j位置元素可能是stop: 1，需要再次检查
             j--;
         } else {
