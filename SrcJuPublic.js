@@ -25,12 +25,6 @@ if(sourcedata != ""){
     var datalist = [];
 }
 
-datalist.sort((a, b) => {
-  const stopA = a.stop ? 1 : 0;
-  const stopB = b.stop ? 1 : 0;
-  return stopB - stopA;
-});
-
 datalist.reverse();
 
 let yxdatalist = datalist.filter(it=>{
@@ -87,6 +81,11 @@ function getListData(lx, selectType) {
     if(getItem('sourceListSort','update') == 'name'){
         jkdatalist = sortByPinyin(jkdatalist);
     }
+    jkdatalist.sort((a, b) => {
+        const stopA = a.stop ? 1 : 0;
+        const stopB = b.stop ? 1 : 0;
+        return stopB - stopA;
+    });
     return jkdatalist;
 }
 
