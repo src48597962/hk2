@@ -82,20 +82,13 @@ function getListData(lx, selectType) {
         jkdatalist = sortByPinyin(jkdatalist);
     }
 
-    let i = 0, j = jkdatalist.length - 1;
-    while (i < j) {
-        // 如果当前元素需要移到末尾（即stop属性为1）
-        if ('stop' in jkdatalist[i] && jkdatalist[i].stop === 1) {
-            // 交换i和j指向的元素
-            [jkdatalist[i], jkdatalist[j]] = [jkdatalist[j], jkdatalist[i]];
-            // 缩小j的范围，因为刚换过来的j位置元素可能是stop: 1，需要再次检查
-            j--;
-        } else {
-            // 如果当前元素不需要移动，仅移动读取指针
-            i++;
-        }
-    }
-    return jkdatalist;
+    // 禁用的放到最后
+    let withStop = jkdatalist.filter(item => item.stop);
+    let withoutStop = jkdatalist.filter(item => !item.stop);
+
+    // 合并数组
+    let result = withoutStop.concat(withStop);
+    return result;
 }
 
 //封装选择主页源方法
