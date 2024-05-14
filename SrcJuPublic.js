@@ -26,8 +26,8 @@ if(sourcedata != ""){
 }
 
 datalist.sort((a, b) => {
-  const stopA = ('stop' in a) ? a.stop : 0;
-  const stopB = ('stop' in b) ? b.stop : 0;
+  const stopA = a.stop ? 1 : 0;
+  const stopB = b.stop ? 1 : 0;
   return stopB - stopA;
 });
 
