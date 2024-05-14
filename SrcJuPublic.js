@@ -24,15 +24,16 @@ if(sourcedata != ""){
 }else{
     var datalist = [];
 }
-datalist.reverse();
 
 datalist.sort((a, b) => {
     if (a.stop || b.stop) {
         return 1;
     }else{
-        return 0;
+        return -1;
     }
 });
+
+datalist.reverse();
 
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
