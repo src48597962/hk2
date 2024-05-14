@@ -26,6 +26,8 @@ if(sourcedata != ""){
 }
 datalist.reverse();
 
+datalist.stop.sort();
+
 let yxdatalist = datalist.filter(it=>{
     return !it.stop;
 });
