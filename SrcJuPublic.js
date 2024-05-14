@@ -27,9 +27,9 @@ if(sourcedata != ""){
 
 datalist.sort((a, b) => {
     if (a.stop || b.stop) {
-        return 1;
-    }else{
         return -1;
+    }else{
+        return 0;
     }
 });
 
