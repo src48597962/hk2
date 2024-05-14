@@ -26,11 +26,9 @@ if(sourcedata != ""){
 }
 
 datalist.sort((a, b) => {
-    if (a.stop || b.stop) {
-        return -1;
-    }else{
-        return 0;
-    }
+  const stopA = ('stop' in a) ? a.stop : 0;
+  const stopB = ('stop' in b) ? b.stop : 0;
+  return stopB - stopA;
 });
 
 datalist.reverse();
