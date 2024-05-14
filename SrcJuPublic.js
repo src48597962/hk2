@@ -84,7 +84,7 @@ function getListData(lx, selectType) {
     jkdatalist.sort((a, b) => {
         const stopA = a.stop ? 1 : 0;
         const stopB = b.stop ? 1 : 0;
-        return stopB - stopA;
+        return stopA - stopB;
     });
     return jkdatalist;
 }
