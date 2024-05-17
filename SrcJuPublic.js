@@ -414,14 +414,14 @@ function getYiData(datatype,od) {
                 }
             })
             confirm({
-                title: "主页源不存在",
+                title: runMode+" 主页源不存在",
                 content: "需先选择配置主页源",
                 confirm: $.toString((input) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
                     return selectSource(input);
                 },runMode),
                 cancel: $.toString(() => {
-                    return "toast://点击组件或当前分类名称都可以切换主页源";
+                    return "toast://点击当前分类名称可以切换主页源";
                 })
             });
         }
