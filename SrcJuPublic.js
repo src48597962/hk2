@@ -93,16 +93,13 @@ function getListData(lx, selectType) {
 //选择主页源新方法hikerPop
 function selectSource2(selectType) {
         const hikerPop = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6966");
-        let sourcename = Juconfig[runMode + 'sourcename'];
         let sourceList = getListData("yi", selectType);
 
         hikerPop.setUseStartActivity(false);
 
         let names = sourceList.map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
-        //let sname = names.slice();
         let spen = 3;
-        //let manage_all = names.slice();
-        //let searchKey = "";
+
         let pop = hikerPop.selectBottomRes({
             options: names,
             columns: spen,
@@ -111,10 +108,10 @@ function selectSource2(selectType) {
             position: 1,
             extraInputBox: new hikerPop.ResExtraInputBox({
                 hint: "源关键字",
-                title: "ok",
-                onChange(text, manage) {
-                    //log("onChange:"+text)
-                    let flist = names.filter(x => x.includes(text));
+                title: runMode,
+                onChange(s, manage) {
+                    //log("onChange:"+s);
+                    let flist = names.filter(x => x.includes(s));
                     manage.list.length = 0;
                     flist.forEach(x => {
                         manage.list.push(x);
@@ -126,7 +123,7 @@ function selectSource2(selectType) {
                     //toast(s);
                     //log(manage.list);
                 },
-                titleVisible: false
+                //titleVisible: false
             }),
             longClick(s, i) {
                 /*
