@@ -97,11 +97,14 @@ function selectSource2(selectType) {
 
         hikerPop.setUseStartActivity(false);
 
-        let names = sourceList.map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
+        let items = sourceList.map(v => {
+            let vname = v.name == sourcename ? "‘‘" + v.name + "’’" : v.name;
+            return {title:vname,icon:v.img};
+        });
         let spen = 3;
 
-        let pop = hikerPop.selectBottomRes({
-            options: names,
+        let pop = hikerPop.selectBottomResIcon({
+            options: items,
             columns: spen,
             title: "当前源>" + selectType + "_" + sourcename,
             noAutoDismiss: true,
@@ -111,7 +114,7 @@ function selectSource2(selectType) {
                 title: "ok",
                 onChange(s, manage) {
                     //log("onChange:"+s);
-                    let flist = names.filter(x => x.includes(s));
+                    let flist = items.filter(x => x.title.includes(s));
                     manage.list.length = 0;
                     flist.forEach(x => {
                         manage.list.push(x);
@@ -138,6 +141,8 @@ function selectSource2(selectType) {
                 */
             },
             click(s, i, manage) {
+                log(s);
+                log(s.title);
                 pop.dismiss();
 
                 let input = s.replace(/[’‘]/g, "");
@@ -192,8 +197,11 @@ function selectSource2(selectType) {
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
                             manage.list.length = 0;
-                            let names = getListData("yi", selectType).map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
-                            names.forEach(x => {
+                            let items = getListData("yi", selectType).map(v => {
+                                let vname = v.name == sourcename ? "‘‘" + v.name + "’’" : v.name;
+                                return {title:vname,icon:v.img};
+                            });
+                            items.forEach(x => {
                                 manage.list.push(x);
                             });
                             manage.change();
@@ -635,3 +643,155 @@ function replaceLast(str, search, replacement) {
 
     return str; // 如果没找到，返回原字符串
 }
+
+/*
+
+function sss() {
+
+    const hikerPop = $.require("hikerPop.js");
+    let spen = 2;
+    let list = [{title: "Test", icon: "https://hikerfans.com/tubiao/erdi/226.png"}, {title: "\u6d4b\u8bd5", icon: "hiker://images/icon_class"}];
+    let pop = hikerPop.selectBottomResIcon({iconList: list, columns: spen, title: "\u7535\u89c6\u5267-\u7e41\u82b1", noAutoDismiss: false, position: 0, extraInputBox: new hikerPop.ResExtraInputBox({hint: "\u4f60\u597d", title: "ok", onChange(s, manage) {
+        log("onChange:" + s);
+        if (s.length > 5) {
+            return true;
+        }
+    }, defaultValue: "\u7e41\u82b1", click(s, manage) {
+        toast(s);
+    }}), click(item, i, manage) {
+        toast(item.title);
+    }, menuClick(manage) {
+        hikerPop.selectCenter({options: ["\u6539\u53d8\u6837\u5f0f", "\u6dfb\u52a0\u4e00\u4e2a\u9879\u76ee", "\u5220\u9664\u4e00\u4e2a\u9879\u76ee", "\u5012\u5e8f", "\u66f4\u6539\u9009\u4e2d"], columns: 3, title: "\u8bf7\u9009\u62e9", click(s, i) {
+            if (i === 0) {
+                spen = spen == 2 ? 1 : 2;
+                manage.changeColumns(spen);
+            } else {
+                if (i === 1) {
+                    list.push({title: "\u6d4b\u8bd5", icon: "hiker://images/icon_class"});
+                    manage.change(list);
+                } else {
+                    if (i === 2) {
+                        list.splice(list.length - 1, 1);
+                        manage.change(list);
+                    } else {
+                        if (i === 2) {
+                            list.reverse();
+                            manage.change(list);
+                        }
+                    }
+                }
+            }
+        }});
+    }});
+    return "hiker://empty";
+
+}
+function selectSource2(selectType) {
+        const hikerPop = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6966");
+        let sourceList = getListData("yi", selectType);
+
+        hikerPop.setUseStartActivity(false);
+
+        let names = sourceList.map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
+        let spen = 3;
+
+        let pop = hikerPop.selectBottomRes({
+            options: names,
+            columns: spen,
+            title: "当前源>" + selectType + "_" + sourcename,
+            noAutoDismiss: true,
+            position: 1,
+            extraInputBox: new hikerPop.ResExtraInputBox({
+                hint: "源关键字",
+                title: "ok",
+                onChange(s, manage) {
+                    //log("onChange:"+s);
+                    let flist = names.filter(x => x.includes(s));
+                    manage.list.length = 0;
+                    flist.forEach(x => {
+                        manage.list.push(x);
+                    });
+                    manage.change();
+                },
+                defaultValue: "",
+                click(s, manage) {
+                    //toast(s);
+                    //log(manage.list);
+                },
+                titleVisible: false
+            }),
+            longClick(s, i) {
+
+            },
+            click(s, i, manage) {
+                pop.dismiss();
+
+                let input = s.replace(/[’‘]/g, "");
+                if (selectType == runMode && input == Juconfig[selectType + 'sourcename']) {
+                    return 'toast://' + selectType + ' 主页源：' + input;
+                }
+                if (typeof (unRegisterTask) != "undefined") {
+                    unRegisterTask("juyue");
+                } else {
+                    toast("软件版本过低，可能存在异常");
+                }
+                try {
+                    let listMyVar = listMyVarKeys();
+                    listMyVar.forEach(it => {
+                        if (!/^SrcJu_|initConfig/.test(it)) {
+                            clearMyVar(it);
+                        }
+                    })
+                } catch (e) {
+                    xlog('清MyVar失败>' + e.message);
+                    clearMyVar(MY_RULE.title + "分类");
+                    clearMyVar(MY_RULE.title + "更新");
+                    clearMyVar(MY_RULE.title + "类别");
+                    clearMyVar(MY_RULE.title + "地区");
+                    clearMyVar(MY_RULE.title + "进度");
+                    clearMyVar(MY_RULE.title + "排序");
+                    clearMyVar("排名");
+                    clearMyVar("分类");
+                    clearMyVar("更新");
+                    clearMyVar(runMode + "_" + sourcename);
+                    clearMyVar("一级源接口信息");
+                }
+                try {
+                    refreshX5WebView('about:blank');
+                } catch (e) { }
+
+                Juconfig["runMode"] = runMode;
+                Juconfig[runMode + 'sourcename'] = input;
+                writeFile(cfgfile, JSON.stringify(Juconfig));
+                refreshPage(false);
+                return 'toast://' + runMode + ' 主页源已设置为：' + input;
+            },
+            menuClick(manage) {
+                hikerPop.selectCenter({
+                    options: ["改变样式", "排序方法:" + (getItem('sourceListSort', 'update') == 'name' ? "名称" : "时间"), "列表倒序"],
+                    columns: 2,
+                    title: "请选择",
+                    click(s, i) {
+                        if (i === 0) {
+                            spen = spen == 3 ? 2 : 3;
+                            manage.changeColumns(spen);
+                        } else if (i === 1) {
+                            setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
+                            manage.list.length = 0;
+                            let names = getListData("yi", selectType).map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
+                            names.forEach(x => {
+                                manage.list.push(x);
+                            });
+                            manage.change();
+                        } else if (i === 2) {
+                            manage.list.reverse();
+                            names.reverse();
+                            manage.change();
+                        }
+                    }
+                });
+            }
+        });
+    return 'hiker://empty';
+}
+*/
