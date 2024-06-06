@@ -189,7 +189,7 @@ function selectSource2(selectType) {
                         if (i === 0) {
                             spen = spen == 3 ? 2 : 3;
                             manage.changeColumns(spen);
-                            manage.scrollToPosition(index, true);
+                            manage.scrollToPosition(index, false);
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "update" : "name");
                             let items = getListData("yi", selectType).map(v => {
