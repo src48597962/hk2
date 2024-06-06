@@ -189,6 +189,7 @@ function selectSource2(selectType) {
                         if (i === 0) {
                             spen = spen == 3 ? 2 : 3;
                             manage.changeColumns(spen);
+                            manage.setSelectedIndex(index);
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
                             let items = getListData("yi", selectType).map(v => {
