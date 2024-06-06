@@ -114,6 +114,7 @@ function selectSource2(selectType) {
                 title: "ok",
                 onChange(s, manage) {
                     //log("onChange:"+s);
+                    log(manage);
                     let flist = items.filter(x => x.title.includes(s));
                     manage.iconList.length = 0;
                     flist.forEach(x => {
