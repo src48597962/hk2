@@ -103,7 +103,7 @@ function selectSource2(selectType) {
         let pop = hikerPop.selectBottomRes({
             options: names,
             columns: spen,
-            title: "当前源>" + runMode + "_" + sourcename,
+            title: "当前源>" + selectType + "_" + sourcename,
             noAutoDismiss: true,
             position: 1,
             extraInputBox: new hikerPop.ResExtraInputBox({
@@ -141,8 +141,8 @@ function selectSource2(selectType) {
                 pop.dismiss();
 
                 let input = s.replace(/[’‘]/g, "");
-                if (Juconfig["runMode"] == runMode && input == Juconfig[runMode + 'sourcename']) {
-                    return 'toast://' + runMode + ' 主页源：' + input;
+                if (selectType == runMode && input == Juconfig[selectType + 'sourcename']) {
+                    return 'toast://' + selectType + ' 主页源：' + input;
                 }
                 if (typeof (unRegisterTask) != "undefined") {
                     unRegisterTask("juyue");
