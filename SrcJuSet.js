@@ -447,18 +447,6 @@ function SRCSet() {
                             refreshPage(false);
                         })
                     })
-                },{
-                    title: "分组方式：" + getItem("sourceListGroup", "接口类型"),
-                    js: $.toString(() => {
-                        return $(["接口类型","自定义类型"], 1).select(() => {
-                            if(input=='自定义类型'){
-                                setItem("sourceListGroup","自定义类型");
-                            }else{
-                                clearItem("sourceListGroup");
-                            }
-                            refreshPage(false);
-                        })
-                    })
                 }]
             }
         }
@@ -638,7 +626,6 @@ function jiekouapi(sourcefile, data, look) {
         clearMyVar('SrcJu_jiekouname');
         clearMyVar('SrcJu_jiekouimg');
         clearMyVar('SrcJu_jiekoutype');
-        clearMyVar('SrcJu_jiekoutype2');
         clearMyVar('SrcJu_jiekougroup');
         clearMyVar('SrcJu_jiekouparse');
         clearMyVar('SrcJu_jiekouerparse');
@@ -651,7 +638,6 @@ function jiekouapi(sourcefile, data, look) {
         putMyVar('SrcJu_jiekouname', data.name);
         putMyVar('SrcJu_jiekouimg', data.img||"");
         putMyVar('SrcJu_jiekoutype', data.type||"");
-        putMyVar('SrcJu_jiekoutype', data.type2||"");
         putMyVar('SrcJu_jiekougroup', data.group||"");
         storage0.putMyVar('SrcJu_jiekouparse', data.parse);
         storage0.putMyVar('SrcJu_jiekouerparse', data.erparse ? data.erparse : "");
@@ -671,18 +657,6 @@ function jiekouapi(sourcefile, data, look) {
         }
     });
     d.push({
-        title: '接口图标',
-        col_type: 'input',
-        desc:"接口图标可留空",
-        extra: {
-            defaultValue: getMyVar('SrcJu_jiekouimg') || "",
-            titleVisible: false,
-            onChange: $.toString(() => {
-                putMyVar('SrcJu_jiekouimg', input);
-            })
-        }
-    });
-    d.push({
         title: '接口类型：'+ getMyVar('SrcJu_jiekoutype',''),
         col_type: 'text_1',
         url: $(getTypeNames(),2,"接口类型").select(() => {
@@ -694,18 +668,16 @@ function jiekouapi(sourcefile, data, look) {
             lineVisible: false
         }
     });
-    let type2Names = getType2Names();
-    type2Names.push("自定义");
     d.push({
-        title: '自定义类型：'+ getMyVar('SrcJu_jiekoutype2',''),
-        col_type: 'text_1',
-        url: $(type2Names,2,"自定义类型").select(() => {
-            putMyVar('SrcJu_jiekoutype2',input);
-            refreshPage(false);
-            return 'toast://自定义类型已设置为：' + input;
-        }),
+        title: '接口图标',
+        col_type: 'input',
+        desc:"接口图标可留空",
         extra: {
-            lineVisible: false
+            defaultValue: getMyVar('SrcJu_jiekouimg') || "",
+            titleVisible: false,
+            onChange: $.toString(() => {
+                putMyVar('SrcJu_jiekouimg', input);
+            })
         }
     });
 
@@ -863,10 +835,6 @@ function jiekouapi(sourcefile, data, look) {
                     }
                     let img = getMyVar('SrcJu_jiekouimg');
                     let type = getMyVar('SrcJu_jiekoutype');
-                    let type2 = getMyVar('SrcJu_jiekoutype2');
-                    if (runTypes.indexOf(type2)>-1) {
-                        return "toast://自定义类型名称不能属于类型名";
-                    }
                     let group = getMyVar('SrcJu_jiekougroup');
                     let parse = getMyVar('SrcJu_jiekouparse');
                     let erparse = getMyVar('SrcJu_jiekouerparse');
@@ -874,9 +842,6 @@ function jiekouapi(sourcefile, data, look) {
                     let newapi = {
                         name: name,
                         type: type
-                    }
-                    if(type2){
-                        newapi['type2'] = type2;
                     }
                     if(group){
                         newapi['group'] = group;
