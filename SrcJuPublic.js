@@ -98,33 +98,33 @@ function selectSource2(selectType) {
         hikerPop.setUseStartActivity(false);
 
         let items = sourceList.map(v => {
-            let vname = v.name == sourcename ? "‘‘" + v.name + "’’" : v.name;
-            return {title:vname,icon:v.img};
+            return {title:v.name,icon:v.img};
         });
         let spen = 3;
+        let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
 
         let pop = hikerPop.selectBottomResIcon({
             iconList: items,
             columns: spen,
             title: "当前源>" + selectType + "_" + sourcename,
-            noAutoDismiss: true,
-            position: 1,
+            noAutoDismiss: false,
+            position: index,
             extraInputBox: new hikerPop.ResExtraInputBox({
                 hint: "源关键字",
                 title: "ok",
                 onChange(s, manage) {
                     //log("onChange:"+s);
                     let flist = items.filter(x => x.title.includes(s));
-                    manage.list.length = 0;
+                    manage.iconList.length = 0;
                     flist.forEach(x => {
-                        manage.list.push(x);
+                        manage.iconList.push(x);
                     });
                     manage.change();
                 },
                 defaultValue: "",
                 click(s, manage) {
                     //toast(s);
-                    //log(manage.list);
+                    //log(manage.iconList);
                 },
                 titleVisible: false
             }),
@@ -194,17 +194,17 @@ function selectSource2(selectType) {
                             manage.changeColumns(spen);
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
-                            manage.list.length = 0;
+                            manage.iconList.length = 0;
                             let items = getListData("yi", selectType).map(v => {
                                 let vname = v.name == sourcename ? "‘‘" + v.name + "’’" : v.name;
                                 return {title:vname,icon:v.img};
                             });
                             items.forEach(x => {
-                                manage.list.push(x);
+                                manage.iconList.push(x);
                             });
                             manage.change();
                         } else if (i === 2) {
-                            manage.list.reverse();
+                            manage.iconList.reverse();
                             items.reverse();
                             manage.change();
                         }
