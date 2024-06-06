@@ -132,7 +132,7 @@ function selectSource2(selectType) {
             }
         })
         */
-
+        log(sourceNameList);
         let names = sourceNameList.map(v => v.name);
         log(names);
         let sname = names.slice();
