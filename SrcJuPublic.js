@@ -190,7 +190,7 @@ function selectSource2(selectType) {
                             spen = spen == 3 ? 2 : 3;
                             manage.changeColumns(spen);
                         } else if (i === 1) {
-                            setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
+                            setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "update" : "name");
                             let items = getListData("yi", selectType).map(v => {
                                 return {title:v.name,icon:v.img};
                             });
