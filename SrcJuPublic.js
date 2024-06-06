@@ -103,12 +103,12 @@ function selectSource2(selectType) {
         let pop = hikerPop.selectBottomRes({
             options: names,
             columns: spen,
-            title: "当前源>" + sourcename,
+            title: "当前源>" + runMode + "_" + sourcename,
             noAutoDismiss: true,
             position: 1,
             extraInputBox: new hikerPop.ResExtraInputBox({
                 hint: "源关键字",
-                title: runMode,
+                title: "ok",
                 onChange(s, manage) {
                     //log("onChange:"+s);
                     let flist = names.filter(x => x.includes(s));
@@ -123,7 +123,7 @@ function selectSource2(selectType) {
                     //toast(s);
                     //log(manage.list);
                 },
-                //titleVisible: false
+                titleVisible: false
             }),
             longClick(s, i) {
                 /*
@@ -139,10 +139,7 @@ function selectSource2(selectType) {
             },
             click(s, i, manage) {
                 pop.dismiss();
-                //setItem("no_loading", "1");
-                // manage.list.forEach((v, ii) => (
-                //   manage.list[ii] = i === ii ? "‘‘" + names[ii] + "’’" : names[ii].replace(/[’‘]/g, "")
-                // ));
+
                 let input = s.replace(/[’‘]/g, "");
                 if (Juconfig["runMode"] == runMode && input == Juconfig[runMode + 'sourcename']) {
                     return 'toast://' + runMode + ' 主页源：' + input;
@@ -213,6 +210,9 @@ function selectSource2(selectType) {
 }
 //封装选择主页源方法
 function selectSource(selectType) {
+    if (getItem('selectSource_col_type') == 'hikerPop') {
+        return selectSource2(selectType);
+    }
     let sourcenames = [];
     let selectIndex = -1;
 
