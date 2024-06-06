@@ -113,13 +113,8 @@ function selectSource2(selectType) {
                 hint: "源关键字",
                 title: "ok",
                 onChange(s, manage) {
-                    log(manage.toString());
                     //log("onChange:"+s);
                     let flist = items.filter(x => x.title.includes(s));
-                    //manage.iconList.length = 0;
-                    //flist.forEach(x => {
-                    //    manage.iconList.push(x);
-                    //});
                     manage.change(flist);
                 },
                 defaultValue: "",
@@ -195,19 +190,13 @@ function selectSource2(selectType) {
                             manage.changeColumns(spen);
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
-                            manage.iconList.length = 0;
                             let items = getListData("yi", selectType).map(v => {
-                                let vname = v.name == sourcename ? "‘‘" + v.name + "’’" : v.name;
                                 return {title:vname,icon:v.img};
                             });
-                            items.forEach(x => {
-                                manage.iconList.push(x);
-                            });
-                            manage.change();
+                            manage.change(items);
                         } else if (i === 2) {
-                            manage.iconList.reverse();
                             items.reverse();
-                            manage.change();
+                            manage.change(items);
                         }
                     }
                 });
