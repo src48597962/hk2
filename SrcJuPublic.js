@@ -92,46 +92,14 @@ function getListData(lx, selectType) {
 }
 //选择主页源新方法hikerPop
 function selectSource2(selectType) {
-
-
-        //const runtimeConfig = GM.defineModule("runtimeConfig");
-        //let source = runtimeConfig.getCurrentSource();
-        //let name = source ? source.name : "";
         const hikerPop = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6966");
-        /*
-        let sourceNameList = runtimeConfig.getAllSource().map(v => {
-            return v.name == name ? "‘‘" + v.name + "’’" : v.name;
-        });
-        */
-
-        let name = Juconfig[runMode + 'sourcename'];
-        let sourceNameList = getListData("yi", selectType);
-
+        let sourcename = Juconfig[runMode + 'sourcename'];
+        let sourceList = getListData("yi", selectType);
 
         hikerPop.setUseStartActivity(false);
 
-        /*
-        function naturalSort(a, b) {
-            a = a.replace(/[’‘]/g, "");
-            b = b.replace(/[’‘]/g, "");
-            return a.localeCompare(b, undefined, {
-                numeric: true,
-                sensitivity: 'base'
-            });
-        }
-        */
 
-        let spen = 3;
-        /*
-        let items = sourceNameList.map((x, i) => {
-            return {
-                title: x,
-                url: i
-            }
-        })
-        */
-
-        let names = sourceNameList.map(v => v.name == name ? "‘‘" + v.name + "’’" : v.name);
+        let names = sourceList.map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
         let sname = names.slice();
 
         let manage_all = names.slice();
@@ -139,7 +107,7 @@ function selectSource2(selectType) {
         let pop = hikerPop.selectBottomRes({
             options: names,
             columns: spen,
-            title: "当前源>" + name,
+            title: "当前源>" + sourcename,
             noAutoDismiss: true,
             position: 1,
             extraInputBox: new hikerPop.ResExtraInputBox({
@@ -162,27 +130,16 @@ function selectSource2(selectType) {
                 titleVisible: false
             }),
             longClick(s, i) {
+                /*
                 showSelectOptions({
                     title: "分享视频源",
                     options: ["JS文件分享"].concat(getPastes()),
                     col: 2,
                     js: $.toString(name => {
-                        const runtimeConfig = GM.defineModule("runtimeConfig");
-                        let sources = runtimeConfig.getAllSource();
-                        let source = sources.find(v => v.name == name);
-                        let path = runtimeConfig.getAbsolutePath(source.ext);
-                        let pname = path.split("/").at(-1);
-                        let rule = fetch(path);
-                        if (!rule) return "toast://获取失败";
-                        if (MY_INDEX === 0) {
-                            writeFile("hiker://files/_cache/" + pname, fetch(path));
-                            return "share://hiker://files/_cache/" + pname;
-                        } else {
-                            let url = sharePaste(base64Encode(rule), input);
-                            return "copy://海阔视界，DRPY视频源「" + name + "」复制整条口令打开软件就会自动导入$" + url + "$" + pname + "@import=js:$.require('import?rule='+" + JSON.stringify(MY_RULE.title) + ")(input, true)";
-                        }
+                        
                     }, s.replace(/[’‘]/g, ""))
                 });
+                */
             },
             click(s, i, manage) {
                 log(s);
@@ -192,116 +149,38 @@ function selectSource2(selectType) {
                 //   manage.list[ii] = i === ii ? "‘‘" + names[ii] + "’’" : names[ii].replace(/[’‘]/g, "")
                 // ));
                 let newname = manage.list[i].replace(/[’‘]/g, "");
-                if (newname == name) {
+                if (newname == sourcename) {
                     return;
                 }
                 return 'toast://' + newname;
             },
             menuClick(manage) {
                 hikerPop.selectCenter({
-                    options: ["改变样式", "筛选源", "自然排序:" + (getItem("natural", "") == "" ? "关闭" : "启用"), "倒序", "刷新配置"],
+                    options: ["改变样式", "排序方法:" + (getItem('sourceListSort', 'update') == 'name' ? "名称" : "时间"), "列表倒序"],
                     columns: 2,
                     title: "请选择",
                     click(s, i) {
                         if (i === 0) {
-                            spen = spen == 3 ? 1 : 3;
+                            spen = spen == 3 ? 2 : 3;
                             manage.changeColumns(spen);
                         } else if (i === 1) {
-                            hikerPop.inputConfirm({
-                                content: "输入关键字 空显示全部",
-                                title: "筛选源",
-                                hint: "源关键字",
-                                defaultValue: searchKey,
-                                textarea: false, //多行模式
-                                maxTextarea: true,
-                                noAutoSoft: false,
-                                //hideCancel: true,
-                                confirm(text) {
-                                    let runtimeConfig = GM.defineModule("runtimeConfig", "runtimeConfig");
-                                    searchKey = text;
-                                    let list = runtimeConfig.getAllSource().map(x => x.name);
-                                    let flist = list.filter(x => x.includes(text));
-                                    manage.list.length = 0;
-                                    flist.forEach(x => {
-                                        manage.list.push(x);
-                                    });
-                                    manage.change();
-                                    //return "toast://输入了" + text;
-                                },
-
+                            setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
+                            manage.list.length = 0;
+                            let names = getListData("yi", selectType).map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
+                            names.forEach(x => {
+                                manage.list.push(x);
                             });
-                        } else if (i === 2) {
-                            let list = Object.assign([], manage.list);
-                            let natural = getItem("natural", "");
-                            if (natural == "") {
-                                manage.list.length = 0;
-                                list.sort(naturalSort).forEach(x => {
-                                    manage.list.push(x);
-                                });
-                            } else {
-                                manage.list.length = 0;
-                                sname.forEach(x => {
-                                    manage.list.push(x);
-                                })
-                            }
                             manage.change();
-                            setItem("natural", natural ? "" : "1");
-                        } else if (i == 3) {
+                        } else if (i === 2) {
                             manage.list.reverse();
                             names.reverse();
                             manage.change();
-                        } else {
-                            function arrayDifference(arr1, arr2) {
-                                const map = new Map(arr2.map(item => [item.key, item]));
-                                return arr1.filter(item => !map.has(item.key));
-                            }
-
-                            let runtimeConfig = GM.defineModule("runtimeConfig", "runtimeConfig");
-                            let list = runtimeConfig.getAllSource();
-                            let Ckey = runtimeConfig.getCurrentSource().key;
-                            //log(Ckey)
-                            let cfg = runtimeConfig.getCurrentConfig()
-                            let {
-                                path,
-                                name
-                            } = cfg;
-                            runtimeConfig.setCurrentConfig({
-                                path,
-                                name,
-                            });
-                            runtimeConfig.setCurrentSource(Ckey);
-                            let nsources = runtimeConfig.getAllSource();
-
-                            let alist = arrayDifference(nsources, list);
-                            let dlist = arrayDifference(list, nsources);
-
-                            if (alist.length > 0 || dlist.length > 0) {
-                                let msg = "";
-                                if (alist.length > 0) {
-                                    alist.forEach(x => {
-                                        manage.list.push(x.name);
-                                    })
-                                    log("新增:" + alist.map(k => k.name).join(","))
-                                    msg += "新增" + alist.length + "个源";
-                                }
-                                if (dlist.length > 0) {
-                                    dlist.forEach(x => {
-                                        manage.list.splice(manage.list.indexOf(x.name), 1);
-                                    })
-                                    log("移除:" + dlist.map(k => k.name).join(","))
-                                    msg += " 移除" + dlist.length + "个源";
-                                }
-                                manage.change();
-                                toast(msg + " 更多详情看log");
-                            } else {
-                                toast("已刷新");
-                            }
                         }
-                    },
+                    }
                 });
             }
         });
-    
+    return 'hiker://empty';
 }
 //封装选择主页源方法
 function selectSource(selectType) {
