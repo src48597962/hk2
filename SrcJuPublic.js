@@ -189,6 +189,7 @@ function selectSource2(selectType) {
                         if (i === 0) {
                             spen = spen == 3 ? 2 : 3;
                             manage.changeColumns(spen);
+                            let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
                             manage.scrollToPosition(index, true);
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
