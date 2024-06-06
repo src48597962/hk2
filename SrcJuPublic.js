@@ -109,6 +109,7 @@ function selectSource2(selectType) {
             title: "当前源>" + selectType + "_" + sourcename,
             noAutoDismiss: false,
             position: index,
+            toPosition: index,
             extraInputBox: new hikerPop.ResExtraInputBox({
                 hint: "源关键字",
                 title: "ok",
