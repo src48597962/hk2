@@ -204,7 +204,7 @@ function yiji() {
                 title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                 url: runMode==it?$('#noLoading#').lazyRule((input) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return selectSource2(input);
+                    return selectSource(input);
                 }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
                     Juconfig["runMode"] = input;
                     writeFile(cfgfile, JSON.stringify(Juconfig));
@@ -236,6 +236,18 @@ function yiji() {
                                     setItem("sourceListSort","name");
                                 }else{
                                     clearItem("sourceListSort");
+                                }
+                                refreshPage(false);
+                            })
+                        })
+                    },{
+                        title: "选源方式：" + (getItem("selectSource_col_type")=='hikerPop'?"hikerPop":"原生组件"),
+                        js: $.toString(() => {
+                            return $(["hikerPop","原生组件"], 1).select(() => {
+                                if(input=='hikerPop'){
+                                    setItem("selectSource_col_type","hikerPop");
+                                }else{
+                                    clearItem("selectSource_col_type");
                                 }
                                 refreshPage(false);
                             })
