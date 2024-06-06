@@ -141,18 +141,50 @@ function selectSource2(selectType) {
                 */
             },
             click(s, i, manage) {
-                log(s);
                 pop.dismiss();
                 //setItem("no_loading", "1");
-                clearItem("no_loading");
                 // manage.list.forEach((v, ii) => (
                 //   manage.list[ii] = i === ii ? "‘‘" + names[ii] + "’’" : names[ii].replace(/[’‘]/g, "")
                 // ));
-                let newname = manage.list[i].replace(/[’‘]/g, "");
-                if (newname == sourcename) {
-                    return;
+                let input = s.replace(/[’‘]/g, "");
+                if (Juconfig["runMode"] == runMode && input == Juconfig[runMode + 'sourcename']) {
+                    return 'toast://' + runMode + ' 主页源：' + input;
                 }
-                return 'toast://' + newname;
+                if (typeof (unRegisterTask) != "undefined") {
+                    unRegisterTask("juyue");
+                } else {
+                    toast("软件版本过低，可能存在异常");
+                }
+                try {
+                    let listMyVar = listMyVarKeys();
+                    listMyVar.forEach(it => {
+                        if (!/^SrcJu_|initConfig/.test(it)) {
+                            clearMyVar(it);
+                        }
+                    })
+                } catch (e) {
+                    xlog('清MyVar失败>' + e.message);
+                    clearMyVar(MY_RULE.title + "分类");
+                    clearMyVar(MY_RULE.title + "更新");
+                    clearMyVar(MY_RULE.title + "类别");
+                    clearMyVar(MY_RULE.title + "地区");
+                    clearMyVar(MY_RULE.title + "进度");
+                    clearMyVar(MY_RULE.title + "排序");
+                    clearMyVar("排名");
+                    clearMyVar("分类");
+                    clearMyVar("更新");
+                    clearMyVar(runMode + "_" + sourcename);
+                    clearMyVar("一级源接口信息");
+                }
+                try {
+                    refreshX5WebView('about:blank');
+                } catch (e) { }
+
+                Juconfig["runMode"] = runMode;
+                Juconfig[runMode + 'sourcename'] = input;
+                writeFile(cfgfile, JSON.stringify(Juconfig));
+                refreshPage(false);
+                return 'toast://' + runMode + ' 主页源已设置为：' + input;
             },
             menuClick(manage) {
                 hikerPop.selectCenter({
