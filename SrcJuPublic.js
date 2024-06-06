@@ -134,6 +134,7 @@ function selectSource2(selectType) {
         */
 
         let names = sourceNameList.map(v => v.name);
+        log(names);
         let sname = names.slice();
 
         let manage_all = names.slice();
