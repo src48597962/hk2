@@ -191,7 +191,7 @@ function selectSource2(selectType) {
                         } else if (i === 1) {
                             setItem("sourceListSort", getItem('sourceListSort') == 'name' ? "" : "name");
                             let items = getListData("yi", selectType).map(v => {
-                                return {title:vname,icon:v.img};
+                                return {title:v.name,icon:v.img};
                             });
                             manage.change(items);
                             let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
