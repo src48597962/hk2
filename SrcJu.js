@@ -204,7 +204,7 @@ function yiji() {
                 title: runMode==it?`““””<b><span style="color: #3399cc">`+it+`</span></b>`:it,
                 url: runMode==it?$('#noLoading#').lazyRule((input) => {
                     require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuPublic.js');
-                    return selectSource(input);
+                    return selectSource2(input);
                 }, it):$('#noLoading#').lazyRule((cfgfile,Juconfig,input) => {
                     Juconfig["runMode"] = input;
                     writeFile(cfgfile, JSON.stringify(Juconfig));
