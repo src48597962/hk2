@@ -101,14 +101,13 @@ function selectSource2(selectType) {
             return {title:v.name,icon:v.img};
         });
         let spen = 3;
-        let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
 
         let pop = hikerPop.selectBottomResIcon({
             iconList: items,
             columns: spen,
             title: "当前源>" + selectType + "_" + sourcename,
             noAutoDismiss: false,
-            position: index,
+            scrollToPosition: sourcename,
             extraInputBox: new hikerPop.ResExtraInputBox({
                 hint: "源关键字",
                 title: "ok",
