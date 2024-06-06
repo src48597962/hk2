@@ -98,12 +98,11 @@ function selectSource2(selectType) {
 
         hikerPop.setUseStartActivity(false);
 
-
         let names = sourceList.map(v => v.name == sourcename ? "‘‘" + v.name + "’’" : v.name);
-        let sname = names.slice();
-
-        let manage_all = names.slice();
-        let searchKey = "";
+        //let sname = names.slice();
+        let spen = 3;
+        //let manage_all = names.slice();
+        //let searchKey = "";
         let pop = hikerPop.selectBottomRes({
             options: names,
             columns: spen,
@@ -144,7 +143,8 @@ function selectSource2(selectType) {
             click(s, i, manage) {
                 log(s);
                 pop.dismiss();
-                setItem("no_loading", "1");
+                //setItem("no_loading", "1");
+                clearItem("no_loading");
                 // manage.list.forEach((v, ii) => (
                 //   manage.list[ii] = i === ii ? "‘‘" + names[ii] + "’’" : names[ii].replace(/[’‘]/g, "")
                 // ));
