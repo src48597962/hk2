@@ -101,13 +101,14 @@ function selectSource2(selectType) {
             return {title:v.name,icon:v.img};
         });
         let spen = 3;
+        let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
 
         let pop = hikerPop.selectBottomResIcon({
             iconList: items,
             columns: spen,
             title: "当前源>" + selectType + "_" + sourcename,
             noAutoDismiss: false,
-            scrollToPosition: sourcename,
+            position: index,
             extraInputBox: new hikerPop.ResExtraInputBox({
                 hint: "源关键字",
                 title: "ok",
@@ -193,9 +194,14 @@ function selectSource2(selectType) {
                                 return {title:vname,icon:v.img};
                             });
                             manage.change(items);
+                            let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
+                            manage.scrollToPosition(index, true);
+                            manage.setSelectedIndex(index);
                         } else if (i === 2) {
                             items.reverse();
                             manage.change(items);
+                            let index = items.indexOf(items.filter(d => d.title == sourcename)[0]);
+                            manage.setSelectedIndex(index);
                         }
                     }
                 });
@@ -781,4 +787,61 @@ function selectSource2(selectType) {
         });
     return 'hiker://empty';
 }
+
+
+#noLoading#@lazyRule=.js:(
+() => {
+    const hikerPop = $.require("hikerPop.js");
+    let spen = 2;
+    let list = new Array(50);
+    list.fill({title: "Test", icon: "https://hikerfans.com/tubiao/erdi/226.png"});
+    let pop = hikerPop.selectBottomResIcon({iconList: list, columns: spen, title: "\u7535\u89c6\u5267-\u7e41\u82b1", noAutoDismiss: false, position: 0, toPosition: 20, extraInputBox: new hikerPop.ResExtraInputBox({hint: "\u4f60\u597d", title: "ok", onChange(s, manage) {
+        log("onChange:" + s);
+        if (s.length > 5) {
+            return true;
+        }
+    }, defaultValue: "\u7e41\u82b1", click(s, manage) {
+        toast(s);
+    }}), click(item, i, manage) {
+        toast(item.title);
+    }, menuClick(manage) {
+        hikerPop.selectCenter({options: ["\u6539\u53d8\u6837\u5f0f", "\u6dfb\u52a0\u4e00\u4e2a\u9879\u76ee", "\u5220\u9664\u4e00\u4e2a\u9879\u76ee", "\u5012\u5e8f", "\u6ed1\u52a8\u5230\u6700\u540e", "\u6ed1\u52a8\u5230\u9876\u90e8", "\u6539\u53d8\u9009\u62e9"], columns: 3, title: "\u8bf7\u9009\u62e9", click(s, i) {
+            if (i === 0) {
+                spen = spen == 2 ? 1 : 2;
+                manage.changeColumns(spen);
+            } else {
+                if (i === 1) {
+                    list.push({title: "\u6d4b\u8bd5", icon: "hiker://images/icon_class"});
+                    manage.change(list);
+                } else {
+                    if (i === 2) {
+                        list.splice(list.length - 1, 1);
+                        manage.change(list);
+                    } else {
+                        if (i === 3) {
+                            list.reverse();
+                            manage.change(list, manage.getSize() - 1);
+                        } else {
+                            if (i === 4) {
+                                log(manage.getSize());
+                                manage.scrollToPosition(manage.getSize() - 1, true);
+                            } else {
+                                if (i === 5) {
+                                    log(manage.getSize());
+                                    manage.scrollToPosition(0, true);
+                                } else {
+                                    if (i === 6) {
+                                        manage.setSelectedIndex(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }});
+    }});
+    return "hiker://empty";
+}
+)()
 */
