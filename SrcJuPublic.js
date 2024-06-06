@@ -105,9 +105,7 @@ function selectSource2(selectType) {
         */
 
         let name = Juconfig[runMode + 'sourcename'];
-        let sourceNameList = getListData("yi", selectType).map(v=>{
-            return v.name == name ? "‘‘" + v.name + "’’" : v.name;
-        })
+        let sourceNameList = getListData("yi", selectType);
 
 
         hikerPop.setUseStartActivity(false);
@@ -132,9 +130,8 @@ function selectSource2(selectType) {
             }
         })
         */
-        log(sourceNameList);
-        let names = sourceNameList.map(v => v.name);
-        log(names);
+
+        let names = sourceNameList.map(v => v.name == name ? "‘‘" + v.name + "’’" : v.name);
         let sname = names.slice();
 
         let manage_all = names.slice();
