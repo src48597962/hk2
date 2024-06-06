@@ -104,7 +104,7 @@ function selectSource2(selectType) {
         let spen = 3;
 
         let pop = hikerPop.selectBottomResIcon({
-            options: items,
+            iconList: items,
             columns: spen,
             title: "当前源>" + selectType + "_" + sourcename,
             noAutoDismiss: true,
@@ -140,12 +140,10 @@ function selectSource2(selectType) {
                 });
                 */
             },
-            click(s, i, manage) {
-                log(s);
-                log(s.title);
+            click(item, i, manage) {
                 pop.dismiss();
 
-                let input = s.replace(/[’‘]/g, "");
+                let input = item.title.replace(/[’‘]/g, "");
                 if (selectType == runMode && input == Juconfig[selectType + 'sourcename']) {
                     return 'toast://' + selectType + ' 主页源：' + input;
                 }
@@ -207,7 +205,7 @@ function selectSource2(selectType) {
                             manage.change();
                         } else if (i === 2) {
                             manage.list.reverse();
-                            names.reverse();
+                            items.reverse();
                             manage.change();
                         }
                     }
