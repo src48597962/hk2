@@ -115,7 +115,7 @@ function selectSource2(selectType) {
                 title: "ok",
                 onChange(s, manage) {
                     //log("onChange:"+s);
-                    let flist = items.filter(x => x.title.includes(s));
+                    let flist = items.filter(x => x.title.toLowerCase().includes(s.toLowerCase()));
                     manage.change(flist);
                 },
                 defaultValue: "",
