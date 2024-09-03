@@ -474,13 +474,13 @@ function erji() {
                     let i1 = parseInt(列表.length / 6);
                     let i2 = parseInt(列表.length / 4);
                     let i3 = parseInt(列表.length / 2);
-                    let list1 = 列表[i1].title;
-                    let list2 = 列表[i2].title;
-                    let list3 = 列表[i3].title;
-                    log(list1);
-                    log(list2);
-                    log(list3);
-                    if(parseInt(list1.match(/(\d+)/)[0])>parseInt(list2.match(/(\d+)/)[0]) && parseInt(list2.match(/(\d+)/)[0])>parseInt(list3.match(/(\d+)/)[0])){
+                    let len1 = parseInt(列表[i1].title.match(/(\d+)/)[0]);
+                    let len2 = parseInt(列表[i2].title.match(/(\d+)/)[0]);
+                    let len3 = parseInt(列表[i3].title.match(/(\d+)/)[0]);
+                    log(len1);
+                    log(len2);
+                    log(len3);
+                    if(len1>len2 && len2>len3){
                         列表.reverse();
                     }
                 }catch(e){
