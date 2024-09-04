@@ -472,12 +472,13 @@ function erji() {
             if(列表.length>0){
                 function checkAndReverseArray(arr) {
                     const numbers = [];
-                    for (const item of arr) {
-                        const digits = item.title.match(/\d+/);
+                    arr.forEach(it=>{
+                        const digits = it.title.match(/\d+/);
                         if (digits) {
                             numbers.push(parseInt(digits[0]));
                         }
-                    }
+                    })
+
                     if (numbers.length < 3) {
                         return arr;
                     }
