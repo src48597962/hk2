@@ -472,7 +472,7 @@ function erji() {
             if(列表.length>0){
                 function checkAndReverseArray(arr) {
                     const numbers = [];
-                    arr.forEach(it=>{
+                    arr.slice(0, 50).forEach(it=>{
                         const digits = it.title.match(/\d+/);
                         if (digits) {
                             numbers.push(parseInt(digits[0]));
