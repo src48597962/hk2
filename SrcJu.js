@@ -470,19 +470,34 @@ function erji() {
 
             let 列表 = 列表s[lineid] || [];
             if(列表.length>0){
-                try{
-                    let i1 = parseInt(列表.length / 6);
-                    let i2 = parseInt(列表.length / 4);
-                    let i3 = parseInt(列表.length / 2);
-                    let len1 = parseInt(列表[i1].title.match(/(\d+)/)[0]);
-                    let len2 = parseInt(列表[i2].title.match(/(\d+)/)[0]);
-                    let len3 = parseInt(列表[i3].title.match(/(\d+)/)[0]);
-                    log(len1);
-                    log(len2);
-                    log(len3);
-                    if(len1>len2 && len2>len3){
-                        列表.reverse();
+                function checkAndReverseArray(arr) {
+                    const numbers = [];
+                    for (const item of arr) {
+                        const digits = item.title.match(/\d+/);
+                        if (digits) {
+                            numbers.push(parseInt(digits[0]));
+                        }
                     }
+                    if (numbers.length < 3) {
+                        return arr;
+                    }
+                    let increasingCount = 0;
+                    let decreasingCount = 0;
+                    for (let i = 1; i < numbers.length; i++) {
+                        if (numbers[i] > numbers[i - 1]) {
+                            increasingCount++;
+                        } else if (numbers[i] < numbers[i - 1]) {
+                            decreasingCount++;
+                        }
+                    }
+                    if (increasingCount > decreasingCount) {
+                        return arr;
+                    } else {
+                        return arr.reverse();
+                    }
+                }
+                try{
+                    列表 = checkAndReverseArray(列表);
                 }catch(e){
                     //xlog('√强制修正选集顺序失败>'+e.message)
                 }
