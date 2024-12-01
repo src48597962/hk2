@@ -506,7 +506,7 @@ function erji() {
             if (getMyVar(sname + 'sort') == '1') {
                 列表.reverse();
             }
-
+            stype = details.type || stype;
             let itype = stype=="漫画"?"comic":stype=="小说"?"novel":"";
             let 解析 = parse['解析'];
             let lazy = $("").lazyRule((解析,参数) => {
@@ -515,7 +515,7 @@ function erji() {
                 try{
                     公共 = $.require('jiekou'+(/聚阅/.test(参数.规则名)?'':'?rule=聚阅√')).公共(参数.标识);
                 }catch(e){
-                    toast('未找到聚阅规则子页面');
+                    //toast('未找到聚阅规则子页面');
                 }
                 eval("let 解析2 = " + 解析);
                 let 标识 = 参数.标识;
