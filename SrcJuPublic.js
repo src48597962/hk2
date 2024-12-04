@@ -367,7 +367,7 @@ function getYiData(datatype, od) {
                     }
                 })
                 d.push({
-                    pic_url: "https://hikerfans.com/weisyr/img/Loading1.gif",
+                    pic_url: "http://123.56.105.145/weisyr/img/Loading1.gif",
                     col_type: "pic_1_center",
                     url: "hiker://empty",
                     extra: {
