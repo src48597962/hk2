@@ -31,7 +31,7 @@ function SRCSet() {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
             jiekouapi(sourcefile);
         }, sourcefile),
-        img: "https://hikerfans.com/tubiao/more/25.png",
+        img: "http://123.56.105.145/tubiao/more/25.png",
         col_type: "icon_4",
         extra: {
             longClick: [{
@@ -257,7 +257,7 @@ function SRCSet() {
                 });
             }
         }),
-        img: "https://hikerfans.com/tubiao/more/290.png",
+        img: "http://123.56.105.145/tubiao/more/290.png",
         col_type: "icon_4"
     });
     d.push({
@@ -284,7 +284,7 @@ function SRCSet() {
                 })
             }
         }),
-        img: "https://hikerfans.com/tubiao/more/43.png",
+        img: "http://123.56.105.145/tubiao/more/43.png",
         col_type: "icon_4",
         extra: {
             longClick: [{
@@ -355,7 +355,7 @@ function SRCSet() {
                 }
             },sharelist)
         }),
-        img: "https://hikerfans.com/tubiao/more/3.png",
+        img: "http://123.56.105.145/tubiao/more/3.png",
         col_type: "icon_4",
         extra: {
             longClick: [{
@@ -605,7 +605,7 @@ function SRCSet() {
                 }
             }, sourcefile, base64Encode(JSON.stringify(it)), Juconfig['sharePaste']),
             desc: (it.group?"["+it.group+"] ":"") + it.type,
-            img: it.img || "https://hikerfans.com/tubiao/ke/31.png",
+            img: it.img || "http://123.56.105.145/tubiao/ke/31.png",
             col_type: "avatar",
             extra: {
                 id: it.type+"_"+it.name
@@ -1060,7 +1060,7 @@ function importConfirm(ruleTitle) {
                 }
             }, sourcefile, base64Encode(JSON.stringify(it)), ruleTitle),
             desc: (it.group?"["+it.group+"] ":"") + it.type,
-            img: it.img || "https://hikerfans.com/tubiao/ke/31.png",
+            img: it.img || "http://123.56.105.145/tubiao/ke/31.png",
             col_type: "avatar",
             extra: {
                 id: it.type+"_"+it.name
