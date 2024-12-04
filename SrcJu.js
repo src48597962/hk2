@@ -76,7 +76,7 @@ function yiji() {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcJuSet.js');
                 SRCSet();
             }),
-            pic_url: "https://hikerfans.com/tubiao/more/129.png",
+            pic_url: "http://123.56.105.145/tubiao/more/129.png",
             col_type: 'icon_5',
             extra: {
                 newWindow: true,
@@ -88,14 +88,14 @@ function yiji() {
             d.push({
                 title: zz,
                 url: rulePage(zz,页码[zz]),
-                pic_url: "https://hikerfans.com/tubiao/more/229.png",
+                pic_url: "http://123.56.105.145/tubiao/more/229.png",
                 col_type: 'icon_5'
             })
         }else{
             d.push({
                 title: "收藏",
                 url: "hiker://collection?rule="+MY_RULE.title,
-                pic_url: "https://hikerfans.com/tubiao/more/109.png",
+                pic_url: "http://123.56.105.145/tubiao/more/109.png",
                 col_type: 'icon_5'
             })
         }
@@ -141,7 +141,7 @@ function yiji() {
                             getYiData(zz);
                         },sousuoextra,zz)
                     },sousuoextra,页码[zz],zz),
-                pic_url: "https://hikerfans.com/tubiao/more/287.png",
+                pic_url: "http://123.56.105.145/tubiao/more/287.png",
                 col_type: 'icon_5',
                 extra: sousuoextra
             })
@@ -152,7 +152,7 @@ function yiji() {
                     require(config.依赖);
                     newsousuopage();
                 }),
-                pic_url: "https://hikerfans.com/tubiao/more/101.png",
+                pic_url: "http://123.56.105.145/tubiao/more/101.png",
                 col_type: 'icon_5',
                 extra: sousuoextra
             })
@@ -162,14 +162,14 @@ function yiji() {
             d.push({
                 title: zz,
                 url: rulePage(zz,页码[zz]),
-                pic_url: "https://hikerfans.com/tubiao/more/288.png",
+                pic_url: "http://123.56.105.145/tubiao/more/288.png",
                 col_type: 'icon_5'
             })
         }else{
             d.push({
                 title: "历史",
                 url: "hiker://history?rule="+MY_RULE.title,
-                pic_url: "https://hikerfans.com/tubiao/more/213.png",
+                pic_url: "http://123.56.105.145/tubiao/more/213.png",
                 col_type: 'icon_5'
             })
         }
@@ -180,7 +180,7 @@ function yiji() {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
                 bookCase();
             }),
-            pic_url: "https://hikerfans.com/tubiao/more/286.png",
+            pic_url: "http://123.56.105.145/tubiao/more/286.png",
             col_type: 'icon_5',
             extra: {
                 longClick: [{
@@ -544,7 +544,7 @@ function erji() {
                                 deleteItemByCls("SrcJudescload");
                                 return "hiker://empty";
                             }),
-                            pic_url: "https://hikerfans.com/tubiao/ke/91.png",
+                            pic_url: "http://123.56.105.145/tubiao/ke/91.png",
                             extra: {
                                 cls: "SrcJudescload"
                             }
@@ -558,7 +558,7 @@ function erji() {
                     }
                     return "hiker://empty";
                 }, erjidetails.desc||""),
-                pic_url: "https://hikerfans.com/tubiao/messy/32.svg",
+                pic_url: "http://123.56.105.145/tubiao/messy/32.svg",
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "Juloadlist"
@@ -569,7 +569,7 @@ function erji() {
                 d.push({
                     title: "聚影搜索",
                     url: JySearch(sskeyword, getItem("juyingSeachType")),
-                    pic_url: 'https://hikerfans.com/tubiao/messy/25.svg',
+                    pic_url: 'http://123.56.105.145/tubiao/messy/25.svg',
                     col_type: 'icon_small_3',
                     extra: {
                         cls: "Juloadlist",
@@ -591,7 +591,7 @@ function erji() {
                         require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcBookCase.js');
                         bookCase();
                     }),
-                    pic_url: 'https://hikerfans.com/tubiao/messy/70.svg',
+                    pic_url: 'http://123.56.105.145/tubiao/messy/70.svg',
                     col_type: 'icon_small_3',
                     extra: {
                         cls: "Juloadlist",
@@ -646,7 +646,7 @@ function erji() {
                         return  "hiker://empty";
                     }
                 }, sskeyword, sgroup||"" ,stype),
-                pic_url: 'https://hikerfans.com/tubiao/messy/20.svg',
+                pic_url: 'http://123.56.105.145/tubiao/messy/20.svg',
                 col_type: 'icon_small_3',
                 extra: {
                     cls: "Juloadlist",
@@ -1533,7 +1533,7 @@ function setMark(data) {
 function downloadicon() {
     try {
         if (!fileExist('hiker://files/cache/src/管理.svg')) {
-            downloadFile('https://hikerfans.com/tubiao/messy/13.svg', 'hiker://files/cache/src/管理.svg');
+            downloadFile('http://123.56.105.145/tubiao/messy/13.svg', 'hiker://files/cache/src/管理.svg');
         }
         if (!fileExist('hiker://files/cache/src/更新.webp')) {
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/更新.webp", 'hiker://files/cache/src/更新.webp');
@@ -1545,7 +1545,7 @@ function downloadicon() {
             downloadFile(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "img/排行.webp", 'hiker://files/cache/src/排行.webp');
         }
         if (!fileExist('hiker://files/cache/src/收藏.svg')) {
-            downloadFile('https://hikerfans.com/tubiao/messy/165.svg', 'hiker://files/cache/src/收藏.svg');
+            downloadFile('http://123.56.105.145/tubiao/messy/165.svg', 'hiker://files/cache/src/收藏.svg');
         }
     } catch (e) { }
 }
