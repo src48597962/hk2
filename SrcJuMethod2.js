@@ -90,7 +90,7 @@ let 属性 = function(fileid, parse, attribut) {
 };
 
 function 图片解密(key, iv, kiType, mode) {
-    const CryptoUtil = $.require("hiker://assets/crypto-java.js");//$.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6805&auth=5e44e1a1-51f6-5825-97ae-4d381341bc00");
+    const CryptoUtil = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6805&auth=5e44e1a1-51f6-5825-97ae-4d381341bc00");
     let getData = (str, type) => {
         switch (type) {
             case "Hex":
