@@ -90,8 +90,7 @@ let 属性 = function(fileid, parse, attribut) {
 };
 
 function 图片解密(key, iv, kiType, mode) {
-    //by LoyDgIk
-    const CryptoUtil = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6805&auth=5e44e1a1-51f6-5825-97ae-4d381341bc00");
+    const CryptoUtil = $.require("hiker://assets/crypto-java.js");//$.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6805&auth=5e44e1a1-51f6-5825-97ae-4d381341bc00");
     let getData = (str, type) => {
         switch (type) {
             case "Hex":
@@ -113,12 +112,44 @@ function 图片解密(key, iv, kiType, mode) {
     return encrypted.toInputStream();
 }
 
+function 图片解密2(key, iv, kiType, mode, base64Dec) {
+    try {
+        if (input == null) throw new Error("");
+        const CryptoUtil = $.require("hiker://assets/crypto-java.js");
+        let getData = (str, type) => {
+            switch (type) {
+                case "Hex":
+                    return CryptoUtil.Data.parseHex(str);
+                case "Base64":
+                    return CryptoUtil.Data.parseBase64(str);
+                case "UTF8":
+                default:
+                    return CryptoUtil.Data.parseUTF8(str);
+            }
+        }
+        let keyData = getData(key, kiType);
+        let ivData = getData(iv, kiType);
+        let textData = CryptoUtil.Data.parseInputStream(input);
+        if(base64Dec){
+            textData = textData.base64Decode();
+        }
+        let encrypted = CryptoUtil.AES.decrypt(textData, keyData, {
+            mode: mode, //"AES/CBC/PKCS7Padding",
+            iv: ivData
+        });
+        return encrypted.toInputStream();
+    } catch (e) {
+        return;
+    }
+}
+
 let exports = {
     "一级": 一级,
     "二级": 二级,
     "公共": 公共,
     "属性": 属性,
-    "imageDecrypt": 图片解密
+    "imageDecrypt": 图片解密,
+    "imageDecrypt2": 图片解密2
 }
 try{
     let exportskeys = Object.keys(exports);
