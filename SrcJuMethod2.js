@@ -149,7 +149,7 @@ let exports = {
     "公共": 公共,
     "属性": 属性,
     "imageDecrypt": 图片解密,
-    "imageDecrypt2": 图片解密2
+    "imgDec": 图片解密2
 }
 try{
     let exportskeys = Object.keys(exports);
