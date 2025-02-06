@@ -8,7 +8,10 @@ var SrcParseS = {
     聚阅: function (vipUrl) {
         if(/www\.aliyundrive\.com|www\.alipan\.com/.test(vipUrl)) {
             return $("hiker://empty#noRecordHistory##noHistory#").rule((input) => {
-                require('https://raw.gitcode.com/src48597962/juying/raw/master/SrcJyAliDisk.js');
+                initConfig({
+                    云盘: 'https://raw.gitcode.com/src48597962/juying/raw/master/'
+                })
+                require(config.云盘 + 'SrcJyAliDisk.js');
                 aliShareUrl(input);
             },vipUrl);
         }else if(/pan\.quark\.cn|drive\.uc\.cn/.test(vipUrl)) {
