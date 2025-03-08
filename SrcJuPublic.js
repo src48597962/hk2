@@ -92,7 +92,7 @@ function getListData(lx, selectType) {
 }
 //选择主页源新方法hikerPop
 function selectSource2(selectType) {
-        const hikerPop = $.require("http://hiker.nokia.press/hikerule/rulelist.json?id=6966");
+        const hikerPop = $.require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + "hikerPop.js");
         let sourceList = getListData("yi", selectType);
 
         hikerPop.setUseStartActivity(false);
