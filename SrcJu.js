@@ -612,7 +612,7 @@ function erji() {
                             "bookName": name,
                             "bookTopPic": pic,
                             "parseCode": download,
-                            "ruleName": MY_RULE._title || MY_RULE.title,
+                            "ruleName": sname + " (聚阅)",
                             "type": itype,
                             "decode": 公共["imgdec"]?$.type(公共["imgdec"])=="function"?$.toString((imgdec)=>{
                                 let imgDecrypt = imgdec;
