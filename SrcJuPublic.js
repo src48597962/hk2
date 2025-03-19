@@ -141,44 +141,7 @@ function selectSource2(selectType) {
                 pop.dismiss();
 
                 let input = item.title.replace(/[’‘]/g, "");
-                if (selectType == runMode && input == Juconfig[selectType + 'sourcename']) {
-                    return 'toast://' + selectType + ' 主页源：' + input;
-                }
-                if (typeof (unRegisterTask) != "undefined") {
-                    unRegisterTask("juyue");
-                } else {
-                    toast("软件版本过低，可能存在异常");
-                }
-                try {
-                    let listMyVar = listMyVarKeys();
-                    listMyVar.forEach(it => {
-                        if (!/^SrcJu_|initConfig/.test(it)) {
-                            clearMyVar(it);
-                        }
-                    })
-                } catch (e) {
-                    xlog('清MyVar失败>' + e.message);
-                    clearMyVar(MY_RULE.title + "分类");
-                    clearMyVar(MY_RULE.title + "更新");
-                    clearMyVar(MY_RULE.title + "类别");
-                    clearMyVar(MY_RULE.title + "地区");
-                    clearMyVar(MY_RULE.title + "进度");
-                    clearMyVar(MY_RULE.title + "排序");
-                    clearMyVar("排名");
-                    clearMyVar("分类");
-                    clearMyVar("更新");
-                    clearMyVar(runMode + "_" + sourcename);
-                    clearMyVar("一级源接口信息");
-                }
-                try {
-                    refreshX5WebView('about:blank');
-                } catch (e) { }
-
-                Juconfig["runMode"] = runMode;
-                Juconfig[runMode + 'sourcename'] = input;
-                writeFile(cfgfile, JSON.stringify(Juconfig));
-                refreshPage(false);
-                return 'toast://' + runMode + ' 主页源已设置为：' + input;
+                return changeSource(input);
             },
             menuClick(manage) {
                 hikerPop.selectCenter({
@@ -211,6 +174,46 @@ function selectSource2(selectType) {
             }
         });
     return 'hiker://empty';
+}
+function changeSource(input) {
+    if (selectType == runMode && input == Juconfig[selectType + 'sourcename']) {
+        return 'toast://' + selectType + ' 主页源：' + input;
+    }
+    if (typeof (unRegisterTask) != "undefined") {
+        unRegisterTask("juyue");
+    } else {
+        toast("软件版本过低，可能存在异常");
+    }
+    try {
+        let listMyVar = listMyVarKeys();
+        listMyVar.forEach(it => {
+            if (!/^SrcJu_|initConfig/.test(it)) {
+                clearMyVar(it);
+            }
+        })
+    } catch (e) {
+        xlog('清MyVar失败>' + e.message);
+        clearMyVar(MY_RULE.title + "分类");
+        clearMyVar(MY_RULE.title + "更新");
+        clearMyVar(MY_RULE.title + "类别");
+        clearMyVar(MY_RULE.title + "地区");
+        clearMyVar(MY_RULE.title + "进度");
+        clearMyVar(MY_RULE.title + "排序");
+        clearMyVar("排名");
+        clearMyVar("分类");
+        clearMyVar("更新");
+        clearMyVar(runMode + "_" + sourcename);
+        clearMyVar("一级源接口信息");
+    }
+    try {
+        refreshX5WebView('about:blank');
+    } catch (e) { }
+
+    Juconfig["runMode"] = runMode;
+    Juconfig[runMode + 'sourcename'] = input;
+    writeFile(cfgfile, JSON.stringify(Juconfig));
+    refreshPage(false);
+    return 'toast://' + runMode + ' 主页源已设置为：' + input;
 }
 //封装选择主页源方法
 function selectSource(selectType) {
