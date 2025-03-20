@@ -141,7 +141,7 @@ function selectSource2(selectType) {
                 pop.dismiss();
 
                 let input = item.title.replace(/[’‘]/g, "");
-                return changeSource(input);
+                return changeSource(selectType, input);
             },
             menuClick(manage) {
                 hikerPop.selectCenter({
@@ -175,9 +175,9 @@ function selectSource2(selectType) {
         });
     return 'hiker://empty';
 }
-function changeSource(input) {
-    if (selectType == runMode && input == Juconfig[selectType + 'sourcename']) {
-        return 'toast://' + selectType + ' 主页源：' + input;
+function changeSource(stype, sname) {
+    if (stype == runMode && sname == Juconfig[stype + 'sourcename']) {
+        return 'toast://' + stype + ' 主页源：' + sname;
     }
     if (typeof (unRegisterTask) != "undefined") {
         unRegisterTask("juyue");
@@ -210,10 +210,10 @@ function changeSource(input) {
     } catch (e) { }
 
     Juconfig["runMode"] = runMode;
-    Juconfig[runMode + 'sourcename'] = input;
+    Juconfig[runMode + 'sourcename'] = sname;
     writeFile(cfgfile, JSON.stringify(Juconfig));
     refreshPage(false);
-    return 'toast://' + runMode + ' 主页源已设置为：' + input;
+    return 'toast://' + runMode + ' 主页源已设置为：' + sname;
 }
 //封装选择主页源方法
 function selectSource(selectType) {
