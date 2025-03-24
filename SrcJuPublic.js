@@ -202,18 +202,18 @@ function changeSource(stype, sname) {
         clearMyVar("排名");
         clearMyVar("分类");
         clearMyVar("更新");
-        clearMyVar(runMode + "_" + sourcename);
+        clearMyVar(stype + "_" + sourcename);
         clearMyVar("一级源接口信息");
     }
     try {
         refreshX5WebView('about:blank');
     } catch (e) { }
 
-    Juconfig["runMode"] = runMode;
-    Juconfig[runMode + 'sourcename'] = sname;
+    Juconfig["runMode"] = stype;
+    Juconfig[stype + 'sourcename'] = sname;
     writeFile(cfgfile, JSON.stringify(Juconfig));
     refreshPage(false);
-    return 'toast://' + runMode + ' 主页源已设置为：' + sname;
+    return 'toast://' + stype + ' 主页源已设置为：' + sname;
 }
 //封装选择主页源方法
 function selectSource(selectType) {
