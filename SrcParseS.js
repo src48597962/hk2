@@ -9,9 +9,9 @@ var SrcParseS = {
         if(/www\.aliyundrive\.com|www\.alipan\.com/.test(vipUrl)) {
             return $("hiker://empty#noRecordHistory##noHistory#").rule((input) => {
                 initConfig({
-                    云盘: 'https://raw.gitcode.com/src48597962/juying/raw/master/'
+                    聚影: 'https://raw.gitcode.com/src48597962/juying/raw/master/'
                 })
-                require(config.云盘 + 'SrcJyAliDisk.js');
+                require(config.聚影 + 'SrcJyAliDisk.js');
                 aliShareUrl(input);
             },vipUrl);
         }else if(/pan\.quark\.cn|drive\.uc\.cn/.test(vipUrl)) {
