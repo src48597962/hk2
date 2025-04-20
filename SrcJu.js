@@ -508,7 +508,10 @@ function erji() {
             }
             stype = details.type || stype;
             let itype = stype=="漫画"?"comic":stype=="小说"?"novel":"";
-            let 解析 = parse['解析'];
+            let 解析 = parse['解析'] || function (url) {
+                require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcParseS.js');
+                return SrcParseS.聚阅(url, (stype=="听书"||stype=="音频")?1:0);
+            };
             let lazy = $("").lazyRule((解析,参数) => {
                 let url = input.split("##")[1];
                 let 公共 = {};
