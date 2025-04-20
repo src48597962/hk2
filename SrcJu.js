@@ -520,8 +520,9 @@ function erji() {
                 }catch(e){
                     //toast('未找到聚阅规则子页面');
                 }
-                eval("let 解析2 = " + 解析);
                 let 标识 = 参数.标识;
+                let stype = 标识.split('-')[0];
+                eval("let 解析2 = " + 解析);
                 return 解析2(url,公共,参数);
             }, 解析, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识});
             
