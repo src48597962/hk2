@@ -508,8 +508,9 @@ function erji() {
             }
             stype = details.type || stype;
             let itype = stype=="漫画"?"comic":stype=="小说"?"novel":"";
-            let 解析 = parse['解析'] || function (url) {
+            let 解析 = parse['解析'] || function (url,公共,参数) {
                 require(config.依赖.match(/http(s)?:\/\/.*\//)[0] + 'SrcParseS.js');
+                let stype = 参数.stype;
                 return SrcParseS.聚阅(url, (stype=="听书"||stype=="音频")?1:0);
             };
             let lazy = $("").lazyRule((解析,参数) => {
@@ -521,16 +522,15 @@ function erji() {
                     //toast('未找到聚阅规则子页面');
                 }
                 let 标识 = 参数.标识;
-                let stype = 标识.split('-')[0];
                 eval("let 解析2 = " + 解析);
                 return 解析2(url,公共,参数);
-            }, 解析, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识});
+            }, 解析, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识, stype:stype});
             
             let download = $.toString((解析,公共,参数) => {
                 eval("let 解析2 = " + 解析);
                 let 标识 = 参数.标识;
                 return 解析2(input,公共,参数);
-            }, 解析, 公共, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识});
+            }, 解析, 公共, {"规则名": MY_RULE._title || MY_RULE.title, "标识": 标识, stype:stype});
 
             d.push({
                 title: "详情简介",
