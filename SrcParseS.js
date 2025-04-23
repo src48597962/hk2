@@ -44,7 +44,7 @@ function exeWebRule(webObj, music, js) {
         ua: head['user-agent'] || MOBILE_UA,
         referer: head['referer'] || undefined,
         checkTime: 100,
-        timeout: 15000
+        //timeout: 15000
     })
 }
 var SrcParseS = {
