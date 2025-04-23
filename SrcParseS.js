@@ -38,10 +38,10 @@ function exeWebRule(webObj, music, js) {
             fba.log("exeWebRule失败>"+e.message);
         }
     },music,webUrl), {
-        //blockRules: ['.m4a','.mp3','.gif','.jpg','.jpeg','.png','.ico','hm.baidu.com','/ads/*.js','/klad/*.php','layer.css'],
+        blockRules: ['.m4a','.mp3','.gif','.jpg','.jpeg','.png','.ico','hm.baidu.com','/ads/*.js','/klad/*.php','layer.css'],
         jsLoadingInject: true,
         js: js,
-        ua: head['user-agent'] || MOBILE_UA,
+        ua: head['user-agent'] || PC_UA,
         referer: head['referer'] || undefined,
         checkTime: 100,
         timeout: 15000
