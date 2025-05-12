@@ -88,8 +88,10 @@
         /*选集列表结构
         let 选集 = pdfa(html, '.play-list&&li').map((data) => {
             let 选集列表 = {};
-            选集列表.title = pdfh(data, 'a--span--i&&Text')
+            选集列表.title = pdfh(data, 'a--span--i&&Text');
             选集列表.url = pd(data, 'a&&href');
+            //选集列表.desc = "描述";//可不传，这是单独传每个选集的desc
+            //选集列表.col_type = "text_2";//可不传，这是单独传每个选集的样式，优先级高于样式设定
             //选集列表.extra = {test: 1};//可不传，这是单独传每个选集的附加，优先级高于二级返回的extra
             return 选集列表;
         })
