@@ -607,8 +607,11 @@ function JySearch(sskeyword, sstype) {
             require(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/', '/master/') + 'SrcJyAlist.js');
             alistSearch2(name, 1);
         }, sskeyword);
+    } else if (sstype == "百度网盘") {
+        putVar('keyword',sskeyword);
+        return "hiker://page/search?1&rule=百度网盘";
     } else {
-        return "hiker://search?rule=聚影√&s=" + sskeyword;
+        return "hiker://search?rule=聚影&s=" + sskeyword;
     }
 }
 // 按拼音排序
