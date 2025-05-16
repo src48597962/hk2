@@ -580,7 +580,7 @@ function erji() {
                         longClick: [{
                             title: "搜索类型：" + getItem("juyingSeachType", "默认"),
                             js: $.toString(() => {
-                                return $(["聚搜接口","云盘接口","Alist接口"], 3).select(() => {
+                                return $(["聚搜接口","云盘接口","Alist接口","百度网盘"], 3).select(() => {
                                     setItem("juyingSeachType",input);
                                     refreshPage(false);
                                 })
