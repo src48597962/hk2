@@ -609,7 +609,7 @@ function JySearch(sskeyword, sstype) {
         }, sskeyword);
     } else if (sstype == "百度网盘") {
         putVar('keyword',sskeyword);
-        return "hiker://page/search?1&rule=百度网盘";
+        return "hiker://page/search?fypage&rule=百度网盘";
     } else {
         return "hiker://search?rule=聚影&s=" + sskeyword;
     }
