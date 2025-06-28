@@ -1560,6 +1560,16 @@ function Version() {
     var nowtime = Date.now();
     var oldtime = parseInt(getItem('VersionChecktime', '0').replace('time', ''));
     if (getMyVar('SrcJu_versionCheck', '0') == '0' && nowtime > (oldtime + 12 * 60 * 60 * 1000)) {
+        confirm({
+            title: "温馨提示",
+            content: "安装新版聚阅，老版不再维护",
+            confirm: $.toString(() => {
+                return fetch("https://raw.gitcode.com/src48597962/juyue/raw/master/%E8%81%9A%E9%98%85.hiker");
+            }),
+            cancel: $.toString(() => {
+                
+            })
+        });
         try {
             eval(request(config.依赖.match(/http(s)?:\/\/.*\//)[0].replace('/Ju/', '/master/') + 'SrcTmplVersion.js'))
             if (parseFloat(newVersion.SrcJu) > parseFloat(nowVersion)) {
